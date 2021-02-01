@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>icon/icon_option_like_orange</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/icon_option_like_orange" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" x="0" y="0" width="24" height="24"></rect>
+        <path d="M14,4 C15.1391197,4 15.2235977,6.00008247 14.2534341,10.0002474 L18.742937,10 C19.8475065,10 20.742937,10.8954305 20.742937,12 C20.742937,12.0804402 20.738084,12.1608071 20.7284045,12.2406627 L20.4422234,14.6016568 C20.1379382,17.11201 18.007282,19 15.4785545,19 L11,19 C9.8954305,19 9,18.1045695 9,17 L9,11 C11.9080964,6.33333333 13.574763,4 14,4 Z M5.5,10 C6.32842712,10 7,10.6715729 7,11.5 L7,17.5 C7,18.3284271 6.32842712,19 5.5,19 C4.67157288,19 4,18.3284271 4,17.5 L4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z" id="icon_like" stroke="#FF8022" fill="#FF8022" stroke-linejoin="round"></path>
+    </g>
+</svg>

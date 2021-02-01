@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>icon/icon_nav_sort</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/icon_nav_sort" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形备份-2" x="0" y="0" width="20" height="20"></rect>
+        <path d="M9,11 L9,16 L4,16 L4,11 L9,11 Z M16,11 L16,16 L11,16 L11,11 L16,11 Z M9,4 L9,9 L4,9 L4,4 L9,4 Z M16,4 L16,9 L11,9 L11,4 L16,4 Z" id="形状结合" stroke="#FF8022" fill="#FF8022" stroke-linejoin="round"></path>
+    </g>
+</svg>

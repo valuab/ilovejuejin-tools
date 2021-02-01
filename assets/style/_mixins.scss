@@ -1,0 +1,32 @@
+// mixins
+@mixin text($size, $color, $bold: normal, $decoration: none) {
+	font-size: $size;
+	font-weight: $bold;
+	color: $color;
+	text-decoration: $decoration;
+}
+
+// @mixin flex() {
+//   display:  flex;
+//   flex-direction: ;
+// }
+
+@mixin scrollHover {
+	@if & {
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		&:hover::-webkit-scrollbar {
+			display: block;
+		}
+	}
+}
+
+@mixin hoverColor($color) {
+	@if & {
+		&:hover {
+			color: $color;
+		}
+	}
+}

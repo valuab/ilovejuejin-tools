@@ -1,0 +1,88 @@
+// sass模块
+@import './reboot';
+
+/**
+ * 公共类名
+ */
+
+// flex
+.flex {
+	display: flex;
+}
+
+.flex-column {
+	flex-direction: column;
+
+	@extend .flex;
+}
+
+.flex-horizontal-center {
+	justify-content: center;
+
+	@extend .flex;
+}
+
+.flex-vertical-center {
+	align-items: center;
+
+	@extend .flex;
+}
+
+.flex-column-horizontal-center {
+	align-items: center;
+
+	@extend .flex-column;
+}
+
+.flex-column-vertical-center {
+	justify-content: center;
+
+	@extend .flex-column;
+}
+
+.flex-center {
+	justify-content: center;
+	align-items: center;
+
+	@extend .flex;
+}
+
+// 设置placeholder的默认样式
+:-moz-placeholder {
+	color: #ddd;
+	opacity: 1;
+}
+
+::-moz-placeholder {
+	color: #ddd;
+	opacity: 1;
+}
+
+// input 默认 and 聚焦样式
+input {
+	margin: 0;
+
+	/* 2 */
+	font-family: inherit;
+	border: 0;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+button:focus {
+	outline: 0;
+}
+
+// 超出文本省略
+.text-hidden-1 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/******* antd样式 *******/
+.ant-popover-inner-content {
+	padding: 0;
+}

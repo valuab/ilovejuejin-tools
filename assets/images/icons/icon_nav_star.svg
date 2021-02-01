@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>icon/icon_nav_star</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/icon_nav_star" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形备份" x="0" y="0" width="20" height="20"></rect>
+        <polygon id="星形" stroke="#FF8022" fill="#FF8022" stroke-linejoin="round" points="10 15 5.29771798 17.472136 6.19577393 12.236068 2.39154787 8.52786405 7.64885899 7.76393202 10 3 12.351141 7.76393202 17.6084521 8.52786405 13.8042261 12.236068 14.702282 17.472136"></polygon>
+    </g>
+</svg>
