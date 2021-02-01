@@ -13,7 +13,9 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@images/*": ["./assets/images/*"],
+      "@icons/*": ["./assets/images/icons/*"]
     },
     "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "ant-design-vue"]
   },
