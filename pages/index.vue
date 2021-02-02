@@ -29,6 +29,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'Index',
+  layout: 'container',
   data() {
     return {
       id: 0,
@@ -44,11 +45,10 @@ export default defineComponent({
 
 <style>
 .container {
-  margin: 0 auto;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
   text-align: center;
 }
 

@@ -1,5 +1,4 @@
 <template>
-  <!-- <a-icon :component="component" v-bind="$attrs"></a-icon> -->
   <component :is="component" v-bind="$attrs"></component>
 </template>
 

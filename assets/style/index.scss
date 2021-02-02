@@ -6,45 +6,25 @@
  */
 
 // flex
-.flex {
-	display: flex;
+
+.flex-row-horizontal-center {
+  @include flex(row, center);
 }
 
-.flex-column {
-	flex-direction: column;
-
-	@extend .flex;
-}
-
-.flex-horizontal-center {
-	justify-content: center;
-
-	@extend .flex;
-}
-
-.flex-vertical-center {
-	align-items: center;
-
-	@extend .flex;
-}
-
-.flex-column-horizontal-center {
-	align-items: center;
-
-	@extend .flex-column;
+.flex-row-vertical-center {
+  @include flex(row, flex-start, center);
 }
 
 .flex-column-vertical-center {
-	justify-content: center;
+  @include flex(column, center);
+}
 
-	@extend .flex-column;
+.flex-column-horizontal-center {
+  @include flex(column, flex-start, center);
 }
 
 .flex-center {
-	justify-content: center;
-	align-items: center;
-
-	@extend .flex;
+  @include flex(row, center, center);
 }
 
 // 设置placeholder的默认样式

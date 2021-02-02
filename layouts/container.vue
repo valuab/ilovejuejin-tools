@@ -3,10 +3,7 @@
     <a-layout-header class="header">
       <global-header></global-header>
     </a-layout-header>
-    <a-layout class="root-main" :has-sider="true">
-      <a-layout-sider width="160px" theme="light">
-        <global-menu></global-menu>
-      </a-layout-sider>
+    <a-layout class="root-main">
       <a-layout-content class="content-wrap" v-bind="$attrs">
         <nuxt />
         <a-layout-footer class="root-footer">
@@ -16,12 +13,22 @@
     </a-layout>
   </a-layout>
 </template>
+
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-export default defineComponent({})
+export default defineComponent({
+  name: 'Container',
+  props: {
+    backgroundColor: {
+      type: String,
+      default: 'rgb(240, 242, 245)',
+    },
+  },
+})
 </script>
-<style lang="scss">
+
+<style lang="scss" scoped>
 .root-container {
   background: #fff;
 
