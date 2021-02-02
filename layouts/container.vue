@@ -46,10 +46,10 @@ export default defineComponent({
   }
 
   .content-wrap {
-    @include flex(column, space-between);
+    @include flex(column, space-between, center);
 
     .root-footer {
-      max-width: 1240px;
+      width: 1240px;
       margin: 0 auto;
       padding-top: 100px;
     }

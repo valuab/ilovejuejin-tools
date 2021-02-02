@@ -5,7 +5,7 @@
     </nuxt-link>
     <a-menu class="menu" mode="horizontal">
       <a-sub-menu key="mobile" class="menu-item" title="手机端">
-        <phone-menu></phone-menu>
+        <!-- <phone-menu></phone-menu> -->
       </a-sub-menu>
       <a-sub-menu key="shopping" class="menu-item" title="官方商城">
         <a-menu-item key="taobao">
@@ -70,6 +70,8 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import { mapActions } from 'vuex'
 import SearchPopup from '../popup/SearchPopup.vue'
 
+type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
+
 export default defineComponent({
   name: 'GlobalHeader',
   components: { SearchPopup },
@@ -78,7 +80,6 @@ export default defineComponent({
     /**
      * @description: 点击menu
      */
-    type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
     const menuClick = (type: clickType) => {
       switch (type) {
         case 'taobao':

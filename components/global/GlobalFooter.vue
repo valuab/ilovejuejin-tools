@@ -3,27 +3,72 @@
     <div class="footer-top">
       <img width="125px" height="50px" src="@images/logo.png" />
       <div class="icons">
-        <a-popover>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionWechat"></icon>
-          </div>
-        </a-popover>
-        <a
-          href="https://weibo.com/cheyanlun?is_all=1"
-          target="_blank"
-          class="icon-wrap flex-center"
-        >
-          <icon icon="OptionWeibo"></icon>
-        </a>
-        <a-popover>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionApple"></icon>
-          </div>
+        <a-popover placement="bottom">
           <template #content>
             <QRCode
               src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
             />
           </template>
+          <div class="icon-wrap flex-center">
+            <icon icon="OptionWechat" size="24"></icon>
+          </div>
+        </a-popover>
+        <a-popover placement="bottom">
+          <template #content>
+            <QRCode
+              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
+            />
+          </template>
+          <div class="icon-wrap flex-center">
+            <icon icon="OptionWeibo" size="24"></icon>
+          </div>
+        </a-popover>
+        <a-popover placement="bottom">
+          <template #content>
+            <QRCode
+              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
+            />
+          </template>
+          <div class="icon-wrap flex-center">
+            <icon icon="OptionApple" size="24"></icon>
+          </div>
+        </a-popover>
+        <a-popover placement="bottom">
+          <template #content>
+            <QRCode
+              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
+            />
+          </template>
+          <div class="icon-wrap flex-center">
+            <icon icon="OptionAndroid" size="24"></icon>
+          </div>
+        </a-popover>
+        <a-popover placement="bottom">
+          <template #content>
+            <QRCode
+              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
+            />
+          </template>
+          <div class="icon-wrap flex-center">
+            <icon icon="OptionH5" size="24"></icon>
+          </div>
+        </a-popover>
+        <!-- <a
+          href="https://weibo.com/cheyanlun?is_all=1"
+          target="_blank"
+          class="icon-wrap flex-center"
+        >
+          <icon icon="OptionWeibo" size="24"></icon>
+        </a>
+        <a-popover placement="bottom">
+          <template #content>
+            <QRCode
+              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
+            />
+          </template>
+          <div class="icon-wrap flex-center">
+            <icon icon="OptionApple" size="24"></icon>
+          </div>
         </a-popover>
         <a-popover>
           <div class="icon-wrap flex-center">
@@ -37,7 +82,7 @@
           <template #content>
             <QRCode src="https://www.djcars.cn/" />
           </template>
-        </a-popover>
+        </a-popover> -->
       </div>
     </div>
     <p class="slogan">真人真话，道出专业与真实</p>
@@ -156,7 +201,7 @@ export default defineComponent({
   }
 
   .copyright {
-    padding-top: 22px;
+    padding: 22px 0;
     border-top: 1px solid #ebebeb;
     @include flex(row, space-between, center);
 

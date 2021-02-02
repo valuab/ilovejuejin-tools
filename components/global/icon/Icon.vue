@@ -1,5 +1,9 @@
 <template>
-  <component :is="component" v-bind="$attrs"></component>
+  <a-icon
+    :component="component"
+    :style="{ height: `${size}px`, fontSize: `${size}px` }"
+    v-bind="$attrs"
+  ></a-icon>
 </template>
 
 <script lang="ts" type="x-template">
@@ -16,6 +20,10 @@ export default defineComponent({
     icon: {
       type: String as PropType<IconType>,
       required: true,
+    },
+    size: {
+      type: String,
+      default: '20',
     },
   },
   setup(props) {

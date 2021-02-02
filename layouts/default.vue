@@ -33,18 +33,18 @@ export default defineComponent({})
   }
 
   .root-main {
-    padding-top: 80px;
+    padding: 80px 0 0;
     min-height: 100vh;
     box-sizing: border-box;
   }
 
   .content-wrap {
-    @include flex(column, space-between);
+    @include flex(column, space-between, center);
 
     .root-footer {
-      max-width: 1240px;
+      width: 1240px;
       margin: 0 auto;
-      padding-top: 100px;
+      padding: 100px 0 0;
     }
   }
 }
