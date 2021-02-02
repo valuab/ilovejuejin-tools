@@ -1,4 +1,5 @@
 import { resolve } from 'path'
+import { getHeader } from './api/header/header'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -38,6 +39,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     // https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
   ],
@@ -47,7 +49,24 @@ export default {
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    retry: { retries: 3 },
+    debug: process.env._ENV !== 'production',
+    timeout: 5000,
+    proxy: true,
+    headers: getHeader(),
+  },
+
+  // cross domain
+  proxy: {
+    '/api/': {
+      target: 'http://pc-beta.djcars.cn',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api/': '',
+      },
+    },
+  },
 
   // alias configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-alias
   alias: {
