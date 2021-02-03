@@ -1,6 +1,6 @@
 // import { getCurrentInstance } from 'vue'
-import getUuid from '../utils/uuid'
-import encryption from '../utils/encryption'
+import getUuid from '../../utils/uuid'
+// import encryption from '../../utils/encryption'
 
 interface headerValue {
   sign: string
@@ -37,6 +37,6 @@ function initHeader() {
  * @description: 编辑加密
  */
 export function editHeader(header: headerValue) {
-  header.sign = encryption(header.sid + header.uid)
+  // header.sign = encryption(header.sid + header.uid)
   return header
 }

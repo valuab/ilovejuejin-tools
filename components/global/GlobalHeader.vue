@@ -22,7 +22,7 @@
         </a-menu-item>
         <a-menu-divider :style="{ margin: '0 31px' }"></a-menu-divider>
         <a-menu-item key="miniappBrand">
-          <div :style="shopMenuItem" @click="ifSearchpopup">
+          <div :style="shopMenuItem" @click="showSearchPopup">
             <icon :style="{ marginRight: '10px' }" icon="LogoDjcars" />
             <span>DJCARS潮牌</span>
           </div>
@@ -53,7 +53,7 @@
     <global-button
       class="search-btn flex-center"
       shape="round"
-      @click="ifSearchpopup"
+      @click="showSearchPopup"
     >
       <icon icon="SearchOrange" />
       <span class="search-btn-text">搜全站</span>
@@ -61,7 +61,7 @@
     <global-button class="login-btn" @click="loginShow">登录</global-button>
     <a-avatar class="avatar" size="large"></a-avatar>
     <!-- <global-login /> -->
-    <search-popup v-if="isShow"></search-popup>
+    <search-popup v-if="isSearchShow"></search-popup>
   </div>
 </template>
 
@@ -112,7 +112,7 @@ export default defineComponent({
     }
   },
   computed: {
-    isShow() {
+    isSearchShow() {
       return this.$store.state.global.isSearchPopup
     },
   },
@@ -126,7 +126,7 @@ export default defineComponent({
       that.$store.dispatch('userInfo/changeLogin', userInfo) // 展示弹窗
     },
     ...mapActions({
-      ifSearchpopup: 'global/showSearchPopup',
+      showSearchPopup: 'global/showSearchPopup',
     }),
   },
 })

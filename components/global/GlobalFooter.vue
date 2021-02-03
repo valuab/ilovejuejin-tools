@@ -104,7 +104,7 @@
         </div>
         <div class="content-item">
           <span class="content-text">如有问题，欢迎告诉我们，</span>
-          <a class="content-text content-text-link" @click="isFeedBack"
+          <a class="content-text content-text-link" @click="showFeedBack"
             >问题反馈</a
           >
         </div>
@@ -122,13 +122,17 @@
         工信和信息化部 | 粤ICP16009880号 | 视频备案0108283170590065
       </a>
     </div>
+    <feed-back v-if="isFeedBackShow"></feed-back>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, getCurrentInstance } from '@nuxtjs/composition-api'
+import { mapActions } from 'vuex'
+import FeedBack from '../popup/FeedBack.vue'
 
 export default defineComponent({
+  components: { FeedBack },
   emits: ['showFeedBack'],
   setup() {
     const { root }: any = getCurrentInstance()
@@ -142,6 +146,16 @@ export default defineComponent({
     return {
       isFeedBack,
     }
+  },
+  computed: {
+    isFeedBackShow(): Boolean {
+      return this.$store.state.global.isFeedBack
+    },
+  },
+  methods: {
+    ...mapActions({
+      showFeedBack: 'global/showFeedBack',
+    }),
   },
 })
 </script>
