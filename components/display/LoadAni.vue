@@ -1,0 +1,78 @@
+<template>
+  <div class="animation-loading">
+    <div class="animation-loading-line"></div>
+    <div class="animation-loading-line"></div>
+    <div class="animation-loading-line"></div>
+    <div class="animation-loading-line"></div>
+    <div class="animation-loading-line"></div>
+  </div>
+</template>
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+export default defineComponent({
+  name: 'LoadAni',
+})
+</script>
+<style lang="scss" scoped>
+.animation-loading {
+  position: relative;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.animation-loading-line {
+  position: relative;
+  display: inline-block;
+  width: 6px;
+  height: 15px;
+  margin: 0 2px;
+  background-color: #e0e0e0;
+  border-radius: 2px;
+  transform-origin: 50% 50%;
+  animation: loading 0.45s infinite ease-in alternate;
+}
+
+.animation-loading-line:nth-of-type(2) {
+  animation-delay: 0.1s;
+}
+
+.animation-loading-line:nth-of-type(3) {
+  animation-delay: 0.2s;
+}
+
+.animation-loading-line:nth-of-type(4) {
+  animation-delay: 0.3s;
+}
+
+.animation-loading-line:nth-of-type(5) {
+  animation-delay: 0.4s;
+}
+
+@-webkit-keyframes loading {
+  0% {
+    -webkit-transform: scaleY(1);
+  }
+
+  50% {
+    -webkit-transform: scaleY(1);
+  }
+
+  100% {
+    -webkit-transform: scaleY(3);
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+
+  100% {
+    transform: scaleY(3);
+  }
+}
+</style>

@@ -1,5 +1,5 @@
 // import { getCurrentInstance } from 'vue'
-import getUuid from '../../utils/uuid'
+// import getUuid from '../../utils/uuid'
 // import encryption from '../../utils/encryption'
 
 interface headerValue {
@@ -25,7 +25,7 @@ export function getHeader() {
  */
 function initHeader() {
   const initHeader = { sign: '', sid: '', uid: 0, uuid: '' }
-  const uuid = getUuid() // 生成
+  const uuid = '' // 生成
 
   initHeader.uuid = uuid
   initHeader.sid = uuid
