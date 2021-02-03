@@ -22,13 +22,18 @@
         </a-menu-item>
         <a-menu-divider :style="{ margin: '0 31px' }"></a-menu-divider>
         <a-menu-item key="miniappBrand">
-          <div :style="shopMenuItem">
+          <div :style="shopMenuItem" @click="ifSearchpopup">
             <icon :style="{ marginRight: '10px' }" icon="LogoDjcars" />
             <span>DJCARS潮牌</span>
           </div>
         </a-menu-item>
         <a-menu-item
-          :style="{ width: '100px', height: '100px', margin: '0 auto 30px' }"
+          :style="{
+            width: '100px',
+            height: '100px',
+            margin: '0 auto 30px',
+            padding: '0',
+          }"
         >
           <img
             width="100px"
@@ -45,30 +50,31 @@
         >专业车膜</a-menu-item
       >
     </a-menu>
-    <global-button class="search-btn flex-center" shape="round">
+    <global-button
+      class="search-btn flex-center"
+      shape="round"
+      @click="ifSearchpopup"
+    >
       <icon icon="SearchOrange" />
       <span class="search-btn-text">搜全站</span>
     </global-button>
     <global-button class="login-btn" @click="loginShow">登录</global-button>
     <a-avatar class="avatar" size="large"></a-avatar>
     <!-- <global-login /> -->
+    <search-popup v-if="isShow"></search-popup>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import { mapActions } from 'vuex'
+import SearchPopup from '../popup/SearchPopup.vue'
 
 export default defineComponent({
   name: 'GlobalHeader',
+  components: { SearchPopup },
   emits: ['showSearch'],
-  setup(_props, context) {
-    /**
-     * @description: 点击搜全站
-     */
-    const ifSearchpopup = () => {
-      context.emit('showSearch')
-    }
-
+  setup() {
     /**
      * @description: 点击menu
      */
@@ -100,10 +106,14 @@ export default defineComponent({
     }
 
     return {
-      ifSearchpopup,
       menuClick,
       shopMenuItem,
     }
+  },
+  computed: {
+    isShow() {
+      return this.$store.state.global.isSearchPopup
+    },
   },
   methods: {
     loginShow() {
@@ -114,6 +124,9 @@ export default defineComponent({
       }
       that.$store.dispatch('userInfo/changeLogin', userInfo) // 展示弹窗
     },
+    ...mapActions({
+      ifSearchpopup: 'global/showSearchPopup',
+    }),
   },
 })
 </script>

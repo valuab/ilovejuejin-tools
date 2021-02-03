@@ -29,7 +29,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'Index',
-  layout: 'container',
+  // layout: 'container',
   data() {
     return {
       id: 0,
@@ -43,7 +43,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .container {
   display: flex;
   justify-content: center;

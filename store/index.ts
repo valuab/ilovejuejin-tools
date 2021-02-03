@@ -1,4 +1,4 @@
-interface IRootState {
+export interface IRootState {
   counter: number
 }
 

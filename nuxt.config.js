@@ -1,5 +1,4 @@
 import { resolve } from 'path'
-import { getHeader } from './api/header/header'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -54,7 +53,6 @@ export default {
     debug: process.env._ENV !== 'production',
     timeout: 5000,
     proxy: true,
-    headers: getHeader(),
   },
 
   // cross domain

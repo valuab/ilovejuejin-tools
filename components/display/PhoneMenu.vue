@@ -18,7 +18,7 @@
           width="160px"
           height="160px"
           alt="图片加载失败"
-          :src="imgSrc.offic"
+          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
         />
         <p class="title">公众号</p>
         <p class="desc">真人真话，道出专业与事实</p>
@@ -27,7 +27,7 @@
         <img
           width="160px"
           height="160px"
-          :src="imgSrc.miniapp"
+          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
           alt="图片加载失败"
         />
         <p class="title">小程序</p>
