@@ -107,7 +107,7 @@ export default defineComponent({
      * @description: 猜你喜欢换一批
      */
     const replaceList = () => {
-      console.log('猜你喜欢')
+      // console.log('猜你喜欢')
     }
 
     return {

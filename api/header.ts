@@ -1,19 +1,12 @@
 // import { getCurrentInstance } from 'vue'
-import getUuid from '../../utils/uuid'
-import encryption from '../../utils/encryption'
+import getUuid from '../utils/uuid'
+import encryption from '../utils/encryption'
 
 interface headerValue {
   sign: string
   sid: string
   uid: number
   uuid?: string
-}
-
-export const headerData = {
-  sign: '',
-  sid: '',
-  uid: 0,
-  uuid: '',
 }
 
 /**

@@ -1,7 +1,3 @@
-// import { NuxtAxiosInstance } from '@nuxtjs/axios'
+// import { Context } from '@nuxt/types'
 
-// let axios: NuxtAxiosInstance
-
-// export default ($axios: NuxtAxiosInstance) => {
-//   axios = $axios
-// }
+// export default (context: Context) => {}
