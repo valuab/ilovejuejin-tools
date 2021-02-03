@@ -4,7 +4,7 @@
       <global-header></global-header>
     </a-layout-header>
     <a-layout class="root-main">
-      <a-layout-content class="content-wrap" v-bind="$attrs">
+      <a-layout-content class="content-wrap">
         <nuxt />
         <a-layout-footer class="root-footer">
           <global-footer></global-footer>
@@ -14,7 +14,7 @@
   </a-layout>
 </template>
 
-<script lang="ts">
+<script lang="ts" scoped>
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({

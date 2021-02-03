@@ -117,6 +117,9 @@ export default defineComponent({
       replaceList,
     }
   },
+  async asyncData({ $axios }) {
+    await $axios.get('https://jsonplaceholder.typicode.com/todos/1')
+  },
   data() {
     return {
       id: 0,

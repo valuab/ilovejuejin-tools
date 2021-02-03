@@ -1,4 +1,6 @@
 import { resolve } from 'path'
+import { NuxtConfig } from '@nuxt/types'
+import { RuleSetRule } from 'webpack'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -19,7 +21,7 @@ export default {
   css: ['ant-design-vue/dist/antd.less', './assets/style/index.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/antd-ui'],
+  plugins: ['@/plugins/antd-ui', '@/plugins/setup-axios'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -43,6 +45,7 @@ export default {
     '@nuxtjs/style-resources',
   ],
 
+  // Modules: https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-build/#styleresources
   styleResources: {
     scss: ['./assets/style/_variable.scss', './assets/style/_mixins.scss'],
   },
@@ -75,31 +78,37 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extend(config) {
-      const svgRule = config.module.rules.find((rule) => rule.test.test('.svg'))
-      svgRule.test = /\.(png|jpe?g|gif|webp)$/
-      config.module.rules.push({
-        test: /\.svg$/,
-        use: ['babel-loader', 'vue-svg-loader'],
-      })
-      config.module.rules.push({
-        test: /\.less/,
-        loader: 'less-loader',
-        options: {
-          lessOptions: {
-            modifyVars: {
-              'primary-color': '#ff8022',
-              'link-color': '#ff8022',
-              'heading-color': '#333333',
-              'text-color': '#3a3a3a',
-              'text-color-secondary': '#999999',
-              'disabled-color': '#b6b6b6',
-              'border-color-base': '#e6e6e6',
-              'box-shadow-base': 'rgba(0, 0, 0, .15)',
+      const module = config.module
+
+      if (module) {
+        const svgRule = module.rules.find((rule) =>
+          (rule.test as RegExp).test('.svg')
+        ) as RuleSetRule
+        svgRule.test = /\.(png|jpe?g|gif|webp)$/
+        module.rules.push({
+          test: /\.svg$/,
+          use: ['babel-loader', 'vue-svg-loader'],
+        })
+        module.rules.push({
+          test: /\.less/,
+          loader: 'less-loader',
+          options: {
+            lessOptions: {
+              modifyVars: {
+                'primary-color': '#ff8022',
+                'link-color': '#ff8022',
+                'heading-color': '#333333',
+                'text-color': '#3a3a3a',
+                'text-color-secondary': '#999999',
+                'disabled-color': '#b6b6b6',
+                'border-color-base': '#e6e6e6',
+                'box-shadow-base': 'rgba(0, 0, 0, .15)',
+              },
+              javascriptEnabled: true,
             },
-            javascriptEnabled: true,
           },
-        },
-      })
+        })
+      }
     },
   },
-}
+} as NuxtConfig

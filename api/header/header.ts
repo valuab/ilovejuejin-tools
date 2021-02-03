@@ -9,6 +9,13 @@ interface headerValue {
   uuid?: string
 }
 
+export const headerData = {
+  sign: '',
+  sid: '',
+  uid: 0,
+  uuid: '',
+}
+
 /**
  * @description: 获取header
  */
