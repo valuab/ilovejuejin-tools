@@ -6,18 +6,21 @@ interface IUserInfo {
   name: string
   avatar: string
 }
-
 export interface IUserModule {
-  getUserInfo: (uid: string) => Promise<IUserInfo>
+  getUserInfo(): Promise<IUserInfo>
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  return {
-    async getUserInfo(uid: String) {
-      const { data } = await $axios.get<IUserInfo>(`url?id=${uid}`)
+  const userModule: IUserModule = {
+    async getUserInfo() {
+      const { data } = await $axios.get<IUserInfo>(
+        `https://jsonplaceholder.typicode.com/todos/1`
+      )
       return data
     },
-  } as IUserModule
+  }
+
+  return userModule
 }
 
 export const getUserInfo = () => {

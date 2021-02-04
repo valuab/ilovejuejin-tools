@@ -75,7 +75,6 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { getUserInfo } from '@/api/apiPublic/modules/user'
 
 export default defineComponent({
   name: 'Index',
@@ -118,9 +117,9 @@ export default defineComponent({
       replaceList,
     }
   },
-  asyncData() {
-    // await $axios.get('https://jsonplaceholder.typicode.com/todos/1')
-    getUserInfo()
+  async asyncData({ app }) {
+    const data = await app.$http.user.getUserInfo()
+    console.log(data)
   },
   data() {
     return {

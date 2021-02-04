@@ -1,7 +1,6 @@
-import { NuxtAxiosInstance } from '@nuxtjs/axios/'
+import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import userModule, { IUserModule } from './modules/user'
-
-interface IRootHttpState {
+export interface IRootHttpState {
   user: IUserModule
 }
 
