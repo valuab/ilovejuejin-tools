@@ -3,6 +3,10 @@ import { NuxtConfig } from '@nuxt/types'
 import { RuleSetRule } from 'webpack'
 
 export default {
+  // https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-env/
+  env: {
+    BASE_URL: process.env.BASE_URL || 'https://pc-beta.djcars.cn',
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'nuxt-with-vue3',
@@ -79,6 +83,8 @@ export default {
   build: {
     extend(config) {
       const module = config.module
+
+      console.log(process.env.BASE_URL)
 
       if (module) {
         const svgRule = module.rules.find((rule) =>

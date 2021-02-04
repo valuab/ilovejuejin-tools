@@ -35,7 +35,7 @@
 </template>
 <script>
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import { handleTime } from '@/utils/handleData'
 
 export default defineComponent({
@@ -58,14 +58,14 @@ export default defineComponent({
   },
   setup(props) {
     const { item } = toRefs(props)
-    const router = useRouter()
+    // const router = useRouter()
     const publishTime = new Date(item.value.publishTime).getTime()
 
     const time = handleTime(publishTime)
 
     function navDetail() {
-      const routeData = router.resolve('/details')
-      window.open(routeData.href, '_blank')
+      // const routeData = router.resolve('/details')
+      // window.open(routeData.href, '_blank')
     }
     return {
       navDetail,
