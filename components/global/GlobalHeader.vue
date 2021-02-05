@@ -50,31 +50,30 @@
         >专业车膜</a-menu-item
       >
     </a-menu>
-    <global-button
+    <a-button
       class="search-btn flex-center"
       shape="round"
       @click="showSearchPopup"
     >
       <icon icon="SearchOrange" />
       <span class="search-btn-text">搜全站</span>
-    </global-button>
-    <global-button class="login-btn" @click="loginShow">登录</global-button>
+    </a-button>
+    <login-button class="login-btn" @click="loginShow">登录</login-button>
     <a-avatar class="avatar" size="large"></a-avatar>
     <!-- <global-login /> -->
-    <search-popup v-if="isSearchShow"></search-popup>
+    <!-- <search-popup v-if="isSearchShow"></search-popup> -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { mapActions } from 'vuex'
-import SearchPopup from '../popup/SearchPopup.vue'
+// import SearchPopup from '../popup/SearchPopup.vue'
 
 type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
 
 export default defineComponent({
   name: 'GlobalHeader',
-  components: { SearchPopup },
   emits: ['showSearch'],
   setup() {
     /**
@@ -111,11 +110,7 @@ export default defineComponent({
       shopMenuItem,
     }
   },
-  computed: {
-    isSearchShow() {
-      return this.$store.state.global.isSearchPopup
-    },
-  },
+  computed: {},
   methods: {
     loginShow() {
       const that: any = this
@@ -169,9 +164,7 @@ export default defineComponent({
     margin-left: auto;
     line-height: 40px;
     background-color: #fff0e6;
-
     @extend .btn-init;
-
     @include text(16px, $primary-color, bold);
 
     .search-btn-text {
@@ -185,7 +178,6 @@ export default defineComponent({
 
   .login-btn {
     margin-left: 19px;
-
     @extend .btn-init;
   }
 }

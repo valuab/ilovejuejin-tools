@@ -1,21 +1,21 @@
 <template>
   <div class="toggle-wrap">
-    <global-button
+    <a-button
       class="toggle-btn toggle-btn-rotate"
       shape="circle"
       :disabled="disabledLeft"
       @click="clickLeft"
     >
       <icon :icon="disabledLeft ? `ListSwitchUnable` : `ListSwitchNormal`" />
-    </global-button>
-    <global-button
+    </a-button>
+    <a-button
       class="toggle-btn"
       shape="circle"
       :disabled="disabledRight"
       @click="clickRight"
     >
       <icon :icon="disabledRight ? `ListSwitchUnable` : `ListSwitchNormal`" />
-    </global-button>
+    </a-button>
   </div>
 </template>
 

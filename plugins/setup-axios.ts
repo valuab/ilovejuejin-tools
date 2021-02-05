@@ -3,8 +3,6 @@ import { Context } from '@nuxt/types'
 import createHttpModule, { IRootHttpState } from '~/api/apiPublic/index'
 
 export default (context: Context) => {
-  console.log(process.env.BASE_URL)
-
   const http = createHttpModule(context.$axios)
   const httpInstance = {
     install(Vue: VueConstructor) {

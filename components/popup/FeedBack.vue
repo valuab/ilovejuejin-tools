@@ -119,14 +119,14 @@
         </div>
 
         <div>
-          <global-button
+          <a-button
             :disabled="disabled"
             class="submit"
             type="primary"
             @click="submit"
           >
             发送反馈
-          </global-button>
+          </a-button>
         </div>
       </div>
       <!-- 底部提交END -->

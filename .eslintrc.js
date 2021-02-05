@@ -15,5 +15,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     'vue/no-v-model-argument': 'off',
+    camelcase: 'off',
   },
 }

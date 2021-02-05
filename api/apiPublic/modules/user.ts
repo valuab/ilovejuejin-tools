@@ -1,7 +1,5 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 
-import axios from 'axios'
-
 interface IUserInfo {
   name: string
   avatar: string
@@ -21,9 +19,4 @@ export default ($axios: NuxtAxiosInstance) => {
   }
 
   return userModule
-}
-
-export const getUserInfo = () => {
-  console.log(axios.defaults.headers)
-  axios.get('https://jsonplaceholder.typicode.com/todos/1')
 }

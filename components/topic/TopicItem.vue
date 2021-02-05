@@ -5,9 +5,7 @@
         <h1>{{ data.name }}</h1>
         <p>{{ data.description }}</p>
       </div>
-      <global-button class="nav-detail" @click="navDetail"
-        >查看全部 ></global-button
-      >
+      <a-button class="nav-detail" @click="navDetail">查看全部 ></a-button>
     </header>
     <div class="main">
       <topic-img class="topicImg" :img-url="data.smallImageUrl"></topic-img>

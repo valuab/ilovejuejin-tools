@@ -4,13 +4,13 @@
       <div v-for="(item, index) in dataList.list" :key="index">
         <topic-item class="topic-item" :data="item"></topic-item>
       </div>
-      <global-button
+      <a-button
         v-if="dataList.list.length < dataList.total"
         class="add-btn"
         @click="addList"
       >
         查看更多
-      </global-button>
+      </a-button>
     </div>
   </menu-container> -->
   <div>

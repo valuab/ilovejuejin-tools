@@ -5,7 +5,7 @@ import { RuleSetRule } from 'webpack'
 export default {
   // https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-env/
   env: {
-    BASE_URL: process.env.BASE_URL || 'https://pc-beta.djcars.cn',
+    BASE_URL: process.env.BASE_URL,
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -19,6 +19,20 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      { src: 'https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js' },
+    ],
+  },
+
+  // server config
+  server: {
+    host: '192.168.5.224',
+    port: 3000,
+  },
+
+  // router config
+  router: {
+    middleware: ['login-redirect'],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -65,10 +79,10 @@ export default {
   // cross domain
   proxy: {
     '/api/': {
-      target: 'http://pc-beta.djcars.cn',
+      target: process.env.BASE_URL,
       changeOrigin: true,
       pathRewrite: {
-        '^/api/': '',
+        '^/api/': 'pc',
       },
     },
   },
@@ -83,8 +97,6 @@ export default {
   build: {
     extend(config) {
       const module = config.module
-
-      console.log(process.env.BASE_URL)
 
       if (module) {
         const svgRule = module.rules.find((rule) =>

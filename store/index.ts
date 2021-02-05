@@ -1,13 +1,27 @@
-export interface IRootState {
-  counter: number
+import { ActionTree, MutationTree } from 'vuex'
+
+interface IUserInfo {
+  name?: string
+  avatar?: string
+  isLogin: boolean
 }
 
-export const state = () => ({
-  counter: 0,
+export interface IRootState {
+  userInfo: IUserInfo | null
+}
+
+export const state: () => IUserInfo = () => ({
+  isLogin: false,
 })
 
-export const mutations = {
-  increment(state: IRootState) {
-    state.counter++
+export const mutations: MutationTree<IRootState> = {
+  setUserInfo(state: IRootState, userInfo: IUserInfo) {
+    state.userInfo = userInfo
+  },
+}
+
+export const actions: ActionTree<IRootState, IRootState> = {
+  setUserInfo({ commit }, userInfo: IUserInfo) {
+    commit('setUserInfo', userInfo)
   },
 }

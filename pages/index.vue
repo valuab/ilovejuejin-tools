@@ -70,6 +70,7 @@
         <kol-list :kol-list="kolList"></kol-list>
       </a-col>
     </a-row>
+    <login-pop-up></login-pop-up>
   </div>
 </template>
 

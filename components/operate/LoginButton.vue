@@ -8,7 +8,8 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'GlobalButton',
+  name: 'LoginButton',
+  inheritAttrs: false,
   props: {
     login: {
       type: Boolean,
