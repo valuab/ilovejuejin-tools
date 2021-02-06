@@ -1,6 +1,11 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import userModule, { IUserModule } from './modules/user'
 import loginModule, { ILoginModule } from './modules/login'
+
+export type IApiResult = {
+  err: number
+  msg: string
+}
 export interface IRootHttpState {
   user: IUserModule
   login: ILoginModule

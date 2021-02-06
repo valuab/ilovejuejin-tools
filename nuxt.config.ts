@@ -61,6 +61,8 @@ export default {
     '@nuxtjs/proxy',
     // https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
+    // https://www.npmjs.com/package/cookie-universal-nuxt
+    ['cookie-universal-nuxt'],
   ],
 
   // Modules: https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-build/#styleresources
@@ -82,7 +84,7 @@ export default {
       target: process.env.BASE_URL,
       changeOrigin: true,
       pathRewrite: {
-        '^/api/': 'pc',
+        '^/api/': 'pc/',
       },
     },
   },
@@ -91,6 +93,7 @@ export default {
   alias: {
     '@images': resolve(__dirname, './assets/images'),
     '@icons': resolve(__dirname, './assets/images/icons'),
+    '@apiModules': resolve(__dirname, './api/apiPublic/modules'),
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

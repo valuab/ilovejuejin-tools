@@ -118,10 +118,6 @@ export default defineComponent({
       replaceList,
     }
   },
-  async asyncData({ app }) {
-    const data = await app.$http.user.getUserInfo()
-    console.log(data)
-  },
   data() {
     return {
       id: 0,

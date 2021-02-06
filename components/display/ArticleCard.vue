@@ -36,7 +36,7 @@
 <script>
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 // import { useRouter } from 'vue-router'
-import { handleTime } from '@/utils/handleData'
+import { handleTime } from '@/utils/data'
 
 export default defineComponent({
   name: 'ContentCard',

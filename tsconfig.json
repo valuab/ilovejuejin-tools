@@ -15,9 +15,16 @@
       "~/*": ["./*"],
       "@/*": ["./*"],
       "@images/*": ["./assets/images/*"],
-      "@icons/*": ["./assets/images/icons/*"]
+      "@icons/*": ["./assets/images/icons/*"],
+      "@apiModules/*": ["./api/apiPublic/modules/*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "ant-design-vue"]
+    "types": [
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "@types/node",
+      "ant-design-vue",
+      "cookie-universal-nuxt/types"
+    ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

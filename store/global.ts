@@ -1,5 +1,5 @@
 import { ActionTree } from 'vuex'
-import { IRootState } from '../index'
+import { IRootState } from './index'
 
 export interface IGlobalState {
   isSearchPopup: Boolean

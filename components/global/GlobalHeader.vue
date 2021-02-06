@@ -110,7 +110,9 @@ export default defineComponent({
       shopMenuItem,
     }
   },
-  computed: {},
+  asyncData({ store }) {
+    console.log(store, 123)
+  },
   methods: {
     loginShow() {
       const that: any = this
