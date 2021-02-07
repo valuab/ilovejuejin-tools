@@ -52,6 +52,8 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://composition-api.nuxtjs.org/helpers/ssrPromise
     '@nuxtjs/composition-api',
+    // https://typed-vuex.roe.dev/getting-started-nuxt
+    'nuxt-typed-vuex',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -62,7 +64,7 @@ export default {
     // https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
     // https://www.npmjs.com/package/cookie-universal-nuxt
-    ['cookie-universal-nuxt'],
+    'cookie-universal-nuxt',
   ],
 
   // Modules: https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-build/#styleresources

@@ -1,40 +1,56 @@
 import { Context } from '@nuxt/types'
-import { ActionTree, MutationTree } from 'vuex'
+import { actionTree, mutationTree, getAccessorType } from 'typed-vuex'
 import { IUserInfoResult } from '@apiModules/user'
+import * as global from './modules/global'
 import { IToken } from '~/api/token'
 
-type IUserInfoType = Partial<IUserInfoResult['result']>
-interface IUserInfo extends IUserInfoType {
+type IUserInfo = IUserInfoResult['result'] & {
   isLogin: boolean
 }
 
-export interface IRootState {
+interface IRootState {
   userInfo: IUserInfo
 }
 
 export const state: () => IRootState = () => ({
   userInfo: {
+    userId: 0,
+    kol: 0,
+    smallImageUrl: '',
+    nickname: '',
     isLogin: false,
   },
 })
 
-export const mutations: MutationTree<IRootState> = {
-  setUserInfo(state, userInfo) {
-    state.userInfo = userInfo
+export const mutations = mutationTree(state, {
+  setUserInfo(state, userInfo: IUserInfoResult['result']) {
+    state.userInfo = { ...userInfo, isLogin: true }
   },
-}
+})
 
-export const actions: ActionTree<IRootState, IRootState> = {
-  async getUserInfo({ commit }, userId: string) {
-    const userInfo = await this.app.$http.user.getUserInfo({ userId })
-    commit('setUserInfo', userInfo)
-  },
-  nuxtServerInit({ dispatch }, { app, $axios }: Context) {
-    const token = app.$cookies.get<IToken | null>('token')
+export const actions = actionTree(
+  { state, mutations },
+  {
+    async getUserInfo({ commit }, userId: string) {
+      const userInfo = await this.app.$http.user.getUserInfo({ userId })
+      commit('setUserInfo', userInfo)
+    },
+    nuxtServerInit({ dispatch }, { app, $axios }: Context) {
+      const token = app.$cookies.get<IToken | undefined>('token')
 
-    if (token) {
-      $axios.defaults.headers = token
-      dispatch('getUserInfo', token.uid)
-    }
+      if (token) {
+        $axios.defaults.headers = token
+        dispatch('getUserInfo', token.uid)
+      }
+    },
+  }
+)
+
+export const accessorType = getAccessorType({
+  state,
+  mutations,
+  actions,
+  modules: {
+    global,
   },
-}
+})

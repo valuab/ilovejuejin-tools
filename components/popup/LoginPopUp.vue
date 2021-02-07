@@ -35,6 +35,7 @@ export default defineComponent({
     }
   },
   mounted() {
+    // TODO: appId需要通过api请求
     this.$nextTick(() => {
       ;(window as any).WxLogin({
         self_redirect: false,

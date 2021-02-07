@@ -76,6 +76,7 @@ export interface ILoginModule {
 
 export default ($axios: NuxtAxiosInstance) => {
   const loginModule: ILoginModule = {
+    // 获取秘钥令牌
     async getAccessToken(params) {
       const paramMap = { ...params, grant_type: 'authorization_code' }
       const url = handleUrlParams(loginLinks.getAccessToken, paramMap)
@@ -83,18 +84,21 @@ export default ($axios: NuxtAxiosInstance) => {
 
       return data
     },
+    // 获取用户登录信息
     async getUserInfo(params) {
       const url = handleUrlParams(loginLinks.getUserInfo, params)
       const { data } = await $axios.get<IGetUserInfoResult>(url)
 
       return data
     },
+    // 获取网页应用信息
     async getAppIdKey() {
       const url = loginLinks.getAppIdKey
       const { data } = await $axios.get<IGetAppIdKeyResult>(url)
 
       return data.result
     },
+    // 登录
     async thirdLogin(params: IThirdLoginParams) {
       const url = handleUrlParams(loginLinks.thirdLogin, params)
       const { data } = await $axios.get<IThirdLoginResult>(url)

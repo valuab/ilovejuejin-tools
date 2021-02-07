@@ -22,7 +22,7 @@
         </a-menu-item>
         <a-menu-divider :style="{ margin: '0 31px' }"></a-menu-divider>
         <a-menu-item key="miniappBrand">
-          <div :style="shopMenuItem" @click="showSearchPopup">
+          <div>
             <icon :style="{ marginRight: '10px' }" icon="LogoDjcars" />
             <span>DJCARS潮牌</span>
           </div>
@@ -50,16 +50,19 @@
         >专业车膜</a-menu-item
       >
     </a-menu>
-    <a-button
-      class="search-btn flex-center"
-      shape="round"
-      @click="showSearchPopup"
-    >
+    <a-button class="search-btn flex-center" shape="round">
       <icon icon="SearchOrange" />
       <span class="search-btn-text">搜全站</span>
     </a-button>
-    <login-button class="login-btn" @click="loginShow">登录</login-button>
-    <a-avatar class="avatar" size="large"></a-avatar>
+    <login-button v-if="!$accessor.userInfo.isLogin" class="login-btn"
+      >登录</login-button
+    >
+    <a-avatar
+      v-if="$accessor.userInfo.isLogin"
+      class="avatar"
+      size="large"
+      :src="$accessor.userInfo.smallImageUrl"
+    ></a-avatar>
     <!-- <global-login /> -->
     <!-- <search-popup v-if="isSearchShow"></search-popup> -->
   </div>
@@ -67,37 +70,11 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { mapActions } from 'vuex'
-// import SearchPopup from '../popup/SearchPopup.vue'
-
-type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
 
 export default defineComponent({
   name: 'GlobalHeader',
   emits: ['showSearch'],
   setup() {
-    /**
-     * @description: 点击menu
-     */
-    const menuClick = (type: clickType) => {
-      switch (type) {
-        case 'taobao':
-          window.open('https://djcars.taobao.com/', '_blank')
-          break
-        case 'tmall':
-          window.open('https://djcsccp.tmall.com/', '_blank')
-          break
-        case 'qhc':
-          window.open('https://vkool.djcars.cn/', '_blank')
-          break
-        case 'vkoll':
-          window.open('https://vkool.djcars.cn/', '_blank')
-          break
-        default:
-          break
-      }
-    }
-
     // 商城menu子item样式
     const shopMenuItem = {
       display: 'flex',
@@ -106,25 +83,12 @@ export default defineComponent({
     }
 
     return {
-      menuClick,
       shopMenuItem,
     }
   },
-  asyncData({ store }) {
-    console.log(store, 123)
-  },
-  methods: {
-    loginShow() {
-      const that: any = this
-      if (that.$store.state.userInfo.isLogin) return
-      const userInfo = {
-        isLoginShow: true,
-      }
-      that.$store.dispatch('userInfo/changeLogin', userInfo) // 展示弹窗
-    },
-    ...mapActions({
-      showSearchPopup: 'global/showSearchPopup',
-    }),
+
+  mounted() {
+    console.log(this.$accessor)
   },
 })
 </script>
