@@ -55,7 +55,10 @@
       <icon icon="SearchOrange" />
       <span class="search-btn-text">搜全站</span>
     </a-button>
-    <login-button v-if="!$accessor.userInfo.isLogin" class="login-btn"
+    <login-button
+      v-if="!$accessor.userInfo.isLogin"
+      class="login-btn"
+      @click="showLoginPopUp"
       >登录</login-button
     >
     <a-avatar
@@ -64,6 +67,7 @@
       size="large"
       :src="$accessor.userInfo.smallImageUrl"
     ></a-avatar>
+    <login-pop-up v-if="$accessor.global.isLoginPopUpShow"></login-pop-up>
     <!-- <global-login /> -->
     <!-- <search-popup v-if="isSearchShow"></search-popup> -->
   </div>
@@ -87,9 +91,13 @@ export default defineComponent({
       shopMenuItem,
     }
   },
-
   mounted() {
     console.log(this.$accessor.userInfo)
+  },
+  methods: {
+    showLoginPopUp() {
+      this.$accessor.global.showLoginPopUpOrHide()
+    },
   },
 })
 </script>

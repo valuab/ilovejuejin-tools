@@ -1,14 +1,14 @@
 <template>
   <a-modal
-    v-model="isLoginPopUpShow"
+    v-model="show"
     dialog-class="dialog-class"
     :footer="null"
     centered
+    @cancel="hideLoginPopUp"
   >
     <div class="login-wrap">
       <h2 class="login-title">微信扫码登录</h2>
       <div id="login-main">
-        123
         <!-- <div class="login-hint">同意协议后才可登录</div> -->
       </div>
       <div class="login-operate">
@@ -31,11 +31,10 @@ export default defineComponent({
   name: 'LoginPopUp',
   data() {
     return {
-      isLoginPopUpShow: true,
+      show: true,
     }
   },
   mounted() {
-    // TODO: appId需要通过api请求
     this.$nextTick(() => {
       ;(window as any).WxLogin({
         self_redirect: false,
@@ -49,6 +48,11 @@ export default defineComponent({
         href: wxLoginCSSlink,
       })
     })
+  },
+  methods: {
+    hideLoginPopUp() {
+      this.$accessor.global.showLoginPopUpOrHide()
+    },
   },
 })
 </script>

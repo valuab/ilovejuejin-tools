@@ -1,7 +1,7 @@
 import { Context } from '@nuxt/types'
 import { actionTree, mutationTree, getAccessorType } from 'typed-vuex'
 import { IUserInfoResult } from '@apiModules/user'
-import * as global from './modules/global'
+import * as global from './global'
 import { IToken } from '~/api/token'
 
 type IUserInfo = IUserInfoResult['result'] & {
@@ -35,12 +35,15 @@ export const actions = actionTree(
       const userInfo = await this.app.$http.user.getUserInfo({ userId })
       commit('setUserInfo', userInfo)
     },
-    nuxtServerInit({ dispatch }, { app, $axios }: Context) {
+    async nuxtServerInit({ commit }, { app, $axios }: Context) {
       const token = app.$cookies.get<IToken | undefined>('token')
 
       if (token) {
         $axios.defaults.headers = token
-        dispatch('getUserInfo', token.uid)
+        const userInfo = await this.app.$http.user.getUserInfo({
+          userId: token.uid,
+        })
+        commit('setUserInfo', userInfo)
       }
     },
   }

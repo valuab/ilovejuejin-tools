@@ -70,7 +70,6 @@
         <kol-list :kol-list="kolList"></kol-list>
       </a-col>
     </a-row>
-    <login-pop-up></login-pop-up>
   </div>
 </template>
 
@@ -117,6 +116,9 @@ export default defineComponent({
       likeList,
       replaceList,
     }
+  },
+  asyncData({ app }) {
+    console.log(app.$accessor.userInfo, '123')
   },
   data() {
     return {
