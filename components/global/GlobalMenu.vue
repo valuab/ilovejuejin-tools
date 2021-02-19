@@ -77,6 +77,10 @@ export default defineComponent({
   .group-menu-item {
     margin-left: 16px;
   }
+
+  .anticon {
+    margin-right: 0;
+  }
 }
 // 去掉选中颜色
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {

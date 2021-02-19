@@ -36,6 +36,7 @@ export default async ({ route, app, $axios, redirect }: Context) => {
       )
 
       const token = getToken(sessionId, userId)
+
       $axios.defaults.headers = token
       app.$cookies.set('token', token)
       redirect(route.path)

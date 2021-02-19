@@ -7,7 +7,7 @@ const userLinks = {
 }
 
 interface IUserInfoParams {
-  userId: string
+  userId: number
 }
 export interface IUserInfoResult extends IApiResult {
   result: {

@@ -23,9 +23,10 @@
         <a-menu-divider :style="{ margin: '0 31px' }"></a-menu-divider>
         <a-menu-item key="miniappBrand">
           <div>
-            <icon :style="{ marginRight: '10px' }" icon="LogoDjcars" />
+            <icon icon="LogoDjcars" />
             <span>DJCARS潮牌</span>
           </div>
+          \
         </a-menu-item>
         <a-menu-item
           :style="{
@@ -88,7 +89,7 @@ export default defineComponent({
   },
 
   mounted() {
-    console.log(this.$accessor)
+    console.log(this.$accessor.userInfo)
   },
 })
 </script>

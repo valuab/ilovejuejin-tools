@@ -100,8 +100,8 @@ export default ($axios: NuxtAxiosInstance) => {
     },
     // 登录
     async thirdLogin(params: IThirdLoginParams) {
-      const url = handleUrlParams(loginLinks.thirdLogin, params)
-      const { data } = await $axios.get<IThirdLoginResult>(url)
+      const url = loginLinks.thirdLogin
+      const { data } = await $axios.post<IThirdLoginResult>(url, params)
 
       return data.result
     },

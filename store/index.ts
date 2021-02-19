@@ -31,7 +31,7 @@ export const mutations = mutationTree(state, {
 export const actions = actionTree(
   { state, mutations },
   {
-    async getUserInfo({ commit }, userId: string) {
+    async getUserInfo({ commit }, userId: number) {
       const userInfo = await this.app.$http.user.getUserInfo({ userId })
       commit('setUserInfo', userInfo)
     },
