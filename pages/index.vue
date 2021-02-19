@@ -31,8 +31,8 @@
       <a-col>
         <h2 class="column-title">
           精选王牌节目
-          <router-link class="column-title-nav" to="/topic"
-            >查看全部 ></router-link
+          <nuxt-link class="column-title-nav" to="/topiclist"
+            >查看全部 ></nuxt-link
           >
         </h2>
         <a-row class="column-list-wrap" :gutter="20">

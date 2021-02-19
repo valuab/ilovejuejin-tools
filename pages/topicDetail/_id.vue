@@ -1,5 +1,5 @@
 <template>
-  <menu-container :style="{ width: '100%' }">
+  <div :style="{ width: '100%' }">
     <article class="container">
       <header class="header-bg">
         <div class="header-box">
@@ -11,12 +11,7 @@
             </div>
           </div>
           <aside class="qrimg">
-            <a-image
-              src="/src/assets/images/logo.png"
-              width="100px"
-              height="100px"
-              :preview="false"
-            ></a-image>
+            <img src="/assets/images/logo.png" />
           </aside>
         </div>
       </header>
@@ -29,33 +24,42 @@
         ></radio-and-search>
         <article-list
           :load="listLoad"
-          :list="articleList.list"
+          :list="list"
           class="article-list"
         ></article-list>
         <Pagination
-          :total="articleList.total"
+          :total="total"
           class="pagination"
           @change="pageChange"
         ></Pagination>
       </div>
     </article>
-  </menu-container>
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 // import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router'
-// import { http } from '/@/api/http'
-// import ApiLink from '/@/api/apiLink'
 
 import TopicImg from '@/components/topic/TopicImg.vue'
 import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
 import Pagination from '@/components/operate/Pagination.vue'
 
+import {
+  IArticleListParams,
+  ICommendItemType,
+} from '@/api/apiPublic/modules/topic'
+
+interface IData {
+  id: number | string
+  listLoad: Boolean
+  list: Array<ICommendItemType>
+  total: number
+}
+
 // import useSearchHistory from '/@/hooks/useSearchHistory.ts'
 
 export default defineComponent({
-  name: 'TopicDetail',
   components: {
     TopicImg,
     RadioAndSearch,
@@ -67,7 +71,7 @@ export default defineComponent({
     // const { params } = toRefs(useRoute())
     // let topicId = params.value.id as string
     // const { useSearch } = useSearchHistory()
-    const detail = ref<any>({})
+    // const detail = ref<any>({})
     // const articleList = reactive({
     //   list: [],
     //   total: 0,
@@ -122,13 +126,67 @@ export default defineComponent({
     //   console.log(page, pageSize)
     // }
     return {
-      detail,
+      // detail,
       //   articleList,
       //   listLoad,
       //   onSearch,
       //   onRadio,
       //   pageChange,
     }
+  },
+  async asyncData({ app, route }) {
+    const detail = await app.$http.topic.getOpItem({
+      id: route.params.id,
+    })
+    const { list, total } = await app.$http.topic.getListByItemId({
+      itemId: route.params.id,
+    })
+    return {
+      id: route.params.id,
+      detail,
+      list,
+      total,
+      listLoad: false,
+    }
+  },
+  data(): IData {
+    return {
+      id: 0,
+      listLoad: true,
+      list: [],
+      total: 0,
+    }
+  },
+  methods: {
+    /**
+     * @description: 点击搜索
+     */
+    onSearch(value: string) {
+      console.log(value)
+    },
+
+    /**
+     * @description: 单选框
+     */
+    onRadio(value: number) {
+      console.log(value)
+
+      this.listLoad = true
+      const typeId = value === 1 ? 0 : value === 2 ? 1 : ''
+      this.getArticleList({ itemId: this.id, typeId })
+    },
+
+    async getArticleList(prams: IArticleListParams) {
+      const { list, total } = await this.$http.topic.getListByItemId(prams)
+      this.list = list
+      this.total = total
+      this.listLoad = false
+    },
+
+    pageChange(param) {
+      const { page, pageSize } = param
+      console.log(page, pageSize)
+    },
   },
 })
 </script>
@@ -166,6 +224,12 @@ export default defineComponent({
 
             width: 37rem;
           }
+        }
+      }
+      .qrimg {
+        & > img {
+          width: 100px;
+          height: 100px;
         }
       }
     }

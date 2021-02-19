@@ -4,13 +4,7 @@
       <img src="../../assets/images/program_left.png" alt="" />
     </div>
     <div>
-      <a-image
-        width="100%"
-        height="100%"
-        :src="imgUrl"
-        alt="图片加载失败"
-        :preview="false"
-      ></a-image>
+      <img :src="imgUrl" alt="图片加载失败" />
       <span class="tag">王牌节目</span>
     </div>
     <div>

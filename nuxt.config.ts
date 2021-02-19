@@ -26,7 +26,7 @@ export default {
 
   // server config
   server: {
-    host: '192.168.5.224',
+    // host: '192.168.5.224',
     port: 3000,
   },
 

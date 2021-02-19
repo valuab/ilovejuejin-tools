@@ -1,11 +1,6 @@
 <template>
   <figure class="container" @click="navDetail">
-    <a-image
-      height="166px"
-      :src="item.smallImageUrl"
-      alt="图片加载失败"
-      :preview="false"
-    ></a-image>
+    <img class="img" :src="item.smallImageUrl" alt="图片加载失败" />
     <span v-if="item.itemKeywordName" class="column-tag">{{
       item.itemKeywordName
     }}</span>
@@ -17,7 +12,7 @@
       <aside>
         <div>
           <p>{{ item.userName }}</p>
-          <p>{{ time }}</p>
+          <p>{{ item.publishTime }}</p>
         </div>
         <div>
           <p>
@@ -34,9 +29,9 @@
   </figure>
 </template>
 <script>
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 // import { useRouter } from 'vue-router'
-import { handleTime } from '@/utils/data'
+// import { handleTime } from '@/utils/data'
 
 export default defineComponent({
   name: 'ContentCard',
@@ -56,22 +51,27 @@ export default defineComponent({
       },
     },
   },
-  setup(props) {
-    const { item } = toRefs(props)
-    // const router = useRouter()
-    const publishTime = new Date(item.value.publishTime).getTime()
-
-    const time = handleTime(publishTime)
-
-    function navDetail() {
-      // const routeData = router.resolve('/details')
-      // window.open(routeData.href, '_blank')
-    }
-    return {
-      navDetail,
-      time,
-    }
+  methods: {
+    navDetail() {
+      // const history = this.$router.resolve({name: '/TopicDetail')
+    },
   },
+  // setup() {
+  //   // const { item } = toRefs(props)
+  //   // const router = useRouter()
+  //   // const publishTime = new Date(item.value.publishTime).getTime()
+
+  //   // const time = handleTime(publishTime)
+  //   const time = ''
+
+  //   function navDetail() {
+
+  //   }
+  //   return {
+  //     navDetail,
+  //     time,
+  //   }
+  // },
 })
 </script>
 <style lang="scss" scoped>
@@ -85,6 +85,11 @@ export default defineComponent({
   background-color: #fff;
   border: solid 1px #e6e6e6;
   border-radius: 4px;
+
+  .img {
+    height: 166px;
+    width: 100%;
+  }
 
   &:hover {
     box-shadow: 0 2px 20px $box-shadow-base;

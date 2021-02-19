@@ -5,7 +5,7 @@
         <h1>{{ data.name }}</h1>
         <p>{{ data.description }}</p>
       </div>
-      <a-button class="nav-detail" @click="navDetail">查看全部 ></a-button>
+      <a-button class="nav-detail" @click="navAllDetail">查看全部 ></a-button>
     </header>
     <div class="main">
       <topic-img class="topicImg" :img-url="data.smallImageUrl"></topic-img>
@@ -19,13 +19,14 @@
   </article>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-// import { useRouter } from 'vue-router'
+import { defineComponent } from '@nuxtjs/composition-api'
 import ArticleCard from '@/components/display/ArticleCard.vue'
-import TopicImg from './TopicImg.vue'
+import TopicImg from '@/components/topic/TopicImg.vue'
+import { ICommendItemType } from '@/api/apiPublic/modules/topic'
 
-// import { http } from '/@/api/http'
-// import ApiLink from '/@/api/apiLink'
+interface IData {
+  articleList: Array<ICommendItemType>
+}
 
 export default defineComponent({
   name: 'TopicItem',
@@ -39,31 +40,26 @@ export default defineComponent({
       default: null,
     },
   },
-  setup() {
-    // const { data } = toRefs(props)
-    // const router = useRouter()
-    const articleList = ref()
-
-    // http(ApiLink.getListByKeywordId, { keywordId: data.value.id }).then(
-    //   (res: any) => {
-    //     articleList.value = res.result.list
-    //   }
-    // )
-
-    /**
-     * @description: 跳转节目详情
-     */
-    // function navDetail(): void {
-    //   const routeData = router.resolve({
-    //     name: 'TopicDetail',
-    //     params: { id: data.value.id },
-    //   })
-    //   window.open(routeData.href, '_blank')
-    // }
+  data(): IData {
     return {
-      articleList,
-      // navDetail,
+      articleList: [],
     }
+  },
+  async created() {
+    const { list } = await this.$http.topic.getListByKeywordId({
+      keywordId: this.$props.data.id,
+    })
+    this.articleList = list
+  },
+  methods: {
+    navAllDetail() {
+      const history = this.$router.resolve({
+        name: '/TopicDetail-id',
+        params: { id: this.$props.data.id },
+      })
+      console.log(history)
+      // window.open(history.href, '_blank')
+    },
   },
 })
 </script>

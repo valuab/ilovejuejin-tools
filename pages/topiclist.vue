@@ -1,62 +1,50 @@
 <template>
-  <!-- <menu-container :style="{ width: '100%', backgroundColor: '#fff' }">
-    <div class="box">
-      <div v-for="(item, index) in dataList.list" :key="index">
-        <topic-item class="topic-item" :data="item"></topic-item>
-      </div>
-      <a-button
-        v-if="dataList.list.length < dataList.total"
-        class="add-btn"
-        @click="addList"
-      >
-        查看更多
-      </a-button>
+  <div class="box">
+    <div v-for="(item, index) in list" :key="index">
+      <topic-item class="topic-item" :data="item"></topic-item>
     </div>
-  </menu-container> -->
-  <div>
-    <div>aaaa</div>
-    <div>aaaa</div>
-    <div>aaaa</div>
-    <div>aaaa</div>
-    <div>aaaa</div>
-    <div>aaaa</div>
+    <a-button v-if="list.length < total" class="add-btn" @click="addList">
+      查看更多
+    </a-button>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import { ICommendListType } from '@/api/apiPublic/modules/topic'
+
+interface IData {
+  list: Array<ICommendListType>
+  total: number
+  page: number
+}
 
 export default defineComponent({
   name: 'TopicList',
-  components: {
-    // TopicItem,
+  async asyncData({ app }) {
+    const { list, total } = await app.$http.topic.getCommendItemList({
+      page: 1,
+    })
+    return {
+      list,
+      total,
+      page: 2,
+    }
   },
-  // setup() {
-  //   const dataList = reactive({
-  //     list: [],
-  //     page: 1,
-  //     total: 0,
-  //   })
-
-  //   /**
-  //    * @description: 点击查看更多
-  //    */
-  //   function addList(): void {
-  //     http(ApiLink.getCommendItemList, { page: dataList.page }).then(
-  //       (res: any) => {
-  //         dataList.list = dataList.list.concat(res.result.list)
-  //         dataList.page += 1
-  //         dataList.total = res.result.total
-  //       }
-  //     )
-  //   }
-
-  //   addList()
-
-  //   return {
-  //     dataList,
-  //     addList,
-  //   }
-  // },
+  data(): IData {
+    return {
+      list: [],
+      total: 0,
+      page: 1,
+    }
+  },
+  methods: {
+    async addList() {
+      const { list } = await this.$http.topic.getCommendItemList({
+        page: this.page++,
+      })
+      this.list = this.list.concat(list)
+    },
+  },
 })
 </script>
 
