@@ -1,7 +1,8 @@
 <template>
   <a-icon
     :component="component"
-    :style="{ height: `${size}px`, fontSize: `${size}px` }"
+    class="icon-view"
+    :style="{ fontSize: `${size}px`, transform: `rotate(${rotate}deg)` }"
     v-bind="$attrs"
   ></a-icon>
 </template>
@@ -25,6 +26,10 @@ export default defineComponent({
       type: String,
       default: '20',
     },
+    rotate: {
+      type: String,
+      default: '0',
+    },
   },
   setup(props) {
     const component = shallowRef(iconManager[props.icon])
@@ -40,3 +45,8 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss" scoped>
+.icon-view.anticon {
+  min-width: 0;
+}
+</style>

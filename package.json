@@ -30,6 +30,7 @@
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.8.3",
     "crypto-js": "^4.0.0",
+    "internal-ip": "^6.2.0",
     "nuxt": "^2.14.12",
     "nuxt-typed-vuex": "^0.1.22",
     "qrcode": "^1.4.4",

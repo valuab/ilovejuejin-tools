@@ -4,28 +4,54 @@ import { IApiResult } from '../index'
 
 export const contentLinks = {
   getCommendList: '/api/index/getCommendList',
+  getOpItemCategory: '/api/index/getOpItemCategory',
+  getKolList: '/api/index/getKolList',
 }
 
-export interface ICommendListData {
+export interface ILayoutListData {
   id: string
   name: string
 }
 
-interface ICommendListResult extends IApiResult {
+interface ILayoutsResult extends IApiResult {
   result: {
-    list: ICommendListData[]
+    list: ILayoutListData[]
   }
 }
 
+export interface IKolListData {
+  userId: number
+  nickname: string
+}
+
+interface IKolListResult extends IApiResult {
+  result: {
+    list: IKolListData[]
+  }
+}
 export interface IContentModule {
-  getCommendList: () => Promise<ICommendListData[]>
+  getCommendList: () => Promise<ILayoutListData[]>
+  getOpItemCategory: () => Promise<ILayoutListData[]>
+  getKolList: () => Promise<IKolListData[]>
 }
 
 export default ($axios: NuxtAxiosInstance) => {
   const contentModule: IContentModule = {
     async getCommendList() {
       const url = contentLinks.getCommendList
-      const { data } = await $axios.get<ICommendListResult>(url)
+      const { data } = await $axios.get<ILayoutsResult>(url)
+
+      return data.result.list
+    },
+    async getOpItemCategory() {
+      const url = contentLinks.getOpItemCategory
+      const { data } = await $axios.get<ILayoutsResult>(url)
+
+      return data.result.list
+    },
+    async getKolList() {
+      const url = contentLinks.getKolList
+      const { data } = await $axios.get<IKolListResult>(url)
 
       return data.result.list
     },

@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 import { NuxtConfig } from '@nuxt/types'
 import { RuleSetRule } from 'webpack'
+import internalIp from 'internal-ip'
 
 export default {
   // https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-env/
@@ -26,7 +27,7 @@ export default {
 
   // server config
   server: {
-    // host: '192.168.5.224',
+    host: internalIp.v4.sync(),
     port: 3000,
   },
 

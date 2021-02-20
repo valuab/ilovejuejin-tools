@@ -38,17 +38,17 @@ export const actions = actionTree(
       })
       commit('setUserInfo', userInfo)
     },
-    async nuxtServerInit({ commit, dispatch }, { app, $axios }: Context) {
+    async nuxtServerInit({ dispatch }, { app, $axios }: Context) {
       const token = app.$cookies.get<IToken | undefined>('token')
 
       if (token) {
         $axios.defaults.headers = token
-        const userInfo = await this.app.$http.user.getUserInfo({
-          userId: token.uid,
-        })
-        commit('setUserInfo', userInfo)
+        await dispatch('getUserInfo', token.uid)
       }
+      // 初始化 layouts 数据
       await dispatch('layouts/getCommendList')
+      await dispatch('layouts/getOpItemCategoryList')
+      await dispatch('layouts/getKolList')
     },
   }
 )
