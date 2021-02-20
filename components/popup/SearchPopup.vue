@@ -10,8 +10,7 @@
       <div v-if="history.length !== 0" class="search-history">
         <div class="header">
           <h2>搜索历史</h2>
-          <!-- <span @click="removeHistory">清空</span> -->
-          <span>清空</span>
+          <span @click="removeHistory">清空</span>
         </div>
         <div class="main">
           <p v-for="(item, index) in history" :key="index" @click="navSearch">
@@ -32,13 +31,12 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from '@nuxtjs/composition-api'
-import { mapActions } from 'vuex'
 // import { useRouter } from 'vue-router'
 
+import useSearchHistory from '@/hooks/useSearchHistory.ts'
 import SearchKOL from '../search/SearchKOL.vue'
 import PopupMask from './PopupMask.vue'
 // import SearchInput from '/@components/search/SearchInput.vue'
-// import useSearchHistory from '/@/hooks/useSearchHistory.ts'
 
 export default defineComponent({
   name: 'SearchPopup',
@@ -49,8 +47,7 @@ export default defineComponent({
   },
   emits: ['showSearch'],
   setup() {
-    // const router = useRouter()
-    // const { history, useSearch, removeHistory } = useSearchHistory()
+    const { history, useSearch, removeHistory } = useSearchHistory()
 
     /**
      * @description: 冒泡拦截
@@ -70,8 +67,8 @@ export default defineComponent({
     /**
      * @description: 点击搜索
      */
-    const onSearch = () => {
-      // useSearch(value).then(() => navSearch(value))
+    const onSearch = (value: string) => {
+      useSearch(value).then(() => navSearch(value))
     }
 
     /**
@@ -86,12 +83,12 @@ export default defineComponent({
     /**
      * @description: 跳转至搜索页
      */
-    const navSearch = () => {
+    const navSearch = (value: string) => {
+      console.log(value)
       // router.push({ name: 'Search', params: { keyword: value } }).then(() => {
       //   ifSearchpopup()
       // })
     }
-    const history = ['1', '2']
 
     return {
       stop,
@@ -99,14 +96,14 @@ export default defineComponent({
       kolList,
       onSearch,
       navKolDetail,
-      // removeHistory,
+      removeHistory,
       navSearch,
     }
   },
   methods: {
-    ...mapActions({
-      ifSearchpopup: 'global/showSearchPopup',
-    }),
+    ifSearchpopup() {
+      this.$accessor.global.showSearchPopup()
+    },
   },
 })
 </script>

@@ -104,7 +104,9 @@
         </div>
         <div class="content-item">
           <span class="content-text">如有问题，欢迎告诉我们，</span>
-          <a class="content-text content-text-link">问题反馈</a>
+          <a class="content-text content-text-link" @click="showFeedBack"
+            >问题反馈</a
+          >
         </div>
       </div>
     </div>
@@ -120,14 +122,22 @@
         工信和信息化部 | 粤ICP16009880号 | 视频备案0108283170590065
       </a>
     </div>
+    <feed-back v-if="this.$accessor.global.isFeedBack"></feed-back>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import FeedBack from '../popup/FeedBack.vue'
 
 export default defineComponent({
   name: 'GlobalFooter',
+  components: { FeedBack },
+  methods: {
+    showFeedBack() {
+      this.$accessor.global.showFeedBack()
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>

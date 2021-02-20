@@ -53,12 +53,10 @@ export default defineComponent({
   },
   methods: {
     navAllDetail() {
-      const history = this.$router.resolve({
-        name: '/TopicDetail-id',
-        params: { id: this.$props.data.id },
-      })
-      console.log(history)
-      // window.open(history.href, '_blank')
+      const history = this.$router.resolve(
+        `/TopicDetail/${this.$props.data.id}`
+      )
+      window.open(history.href, '_blank')
     },
   },
 })

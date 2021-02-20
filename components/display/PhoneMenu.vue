@@ -8,7 +8,7 @@
         @mouseover="mouseOver($event, index)"
         @mouseout="mouseOut($event)"
       >
-        <icon :icon="item.icon" />
+        <icon :icon="item.icon" :size="'30'" />
         <span>{{ item.name }}</span>
       </div>
     </div>
@@ -42,7 +42,7 @@ export default defineComponent({
   name: 'PhoneMenu',
   setup() {
     const menuPhoneList = reactive([
-      { icon: 'LogoDjcars', name: '大家车言论', offic: 'red', miniapp: 'red' },
+      { icon: 'LogoDjcar', name: '大家车言论', offic: 'red', miniapp: 'red' },
       { icon: 'LogoMall', name: '大家车商城', offic: 'blue', miniapp: 'blue' },
       {
         icon: 'LogoQuestion',

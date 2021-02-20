@@ -172,7 +172,7 @@ export default defineComponent({
       console.log(value)
 
       this.listLoad = true
-      const typeId = value === 1 ? 0 : value === 2 ? 1 : ''
+      const typeId = value === 1 ? '0' : value === 2 ? '1' : ''
       this.getArticleList({ itemId: this.id, typeId })
     },
 
@@ -183,7 +183,7 @@ export default defineComponent({
       this.listLoad = false
     },
 
-    pageChange(param) {
+    pageChange(param: any) {
       const { page, pageSize } = param
       console.log(page, pageSize)
     },

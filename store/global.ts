@@ -1,4 +1,4 @@
-import { actionTree, mutationTree } from 'typed-vuex'
+import { mutationTree } from 'typed-vuex'
 
 export interface IGlobalState {
   isSearchPopup: Boolean
@@ -26,15 +26,15 @@ export const mutations = mutationTree(state, {
   },
 })
 
-export const actions = actionTree(
-  { state, mutations },
-  {
-    showSearchPopup(context) {
-      context.commit('showSearchPopup')
-    },
+// export const actions = actionTree(
+//   { state, mutations },
+//   {
+//     showSearchPopup(context) {
+//       context.commit('showSearchPopup')
+//     },
 
-    showFeedBack(context) {
-      context.commit('showFeedBack')
-    },
-  }
-)
+//     showFeedBack(context) {
+//       context.commit('showFeedBack')
+//     },
+//   }
+// )

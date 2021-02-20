@@ -26,6 +26,7 @@ import NavTriangle from '@icons/icon_nav_triangle.svg'
 /** ****** HeaderLogo START ********/
 import LogoApp from '@icons/logo_app.svg'
 import LogoDjcars from '@icons/logo_djcars.svg'
+import LogoDjcar from '@icons/logo_djcar.svg'
 import LogoGame from '@icons/logo_game.svg'
 import LogoMall from '@icons/logo_mall.svg'
 import LogoObservation from '@icons/logo_observation.svg'
@@ -59,6 +60,7 @@ export type IconType =
   | 'ArrowOrange'
   | 'LogoApp'
   | 'LogoDjcars'
+  | 'LogoDjcar'
   | 'LogoGame'
   | 'LogoMall'
   | 'LogoObservation'
@@ -96,6 +98,7 @@ const iconManager: Record<IconType, Component> = {
   ArrowOrange,
   LogoApp,
   LogoDjcars,
+  LogoDjcar,
   LogoGame,
   LogoMall,
   LogoObservation,

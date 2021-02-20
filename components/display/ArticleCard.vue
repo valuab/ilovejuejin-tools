@@ -12,15 +12,15 @@
       <aside>
         <div>
           <p>{{ item.userName }}</p>
-          <p>{{ item.publishTime }}</p>
+          <p>{{ time }}</p>
         </div>
         <div>
           <p>
-            <Icon icon="ListView" font-size="10px"></Icon
+            <Icon icon="ListView" :size="'10'"></Icon
             ><span>{{ item.totalViewCount }}</span>
           </p>
           <p>
-            <Icon icon="ListComment" font-size="10px"></Icon
+            <Icon icon="ListComment" :size="'10'"></Icon
             ><span>{{ item.commentCount }}</span>
           </p>
         </div>
@@ -32,6 +32,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 // import { useRouter } from 'vue-router'
 // import { handleTime } from '@/utils/data'
+// import moment from 'moment'
 
 export default defineComponent({
   name: 'ContentCard',
@@ -51,27 +52,22 @@ export default defineComponent({
       },
     },
   },
+  setup() {
+    // const { item } = toRefs(props)
+    // const router = useRouter()
+    // const publishTime = new Date(item.value.publishTime).getTime()
+
+    // const time = handleTime(publishTime)
+    const time = ''
+    return {
+      time,
+    }
+  },
   methods: {
     navDetail() {
       // const history = this.$router.resolve({name: '/TopicDetail')
     },
   },
-  // setup() {
-  //   // const { item } = toRefs(props)
-  //   // const router = useRouter()
-  //   // const publishTime = new Date(item.value.publishTime).getTime()
-
-  //   // const time = handleTime(publishTime)
-  //   const time = ''
-
-  //   function navDetail() {
-
-  //   }
-  //   return {
-  //     navDetail,
-  //     time,
-  //   }
-  // },
 })
 </script>
 <style lang="scss" scoped>

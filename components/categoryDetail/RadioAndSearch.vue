@@ -23,16 +23,9 @@
 <script lang="ts">
 // import type { RadioChangeEvent } from 'ant-design-vue/lib/radio/interface'
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { Radio, Input } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'RadioAndSearch',
-  components: {
-    ARadioGroup: Radio.Group,
-    ARadioButton: Radio.Button,
-    AInputSearch: Input.Search,
-    // ASpace: Space,
-  },
   props: {
     defaultRadio: {
       type: Number,
@@ -56,8 +49,10 @@ export default defineComponent({
      * @description: 监听radio改变
      */
     const onChange = (e: any): void => {
-      const value = e.target.value
-      context.emit('radio', value)
+      console.log(e)
+
+      // const value = e.target.value
+      // context.emit('radio', value)
     }
 
     return {

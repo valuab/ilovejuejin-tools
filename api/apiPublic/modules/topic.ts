@@ -25,7 +25,7 @@ export interface IOpItemParams {
 export interface IArticleListParams {
   itemId: string | number
   viewUserId?: string
-  typeId?: number
+  typeId?: string
 }
 
 export interface ICommendListType {

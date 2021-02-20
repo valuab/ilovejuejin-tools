@@ -5,7 +5,7 @@
     </nuxt-link>
     <a-menu class="menu" mode="horizontal">
       <a-sub-menu key="mobile" class="menu-item" title="手机端">
-        <!-- <phone-menu></phone-menu> -->
+        <phone-menu></phone-menu>
       </a-sub-menu>
       <a-sub-menu key="shopping" class="menu-item" title="官方商城">
         <a-menu-item key="taobao">
@@ -51,7 +51,11 @@
         >专业车膜</a-menu-item
       >
     </a-menu>
-    <a-button class="search-btn flex-center" shape="round">
+    <a-button
+      class="search-btn flex-center"
+      shape="round"
+      @click="showSearchPopup"
+    >
       <icon icon="SearchOrange" />
       <span class="search-btn-text">搜全站</span>
     </a-button>
@@ -69,7 +73,7 @@
     ></a-avatar>
     <login-pop-up v-if="$accessor.global.isLoginPopUpShow"></login-pop-up>
     <!-- <global-login /> -->
-    <!-- <search-popup v-if="isSearchShow"></search-popup> -->
+    <search-popup v-if="$accessor.global.isSearchPopup"></search-popup>
   </div>
 </template>
 
@@ -94,6 +98,10 @@ export default defineComponent({
   methods: {
     showLoginPopUp() {
       this.$accessor.global.showLoginPopUpOrHide()
+    },
+
+    showSearchPopup() {
+      this.$accessor.global.showSearchPopup()
     },
   },
 })

@@ -3,6 +3,7 @@ import userModule, { IUserModule } from './modules/user'
 import loginModule, { ILoginModule } from './modules/login'
 import topicModule, { ITopicModule } from './modules/topic'
 import contentModule, { IContentModule } from './modules/content'
+import globalModule, { IGlobalModule } from './modules/global'
 
 export type IApiResult = {
   err: number
@@ -13,6 +14,7 @@ export interface IRootHttpState {
   login: ILoginModule
   topic: ITopicModule
   content: IContentModule
+  global: IGlobalModule
 }
 
 export default ($axios: NuxtAxiosInstance) => {
@@ -21,5 +23,6 @@ export default ($axios: NuxtAxiosInstance) => {
     login: loginModule($axios),
     topic: topicModule($axios),
     content: contentModule($axios),
+    global: globalModule($axios),
   } as IRootHttpState
 }

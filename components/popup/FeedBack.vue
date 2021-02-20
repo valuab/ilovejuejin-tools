@@ -12,7 +12,7 @@
           <a-radio-group :default-value="defaultRadio" @Change="onChange">
             <a-space :size="10">
               <a-radio-button
-                v-for="(item, index) in readioList"
+                v-for="(item, index) in radioList"
                 :key="index"
                 class="radio-btn"
                 :value="item.id"
@@ -110,11 +110,7 @@
             :max-length="4"
             placeholder="输入验证字符"
           ></a-input>
-          <image
-            class="verify-image"
-            :src="verifyImg"
-            alt="图片加载失败"
-          ></image>
+          <img class="verify-image" :src="verifyImg" alt="图片加载失败" />
           <span class="verify-change" @click="toggleVerify">换一个</span>
         </div>
 
@@ -134,34 +130,29 @@
   </popup-mask>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  ref,
-  toRefs,
-  unref,
-  watchEffect,
-} from '@nuxtjs/composition-api'
-import { mapActions } from 'vuex'
-import {
-  // Space,
-  Radio,
-  Input,
-  Dropdown,
-  Menu,
-  // message,
-  // RadioChangeEvent,
-} from 'ant-design-vue'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-// import { } from 'ant-design-vue'
-// import { http } from '/@/api/http'
-// import ApiLink from '/@/api/apiLink'
+import { Radio, Input, Dropdown, Menu, message } from 'ant-design-vue'
+
+import { IListType, globalLinks } from '@/api/apiPublic/modules/global'
 
 import PopupMask from './PopupMask.vue'
+
+interface IData {
+  radioList: Array<IListType>
+  tabIndex: number
+  appIssue: any
+  dropdownIndex: number
+  issueValue: {
+    contact: string
+    textArea: string
+  }
+  verifyInput: string
+  verifyImg: string
+}
 export default defineComponent({
   name: 'FeedBack',
   components: {
-    // ASpace: Space,
     ARadioGroup: Radio.Group,
     ARadioButton: Radio.Button,
     AInput: Input,
@@ -178,186 +169,167 @@ export default defineComponent({
       default: 2,
     },
   },
-  emits: ['showFeedBack'],
-  setup(props) {
-    const { defaultRadio } = toRefs(props)
+  data(): IData {
+    return {
+      radioList: [],
+      tabIndex: 2,
+      appIssue: {
+        inputValue: '', // 品牌型号
+        textArea: '', // 问题描述
+        list: [
+          {
+            title: '选择手机系统',
+            iconAni: '',
+            items: [
+              { id: 1, versionName: 'Android系统' },
+              { id: 2, versionName: 'iOS系统' },
+            ],
+            value: NaN,
+          },
+          {
+            title: '选择APP版本',
+            iconAni: '',
+            items: [],
+            value: NaN,
+          },
+        ],
+      },
+      dropdownIndex: 0,
+      issueValue: {
+        contact: '', // 联系方式
+        textArea: '', // 问题描述
+      },
+      verifyInput: '',
+      verifyImg: '',
+    }
+  },
+  computed: {
+    disabled() {
+      if (this.tabIndex === 1) {
+        const dropdownNull = this.appIssue.list.some((item: any) => !item.value)
+        if (
+          this.appIssue.inputValue &&
+          this.appIssue.textArea &&
+          this.verifyInput.length === 4 &&
+          !dropdownNull
+        ) {
+          return false
+        } else {
+          return true
+        }
+      } else if (
+        this.issueValue.contact &&
+        this.issueValue.textArea &&
+        this.verifyInput.length === 4
+      ) {
+        return false
+      } else {
+        return true
+      }
+    },
+  },
+  async created() {
+    const { list: radioList } = await this.$http.global.getFeedbackCategory()
+    const { list: appVersionList } = await this.$http.global.getAppVersionList()
+    this.radioList = radioList
+    this.appIssue.list[1].items = appVersionList
+    this.toggleVerify()
+  },
+  methods: {
+    /**
+     * @description: 弹窗隐藏
+     */
+    showFeedBack() {
+      this.$accessor.global.showFeedBack()
+    },
 
-    /** *********** tab问题选择 START ****************/
-    const tabIndex = ref<Number>(unref(defaultRadio))
-
-    // 问题单选标题列表
-    const readioList: any = ref([])
-    // http(ApiLink.getFeedbackCategory).then((res: any) => {
-    //   readioList.value = res.result.list
-    // })
     /**
      * @description: 监听radio改变
      */
-    const onChange = (e: any): void => {
+    onChange(e: any) {
       const value = e.target.value
-      tabIndex.value = value
-    }
-    /** *********** tab问题选择 END ****************/
+      this.tabIndex = value
+    },
 
-    /** *********** APP问题 START ****************/
-    const appIssue = reactive({
-      inputValue: '', // 品牌型号
-      textArea: '', // 问题描述
-      list: [
-        {
-          title: '选择手机系统',
-          iconAni: '',
-          items: [
-            { id: 1, versionName: 'Android系统' },
-            { id: 2, versionName: 'iOS系统' },
-          ],
-          value: NaN,
-        },
-        {
-          title: '选择APP版本',
-          iconAni: '',
-          items: [],
-          value: NaN,
-        },
-      ],
-    })
-    // http(ApiLink.getAppVersionList).then((res: any) => {
-    //   appIssue.list[1].items = res.result.list
-    // })
-    const dropdownIndex = ref<number>(0) // 下拉列表index
     /**
      * @description: 点击下拉列表
      */
-    const dropdownClick = (index: number): void => {
-      dropdownIndex.value = index
-      appIssue.list[index].iconAni = 'transform: rotateX(180deg)'
-    }
+    dropdownClick(index: number) {
+      this.dropdownIndex = index
+      this.appIssue.list[index].iconAni = 'transform: rotateX(180deg)'
+    },
 
     /**
      * @description: 下拉列表显示与隐藏
      */
-    const visibleChange = (visible: boolean): void => {
-      appIssue.list[dropdownIndex.value].iconAni = visible
+    visibleChange(visible: boolean) {
+      this.appIssue.list[this.dropdownIndex].iconAni = visible
         ? 'transform: rotateX(180deg)'
         : ''
-    }
+    },
 
     /**
      * @description: menu点击回调
      */
-    const menuClick = (e: { key: number }): void => {
+    menuClick(e: { key: number }) {
       const { key } = e
-      const menuItem = appIssue.list[dropdownIndex.value].items
-      appIssue.list[dropdownIndex.value] = {
+      const menuItem = this.appIssue.list[this.dropdownIndex].items
+      this.appIssue.list[this.dropdownIndex] = {
         title: menuItem[key].versionName,
         iconAni: '',
         items: menuItem,
         value: menuItem[key].id,
       }
-    }
+    },
 
-    /** *********** APP问题 END ****************/
-
-    /** *********** 其余问题 START ****************/
-    const issueValue = reactive({
-      contact: '', // 联系方式
-      textArea: '', // 问题描述
-    })
-    /** *********** 其余问题 END ****************/
-
-    /** *********** 提交反馈 START ****************/
-    const disabled = ref<boolean>(true) // 按钮disabled
-    const verifyInput = ref<string>('') // 验证码
-    const verifyImg = ref('') // 验证码图片
-    const toggleVerify = () => {
-      // verifyImg.value = `/api${ApiLink.getVerifyImg.url}?time=${new Date()}`
-    }
-    toggleVerify()
     /**
-     * @description: 监听数据改变
+     * @description: 点击切换验证码
      */
-    watchEffect(() => {
-      if (tabIndex.value === 1) {
-        const dropdownNull = appIssue.list.some((item) => !item.value)
-        if (
-          appIssue.inputValue &&
-          appIssue.textArea &&
-          verifyInput.value.length === 4 &&
-          !dropdownNull
-        ) {
-          disabled.value = false
-        } else {
-          disabled.value = true
-        }
-      } else if (
-        issueValue.contact &&
-        issueValue.textArea &&
-        verifyInput.value.length === 4
-      ) {
-        disabled.value = false
-      } else {
-        disabled.value = true
-      }
-    })
+    toggleVerify() {
+      this.verifyImg = `${
+        globalLinks.getVerifyImg
+      }?time=${new Date().getTime()}`
+    },
+
     /**
      * @description: 提交问题反馈
      */
-    const submit = () => {
-      // const captcha = verifyInput.value
-      // const categoryId = tabIndex.value
-      // let osTypeId, model, versionCode, content, contact
-      // if (categoryId === 1) {
-      //   osTypeId = appIssue.list[0].value
-      //   model = appIssue.inputValue
-      //   versionCode = appIssue.list[1].value
-      //   content = appIssue.textArea
-      //   contact = 'PC官网'
-      // } else {
-      //   osTypeId = ''
-      //   model = ''
-      //   versionCode = ''
-      //   content = issueValue.textArea
-      //   contact = issueValue.contact
-      // }
-      // http(ApiLink.createForSite, {
-      //   captcha,
-      //   categoryId,
-      //   osTypeId,
-      //   model,
-      //   versionCode,
-      //   content,
-      //   contact,
-      // }).then((res) => {
-      //   if (res.error) {
-      //     message.error(res.error)
-      //     return
-      //   }
-      //   message.success('提交成功')
-      //   isFeedBack()
-      // })
-    }
-    /** *********** 提交反馈 END ****************/
-
-    return {
-      readioList,
-      tabIndex,
-      onChange,
-      appIssue,
-      visibleChange,
-      menuClick,
-      issueValue,
-      dropdownClick,
-      disabled,
-      verifyImg,
-      verifyInput,
-      toggleVerify,
-      submit,
-    }
-  },
-  methods: {
-    ...mapActions({
-      showFeedBack: 'global/showFeedBack',
-    }),
+    submit() {
+      const captcha = this.verifyInput
+      const categoryId = this.tabIndex
+      let osTypeId, model, versionCode, content, contact
+      if (categoryId === 1) {
+        osTypeId = this.appIssue.list[0].value
+        model = this.appIssue.inputValue
+        versionCode = this.appIssue.list[1].value
+        content = this.appIssue.textArea
+        contact = 'PC官网'
+      } else {
+        osTypeId = ''
+        model = ''
+        versionCode = ''
+        content = this.issueValue.textArea
+        contact = this.issueValue.contact
+      }
+      this.$http.global
+        .createForSite({
+          captcha,
+          categoryId,
+          osTypeId,
+          model,
+          versionCode,
+          content,
+          contact,
+        })
+        .then((res) => {
+          if (!res.id) {
+            message.error('提交失败')
+            return
+          }
+          message.success('提交成功')
+          this.showFeedBack()
+        })
+    },
   },
 })
 </script>
