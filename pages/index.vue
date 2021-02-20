@@ -117,19 +117,6 @@ export default defineComponent({
       replaceList,
     }
   },
-  asyncData({ app }) {
-    console.log(app.$accessor.userInfo, '123')
-  },
-  data() {
-    return {
-      id: 0,
-    }
-  },
-  computed: {
-    test(): number {
-      return this.$store.state.counter
-    },
-  },
 })
 </script>
 

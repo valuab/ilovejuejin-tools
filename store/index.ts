@@ -2,6 +2,7 @@ import { Context } from '@nuxt/types'
 import { actionTree, mutationTree, getAccessorType } from 'typed-vuex'
 import { IUserInfoResult } from '@apiModules/user'
 import * as global from './global'
+import * as layouts from './layouts'
 import { IToken } from '~/api/token'
 
 type IUserInfo = IUserInfoResult['result'] & {
@@ -23,19 +24,21 @@ export const state: () => IRootState = () => ({
 })
 
 export const mutations = mutationTree(state, {
-  setUserInfo(state, userInfo: IUserInfoResult['result']) {
-    state.userInfo = { ...userInfo, isLogin: true }
+  setUserInfo(state, payload: IUserInfoResult['result']) {
+    state.userInfo = { ...payload, isLogin: true }
   },
 })
 
 export const actions = actionTree(
   { state, mutations },
   {
-    async getUserInfo({ commit }, userId: number) {
-      const userInfo = await this.app.$http.user.getUserInfo({ userId })
+    async getUserInfo({ commit }, payload: number) {
+      const userInfo = await this.app.$http.user.getUserInfo({
+        userId: payload,
+      })
       commit('setUserInfo', userInfo)
     },
-    async nuxtServerInit({ commit }, { app, $axios }: Context) {
+    async nuxtServerInit({ commit, dispatch }, { app, $axios }: Context) {
       const token = app.$cookies.get<IToken | undefined>('token')
 
       if (token) {
@@ -45,6 +48,7 @@ export const actions = actionTree(
         })
         commit('setUserInfo', userInfo)
       }
+      await dispatch('layouts/getCommendList')
     },
   }
 )
@@ -55,5 +59,6 @@ export const accessorType = getAccessorType({
   actions,
   modules: {
     global,
+    layouts,
   },
 })

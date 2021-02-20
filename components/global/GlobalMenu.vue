@@ -11,10 +11,12 @@
           <span class="menu-item-title">王牌节目</span>
         </div>
       </template>
-      <a-menu-item key="1" class="group-menu-item">垃圾栏目</a-menu-item>
-      <a-menu-item key="2" class="group-menu-item">垃圾栏目</a-menu-item>
-      <a-menu-item key="3" class="group-menu-item">垃圾栏目</a-menu-item>
-      <a-menu-item key="4" class="group-menu-item">垃圾栏目</a-menu-item>
+      <a-menu-item
+        v-for="commend in commendList"
+        :key="commend.id"
+        class="group-menu-item"
+        >{{ commend.name }}</a-menu-item
+      >
     </a-menu-item-group>
     <a-menu-item-group>
       <template #title>
@@ -53,6 +55,11 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'GlobalMenu',
+  computed: {
+    commendList() {
+      return this.$accessor.layouts.commendList
+    },
+  },
 })
 </script>
 <style lang="scss" scope>

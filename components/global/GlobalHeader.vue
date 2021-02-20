@@ -91,9 +91,6 @@ export default defineComponent({
       shopMenuItem,
     }
   },
-  mounted() {
-    console.log(this.$accessor.userInfo)
-  },
   methods: {
     showLoginPopUp() {
       this.$accessor.global.showLoginPopUpOrHide()
