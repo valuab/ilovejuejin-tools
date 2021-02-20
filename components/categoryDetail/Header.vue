@@ -5,7 +5,7 @@
         <a-avatar :src="detail.imgUrl" :size="100"></a-avatar>
         <div class="desc">
           <h1>{{ detail.name }}</h1>
-          <p>{{ detail.des }}</p>
+          <p>{{ detail.description }}</p>
         </div>
       </div>
       <a-avatar :size="100"></a-avatar>
@@ -16,7 +16,7 @@
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 export interface IDetail {
   name: string
-  des: string
+  description: string
   imgUrl: string
 }
 export default defineComponent({

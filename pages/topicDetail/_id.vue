@@ -24,14 +24,11 @@
         ></radio-and-search>
         <article-list
           :load="listLoad"
+          :none="total === 0"
           :list="list"
           class="article-list"
         ></article-list>
-        <Pagination
-          :total="total"
-          class="pagination"
-          @change="pageChange"
-        ></Pagination>
+        <Pagination class="pagination" @change="pageChange"></Pagination>
       </div>
     </article>
   </div>
@@ -45,15 +42,14 @@ import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
 import Pagination from '@/components/operate/Pagination.vue'
 
-import {
-  IArticleListParams,
-  ICommendItemType,
-} from '@/api/apiPublic/modules/topic'
+import { IArticleListParams } from '@/api/apiPublic/modules/topic'
+
+import { IArticleItemType } from '@/utils/type'
 
 interface IData {
   id: number | string
   listLoad: Boolean
-  list: Array<ICommendItemType>
+  list: Array<IArticleItemType>
   total: number
 }
 
@@ -66,74 +62,7 @@ export default defineComponent({
     ArticleList,
     Pagination,
   },
-  setup() {
-    // const router = useRouter()
-    // const { params } = toRefs(useRoute())
-    // let topicId = params.value.id as string
-    // const { useSearch } = useSearchHistory()
-    // const detail = ref<any>({})
-    // const articleList = reactive({
-    //   list: [],
-    //   total: 0,
-    // })
-    // const listLoad = ref<Boolean>(true)
-    // onBeforeRouteUpdate((to) => {
-    //   topicId = to.params.id as string
-    //   getOpItem()
-    //   getArticleList({ itemId: topicId })
-    // })
-    // const getOpItem = () => {
-    //   http(ApiLink.getOpItem, { id: topicId }).then((res: any) => {
-    //     detail.value = res.result
-    //   })
-    // }
-    // interface IGetListParms {
-    //   itemId: string
-    //   viewUserId?: string
-    //   typeId?: number
-    // }
-    // const getArticleList = (prams: IGetListParms) => {
-    //   http(ApiLink.getListByItemId, prams).then((res: any) => {
-    //     articleList.list = res.result.list
-    //     articleList.total = res.result.total
-    //     listLoad.value = false
-    //   })
-    // }
-    // // 初始化数据
-    // getOpItem()
-    // getArticleList({ itemId: topicId })
-    // /**
-    //  * @description: 点击搜索
-    //  */
-    // const onSearch = (value: string) => {
-    //   router.push({ name: 'Search' }).then(() => {
-    //     useSearch(value)
-    //   })
-    // }
-    // /**
-    //  * @description: 单选框
-    //  */
-    // const onRadio = (value: number) => {
-    //   listLoad.value = true
-    //   const typeId = value === 1 ? 0 : value === 2 ? 1 : ''
-    //   getArticleList({ itemId: topicId, typeId })
-    // }
-    // /**
-    //  * @description: 页码改变
-    //  */
-    // const pageChange = (param: IchangeParam) => {
-    //   const { page, pageSize } = param
-    //   console.log(page, pageSize)
-    // }
-    return {
-      // detail,
-      //   articleList,
-      //   listLoad,
-      //   onSearch,
-      //   onRadio,
-      //   pageChange,
-    }
-  },
+
   async asyncData({ app, route }) {
     const detail = await app.$http.topic.getOpItem({
       id: route.params.id,
@@ -163,6 +92,9 @@ export default defineComponent({
      */
     onSearch(value: string) {
       console.log(value)
+      //   router.push({ name: 'Search' }).then(() => {
+      //     useSearch(value)
+      //   })
     },
 
     /**
@@ -183,6 +115,9 @@ export default defineComponent({
       this.listLoad = false
     },
 
+    /**
+     * @description: 改变页码
+     */
     pageChange(param: any) {
       const { page, pageSize } = param
       console.log(page, pageSize)
@@ -249,6 +184,7 @@ export default defineComponent({
       width: 100%;
       height: 45rem;
       background-image: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
+      z-index: -1;
     }
 
     .article-list {

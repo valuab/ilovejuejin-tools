@@ -17,35 +17,36 @@
           class="list-box"
           :style="{ left: `${toggle.styleLeft}px` }"
         >
-          <!-- <figure
+          <figure
             v-for="(item, index) in list"
             :key="index"
             class="list-item"
             @click="navDetail(item.id)"
           >
-            <a-image
-              width="190px"
-              height="254px"
-              :src="item.smallImageUrl"
-              alt="图片加载失败"
-              :preview="false"
-            ></a-image>
+            <img :src="item.smallImageUrl" alt="图片加载失败" srcset="" />
             <figcaption>{{ item.name }}</figcaption>
-          </figure> -->
+          </figure>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  PropType,
+  ref,
+} from '@nuxtjs/composition-api'
+
+import { ITopicListType } from '@/api/apiPublic/modules/categoryDetail'
 // import { useRouter } from 'vue-router'
 
 import Toggle from '@/components/operate/Toggle.vue'
 
 import type { ToggleType } from '@/components/operate/Toggle.vue'
-// import useToggleShowOrHide from '/@/hooks/useToggleShowOrHide'
-// import useMoveContainerPosition from '/@/hooks/useMoveContainerPosition'
+import useToggleShowOrHide from '@/hooks/useToggleShowOrHide'
+import useMoveContainerPosition from '@/hooks/useMoveContainerPosition'
 
 export default defineComponent({
   name: 'Recommend',
@@ -54,20 +55,17 @@ export default defineComponent({
   },
   props: {
     list: {
-      type: Array,
-      default() {
-        return []
-      },
+      type: Array as PropType<Array<ITopicListType>>,
+      default: [],
     },
   },
   setup() {
     /** ***** TOGGLE START ******************/
     const offsetX: number = 420
-    // const listBox = ref<any>(null)
-    // const listContainer = ref<any>(null)
+    const listBox = ref<any>(null)
+    const listContainer = ref<any>(null)
     const toggle = reactive({
-      // ifToggle: useToggleShowOrHide(listContainer, listBox),
-      ifToggle: true,
+      ifToggle: useToggleShowOrHide(listContainer, listBox),
       disabledLeft: true,
       disabledRight: false,
       styleLeft: 0,
@@ -83,23 +81,22 @@ export default defineComponent({
           default:
             break
         }
-        console.log(currentOffset)
-        // handleToggleBtnDisable(currentOffset)
+        handleToggleBtnDisable(currentOffset)
       },
     })
-    // /**
-    //  * 处理 toggle 是否禁止
-    //  */
-    // const handleToggleBtnDisable = (currentOffset: number) => {
-    //   const { offset, disabledLeft, disabledRight } = useMoveContainerPosition(
-    //     listContainer,
-    //     listBox,
-    //     currentOffset
-    //   )
-    //   toggle.styleLeft = offset
-    //   toggle.disabledLeft = disabledLeft
-    //   toggle.disabledRight = disabledRight
-    // }
+    /**
+     * 处理 toggle 是否禁止
+     */
+    const handleToggleBtnDisable = (currentOffset: number) => {
+      const { offset, disabledLeft, disabledRight } = useMoveContainerPosition(
+        listContainer,
+        listBox,
+        currentOffset
+      )
+      toggle.styleLeft = offset
+      toggle.disabledLeft = disabledLeft
+      toggle.disabledRight = disabledRight
+    }
     // /** ***** TOGGLE END ******************/
     // const router = useRouter()
     // /**
@@ -112,8 +109,8 @@ export default defineComponent({
     return {
       navDetail,
       toggle,
-      // listBox,
-      // listContainer,
+      listBox,
+      listContainer,
     }
   },
 })
@@ -157,6 +154,10 @@ export default defineComponent({
 
         & > figure {
           margin-right: 20px;
+          & > img {
+            width: 190px;
+            height: 254px;
+          }
 
           & > figcaption {
             margin-top: 16px;

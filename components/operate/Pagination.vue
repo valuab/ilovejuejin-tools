@@ -65,12 +65,12 @@ export default defineComponent({
 .pagination {
   text-align: center;
 
-  // ::v-deep(.ant-pagination-item-active) {
-  //   background-color: $primary-color;
+  /deep/ .ant-pagination-item-active {
+    background-color: $primary-color;
 
-  //   a {
-  //     color: #fff;
-  //   }
-  // }
+    a {
+      color: #fff;
+    }
+  }
 }
 </style>

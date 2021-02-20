@@ -1,6 +1,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
+import { IArticleItemType } from '~/utils/type'
 
 const topicLink = {
   getCommendItemList: '/api/item/getCommendItemList', // 获取王牌节目列表
@@ -42,19 +43,10 @@ export interface ICommendListResult extends IApiResult {
   }
 }
 
-export interface ICommendItemType {
-  title: string
-  userName: string
-  itemCategoryName: string
-  itemKeywordName?: string
-  smallImageUrl: string
-  totalViewCount?: number
-  commentCount?: number
-}
 export interface ICommendItemResult extends IApiResult {
   result: {
     total: number
-    list: Array<ICommendItemType>
+    list: Array<IArticleItemType>
   }
 }
 
@@ -69,7 +61,7 @@ export interface IOpItemResult extends IApiResult {
 export interface IArticleListResult extends IArticleListParams {
   result: {
     total: number
-    list: Array<ICommendItemType>
+    list: Array<IArticleItemType>
   }
 }
 

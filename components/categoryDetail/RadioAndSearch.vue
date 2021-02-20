@@ -77,7 +77,7 @@ export default defineComponent({
     outline: none;
   }
 
-  ::v-deep(input) {
+  /deep/ input {
     background-color: #f5f5f5;
   }
 }

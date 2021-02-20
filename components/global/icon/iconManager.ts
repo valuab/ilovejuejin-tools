@@ -14,6 +14,7 @@ import IndexChange from '@icons/index_change.svg'
 import ListSwitchUnable from '@icons/icon_list_switch_unable.svg'
 import ListSwitchNormal from '@icons/icon_list_switch_normal.svg'
 import ArrowOrange from '@icons/icon_arrow_orange.svg'
+import ArticleListNone from '@icons/icon_none.svg'
 
 /** ****** SideMenu START ********/
 import NavHome from '@icons/icon_nav_home.svg'
@@ -69,6 +70,7 @@ export type IconType =
   | 'LogoCar'
   | 'LogoTaobao'
   | 'LogoTmall'
+  | 'ArticleListNone'
 
 /**
  * 引入要使用的svg
@@ -107,6 +109,7 @@ const iconManager: Record<IconType, Component> = {
   LogoCar,
   LogoTaobao,
   LogoTmall,
+  ArticleListNone,
 }
 
 export default iconManager
