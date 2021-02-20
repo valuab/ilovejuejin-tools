@@ -18,7 +18,7 @@ export interface IUserInfoResult extends IApiResult {
   }
 }
 export interface IUserModule {
-  getUserInfo({ userId }: IUserInfoParams): Promise<IUserInfoResult['result']>
+  getUserInfo(params: IUserInfoParams): Promise<IUserInfoResult['result']>
 }
 
 export default ($axios: NuxtAxiosInstance) => {

@@ -3,7 +3,7 @@ import { IApiResult } from '../index'
 import wxConfig from '~/config/wxConfig'
 import { handleUrlParams } from '~/utils/data'
 
-export const loginLinks = {
+const loginLinks = {
   getAccessToken: `${wxConfig.WX_URL}/sns/oauth2/access_token`,
   getUserInfo: `${wxConfig.WX_URL}/sns/userinfo`,
   getAppIdKey: '/api/getAppIdKey',
@@ -55,23 +55,14 @@ interface IThirdLoginResult extends IApiResult {
 }
 
 export interface ILoginModule {
-  getAccessToken: ({
-    appid,
-    secret,
-    code,
-  }: IGetAccessTokenParams) => Promise<IGetAccessTokenResult>
-  getUserInfo: ({
-    access_token,
-    openid,
-  }: IGetUserInfoParams) => Promise<IGetUserInfoResult>
+  getAccessToken: (
+    params: IGetAccessTokenParams
+  ) => Promise<IGetAccessTokenResult>
+  getUserInfo: (params: IGetUserInfoParams) => Promise<IGetUserInfoResult>
   getAppIdKey: () => Promise<IGetAppIdKeyResult['result']>
-  thirdLogin: ({
-    unionId,
-    openId,
-    nickName,
-    headImg,
-    gender,
-  }: IThirdLoginParams) => Promise<IThirdLoginResult['result']>
+  thirdLogin: (
+    params: IThirdLoginParams
+  ) => Promise<IThirdLoginResult['result']>
 }
 
 export default ($axios: NuxtAxiosInstance) => {

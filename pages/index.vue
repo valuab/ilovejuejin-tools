@@ -12,17 +12,21 @@
             </template>
             <template #nextArrow>
               <div class="custom-slick-arrow-right">
-                <icon icon="ArrowWhite"></icon>
+                <icon icon="ArrowWhite" rotate="180"></icon>
               </div>
             </template>
-            <div class="carousel-item">
+            <div
+              v-for="newItem in newList"
+              :key="newItem.postId"
+              class="carousel-item"
+            >
+              <img
+                class="carousel-item-img"
+                :src="newItem.smallImageUrl"
+                :alt="newItem.title"
+              />
               <p class="carousel-title text-hidden-1">
-                从来没有一台双门车，分量有它重从来没有一台双门车，分量有它重
-              </p>
-            </div>
-            <div class="carousel-item">
-              <p class="carousel-title text-hidden-1">
-                从来没有一台双门车，分量有它重从来没有一台双门车，分量有它重
+                {{ newItem.title }}
               </p>
             </div>
           </a-carousel>
@@ -36,11 +40,16 @@
           >
         </h2>
         <a-row class="column-list-wrap" :gutter="20">
-          <a-col span="12">
-            <div class="column-list-item">1</div>
-          </a-col>
-          <a-col span="12">
-            <div class="column-list-item">2</div>
+          <a-col
+            v-for="recommendItem in recommendList"
+            :key="recommendItem.id"
+            span="12"
+          >
+            <img
+              class="column-list-item"
+              :src="recommendItem.smallImageUrl"
+              :alt="recommendItem.description"
+            />
           </a-col>
         </a-row>
       </a-col>
@@ -75,6 +84,11 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import { NEW_LIST_TYPE } from '~/enums/content'
+import {
+  INewListData,
+  IRecommendListData,
+} from '~/api/apiPublic/modules/content'
 
 export default defineComponent({
   name: 'Index',
@@ -117,6 +131,22 @@ export default defineComponent({
       replaceList,
     }
   },
+  async asyncData({ app }) {
+    const { userId: viewUserId } = app.$accessor.userInfo
+    const newList = await app.$http.content.getNewList({
+      viewUserId,
+      type: NEW_LIST_TYPE.NEW_RECOMMEND,
+    })
+    const recommendList = await app.$http.content.getRecommendList()
+
+    return { newList, recommendList: recommendList.slice(0, 2) }
+  },
+  data() {
+    return {
+      newList: [] as INewListData[],
+      recommendList: [] as IRecommendListData[],
+    }
+  },
 })
 </script>
 
@@ -153,7 +183,6 @@ export default defineComponent({
         line-height: 80px;
         text-align: center;
         background-color: rgba(0, 0, 0, 0.7);
-        transform: rotate(180deg);
       }
 
       .dots {
@@ -163,12 +192,18 @@ export default defineComponent({
 
       .carousel-wrap {
         width: 590px;
+        height: 332px;
+        overflow: hidden;
 
         .carousel-item {
           position: relative;
           width: 100%;
-          height: 332px;
-          background: #364d79;
+          height: 100%;
+
+          &-img {
+            width: 100%;
+            height: 100%;
+          }
 
           .carousel-title {
             position: absolute;
@@ -177,6 +212,7 @@ export default defineComponent({
             width: 100%;
             padding: 0 16px;
             line-height: 24px;
+
             @include text(24px, #fff, bold);
           }
         }
@@ -186,13 +222,14 @@ export default defineComponent({
     .column-title {
       padding-top: 40px;
       margin-bottom: 20px;
-      line-height: 1;
+
       @include flex(row, flex-start, center);
       @include text($font-size-heading, #000, bold);
 
       .column-title-nav {
         height: 20px;
         padding-left: 10px;
+
         @include flex(row, flex-start, center);
         @include text($font-size-base, #666);
         @include hoverColor(#333);
@@ -209,6 +246,7 @@ export default defineComponent({
       position: relative;
       left: -10px;
       flex-wrap: wrap;
+
       @include flex;
 
       .like-column-item {
@@ -216,6 +254,7 @@ export default defineComponent({
         height: 154px;
         padding: 0 10px;
         margin-bottom: 15px;
+
         @include text($font-size-base, #000);
         @include hoverColor($primary-color);
       }
