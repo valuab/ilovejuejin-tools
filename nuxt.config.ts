@@ -37,7 +37,8 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['ant-design-vue/dist/antd.less', './assets/style/index.scss'],
+  // css: ['ant-design-vue/dist/antd.less', './assets/style/index.scss'],
+  css: ['./assets/style/index.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['@/plugins/antd-ui', '@/plugins/setup-axios'],
@@ -133,6 +134,20 @@ export default {
           },
         })
       }
+    },
+    transpile: ['ant-design-vue'],
+    babel: {
+      plugins: [
+        [
+          'import',
+          {
+            libraryName: 'ant-design-vue',
+            libraryDirectory: 'es',
+            style: true,
+          },
+          'ant-design-vue',
+        ],
+      ],
     },
   },
 } as NuxtConfig
