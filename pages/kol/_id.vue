@@ -3,8 +3,11 @@
     <Header :detail="detail"></Header>
     <Recommend :list="recommendList"></Recommend>
     <div class="main">
-      <div class="bg"></div>
-      <!-- <tabs :tabs="userTabs" class="tabs" @tabActive="tabActive"></tabs> -->
+      <div
+        class="bg"
+        :style="{ maxHeight: articleList.total < 5 ? '30rem' : '45rem' }"
+      ></div>
+      <!-- <tabs :tabs="categoryTabs" class="tabs" @tabActive="tabActive"></tabs> -->
       <radio-and-search
         class="radio-search"
         @search="onSearch"
@@ -49,46 +52,46 @@ export default defineComponent({
   async asyncData({ app, route }) {
     // 获取分类详情
     const {
-      name,
+      nickname: name,
       description,
       smallImageUrl,
-    } = await app.$http.category.getOpItemCategory({
-      id: route.params.id,
+    } = await app.$http.kol.getUserInfo({
+      userId: Number(route.params.id),
     })
 
     // 获取王牌节目列表
-    const {
-      list: recommendList,
-    } = await app.$http.category.getItemListByCategoryId({
-      categoryId: route.params.id,
-    })
+    const { list: recommendList } = await app.$http.kol.getItemListByHostUserId(
+      {
+        hostUserId: route.params.id,
+      }
+    )
 
-    // 获取kol列表
+    // 获取分类列表
     let activeTab: number = 0
-    let userTabs: any[] = []
+    let categoryTabs: any[] = []
     const copyUserList = []
     let articleRes: any = {
       list: [],
       total: 0,
     }
-    const userRes = await app.$http.category.getHostListByCategoryId({
-      categoryId: route.params.id,
+    const categoryRes = await app.$http.kol.getListByHostUserId({
+      userId: route.params.id,
     })
 
-    if (userRes.total) {
-      for (let i = 0; i < userRes.list?.length; i++) {
+    if (categoryRes.total) {
+      for (let i = 0; i < categoryRes.list?.length; i++) {
         copyUserList.push({
-          title: userRes.list[i].nickname,
-          key: Number(userRes.list[i].userId),
+          title: categoryRes.list[i].name,
+          key: categoryRes.list[i].id,
         })
       }
       activeTab = copyUserList[0].key
       // 获取文章列表
-      articleRes = await app.$http.category.getListByCategoryIdHostUserId({
-        categoryId: route.params.id,
-        hostUserId: activeTab,
+      articleRes = await app.$http.kol.getListByCategoryIdHostUserId({
+        categoryId: activeTab,
+        hostUserId: route.params.id,
       })
-      userTabs = copyUserList
+      categoryTabs = copyUserList
     }
 
     return {
@@ -97,9 +100,9 @@ export default defineComponent({
         description,
         imgUrl: smallImageUrl,
       },
-      categoryId: route.params.id,
+      kolId: route.params.id,
       recommendList,
-      userTabs,
+      categoryTabs,
       activeTab,
       articleList: {
         list: articleRes.list,
@@ -151,8 +154,8 @@ export default defineComponent({
     getArticleList(typeId?: number | string) {
       this.$http.category
         .getListByCategoryIdHostUserId({
-          categoryId: this.categoryId,
-          hostUserId: this.activeTab,
+          categoryId: this.activeTab,
+          hostUserId: this.kolId,
           typeId,
         })
         .then((res: any) => {
@@ -169,14 +172,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 .main {
   position: relative;
+  min-height: 30rem;
 
   & > .bg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 810px;
-    z-index: -1;
+    height: 45rem;
     background-image: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
   }
 

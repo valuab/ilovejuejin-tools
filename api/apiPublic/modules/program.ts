@@ -1,3 +1,7 @@
+/**
+ * 节目相关接口
+ */
+
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
@@ -13,22 +17,6 @@ const topicLink = {
 export interface ICommendListParams {
   page: number
 }
-
-export interface ICommendItemParams {
-  viewUserId?: number
-  keywordId: number | string
-}
-
-export interface IOpItemParams {
-  id: string
-}
-
-export interface IArticleListParams {
-  itemId: string | number
-  viewUserId?: string
-  typeId?: string
-}
-
 export interface ICommendListType {
   id: string
   name: string
@@ -43,6 +31,10 @@ export interface ICommendListResult extends IApiResult {
   }
 }
 
+export interface ICommendItemParams {
+  viewUserId?: number
+  keywordId: number | string
+}
 export interface ICommendItemResult extends IApiResult {
   result: {
     total: number
@@ -50,6 +42,9 @@ export interface ICommendItemResult extends IApiResult {
   }
 }
 
+export interface IOpItemParams {
+  id: string
+}
 export interface IOpItemResult extends IApiResult {
   result: {
     name: string
@@ -58,6 +53,11 @@ export interface IOpItemResult extends IApiResult {
   }
 }
 
+export interface IArticleListParams {
+  itemId: string | number
+  viewUserId?: string
+  typeId?: string
+}
 export interface IArticleListResult extends IArticleListParams {
   result: {
     total: number
@@ -79,7 +79,7 @@ export interface IProgramModule {
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  return {
+  const programMudule: IProgramModule = {
     async getCommendItemList(params) {
       const url = handleUrlParams(topicLink.getCommendItemList, params)
       const { data } = await $axios.get<ICommendListResult>(url)
@@ -103,5 +103,6 @@ export default ($axios: NuxtAxiosInstance) => {
       const { data } = await $axios.get<IArticleListResult>(url)
       return data.result
     },
-  } as IProgramModule
+  }
+  return programMudule
 }

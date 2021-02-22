@@ -16,7 +16,10 @@
         </div>
       </header>
       <div class="main">
-        <div class="main-bg"></div>
+        <div
+          class="main-bg"
+          :style="{ maxHeight: total < 5 ? '30rem' : '45rem' }"
+        ></div>
         <radio-and-search
           class="radio-search"
           @search="onSearch"
@@ -28,7 +31,11 @@
           :list="list"
           class="article-list"
         ></article-list>
-        <Pagination class="pagination" @change="pageChange"></Pagination>
+        <Pagination
+          class="pagination"
+          :total="total"
+          @change="pageChange"
+        ></Pagination>
       </div>
     </article>
   </div>
@@ -41,7 +48,7 @@ import TopicImg from '@/components/topic/TopicImg.vue'
 import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
 import Pagination from '@/components/operate/Pagination.vue'
-import { IArticleListParams } from '@/api/apiPublic/modules/program'
+import { IArticleListParams } from '@apiModules/program'
 import { IArticleItemType } from '@/utils/type'
 
 interface IData {
@@ -170,6 +177,7 @@ export default defineComponent({
 
   .main {
     position: relative;
+    min-height: 30rem;
 
     .radio-search {
       padding-top: 20px;
@@ -182,7 +190,6 @@ export default defineComponent({
       width: 100%;
       height: 45rem;
       background-image: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
-      z-index: -1;
     }
 
     .article-list {

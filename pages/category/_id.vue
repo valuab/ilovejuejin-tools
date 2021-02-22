@@ -3,7 +3,10 @@
     <Header :detail="detail"></Header>
     <Recommend :list="recommendList"></Recommend>
     <div class="main">
-      <div class="bg"></div>
+      <div
+        class="bg"
+        :style="{ maxHeight: articleList.total < 5 ? '30rem' : '45rem' }"
+      ></div>
       <!-- <tabs :tabs="userTabs" class="tabs" @tabActive="tabActive"></tabs> -->
       <radio-and-search
         class="radio-search"
@@ -169,14 +172,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 .main {
   position: relative;
+  min-height: 30rem;
 
   & > .bg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 810px;
-    z-index: -1;
+    height: 45rem;
     background-image: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
   }
 

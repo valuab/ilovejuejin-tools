@@ -1,3 +1,7 @@
+/**
+ * 用户相关接口
+ */
+
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
@@ -13,22 +17,6 @@ const userLinks = {
 interface IUserInfoParams {
   userId: number
 }
-
-interface ITopicListParams {
-  hostUserId: string
-}
-
-interface ICategoryListParams {
-  userId: number
-}
-
-interface IArticleListParams {
-  categoryId: string
-  hostUserId: number
-  viewUserId?: string
-  typeId?: string
-}
-
 export interface IUserInfoResult extends IApiResult {
   result: {
     userId: number
@@ -39,12 +27,14 @@ export interface IUserInfoResult extends IApiResult {
   }
 }
 
+interface ITopicListParams {
+  hostUserId: string
+}
 export interface ITopicListType {
   id: number
   smallImageUrl: string
   name: string
 }
-
 export interface ITopicListResult extends IApiResult {
   result: {
     total: number
@@ -52,11 +42,13 @@ export interface ITopicListResult extends IApiResult {
   }
 }
 
-export interface ICategoryListType {
-  userId: number
-  nickname: string
+interface ICategoryListParams {
+  userId: string
 }
-
+export interface ICategoryListType {
+  id: number
+  name: string
+}
 export interface ICategoryListResult extends IApiResult {
   result: {
     total: number
@@ -64,6 +56,12 @@ export interface ICategoryListResult extends IApiResult {
   }
 }
 
+interface IArticleListParams {
+  categoryId: number
+  hostUserId: string
+  viewUserId?: string
+  typeId?: string
+}
 export interface IArticleListResult extends IApiResult {
   result: {
     total: number
@@ -85,7 +83,7 @@ export interface IKolModule {
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  return {
+  const kolModule: IKolModule = {
     async getUserInfo(params) {
       const url = handleUrlParams(userLinks.getUsrInfo, params)
       const { data } = await $axios.get<IUserInfoResult>(url)
@@ -116,5 +114,6 @@ export default ($axios: NuxtAxiosInstance) => {
 
       return data.result
     },
-  } as IKolModule
+  }
+  return kolModule
 }

@@ -10,7 +10,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { ICommendListType } from '@/api/apiPublic/modules/program'
+import { ICommendListType } from '@apiModules/program'
 
 interface IData {
   list: Array<ICommendListType>

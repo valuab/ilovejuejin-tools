@@ -39,7 +39,7 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 
-import { ITopicListType } from '@/api/apiPublic/modules/category'
+import { IProgramListType } from '@/api/apiPublic/modules/category'
 // import { useRouter } from 'vue-router'
 
 import Toggle from '@/components/operate/Toggle.vue'
@@ -55,7 +55,7 @@ export default defineComponent({
   },
   props: {
     list: {
-      type: Array as PropType<Array<ITopicListType>>,
+      type: Array as PropType<Array<IProgramListType>>,
       default: [],
     },
   },
@@ -97,21 +97,21 @@ export default defineComponent({
       toggle.disabledLeft = disabledLeft
       toggle.disabledRight = disabledRight
     }
-    // /** ***** TOGGLE END ******************/
-    // const router = useRouter()
-    // /**
-    //  * @description: 跳转节目详情
-    //  */
-    function navDetail(id: number) {
-      console.log(id)
-      // router.push({ name: 'TopicDetail', params: { id } })
-    }
+    /** ***** TOGGLE END ******************/
     return {
-      navDetail,
       toggle,
       listBox,
       listContainer,
     }
+  },
+  methods: {
+    /**
+     * @description: 跳转节目详情
+     */
+    navDetail(id: number) {
+      this.$router.push(`/topic/${id}`)
+      // router.push({ name: 'TopicDetail', params: { id } })
+    },
   },
 })
 </script>

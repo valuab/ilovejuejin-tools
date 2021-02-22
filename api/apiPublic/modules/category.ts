@@ -1,3 +1,7 @@
+/**
+ * 分类相关接口
+ */
+
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
@@ -13,18 +17,6 @@ const userLinks = {
 interface ICategoryParams {
   id: string
 }
-
-interface ICategoryUserParams {
-  categoryId: string
-}
-
-interface IArticleListParams {
-  categoryId: string
-  hostUserId: number
-  viewUserId?: string
-  typeId?: string
-}
-
 export interface ICategoryDetailResult extends IApiResult {
   result: {
     name: string
@@ -33,24 +25,28 @@ export interface ICategoryDetailResult extends IApiResult {
   }
 }
 
-export interface ITopicListType {
+interface IProgramListParams {
+  categoryId: string
+}
+export interface IProgramListType {
   id: number
   smallImageUrl: string
   name: string
 }
-
-export interface ITopicListResult extends IApiResult {
+export interface IProgramListResult extends IApiResult {
   result: {
     total: number
-    list: Array<ITopicListType>
+    list: Array<IProgramListType>
   }
 }
 
+interface IUserListParams {
+  categoryId: string
+}
 export interface IUserListType {
   userId: number
   nickname: string
 }
-
 export interface IUserListResult extends IApiResult {
   result: {
     total: number
@@ -58,6 +54,12 @@ export interface IUserListResult extends IApiResult {
   }
 }
 
+interface IArticleListParams {
+  categoryId: string
+  hostUserId: number
+  viewUserId?: string
+  typeId?: string
+}
 export interface IArticleListResult extends IApiResult {
   result: {
     total: number
@@ -66,25 +68,22 @@ export interface IArticleListResult extends IApiResult {
 }
 
 export interface ICategoryModule {
-  getOpItemCategory({
-    id,
-  }: ICategoryParams): Promise<ICategoryDetailResult['result']>
-  getItemListByCategoryId({
-    categoryId,
-  }: ICategoryUserParams): Promise<ITopicListResult['result']>
-  getHostListByCategoryId({
-    categoryId,
-  }: ICategoryUserParams): Promise<IUserListResult['result']>
-  getListByCategoryIdHostUserId({
-    categoryId,
-    hostUserId,
-    viewUserId,
-    typeId,
-  }: IArticleListParams): Promise<IArticleListResult['result']>
+  getOpItemCategory(
+    params: ICategoryParams
+  ): Promise<ICategoryDetailResult['result']>
+  getItemListByCategoryId(
+    params: IProgramListParams
+  ): Promise<IProgramListResult['result']>
+  getHostListByCategoryId(
+    params: IUserListParams
+  ): Promise<IUserListResult['result']>
+  getListByCategoryIdHostUserId(
+    params: IArticleListParams
+  ): Promise<IArticleListResult['result']>
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  return {
+  const categoryModule: ICategoryModule = {
     async getOpItemCategory(params) {
       const url = handleUrlParams(userLinks.getOpItemCategory, params)
       const { data } = await $axios.get<ICategoryDetailResult>(url)
@@ -94,7 +93,7 @@ export default ($axios: NuxtAxiosInstance) => {
 
     async getItemListByCategoryId(params) {
       const url = handleUrlParams(userLinks.getItemListByCategoryId, params)
-      const { data } = await $axios.get<ITopicListResult>(url)
+      const { data } = await $axios.get<IProgramListResult>(url)
 
       return data.result
     },
@@ -115,5 +114,6 @@ export default ($axios: NuxtAxiosInstance) => {
 
       return data.result
     },
-  } as ICategoryModule
+  }
+  return categoryModule
 }
