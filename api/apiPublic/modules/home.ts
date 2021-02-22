@@ -13,6 +13,7 @@ export const homeLinks = {
   getKolList: '/api/index/getKolList', // 获取大咖列表
   getNewList: '/api/index/getNewList', // 获取最新推荐或全部出品
   getRecommendList: '/api/index/getRecommendList', // 获取精选王牌节目
+  getGuessYouLikeList: '/api/index/getGuessYouLikeList', // 获取猜你喜欢
 }
 
 export interface ILayoutListData {
@@ -29,6 +30,7 @@ interface ILayoutsResult extends IApiResult {
 export interface IKolListData {
   userId: number
   nickname: string
+  smallImageUrl: string
 }
 
 interface IKolListResult extends IApiResult {
@@ -65,16 +67,36 @@ interface IGetRecommendList extends IApiResult {
     list: IRecommendListData[]
   }
 }
+
+export interface IGuessYouLikeItem {
+  forumId: number
+  postId: string
+  title: string
+  smallImageUrl: string
+}
+
+interface IGetGuessYouLikeListParams {
+  count: number
+}
+
+interface IGetGuessYouLikeListResult extends IApiResult {
+  result: {
+    list: IGuessYouLikeItem[]
+  }
+}
 export interface IHomeModule {
   getCommendList: () => Promise<ILayoutListData[]>
   getOpItemCategory: () => Promise<ILayoutListData[]>
   getKolList: () => Promise<IKolListData[]>
   getNewList: (params: IGetNewListParams) => Promise<INewListData[]>
   getRecommendList: () => Promise<IRecommendListData[]>
+  getGuessYouLikeList: (
+    params: IGetGuessYouLikeListParams
+  ) => Promise<IGuessYouLikeItem[]>
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  return {
+  const homeModule: IHomeModule = {
     // 获取王牌节目
     async getCommendList() {
       const url = homeLinks.getCommendList
@@ -97,7 +119,7 @@ export default ($axios: NuxtAxiosInstance) => {
       return data.result.list
     },
     // 获取最新推荐&全部出品
-    async getNewList(params: IGetNewListParams) {
+    async getNewList(params) {
       const url = handleUrlParams(homeLinks.getNewList, params)
       const { data } = await $axios.get<IGetNewListResult>(url)
 
@@ -110,5 +132,14 @@ export default ($axios: NuxtAxiosInstance) => {
 
       return data.result.list
     },
-  } as IHomeModule
+    // 获取猜你喜欢列表
+    async getGuessYouLikeList(params) {
+      const url = handleUrlParams(homeLinks.getGuessYouLikeList, params)
+      const { data } = await $axios.get<IGetGuessYouLikeListResult>(url)
+
+      return data.result.list
+    },
+  }
+
+  return homeModule
 }

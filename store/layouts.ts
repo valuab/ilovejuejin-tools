@@ -1,10 +1,11 @@
 import { actionTree, mutationTree } from 'typed-vuex'
-import { ILayoutListData } from '~/api/apiPublic/modules/home'
+import { ILayoutListData, IKolListData } from '~/api/apiPublic/modules/home'
 
+type IkolItem = ILayoutListData & IKolListData
 export interface ILayoutsState {
   commendList: ILayoutListData[]
   opItemCategoryList: ILayoutListData[]
-  kolList: ILayoutListData[]
+  kolList: IkolItem[]
 }
 
 export const namespaced = true
@@ -22,7 +23,7 @@ export const mutations = mutationTree(state, {
   setOpItemCategoryList(state, payload: ILayoutListData[]) {
     state.opItemCategoryList = [...payload]
   },
-  setKolList(state, payload: ILayoutListData[]) {
+  setKolList(state, payload: IkolItem[]) {
     state.kolList = [...payload]
   },
 })
@@ -44,8 +45,9 @@ export const actions = actionTree(
         const item = {
           id: val.userId.toString(),
           name: val.nickname,
+          ...val,
         }
-        return item as ILayoutListData
+        return item as IkolItem
       })
       commit('setKolList', newKolList)
     },

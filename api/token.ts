@@ -13,6 +13,7 @@ export default (sid = '', uid = 0) => {
   const _uuid = v4()
   const sessionId = sid || v4()
   const sign = CryptoJS.HmacSHA1(sessionId + uid, config.APP_SECRET)
+
   return {
     uuid: _uuid,
     uid,

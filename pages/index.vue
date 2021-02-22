@@ -1,10 +1,17 @@
 <template>
   <div class="container">
+    <!-- 栏目一 START -->
     <a-row class="column-wrap" :gutter="20">
       <a-col>
         <div class="column-item">
           <h2 class="column-title">最新推荐</h2>
-          <a-carousel class="carousel-wrap" dots-class="dots" autoplay arrows>
+          <a-carousel
+            class="carousel-wrap"
+            dots-class="dots"
+            :initial-slide="0"
+            autoplay
+            arrows
+          >
             <template #prevArrow>
               <div class="custom-slick-arrow-left">
                 <icon icon="ArrowWhite"></icon>
@@ -54,80 +61,83 @@
         </a-row>
       </a-col>
     </a-row>
+    <!-- 栏目一 END -->
+    <!-- 栏目二 START -->
     <a-row class="column-wrap">
       <a-col flex="1">
         <h2 class="column-title">
           猜你喜欢
-          <a-button class="column-title-nav" type="link" @click="replaceList">
-            <icon :style="{ marginRight: '5px' }" icon="IndexChange" />
+          <a-button
+            class="column-title-nav"
+            type="link"
+            @click="changeLikeList"
+          >
+            <icon icon="IndexChange" size="19" />
             换一批
           </a-button>
         </h2>
         <div class="like-column-list-wrap">
           <nuxt-link
-            v-for="(item, index) in likeList"
-            :key="index"
+            v-for="guessYouLikeItem in guessYouLikeList"
+            :key="guessYouLikeItem.postId"
             to="/"
             class="like-column-item"
           >
-            <img width="100%" height="106px" src="@images/logo.png" />
-            <p>{{ item.des }}</p>
+            <img
+              width="100%"
+              height="106px"
+              :src="guessYouLikeItem.smallImageUrl"
+            />
+            <p>{{ guessYouLikeItem.title }}</p>
           </nuxt-link>
         </div>
       </a-col>
       <a-col>
-        <kol-list :kol-list="kolList"></kol-list>
+        <h2 class="column-title" :style="{ justifyContent: 'space-between' }">
+          我们的KOL
+          <toggle
+            v-if="kolGroupList.length > 1"
+            :disabled-left="!kolGroupIndex"
+            :disabled-right="kolGroupIndex >= kolGroupList.length - 1"
+            @clickLeft="toggleLeft"
+            @clickRight="toggleRight"
+          />
+        </h2>
+        <a-carousel
+          ref="kolCarousel"
+          class="kol-list-container"
+          :initial-slide="0"
+        >
+          <div
+            v-for="(kolGroup, index) in kolGroupList"
+            :key="index"
+            class="kol-list-wrap"
+          >
+            <a v-for="kolItem in kolGroup" :key="kolItem.id" class="kol-item">
+              <a-avatar :size="30" :src="kolItem.smallImageUrl"></a-avatar>
+              <strong class="kol-name text-hidden-1">{{ kolItem.name }}</strong>
+            </a>
+          </div>
+        </a-carousel>
       </a-col>
     </a-row>
+    <!-- 栏目二 END -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { NEW_LIST_TYPE } from '~/enums/content'
-import { INewListData, IRecommendListData } from '~/api/apiPublic/modules/home'
+import {
+  INewListData,
+  IRecommendListData,
+  IGuessYouLikeItem,
+  ILayoutListData,
+  IKolListData,
+} from '~/api/apiPublic/modules/home'
 
 export default defineComponent({
   name: 'Index',
-  setup() {
-    const num = 10
-    const tabs = [] // tab列表
-    const kolList = [] // kol列表
-    const likeList = [] // 猜你喜欢
-
-    for (let i = 0; i < num; i++) {
-      const tab = {
-        title: `全部出品${i}`,
-        key: i,
-      }
-      tabs.push(tab)
-      kolList.push([
-        'kolList',
-        'kolList',
-        'kolList',
-        'kolList',
-        'kolList',
-        'kolList',
-      ])
-      likeList.push({
-        des: '来，你绝对想不到这里是干嘛的',
-      })
-    }
-
-    /**
-     * @description: 猜你喜欢换一批
-     */
-    const replaceList = () => {
-      // console.log('猜你喜欢')
-    }
-
-    return {
-      tabs,
-      kolList,
-      likeList,
-      replaceList,
-    }
-  },
   async asyncData({ app }) {
     const { userId: viewUserId } = app.$accessor.userInfo
     const newList = await app.$http.home.getNewList({
@@ -135,14 +145,60 @@ export default defineComponent({
       type: NEW_LIST_TYPE.NEW_RECOMMEND,
     })
     const recommendList = await app.$http.home.getRecommendList()
+    const guessYouLikeList = await app.$http.home.getGuessYouLikeList({
+      count: 10,
+    })
 
-    return { newList, recommendList: recommendList.slice(0, 2) }
+    return {
+      newList,
+      recommendList: recommendList.slice(0, 2),
+      guessYouLikeList,
+    }
   },
   data() {
     return {
       newList: [] as INewListData[],
       recommendList: [] as IRecommendListData[],
+      guessYouLikeList: [] as IGuessYouLikeItem[],
+      kolGroupIndex: 0,
+      likeListLoad: false,
     }
+  },
+  computed: {
+    kolGroupList() {
+      const list = this.$accessor.layouts.kolList
+      const kolGroupList = [] as (ILayoutListData & IKolListData)[][]
+      const length = 6
+      let index = 0
+
+      while (index < list.length) {
+        kolGroupList.push(list.slice(index, (index += length)))
+      }
+
+      return kolGroupList
+    },
+  },
+  methods: {
+    async changeLikeList() {
+      const likeListLoad = this.likeListLoad
+
+      if (!likeListLoad) {
+        this.likeListLoad = true
+        const guessYouLikeList = await this.$http.home.getGuessYouLikeList({
+          count: 10,
+        })
+        this.guessYouLikeList = guessYouLikeList
+        this.likeListLoad = false
+      }
+    },
+    toggleLeft() {
+      ;(this.$refs.kolCarousel as any).prev()
+      this.kolGroupIndex -= 1
+    },
+    toggleRight() {
+      ;(this.$refs.kolCarousel as any).next()
+      this.kolGroupIndex += 1
+    },
   },
 })
 </script>
@@ -230,6 +286,10 @@ export default defineComponent({
         @include flex(row, flex-start, center);
         @include text($font-size-base, #666);
         @include hoverColor(#333);
+
+        span {
+          margin: 0;
+        }
       }
     }
 
@@ -252,8 +312,46 @@ export default defineComponent({
         padding: 0 10px;
         margin-bottom: 15px;
 
-        @include text($font-size-base, #000);
+        @include text($font-size-base, #000, bold);
         @include hoverColor($primary-color);
+
+        p {
+          margin-top: 8px;
+        }
+      }
+    }
+
+    .kol-list-container {
+      width: 170px;
+      height: 320px;
+      overflow: hidden;
+
+      .kol-list-wrap {
+        width: 100%;
+        height: 320px;
+        padding: 20px 20px 0;
+        background-color: #fff;
+        border: solid 1px #e6e6e6;
+
+        @include flex(column);
+
+        .kol-item {
+          margin-bottom: 20px;
+          color: #000;
+          box-sizing: border-box;
+          word-break: break-all;
+
+          @include flex(row, flex-start, center);
+          @include hoverColor($primary-color);
+
+          .kol-name {
+            padding-left: 10px;
+          }
+        }
+
+        .kol-item:last-child {
+          margin: 0;
+        }
       }
     }
   }
