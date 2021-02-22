@@ -83,10 +83,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { NEW_LIST_TYPE } from '~/enums/content'
-import {
-  INewListData,
-  IRecommendListData,
-} from '~/api/apiPublic/modules/content'
+import { INewListData, IRecommendListData } from '~/api/apiPublic/modules/home'
 
 export default defineComponent({
   name: 'Index',
@@ -131,11 +128,11 @@ export default defineComponent({
   },
   async asyncData({ app }) {
     const { userId: viewUserId } = app.$accessor.userInfo
-    const newList = await app.$http.content.getNewList({
+    const newList = await app.$http.home.getNewList({
       viewUserId,
       type: NEW_LIST_TYPE.NEW_RECOMMEND,
     })
-    const recommendList = await app.$http.content.getRecommendList()
+    const recommendList = await app.$http.home.getRecommendList()
 
     return { newList, recommendList: recommendList.slice(0, 2) }
   },

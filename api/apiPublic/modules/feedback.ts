@@ -44,7 +44,7 @@ export interface ICreateResult extends IApiResult {
   }
 }
 
-export interface IGlobalModule {
+export interface IFeedbackModule {
   getAppVersionList(): Promise<IAppVersionResult['result']>
   getFeedbackCategory(): Promise<ICategoryListResult['result']>
   createForSite({
@@ -59,7 +59,7 @@ export interface IGlobalModule {
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  const userModule: IGlobalModule = {
+  return {
     async getAppVersionList() {
       const { data } = await $axios.get<IAppVersionResult>(
         globalLinks.getAppVersionList
@@ -82,7 +82,5 @@ export default ($axios: NuxtAxiosInstance) => {
 
       return data.result
     },
-  }
-
-  return userModule
+  } as IFeedbackModule
 }

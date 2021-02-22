@@ -1,31 +1,35 @@
+/**
+ * api主文件
+ */
+
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
-import userModule, { IUserModule } from './modules/user'
+import kolModule, { IKolModule } from './modules/kol'
 import loginModule, { ILoginModule } from './modules/login'
-import topicModule, { ITopicModule } from './modules/topic'
-import contentModule, { IContentModule } from './modules/content'
-import globalModule, { IGlobalModule } from './modules/global'
-import categoryModule, { ICategoryModule } from './modules/categoryDetail'
+import programModule, { IProgramModule } from './modules/program'
+import homeModule, { IHomeModule } from './modules/home'
+import feedbackModule, { IFeedbackModule } from './modules/feedback'
+import categoryModule, { ICategoryModule } from './modules/category'
 
 export type IApiResult = {
   err: number
   msg: string
 }
 export interface IRootHttpState {
-  user: IUserModule
+  kol: IKolModule
   login: ILoginModule
-  topic: ITopicModule
-  content: IContentModule
-  global: IGlobalModule
-  categoryDetail: ICategoryModule
+  program: IProgramModule
+  home: IHomeModule
+  feedback: IFeedbackModule
+  category: ICategoryModule
 }
 
 export default ($axios: NuxtAxiosInstance) => {
   return {
-    user: userModule($axios),
+    kol: kolModule($axios),
     login: loginModule($axios),
-    topic: topicModule($axios),
-    content: contentModule($axios),
-    global: globalModule($axios),
-    categoryDetail: categoryModule($axios),
+    program: programModule($axios),
+    home: homeModule($axios),
+    feedback: feedbackModule($axios),
+    category: categoryModule($axios),
   } as IRootHttpState
 }

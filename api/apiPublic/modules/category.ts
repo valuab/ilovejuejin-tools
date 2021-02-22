@@ -84,7 +84,7 @@ export interface ICategoryModule {
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  const userModule: ICategoryModule = {
+  return {
     async getOpItemCategory(params) {
       const url = handleUrlParams(userLinks.getOpItemCategory, params)
       const { data } = await $axios.get<ICategoryDetailResult>(url)
@@ -115,7 +115,5 @@ export default ($axios: NuxtAxiosInstance) => {
 
       return data.result
     },
-  }
-
-  return userModule
+  } as ICategoryModule
 }

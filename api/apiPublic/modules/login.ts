@@ -4,12 +4,11 @@ import wxConfig from '~/config/wxConfig'
 import { handleUrlParams } from '~/utils/data'
 
 const loginLinks = {
-  getAccessToken: `${wxConfig.WX_URL}/sns/oauth2/access_token`,
-  getUserInfo: `${wxConfig.WX_URL}/sns/userinfo`,
-  getAppIdKey: '/api/getAppIdKey',
-  thirdLogin: '/api/thirdLogin',
+  getAccessToken: `${wxConfig.WX_URL}/sns/oauth2/access_token`, // 获取微信秘钥Token
+  getUserInfo: `${wxConfig.WX_URL}/sns/userinfo`, // 获取微信用户信息
+  getAppIdKey: '/api/getAppIdKey', // 获取网页应用信息
+  thirdLogin: '/api/thirdLogin', // 用户登录
 }
-
 interface IGetAccessTokenParams {
   appid: string
   secret: string

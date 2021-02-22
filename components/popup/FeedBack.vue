@@ -134,7 +134,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 import { Radio, Input, Dropdown, Menu, message } from 'ant-design-vue'
 
-import { IListType, globalLinks } from '@/api/apiPublic/modules/global'
+import { IListType, globalLinks } from '@/api/apiPublic/modules/feedback'
 
 import PopupMask from './PopupMask.vue'
 
@@ -150,6 +150,7 @@ interface IData {
   verifyInput: string
   verifyImg: string
 }
+
 export default defineComponent({
   name: 'FeedBack',
   components: {
@@ -229,8 +230,10 @@ export default defineComponent({
     },
   },
   async created() {
-    const { list: radioList } = await this.$http.global.getFeedbackCategory()
-    const { list: appVersionList } = await this.$http.global.getAppVersionList()
+    const { list: radioList } = await this.$http.feedback.getFeedbackCategory()
+    const {
+      list: appVersionList,
+    } = await this.$http.feedback.getAppVersionList()
     this.radioList = radioList
     this.appIssue.list[1].items = appVersionList
     this.toggleVerify()
@@ -311,7 +314,7 @@ export default defineComponent({
         content = this.issueValue.textArea
         contact = this.issueValue.contact
       }
-      this.$http.global
+      this.$http.feedback
         .createForSite({
           captcha,
           categoryId,

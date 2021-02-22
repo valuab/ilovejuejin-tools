@@ -65,27 +65,21 @@ export interface IArticleListResult extends IArticleListParams {
   }
 }
 
-export interface ITopicModule {
-  getCommendItemList({
-    page,
-  }: ICommendListParams): Promise<ICommendListResult['result']>
-
-  getListByKeywordId({
-    keywordId,
-    viewUserId,
-  }: ICommendItemParams): Promise<ICommendItemResult['result']>
-
-  getOpItem({ id }: IOpItemParams): Promise<IOpItemResult['result']>
-
-  getListByItemId({
-    itemId,
-    viewUserId,
-    typeId,
-  }: IArticleListParams): Promise<IArticleListResult['result']>
+export interface IProgramModule {
+  getCommendItemList(
+    params: ICommendListParams
+  ): Promise<ICommendListResult['result']>
+  getListByKeywordId(
+    params: ICommendItemParams
+  ): Promise<ICommendItemResult['result']>
+  getOpItem(params: IOpItemParams): Promise<IOpItemResult['result']>
+  getListByItemId(
+    params: IArticleListParams
+  ): Promise<IArticleListResult['result']>
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  const topicModule: ITopicModule = {
+  return {
     async getCommendItemList(params) {
       const url = handleUrlParams(topicLink.getCommendItemList, params)
       const { data } = await $axios.get<ICommendListResult>(url)
@@ -109,7 +103,5 @@ export default ($axios: NuxtAxiosInstance) => {
       const { data } = await $axios.get<IArticleListResult>(url)
       return data.result
     },
-  }
-
-  return topicModule
+  } as IProgramModule
 }

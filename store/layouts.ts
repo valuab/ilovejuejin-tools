@@ -1,5 +1,5 @@
 import { actionTree, mutationTree } from 'typed-vuex'
-import { ILayoutListData } from '~/api/apiPublic/modules/content'
+import { ILayoutListData } from '~/api/apiPublic/modules/home'
 
 export interface ILayoutsState {
   commendList: ILayoutListData[]
@@ -31,15 +31,15 @@ export const actions = actionTree(
   { state, mutations },
   {
     async getCommendList({ commit }) {
-      const commendList = await this.app.$http.content.getCommendList()
+      const commendList = await this.app.$http.home.getCommendList()
       commit('setCommendList', commendList)
     },
     async getOpItemCategoryList({ commit }) {
-      const opItemCategoryList = await this.app.$http.content.getOpItemCategory()
+      const opItemCategoryList = await this.app.$http.home.getOpItemCategory()
       commit('setOpItemCategoryList', opItemCategoryList)
     },
     async getKolList({ commit }) {
-      const kolList = await this.app.$http.content.getKolList()
+      const kolList = await this.app.$http.home.getKolList()
       const newKolList = kolList.map((val) => {
         const item = {
           id: val.userId.toString(),

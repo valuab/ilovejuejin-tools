@@ -1,6 +1,6 @@
 import { Context } from '@nuxt/types'
 import { actionTree, mutationTree, getAccessorType } from 'typed-vuex'
-import { IUserInfoResult } from '@apiModules/user'
+import { IUserInfoResult } from '@apiModules/kol'
 import * as global from './global'
 import * as layouts from './layouts'
 import { IToken } from '~/api/token'
@@ -19,6 +19,7 @@ export const state: () => IRootState = () => ({
     kol: 0,
     smallImageUrl: '',
     nickname: '',
+    description: '',
     isLogin: false,
   },
 })
@@ -33,7 +34,7 @@ export const actions = actionTree(
   { state, mutations },
   {
     async getUserInfo({ commit }, payload: number) {
-      const userInfo = await this.app.$http.user.getUserInfo({
+      const userInfo = await this.app.$http.kol.getUserInfo({
         userId: payload,
       })
       commit('setUserInfo', userInfo)

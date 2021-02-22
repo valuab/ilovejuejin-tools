@@ -39,7 +39,7 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 
-import { ITopicListType } from '@/api/apiPublic/modules/categoryDetail'
+import { ITopicListType } from '@/api/apiPublic/modules/category'
 // import { useRouter } from 'vue-router'
 
 import Toggle from '@/components/operate/Toggle.vue'

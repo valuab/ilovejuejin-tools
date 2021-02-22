@@ -52,14 +52,14 @@ export default defineComponent({
       name,
       description,
       smallImageUrl,
-    } = await app.$http.categoryDetail.getOpItemCategory({
+    } = await app.$http.category.getOpItemCategory({
       id: route.params.id,
     })
 
     // 获取王牌节目列表
     const {
       list: recommendList,
-    } = await app.$http.categoryDetail.getItemListByCategoryId({
+    } = await app.$http.category.getItemListByCategoryId({
       categoryId: route.params.id,
     })
 
@@ -71,7 +71,7 @@ export default defineComponent({
       list: [],
       total: 0,
     }
-    const userRes = await app.$http.categoryDetail.getHostListByCategoryId({
+    const userRes = await app.$http.category.getHostListByCategoryId({
       categoryId: route.params.id,
     })
 
@@ -84,12 +84,10 @@ export default defineComponent({
       }
       activeTab = copyUserList[0].key
       // 获取文章列表
-      articleRes = await app.$http.categoryDetail.getListByCategoryIdHostUserId(
-        {
-          categoryId: route.params.id,
-          hostUserId: activeTab,
-        }
-      )
+      articleRes = await app.$http.category.getListByCategoryIdHostUserId({
+        categoryId: route.params.id,
+        hostUserId: activeTab,
+      })
       userTabs = copyUserList
     }
 
@@ -151,7 +149,7 @@ export default defineComponent({
      * @param typeId 类型 0图文，1视频，不选默认所有
      */
     getArticleList(typeId?: number | string) {
-      this.$http.categoryDetail
+      this.$http.category
         .getListByCategoryIdHostUserId({
           categoryId: this.categoryId,
           hostUserId: this.activeTab,

@@ -41,9 +41,7 @@ import TopicImg from '@/components/topic/TopicImg.vue'
 import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
 import Pagination from '@/components/operate/Pagination.vue'
-
-import { IArticleListParams } from '@/api/apiPublic/modules/topic'
-
+import { IArticleListParams } from '@/api/apiPublic/modules/program'
 import { IArticleItemType } from '@/utils/type'
 
 interface IData {
@@ -64,10 +62,10 @@ export default defineComponent({
   },
 
   async asyncData({ app, route }) {
-    const detail = await app.$http.topic.getOpItem({
+    const detail = await app.$http.program.getOpItem({
       id: route.params.id,
     })
-    const { list, total } = await app.$http.topic.getListByItemId({
+    const { list, total } = await app.$http.program.getListByItemId({
       itemId: route.params.id,
     })
     return {
@@ -109,7 +107,7 @@ export default defineComponent({
     },
 
     async getArticleList(prams: IArticleListParams) {
-      const { list, total } = await this.$http.topic.getListByItemId(prams)
+      const { list, total } = await this.$http.program.getListByItemId(prams)
       this.list = list
       this.total = total
       this.listLoad = false

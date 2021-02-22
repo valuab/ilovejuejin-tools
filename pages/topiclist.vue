@@ -10,7 +10,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { ICommendListType } from '@/api/apiPublic/modules/topic'
+import { ICommendListType } from '@/api/apiPublic/modules/program'
 
 interface IData {
   list: Array<ICommendListType>
@@ -20,7 +20,7 @@ interface IData {
 
 export default defineComponent({
   async asyncData({ app }) {
-    const { list, total } = await app.$http.topic.getCommendItemList({
+    const { list, total } = await app.$http.program.getCommendItemList({
       page: 1,
     })
     return {
@@ -38,7 +38,7 @@ export default defineComponent({
   },
   methods: {
     async addList() {
-      const { list } = await this.$http.topic.getCommendItemList({
+      const { list } = await this.$http.program.getCommendItemList({
         page: this.page++,
       })
       this.list = this.list.concat(list)

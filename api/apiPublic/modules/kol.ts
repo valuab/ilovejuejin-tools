@@ -11,7 +11,7 @@ const userLinks = {
 }
 
 interface IUserInfoParams {
-  userId: string
+  userId: number
 }
 
 interface ITopicListParams {
@@ -19,7 +19,7 @@ interface ITopicListParams {
 }
 
 interface ICategoryListParams {
-  userId: string
+  userId: number
 }
 
 interface IArticleListParams {
@@ -31,7 +31,9 @@ interface IArticleListParams {
 
 export interface IUserInfoResult extends IApiResult {
   result: {
-    name: string
+    userId: number
+    kol: number
+    nickname: string
     description: string
     smallImageUrl: string
   }
@@ -69,27 +71,22 @@ export interface IArticleListResult extends IApiResult {
   }
 }
 
-export interface ICategoryModule {
-  getOpItemCategory({
-    userId,
-  }: IUserInfoParams): Promise<IUserInfoResult['result']>
-  getItemListByHostUserId({
-    hostUserId,
-  }: ITopicListParams): Promise<ITopicListResult['result']>
-  getListByHostUserId({
-    userId,
-  }: ICategoryListParams): Promise<ICategoryListResult['result']>
-  getListByCategoryIdHostUserId({
-    categoryId,
-    hostUserId,
-    viewUserId,
-    typeId,
-  }: IArticleListParams): Promise<IArticleListResult['result']>
+export interface IKolModule {
+  getUserInfo(params: IUserInfoParams): Promise<IUserInfoResult['result']>
+  getItemListByHostUserId(
+    params: ITopicListParams
+  ): Promise<ITopicListResult['result']>
+  getListByHostUserId(
+    params: ICategoryListParams
+  ): Promise<ICategoryListResult['result']>
+  getListByCategoryIdHostUserId(
+    params: IArticleListParams
+  ): Promise<IArticleListResult['result']>
 }
 
 export default ($axios: NuxtAxiosInstance) => {
-  const userModule: ICategoryModule = {
-    async getOpItemCategory(params) {
+  return {
+    async getUserInfo(params) {
       const url = handleUrlParams(userLinks.getUsrInfo, params)
       const { data } = await $axios.get<IUserInfoResult>(url)
 
@@ -119,7 +116,5 @@ export default ($axios: NuxtAxiosInstance) => {
 
       return data.result
     },
-  }
-
-  return userModule
+  } as IKolModule
 }

@@ -46,7 +46,7 @@ export default defineComponent({
     }
   },
   async created() {
-    const { list } = await this.$http.topic.getListByKeywordId({
+    const { list } = await this.$http.program.getListByKeywordId({
       keywordId: this.$props.data.id,
     })
     this.articleList = list
