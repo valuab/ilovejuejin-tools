@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="container">
     <div v-for="(item, index) in list" :key="index">
       <topic-item class="topic-item" :data="item"></topic-item>
     </div>
@@ -19,7 +19,6 @@ interface IData {
 }
 
 export default defineComponent({
-  name: 'TopicList',
   async asyncData({ app }) {
     const { list, total } = await app.$http.topic.getCommendItemList({
       page: 1,
@@ -49,7 +48,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.box {
+.container {
   width: 1280px;
   padding: 0 20px;
   margin: 0 auto 60px;

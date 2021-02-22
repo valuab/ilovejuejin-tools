@@ -38,7 +38,6 @@ import Pagination from '@/components/operate/Pagination.vue'
 // import useSearchHistory from '/@/hooks/useSearchHistory.ts'
 
 export default defineComponent({
-  name: 'CategoryDetail',
   components: {
     Header,
     Recommend,
@@ -84,15 +83,14 @@ export default defineComponent({
         })
       }
       activeTab = copyUserList[0].key
-      articleRes = await getArticleList(activeTab)
-    }
-    userTabs = copyUserList
-
-    function getArticleList(hostUserId: number) {
-      return app.$http.categoryDetail.getListByCategoryIdHostUserId({
-        categoryId: route.params.id,
-        hostUserId,
-      })
+      // 获取文章列表
+      articleRes = await app.$http.categoryDetail.getListByCategoryIdHostUserId(
+        {
+          categoryId: route.params.id,
+          hostUserId: activeTab,
+        }
+      )
+      userTabs = copyUserList
     }
 
     return {
@@ -180,6 +178,7 @@ export default defineComponent({
     left: 0;
     width: 100%;
     height: 810px;
+    z-index: -1;
     background-image: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
   }
 

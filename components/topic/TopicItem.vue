@@ -22,10 +22,10 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import ArticleCard from '@/components/display/ArticleCard.vue'
 import TopicImg from '@/components/topic/TopicImg.vue'
-import { ICommendItemType } from '@/api/apiPublic/modules/topic'
+import { IArticleItemType } from '@/utils/type'
 
 interface IData {
-  articleList: Array<ICommendItemType>
+  articleList: Array<IArticleItemType>
 }
 
 export default defineComponent({
@@ -53,9 +53,7 @@ export default defineComponent({
   },
   methods: {
     navAllDetail() {
-      const history = this.$router.resolve(
-        `/TopicDetail/${this.$props.data.id}`
-      )
+      const history = this.$router.resolve(`/topic/${this.$props.data.id}`)
       window.open(history.href, '_blank')
     },
   },
