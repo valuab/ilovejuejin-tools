@@ -1,6 +1,9 @@
 <template>
   <popup-mask :direction="'Center'" :show-header="false" @hide="showFeedBack">
     <div class="box">
+      <span class="close" @click="showFeedBack"
+        ><Icon icon="CloseBlack" font-size="20px"></Icon
+      ></span>
       <div class="header">
         <h1>意见反馈</h1>
         <p>为您提供优质的服务（产品微信：djchewen）</p>
@@ -12,7 +15,7 @@
           <a-radio-group :default-value="defaultRadio" @change="onChange">
             <a-space :size="10">
               <a-radio-button
-                v-for="(item, index) in radioList"
+                v-for="(item, index) in $accessor.global.feedBackTabsList"
                 :key="index"
                 class="radio-btn"
                 :value="item.id"
@@ -31,7 +34,7 @@
               v-for="(dropDownItem, dropDownindex) in appIssue.list"
               :key="dropDownindex"
             >
-              <a-dropdown :trigger="['click']" @visible-change="visibleChange">
+              <a-dropdown :trigger="['click']" @visibleChange="visibleChange">
                 <a-button
                   class="dropdown-title"
                   @click="dropdownClick(dropDownindex)"
@@ -190,7 +193,7 @@ export default defineComponent({
           {
             title: '选择APP版本',
             iconAni: '',
-            items: [],
+            items: this.$accessor.global.feedBackAppVersion,
             value: NaN,
           },
         ],
@@ -203,6 +206,11 @@ export default defineComponent({
       verifyInput: '',
       verifyImg: '',
     }
+  },
+  fetch() {
+    this.$accessor.global.getFeedBackTabs()
+    this.$accessor.global.getFeedBackVersion()
+    this.toggleVerify()
   },
   computed: {
     disabled() {
@@ -228,15 +236,6 @@ export default defineComponent({
         return true
       }
     },
-  },
-  async created() {
-    const { list: radioList } = await this.$http.feedback.getFeedbackCategory()
-    const {
-      list: appVersionList,
-    } = await this.$http.feedback.getAppVersionList()
-    this.radioList = radioList
-    this.appIssue.list[1].items = appVersionList
-    this.toggleVerify()
   },
   methods: {
     /**
@@ -266,6 +265,8 @@ export default defineComponent({
      * @description: 下拉列表显示与隐藏
      */
     visibleChange(visible: boolean) {
+      console.log(this.dropdownIndex, visible)
+
       this.appIssue.list[this.dropdownIndex].iconAni = visible
         ? 'transform: rotateX(180deg)'
         : ''
@@ -342,6 +343,13 @@ export default defineComponent({
   overflow: hidden;
   background-color: #fff;
   border-radius: 10px;
+  position: relative;
+
+  & > .close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+  }
 
   .header {
     width: 100%;

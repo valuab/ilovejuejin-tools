@@ -55,7 +55,7 @@ export interface IOpItemResult extends IApiResult {
 
 export interface IArticleListParams {
   itemId: string | number
-  viewUserId?: string
+  viewUserId?: number
   typeId?: string
   page: number
 }

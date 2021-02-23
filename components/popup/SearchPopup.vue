@@ -21,12 +21,13 @@
       <div class="search-KOL">
         <h2>内容出品人</h2>
         <a-row :gutter="16">
-          <a-col v-for="(item, index) in kolList" :key="index" :span="6">
-            <search-KOL
-              class="kol"
-              :item="item"
-              @click="navKolDetail(item.userId)"
-            ></search-KOL>
+          <a-col
+            v-for="(item, index) in kolList"
+            :key="index"
+            :span="6"
+            @click="navKolDetail(item.userId)"
+          >
+            <search-KOL class="kol" :item="item"></search-KOL>
           </a-col>
         </a-row>
       </div>
@@ -97,9 +98,8 @@ export default defineComponent({
     navSearch(value: string) {
       console.log(value)
 
-      this.$router.push('/').then(() => {
-        this.ifSearchpopup()
-      })
+      this.$router.push('/')
+      this.ifSearchpopup()
     },
 
     /**
@@ -113,9 +113,8 @@ export default defineComponent({
      * @description: 跳转至kol详情页
      */
     navKolDetail(id: number) {
-      this.$router.push(`/kol/${id}`).then(() => {
-        this.ifSearchpopup()
-      })
+      this.$router.push(`/kol/${id}`)
+      this.ifSearchpopup()
     },
   },
 })
