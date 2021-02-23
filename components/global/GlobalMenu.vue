@@ -67,7 +67,7 @@ export default defineComponent({
         },
         {
           id: 2,
-          title: '王牌节目',
+          title: '我们的KOL',
           icon: 'NavKol',
           list: kolList.slice(0, 5),
           unfold: false,

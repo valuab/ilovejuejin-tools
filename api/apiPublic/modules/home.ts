@@ -6,6 +6,7 @@ import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { NEW_LIST_TYPE } from '~/enums/content'
 import { handleUrlParams } from '~/utils/data'
+import { IArticleItemType } from '~/typings/post'
 
 export const homeLinks = {
   getCommendList: '/api/index/getCommendList', // 获取王牌节目
@@ -14,6 +15,7 @@ export const homeLinks = {
   getNewList: '/api/index/getNewList', // 获取最新推荐或全部出品
   getRecommendList: '/api/index/getRecommendList', // 获取精选王牌节目
   getGuessYouLikeList: '/api/index/getGuessYouLikeList', // 获取猜你喜欢
+  getListByCategoryId: '/api/index/getListByCategoryId', // 获取分类帖子
 }
 
 export interface ILayoutListData {
@@ -38,7 +40,6 @@ interface IKolListResult extends IApiResult {
     list: IKolListData[]
   }
 }
-
 export interface INewListData {
   forumId: number
   smallImageUrl: string
@@ -49,14 +50,22 @@ export interface INewListData {
 interface IGetNewListParams {
   viewUserId: number
   type: NEW_LIST_TYPE
+  page?: number
 }
 
-interface IGetNewListResult extends IApiResult {
+export interface IGetNewListResult extends IApiResult {
   result: {
+    total: number
     list: INewListData[]
   }
 }
 
+export interface IGetCategoryIdResult extends IApiResult {
+  result: {
+    total: number
+    list: IArticleItemType[]
+  }
+}
 export interface IRecommendListData {
   id: string
   smallImageUrl: string
@@ -84,15 +93,32 @@ interface IGetGuessYouLikeListResult extends IApiResult {
     list: IGuessYouLikeItem[]
   }
 }
+
+interface IGetListByCategoryIdParams {
+  viewUserId: number
+  categoryId: string
+}
+
+interface IGetListByCategoryIdResult extends IApiResult {
+  result: {
+    total: number
+    list: IArticleItemType[]
+  }
+}
 export interface IHomeModule {
   getCommendList: () => Promise<ILayoutListData[]>
   getOpItemCategory: () => Promise<ILayoutListData[]>
   getKolList: () => Promise<IKolListData[]>
-  getNewList: (params: IGetNewListParams) => Promise<INewListData[]>
+  getNewList: (
+    params: IGetNewListParams
+  ) => Promise<IGetNewListResult['result'] | IGetCategoryIdResult['result']>
   getRecommendList: () => Promise<IRecommendListData[]>
   getGuessYouLikeList: (
     params: IGetGuessYouLikeListParams
   ) => Promise<IGuessYouLikeItem[]>
+  getListByCategoryId: (
+    params: IGetListByCategoryIdParams
+  ) => Promise<IGetListByCategoryIdResult['result']>
 }
 
 export default ($axios: NuxtAxiosInstance) => {
@@ -121,9 +147,11 @@ export default ($axios: NuxtAxiosInstance) => {
     // 获取最新推荐&全部出品
     async getNewList(params) {
       const url = handleUrlParams(homeLinks.getNewList, params)
-      const { data } = await $axios.get<IGetNewListResult>(url)
+      const { data } = await $axios.get<
+        IGetNewListResult | IGetCategoryIdResult
+      >(url)
 
-      return data.result.list
+      return data.result
     },
     // 获取精选王牌节目
     async getRecommendList() {
@@ -138,6 +166,13 @@ export default ($axios: NuxtAxiosInstance) => {
       const { data } = await $axios.get<IGetGuessYouLikeListResult>(url)
 
       return data.result.list
+    },
+    // 获取分类帖子
+    async getListByCategoryId(params) {
+      const url = handleUrlParams(homeLinks.getListByCategoryId, params)
+      const { data } = await $axios.get<IGetListByCategoryIdResult>(url)
+
+      return data.result
     },
   }
 

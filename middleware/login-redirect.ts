@@ -3,11 +3,16 @@ import getToken from '~/api/token'
 
 export default async ({ route, app, $axios, redirect }: Context) => {
   const { code, state } = route.query
-  const headers = $axios.defaults.headers
 
   if (process.env.NODE_ENV === 'development' && process.client) {
     const token = app.$cookies.get('token')
-    $axios.defaults.headers = { ...headers, ...token }
+
+    if (token) {
+      $axios.setHeader('sign', token.sign)
+      $axios.setHeader('sid', token.sid)
+      $axios.setHeader('uid', token.uid.toString())
+      $axios.setHeader('uuid', token.uuid)
+    }
   }
 
   if (code && state === 'wxLogin') {
@@ -38,7 +43,10 @@ export default async ({ route, app, $axios, redirect }: Context) => {
 
       const token = getToken(sessionId, userId)
 
-      $axios.defaults.headers = { ...headers, ...token }
+      $axios.setHeader('sign', token.sign)
+      $axios.setHeader('sid', token.sid)
+      $axios.setHeader('uid', token.uid.toString())
+      $axios.setHeader('uuid', token.uuid)
       app.$cookies.set('token', token)
       redirect(route.path)
     } catch (err) {

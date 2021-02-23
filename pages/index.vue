@@ -2,44 +2,48 @@
   <div class="container">
     <!-- 栏目一 START -->
     <a-row class="column-wrap" :gutter="20">
-      <a-col>
+      <a-col :span="12">
         <div class="column-item">
           <h2 class="column-title">最新推荐</h2>
-          <a-carousel
-            class="carousel-wrap"
-            dots-class="dots"
-            :initial-slide="0"
-            autoplay
-            arrows
-          >
-            <template #prevArrow>
-              <div class="custom-slick-arrow-left">
-                <icon icon="ArrowWhite"></icon>
-              </div>
-            </template>
-            <template #nextArrow>
-              <div class="custom-slick-arrow-right">
-                <icon icon="ArrowWhite" rotate="180"></icon>
-              </div>
-            </template>
-            <div
-              v-for="newItem in newList"
-              :key="newItem.postId"
-              class="carousel-item"
-            >
-              <img
-                class="carousel-item-img"
-                :src="newItem.smallImageUrl"
-                :alt="newItem.title"
-              />
-              <p class="carousel-title text-hidden-1">
-                {{ newItem.title }}
-              </p>
-            </div>
-          </a-carousel>
+          <div class="column-carousel">
+            <no-ssr>
+              <a-carousel
+                class="carousel-wrap"
+                dots-class="dots"
+                :initial-slide="0"
+                autoplay
+                arrows
+              >
+                <template #prevArrow>
+                  <div class="custom-slick-arrow-left">
+                    <icon icon="ArrowWhite"></icon>
+                  </div>
+                </template>
+                <template #nextArrow>
+                  <div class="custom-slick-arrow-right">
+                    <icon icon="ArrowWhite" rotate="180"></icon>
+                  </div>
+                </template>
+                <div
+                  v-for="newItem in newList"
+                  :key="newItem.postId"
+                  class="carousel-item"
+                >
+                  <img
+                    class="carousel-item-img"
+                    :src="newItem.smallImageUrl"
+                    :alt="newItem.title"
+                  />
+                  <p class="carousel-title text-hidden-1">
+                    {{ newItem.title }}
+                  </p>
+                </div>
+              </a-carousel>
+            </no-ssr>
+          </div>
         </div>
       </a-col>
-      <a-col>
+      <a-col :span="12">
         <h2 class="column-title">
           精选王牌节目
           <nuxt-link class="column-title-nav" to="/topiclist"
@@ -99,48 +103,100 @@
             v-if="kolGroupList.length > 1"
             :disabled-left="!kolGroupIndex"
             :disabled-right="kolGroupIndex >= kolGroupList.length - 1"
-            @clickLeft="toggleLeft"
-            @clickRight="toggleRight"
+            @clickLeft="toggleKolLeftOrRight"
+            @clickRight="toggleKolLeftOrRight"
           />
         </h2>
-        <a-carousel
-          ref="kolCarousel"
-          class="kol-list-container"
-          :initial-slide="0"
-        >
+        <div class="kol-list-container">
           <div
-            v-for="(kolGroup, index) in kolGroupList"
-            :key="index"
-            class="kol-list-wrap"
+            ref="kolCarousel"
+            class="kol-carousel"
+            :style="{ left: `${kolCarouselLeft}px` }"
           >
-            <a v-for="kolItem in kolGroup" :key="kolItem.id" class="kol-item">
-              <a-avatar :size="30" :src="kolItem.smallImageUrl"></a-avatar>
-              <strong class="kol-name text-hidden-1">{{ kolItem.name }}</strong>
-            </a>
+            <div
+              v-for="(kolGroup, index) in kolGroupList"
+              :key="index"
+              class="kol-list-wrap"
+            >
+              <a v-for="kolItem in kolGroup" :key="kolItem.id" class="kol-item">
+                <a-avatar :size="30" :src="kolItem.smallImageUrl"></a-avatar>
+                <strong class="kol-name text-hidden-1">{{
+                  kolItem.name
+                }}</strong>
+              </a>
+            </div>
           </div>
-        </a-carousel>
+        </div>
       </a-col>
     </a-row>
     <!-- 栏目二 END -->
+    <!-- tabs START -->
+    <tabs :tabs="categoryTabsList" @tabActive="getListByCategoryId">
+      <template v-for="(categoryColumn, index) in categoryList">
+        <div
+          :key="index"
+          class="all-list-wrap"
+          :hidden="categoryIndex !== index"
+        >
+          <article-list
+            :list="categoryColumn.list"
+            :load="!categoryColumn.list"
+          ></article-list>
+          <pagination
+            :total="categoryColumn.total || 0"
+            :default-page-size="16"
+          ></pagination>
+        </div>
+      </template>
+    </tabs>
+    <!-- tabs END -->
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { NEW_LIST_TYPE } from '~/enums/content'
+import { ToggleType } from '~/components/operate/Toggle.vue'
 import {
   INewListData,
   IRecommendListData,
   IGuessYouLikeItem,
   ILayoutListData,
   IKolListData,
+  IGetCategoryIdResult,
 } from '~/api/apiPublic/modules/home'
 
 export default defineComponent({
   name: 'Index',
+  setup() {
+    const kolGroupIndex = ref(0)
+    const kolCarouselLeft = ref(0)
+    const kolCarousel = ref<null | HTMLElement>(null)
+    const toggleKolLeftOrRight = (direcion: ToggleType) => {
+      const kolCarouselNode = kolCarousel.value
+      const width = kolCarouselNode?.clientWidth
+
+      if (width) {
+        if (direcion === 'Left') {
+          kolGroupIndex.value -= 1
+          kolCarouselLeft.value += width
+        } else {
+          kolGroupIndex.value += 1
+          kolCarouselLeft.value -= width
+        }
+      }
+    }
+
+    return {
+      kolCarousel,
+      kolGroupIndex,
+      kolCarouselLeft,
+      toggleKolLeftOrRight,
+    }
+  },
   async asyncData({ app }) {
     const { userId: viewUserId } = app.$accessor.userInfo
-    const newList = await app.$http.home.getNewList({
+    const newListData = await app.$http.home.getNewList({
       viewUserId,
       type: NEW_LIST_TYPE.NEW_RECOMMEND,
     })
@@ -148,11 +204,20 @@ export default defineComponent({
     const guessYouLikeList = await app.$http.home.getGuessYouLikeList({
       count: 10,
     })
+    const yieldListData = await app.$http.home.getNewList({
+      viewUserId,
+      type: NEW_LIST_TYPE.ALL_YIELD,
+    })
+    const list = app.$accessor.layouts.opItemCategoryList
+    const categoryList = Array(list.length + 1).fill({})
+
+    categoryList[0] = yieldListData
 
     return {
-      newList,
-      recommendList: recommendList.slice(0, 2),
-      guessYouLikeList,
+      newList: newListData.list, // 最新推荐
+      recommendList: recommendList.slice(0, 2), // 王牌节目
+      guessYouLikeList, // 猜你喜欢
+      categoryList,
     }
   },
   data() {
@@ -160,14 +225,15 @@ export default defineComponent({
       newList: [] as INewListData[],
       recommendList: [] as IRecommendListData[],
       guessYouLikeList: [] as IGuessYouLikeItem[],
-      kolGroupIndex: 0,
+      categoryList: [] as IGetCategoryIdResult['result'][],
+      categoryIndex: 0,
       likeListLoad: false,
     }
   },
   computed: {
     kolGroupList() {
       const list = this.$accessor.layouts.kolList
-      const kolGroupList = [] as (ILayoutListData & IKolListData)[][]
+      const kolGroupList: (ILayoutListData & IKolListData)[][] = []
       const length = 6
       let index = 0
 
@@ -176,6 +242,24 @@ export default defineComponent({
       }
 
       return kolGroupList
+    },
+    categoryTabsList() {
+      const list = this.$accessor.layouts.opItemCategoryList
+      const categoryTabsList = list.map((categoryItem, index) => {
+        return {
+          title: categoryItem.name,
+          key: index + 1,
+          id: categoryItem.id,
+        }
+      })
+
+      categoryTabsList.unshift({
+        title: '全部出品',
+        key: 0,
+        id: '',
+      })
+
+      return categoryTabsList
     },
   },
   methods: {
@@ -191,13 +275,21 @@ export default defineComponent({
         this.likeListLoad = false
       }
     },
-    toggleLeft() {
-      ;(this.$refs.kolCarousel as any).prev()
-      this.kolGroupIndex -= 1
-    },
-    toggleRight() {
-      ;(this.$refs.kolCarousel as any).next()
-      this.kolGroupIndex += 1
+    async getListByCategoryId(index: number) {
+      if (this.categoryIndex === index) return
+      this.categoryIndex = index
+
+      const categoryId = this.categoryTabsList[index].id
+      const categoryList = this.categoryList
+
+      if (categoryId && !categoryList[index].list) {
+        const { userId: viewUserId } = this.$accessor.userInfo
+        const categoryItem = await this.$http.home.getListByCategoryId({
+          viewUserId,
+          categoryId,
+        })
+        this.$set(categoryList, index, categoryItem)
+      }
     },
   },
 })
@@ -243,30 +335,33 @@ export default defineComponent({
         text-align: left;
       }
 
-      .carousel-wrap {
-        width: 590px;
+      .column-carousel {
         height: 332px;
-        overflow: hidden;
 
-        .carousel-item {
-          position: relative;
-          width: 100%;
-          height: 100%;
+        .carousel-wrap {
+          width: auto;
+          height: 332px;
 
-          &-img {
+          .carousel-item {
+            position: relative;
             width: 100%;
             height: 100%;
-          }
 
-          .carousel-title {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 0 16px;
-            line-height: 24px;
+            &-img {
+              width: 100%;
+              height: 100%;
+            }
 
-            @include text(24px, #fff, bold);
+            .carousel-title {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              padding: 0 16px;
+              line-height: 24px;
+
+              @include text(24px, #fff, bold);
+            }
           }
         }
       }
@@ -326,31 +421,40 @@ export default defineComponent({
       height: 320px;
       overflow: hidden;
 
-      .kol-list-wrap {
-        width: 100%;
-        height: 320px;
-        padding: 20px 20px 0;
-        background-color: #fff;
-        border: solid 1px #e6e6e6;
+      .kol-carousel {
+        position: relative;
+        left: 0;
+        transition: left 0.5s;
 
-        @include flex(column);
+        @include flex(row);
 
-        .kol-item {
-          margin-bottom: 20px;
-          color: #000;
-          box-sizing: border-box;
-          word-break: break-all;
+        .kol-list-wrap {
+          width: 170px;
+          height: 320px;
+          padding: 20px 20px 0;
+          background-color: #fff;
+          border: solid 1px #e6e6e6;
 
-          @include flex(row, flex-start, center);
-          @include hoverColor($primary-color);
+          @include flex(column);
 
-          .kol-name {
-            padding-left: 10px;
+          .kol-item {
+            margin-bottom: 20px;
+            color: #000;
+            box-sizing: border-box;
+            word-break: break-all;
+
+            @include flex(row, flex-start, center);
+            @include hoverColor($primary-color);
+
+            .kol-name {
+              width: 100px;
+              padding-left: 10px;
+            }
           }
-        }
 
-        .kol-item:last-child {
-          margin: 0;
+          .kol-item:last-child {
+            margin: 0;
+          }
         }
       }
     }

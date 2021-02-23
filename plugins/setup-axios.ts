@@ -10,8 +10,12 @@ export default ({ app, $axios }: Context) => {
       Vue.prototype.$http = http
     },
   }
-  const headers = $axios.defaults.headers
-  $axios.defaults.headers = { ...headers, ...getToken() }
+  const token = getToken()
+
+  $axios.setHeader('sign', token.sign)
+  $axios.setHeader('sid', token.sid)
+  $axios.setHeader('uid', token.uid.toString())
+  $axios.setHeader('uuid', token.uuid)
   app.$http = http
   Vue.use(httpInstance)
 }
