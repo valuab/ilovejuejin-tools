@@ -14,7 +14,7 @@
         @radio="onRadio"
       ></radio-and-search>
       <article-list
-        :load="listLoad"
+        :load="articleList.listLoad"
         :list="articleList.list"
         :none="articleList.total === 0"
         class="article-list"
@@ -36,9 +36,30 @@ import Recommend from '@/components/categoryDetail/Recommend.vue'
 // import Tabs from '/@components/display/Tabs.vue'
 import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
-import Pagination from '@/components/operate/Pagination.vue'
+import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
+
+import { ITopicListType } from '@apiModules/kol'
+import { IArticleItemType } from '~/utils/type'
 
 // import useSearchHistory from '/@/hooks/useSearchHistory.ts'
+
+interface IData {
+  detail: {
+    name: string
+    description: string
+    imgUrl: string
+  }
+  kolId: string
+  recommendList: ITopicListType[]
+  activeTab: number
+  articleList: {
+    list: IArticleItemType[]
+    total: number
+    typeId: string
+    page: number
+    listLoad: boolean
+  }
+}
 
 export default defineComponent({
   components: {
@@ -88,6 +109,7 @@ export default defineComponent({
       activeTab = copyUserList[0].key
       // 获取文章列表
       articleRes = await app.$http.kol.getListByCategoryIdHostUserId({
+        page: 1,
         categoryId: activeTab,
         hostUserId: route.params.id,
       })
@@ -107,19 +129,36 @@ export default defineComponent({
       articleList: {
         list: articleRes.list,
         total: articleRes.total,
+        typeId: '',
+        page: 1,
+        listLoad: false,
       },
     }
   },
-  data(): any {
+  data(): IData {
     return {
-      listLoad: false,
+      detail: {
+        name: '',
+        description: '',
+        imgUrl: '',
+      },
+      kolId: '',
+      recommendList: [],
+      activeTab: 0,
+      articleList: {
+        list: [],
+        total: 0,
+        typeId: '',
+        page: 1,
+        listLoad: false,
+      },
     }
   },
   methods: {
     /**
      * @description: tab切换
      */
-    tabActive(key: any) {
+    tabActive(key: number) {
       console.log(key)
     },
 
@@ -137,33 +176,39 @@ export default defineComponent({
      * @description: 单选框
      */
     onRadio(value: number) {
-      this.listLoad = true
-      const typeId = value === 1 ? 0 : value === 2 ? 1 : ''
-      this.getArticleList(typeId)
+      this.articleList.listLoad = true
+      const typeId = value === 1 ? '0' : value === 2 ? '1' : ''
+      this.articleList.typeId = typeId
+      this.articleList.page = 1
+      this.getArticleList()
     },
 
     /**
      * @description: 页码改变
      */
-    pageChange() {},
+    pageChange(param: IchangeParam) {
+      const { page } = param
+      this.articleList.listLoad = true
+      this.articleList.page = page
+      this.getArticleList()
+    },
 
     /**
      * @description: 获取文章列表
      * @param typeId 类型 0图文，1视频，不选默认所有
      */
-    getArticleList(typeId?: number | string) {
-      this.$http.category
+    getArticleList() {
+      this.$http.kol
         .getListByCategoryIdHostUserId({
           categoryId: this.activeTab,
           hostUserId: this.kolId,
-          typeId,
+          typeId: this.articleList.typeId,
+          page: this.articleList.page,
         })
         .then((res: any) => {
-          this.listLoad = false
-          this.articleList = {
-            list: res.list,
-            total: res.total,
-          }
+          this.articleList.listLoad = false
+          this.articleList.list = res.list
+          this.articleList.total = res.total
         })
     },
   },

@@ -59,6 +59,7 @@ export interface ICategoryListResult extends IApiResult {
 interface IArticleListParams {
   categoryId: number
   hostUserId: string
+  page: number
   viewUserId?: string
   typeId?: string
 }

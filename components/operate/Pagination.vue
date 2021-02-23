@@ -23,8 +23,8 @@ function renderVNode(_: any, { attrs: { vnode } }: any) {
 }
 
 export interface IchangeParam {
-  page: Number
-  pageSize: Number
+  page: number
+  pageSize: number
 }
 
 export default defineComponent({

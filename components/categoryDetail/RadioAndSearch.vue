@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-radio-group :default-value="defaultRadio" @Change="onChange">
+    <a-radio-group :default-value="defaultRadio" @change="onChange">
       <a-space :size="10">
         <a-radio-button
           v-for="(item, index) in readioList"
@@ -21,7 +21,6 @@
   </div>
 </template>
 <script lang="ts">
-// import type { RadioChangeEvent } from 'ant-design-vue/lib/radio/interface'
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
@@ -49,10 +48,8 @@ export default defineComponent({
      * @description: 监听radio改变
      */
     const onChange = (e: any): void => {
-      console.log(e)
-
-      // const value = e.target.value
-      // context.emit('radio', value)
+      const value = e.target.value
+      context.emit('radio', value)
     }
 
     return {

@@ -32,8 +32,8 @@
           class="article-list"
         ></article-list>
         <Pagination
-          class="pagination"
           :total="total"
+          class="pagination"
           @change="pageChange"
         ></Pagination>
       </div>
@@ -47,8 +47,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import TopicImg from '@/components/topic/TopicImg.vue'
 import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
-import Pagination from '@/components/operate/Pagination.vue'
-import { IArticleListParams } from '@apiModules/program'
+import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
 import { IArticleItemType } from '@/utils/type'
 
 interface IData {
@@ -56,6 +55,8 @@ interface IData {
   listLoad: Boolean
   list: Array<IArticleItemType>
   total: number
+  typeId: string
+  page: number
 }
 
 // import useSearchHistory from '/@/hooks/useSearchHistory.ts'
@@ -73,6 +74,7 @@ export default defineComponent({
       id: route.params.id,
     })
     const { list, total } = await app.$http.program.getListByItemId({
+      page: 1,
       itemId: route.params.id,
     })
     return {
@@ -85,10 +87,12 @@ export default defineComponent({
   },
   data(): IData {
     return {
-      id: 0,
-      listLoad: true,
-      list: [],
-      total: 0,
+      id: 0, // 节目ID
+      listLoad: true, // 加载动画
+      list: [], // 文章列表
+      total: 0, // 总数
+      typeId: '', // 单选id
+      page: 1, // 页码
     }
   },
   methods: {
@@ -106,15 +110,20 @@ export default defineComponent({
      * @description: 单选框
      */
     onRadio(value: number) {
-      console.log(value)
-
       this.listLoad = true
       const typeId = value === 1 ? '0' : value === 2 ? '1' : ''
-      this.getArticleList({ itemId: this.id, typeId })
+      this.typeId = typeId
+      this.page = 1
+      this.getArticleList()
     },
 
-    async getArticleList(prams: IArticleListParams) {
-      const { list, total } = await this.$http.program.getListByItemId(prams)
+    async getArticleList() {
+      const { id: itemId, typeId, page } = this
+      const { list, total } = await this.$http.program.getListByItemId({
+        itemId,
+        typeId,
+        page,
+      })
       this.list = list
       this.total = total
       this.listLoad = false
@@ -123,9 +132,11 @@ export default defineComponent({
     /**
      * @description: 改变页码
      */
-    pageChange(param: any) {
-      const { page, pageSize } = param
-      console.log(page, pageSize)
+    pageChange(param: IchangeParam) {
+      const { page } = param
+      this.listLoad = true
+      this.page = page
+      this.getArticleList()
     },
   },
 })
@@ -184,6 +195,7 @@ export default defineComponent({
     }
 
     .main-bg {
+      display: none;
       position: absolute;
       top: 0;
       left: 0;

@@ -57,6 +57,7 @@ export interface IArticleListParams {
   itemId: string | number
   viewUserId?: string
   typeId?: string
+  page: number
 }
 export interface IArticleListResult extends IArticleListParams {
   result: {
