@@ -21,7 +21,7 @@ export interface ICommendListType {
   id: string
   name: string
   description: string
-  recommendSmallImageUrl: string
+  smallImageUrl: string
 }
 
 export interface ICommendListResult extends IApiResult {

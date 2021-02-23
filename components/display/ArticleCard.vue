@@ -28,36 +28,19 @@
     </figcaption>
   </figure>
 </template>
-<script>
-import { defineComponent } from '@nuxtjs/composition-api'
-// import { useRouter } from 'vue-router'
-// import { handleTime } from '@/utils/data'
-// import moment from 'moment'
+<script lang="ts">
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { IArticleItemType } from '~/utils/type'
 
 export default defineComponent({
   name: 'ContentCard',
   props: {
     item: {
-      type: Object,
-      // eslint-disable-next-line vue/require-valid-default-prop
-      default: {
-        smallImageUrl:
-          'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        itemCategoryName: 'test',
-        itemKeywordName: 'test',
-        title: 'test',
-        userName: 'test',
-        totalViewCount: 'test',
-        commentCount: 'test',
-      },
+      type: Object as PropType<IArticleItemType>,
+      default: null,
     },
   },
   setup() {
-    // const { item } = toRefs(props)
-    // const router = useRouter()
-    // const publishTime = new Date(item.value.publishTime).getTime()
-
-    // const time = handleTime(publishTime)
     const time = ''
     return {
       time,

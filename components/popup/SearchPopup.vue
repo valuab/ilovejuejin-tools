@@ -1,6 +1,6 @@
 <template>
   <popup-mask :direction="'Top'" :show-header="true" @hide="ifSearchpopup">
-    <aside class="container" @click.stop="stop">
+    <aside class="container">
       <span class="close" @click="ifSearchpopup"
         ><Icon icon="CloseBlack" font-size="20px"></Icon
       ></span>
@@ -22,7 +22,11 @@
         <h2>内容出品人</h2>
         <a-row :gutter="16">
           <a-col v-for="(item, index) in kolList" :key="index" :span="6">
-            <search-KOL class="kol" @click="navKolDetail"></search-KOL>
+            <search-KOL
+              class="kol"
+              :item="item"
+              @click="navKolDetail(item.userId)"
+            ></search-KOL>
           </a-col>
         </a-row>
       </div>
@@ -30,13 +34,21 @@
   </popup-mask>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
-// import { useRouter } from 'vue-router'
-
-import useSearchHistory from '@/hooks/useSearchHistory.ts'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { IKolListType } from '@apiModules/search'
+import {
+  getSearchHistory,
+  setSearchHistory,
+  deleteHistory,
+} from '@/utils/search'
 import SearchKOL from '../search/SearchKOL.vue'
 import PopupMask from './PopupMask.vue'
 // import SearchInput from '/@components/search/SearchInput.vue'
+
+interface IDataType {
+  kolList: IKolListType[]
+  history: Array<string>
+}
 
 export default defineComponent({
   name: 'SearchPopup',
@@ -46,63 +58,64 @@ export default defineComponent({
     PopupMask,
   },
   emits: ['showSearch'],
-  setup() {
-    const { history, useSearch, removeHistory } = useSearchHistory()
+
+  data(): IDataType {
+    return {
+      kolList: [],
+      history: [],
+    }
+  },
+
+  async created() {
+    const kolList = await this.$http.search.getKolList()
+    this.kolList = kolList
+  },
+
+  mounted() {
+    this.history = getSearchHistory()
+  },
+
+  methods: {
+    /**
+     * @description: 隐藏弹窗
+     */
+    ifSearchpopup() {
+      this.$accessor.global.showSearchPopup()
+    },
 
     /**
-     * @description: 冒泡拦截
+     * @description: 清空搜索历史
      */
-    const stop = () => {
-      return false
-    }
-
-    /**
-     * @description: kol数组
-     */
-    const kolList = reactive<Array<number>>([])
-    for (let i = 0; i < 12; i++) {
-      kolList.push(i)
-    }
-
-    /**
-     * @description: 点击搜索
-     */
-    const onSearch = (value: string) => {
-      useSearch(value).then(() => navSearch(value))
-    }
-
-    /**
-     * @description: 跳转至kol详情页
-     */
-    const navKolDetail = () => {
-      // router
-      //   .push({ name: 'KOLDetail', params: { id: '3' } })
-      //   .then(() => ifSearchpopup())
-    }
+    removeHistory() {
+      deleteHistory()
+      this.history = []
+    },
 
     /**
      * @description: 跳转至搜索页
      */
-    const navSearch = (value: string) => {
+    navSearch(value: string) {
       console.log(value)
-      // router.push({ name: 'Search', params: { keyword: value } }).then(() => {
-      //   ifSearchpopup()
-      // })
-    }
 
-    return {
-      stop,
-      history,
-      kolList,
-      onSearch,
-      navKolDetail,
-      removeHistory,
-      navSearch,
-    }
-  },
-  methods: {
-    ifSearchpopup() {
-      this.$accessor.global.showSearchPopup()
+      this.$router.push('/').then(() => {
+        this.ifSearchpopup()
+      })
+    },
+
+    /**
+     * @description: 点击搜索
+     */
+    onSearch(value: string) {
+      setSearchHistory(value).then(() => this.navSearch(value))
+    },
+
+    /**
+     * @description: 跳转至kol详情页
+     */
+    navKolDetail(id: number) {
+      this.$router.push(`/kol/${id}`).then(() => {
+        this.ifSearchpopup()
+      })
     },
   },
 })

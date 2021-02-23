@@ -19,10 +19,11 @@
   </article>
 </template>
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import ArticleCard from '@/components/display/ArticleCard.vue'
 import TopicImg from '@/components/topic/TopicImg.vue'
 import { IArticleItemType } from '@/utils/type'
+import { ICommendListType } from '@apiModules/program'
 
 interface IData {
   articleList: Array<IArticleItemType>
@@ -36,7 +37,7 @@ export default defineComponent({
   },
   props: {
     data: {
-      type: Object,
+      type: Object as PropType<ICommendListType>,
       default: null,
     },
   },

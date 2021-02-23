@@ -5,11 +5,11 @@
       <icon icon="ArticleListNone" size="100"></icon>
       <span>暂无出品</span>
     </div>
-    <a-row v-else :gutter="16">
-      <a-col v-for="(item, index) in list" :key="index" :span="6">
+    <div v-else class="articleFlex">
+      <div v-for="(item, index) in list" :key="index" class="articleItem">
         <article-card :item="item"></article-card>
-      </a-col>
-    </a-row>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -48,16 +48,21 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .list-container {
-  width: 1280px;
-  padding: 0 20px;
+  width: 100%;
   .none {
     margin-top: 50px;
     @include flex(column, center, center);
     @include text($font-size-base, #cccccc);
   }
-}
 
-.ant-col {
-  margin-bottom: 20px;
+  .articleFlex {
+    @include flex;
+
+    flex-wrap: wrap;
+    margin: 0 -10px;
+    .articleItem {
+      margin: 0 10px 20px;
+    }
+  }
 }
 </style>

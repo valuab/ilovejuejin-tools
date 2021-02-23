@@ -9,7 +9,7 @@
         <p>请选择您需要反馈的问题：</p>
         <!-- 单选START -->
         <div class="radio">
-          <a-radio-group :default-value="defaultRadio" @Change="onChange">
+          <a-radio-group :default-value="defaultRadio" @change="onChange">
             <a-space :size="10">
               <a-radio-button
                 v-for="(item, index) in radioList"
@@ -134,7 +134,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 import { Radio, Input, Dropdown, Menu, message } from 'ant-design-vue'
 
-import { IListType, globalLinks } from '@/api/apiPublic/modules/feedback'
+import { IListType, globalLinks } from '@apiModules/feedback'
 
 import PopupMask from './PopupMask.vue'
 
@@ -277,12 +277,12 @@ export default defineComponent({
     menuClick(e: { key: number }) {
       const { key } = e
       const menuItem = this.appIssue.list[this.dropdownIndex].items
-      this.appIssue.list[this.dropdownIndex] = {
+      this.$set(this.appIssue.list, this.dropdownIndex, {
         title: menuItem[key].versionName,
         iconAni: '',
         items: menuItem,
         value: menuItem[key].id,
-      }
+      })
     },
 
     /**

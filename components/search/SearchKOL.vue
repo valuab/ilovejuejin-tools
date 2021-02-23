@@ -1,17 +1,30 @@
 <template>
   <div class="KOL-container">
-    <a-avatar :size="60"></a-avatar>
+    <a-avatar :size="60" :src="item.smallImageUrl"></a-avatar>
     <div class="right">
-      <p>YYP颜宇鹏</p>
-      <p>1191篇评测 ></p>
+      <p>{{ item.nickname }}</p>
+      <p>{{ item.postCount }}篇评测 ></p>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { IKolListType } from '@apiModules/search'
 
 export default defineComponent({
   name: 'SearchKOL',
+  props: {
+    item: {
+      type: Object as PropType<IKolListType>,
+      default: () => {
+        return {
+          smallImageUrl: '',
+          nickname: '',
+          postCount: 0,
+        }
+      },
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>

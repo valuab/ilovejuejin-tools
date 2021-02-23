@@ -13,12 +13,13 @@
         @search="onSearch"
         @radio="onRadio"
       ></radio-and-search>
-      <article-list
-        :load="articleList.listLoad"
-        :list="articleList.list"
-        :none="articleList.total === 0"
-        class="article-list"
-      ></article-list>
+      <div class="article-list">
+        <article-list
+          :load="articleList.listLoad"
+          :list="articleList.list"
+          :none="articleList.total === 0"
+        ></article-list>
+      </div>
       <Pagination
         :total="articleList.total"
         class="pagination"
@@ -39,8 +40,8 @@ import ArticleList from '@/components/display/ArticleList.vue'
 import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
 
 import { IProgramListType } from '@apiModules/category'
+import { setSearchHistory } from '@/utils/search'
 import { IArticleItemType } from '~/utils/type'
-// import useSearchHistory from '/@/hooks/useSearchHistory.ts'
 
 interface IData {
   detail: {
@@ -167,10 +168,7 @@ export default defineComponent({
      * @description: 点击搜索
      */
     onSearch(value: string) {
-      console.log(value)
-      // router.push({ name: 'Search' }).then(() => {
-      //   useSearch(value)
-      // })
+      setSearchHistory(value)
     },
 
     /**
@@ -239,6 +237,7 @@ export default defineComponent({
   }
 
   .article-list {
+    max-width: 1240px;
     margin: 20px auto 0;
   }
 

@@ -1,54 +1,50 @@
 <template>
-  <div :style="{ width: '100%' }">
-    <article class="container">
-      <header class="header-bg">
-        <div class="header-box">
-          <div class="header-left">
-            <topic-img :img-url="detail.smallImageUrl"></topic-img>
-            <div class="des">
-              <h1>{{ detail.name }}</h1>
-              <p>{{ detail.description }}</p>
-            </div>
+  <article :style="{ width: '100%' }" class="container">
+    <header class="header-bg">
+      <div class="header-box">
+        <div class="header-left">
+          <topic-img :img-url="detail.smallImageUrl"></topic-img>
+          <div class="des">
+            <h1>{{ detail.name }}</h1>
+            <p>{{ detail.description }}</p>
           </div>
-          <aside class="qrimg">
-            <img src="/assets/images/logo.png" />
-          </aside>
         </div>
-      </header>
-      <div class="main">
-        <div
-          class="main-bg"
-          :style="{ maxHeight: total < 5 ? '30rem' : '45rem' }"
-        ></div>
-        <radio-and-search
-          class="radio-search"
-          @search="onSearch"
-          @radio="onRadio"
-        ></radio-and-search>
+        <aside class="qrimg">
+          <img src="/assets/images/logo.png" />
+        </aside>
+      </div>
+    </header>
+    <div class="main">
+      <div
+        class="main-bg"
+        :style="{ maxHeight: total < 5 ? '30rem' : '45rem' }"
+      ></div>
+      <radio-and-search
+        class="radio-search"
+        @search="onSearch"
+        @radio="onRadio"
+      ></radio-and-search>
+      <div class="article-list">
         <article-list
           :load="listLoad"
           :none="total === 0"
           :list="list"
-          class="article-list"
         ></article-list>
-        <Pagination
-          :total="total"
-          class="pagination"
-          @change="pageChange"
-        ></Pagination>
       </div>
-    </article>
-  </div>
+      <Pagination
+        :total="total"
+        class="pagination"
+        @change="pageChange"
+      ></Pagination>
+    </div>
+  </article>
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-// import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router'
-
-import TopicImg from '@/components/topic/TopicImg.vue'
-import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
-import ArticleList from '@/components/display/ArticleList.vue'
-import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
+import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { IArticleItemType } from '@/utils/type'
+
+import { setSearchHistory } from '@/utils/search'
 
 interface IData {
   id: number | string
@@ -59,16 +55,7 @@ interface IData {
   page: number
 }
 
-// import useSearchHistory from '/@/hooks/useSearchHistory.ts'
-
 export default defineComponent({
-  components: {
-    TopicImg,
-    RadioAndSearch,
-    ArticleList,
-    Pagination,
-  },
-
   async asyncData({ app, route }) {
     const detail = await app.$http.program.getOpItem({
       id: route.params.id,
@@ -97,16 +84,6 @@ export default defineComponent({
   },
   methods: {
     /**
-     * @description: 点击搜索
-     */
-    onSearch(value: string) {
-      console.log(value)
-      //   router.push({ name: 'Search' }).then(() => {
-      //     useSearch(value)
-      //   })
-    },
-
-    /**
      * @description: 单选框
      */
     onRadio(value: number) {
@@ -117,6 +94,16 @@ export default defineComponent({
       this.getArticleList()
     },
 
+    /**
+     * @description: 搜索
+     */
+    onSearch(value: string) {
+      setSearchHistory(value)
+    },
+
+    /**
+     * @description: 获取文章列表
+     */
     async getArticleList() {
       const { id: itemId, typeId, page } = this
       const { list, total } = await this.$http.program.getListByItemId({
@@ -205,6 +192,7 @@ export default defineComponent({
     }
 
     .article-list {
+      max-width: 1240px;
       margin: 20px auto 0;
     }
 
