@@ -13,18 +13,6 @@
   align-items: $align-items;
 }
 
-@mixin scrollHover {
-	@if & {
-		&::-webkit-scrollbar {
-			display: none;
-		}
-
-		&:hover::-webkit-scrollbar {
-			display: block;
-		}
-	}
-}
-
 @mixin hoverColor($color) {
 	@if & {
 		&:hover {

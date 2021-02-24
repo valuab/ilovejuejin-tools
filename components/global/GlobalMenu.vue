@@ -1,12 +1,18 @@
 <template>
   <a-menu class="menu-wrap">
-    <a-menu-item key="home" class="menu-item flex-row-vertical-center">
-      <icon icon="NavHome"></icon>
-      <span class="menu-item-title">首页</span>
+    <a-menu-item
+      key="home"
+      class="menu-item-group menu-item flex-row-vertical-center"
+    >
+      <nuxt-link to="/">
+        <icon icon="NavHome"></icon>
+        <span class="menu-item-title">首页</span>
+      </nuxt-link>
     </a-menu-item>
     <a-menu-item-group
       v-for="(groupItem, index) in menuGroupList"
       :key="groupItem.id"
+      class="menu-item-group"
     >
       <template #title>
         <div class="menu-item flex-row-vertical-center">
@@ -102,32 +108,38 @@ export default defineComponent({
   width: 160px;
   height: 91.5vh;
   padding: 10px 0;
-  overflow-y: scroll;
   border-right: 1px solid #e6e6e6;
   box-sizing: border-box;
+  overflow: hidden;
 
-  // @include scrollHover;
-
-  .menu-item-title {
-    margin-left: 8px;
-
-    @include text($font-size-lg, $heading-color, 600);
+  &:hover {
+    overflow-y: scroll;
   }
 
-  .group-menu-item {
-    margin-left: 16px;
+  .menu-item-group {
+    width: 140px;
 
-    .all-btn {
-      border: none;
-      padding: 0;
-      color: #3a3a3a;
+    .menu-item-title {
+      margin-left: 8px;
 
-      @include flex(row, flex-start, center);
+      @include text($font-size-lg, $heading-color, 600);
     }
-  }
 
-  .anticon {
-    margin-right: 0;
+    .group-menu-item {
+      margin-left: 16px;
+
+      .all-btn {
+        border: none;
+        padding: 0;
+        color: #3a3a3a;
+
+        @include flex(row, flex-start, center);
+      }
+    }
+
+    .anticon {
+      margin-right: 0;
+    }
   }
 }
 // 去掉选中颜色

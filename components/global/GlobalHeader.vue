@@ -62,8 +62,9 @@
     <login-button
       v-if="!$accessor.userInfo.isLogin"
       class="login-btn"
+      type="link"
       @click="showLoginPopUp"
-      >登录</login-button
+      >登 录</login-button
     >
     <a-avatar
       v-if="$accessor.userInfo.isLogin"
@@ -157,8 +158,13 @@ export default defineComponent({
   }
 
   .login-btn {
+    color: #3a3a3a;
     margin-left: 19px;
     @extend .btn-init;
+
+    &:hover {
+      color: $primary-color;
+    }
   }
 }
 
