@@ -5,7 +5,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
-import { IArticleItemType } from '~/utils/type'
+import { IArticleItemType } from '~/typings/post'
 
 const userLinks = {
   getOpItemCategory: '/api/category/getOpItemCategory', // 获取分类对象

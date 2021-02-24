@@ -5,7 +5,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
-import { IArticleItemType } from '~/utils/type'
+import { IArticleItemType } from '~/typings/post'
 
 const topicLink = {
   getCommendItemList: '/api/item/getCommendItemList', // 获取王牌节目列表
@@ -59,7 +59,7 @@ export interface IArticleListParams {
   typeId?: string
   page: number
 }
-export interface IArticleListResult extends IArticleListParams {
+export interface IArticleListResult extends IApiResult {
   result: {
     total: number
     list: Array<IArticleItemType>

@@ -7,8 +7,9 @@
         class="bg"
         :style="{ maxHeight: articleList.total < 5 ? '30rem' : '45rem' }"
       ></div>
-      <!-- <tabs :tabs="categoryTabs" class="tabs" @tabActive="tabActive"></tabs> -->
+      <tabs :tabs="categoryTabs" class="tabs" @tabActive="tabActive"></tabs>
       <radio-and-search
+        :default="radioValue"
         class="radio-search"
         @search="onSearch"
         @radio="onRadio"
@@ -31,18 +32,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-// import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router'
-
-import Header from '@/components/categoryDetail/Header.vue'
-import Recommend from '@/components/categoryDetail/Recommend.vue'
-// import Tabs from '/@components/display/Tabs.vue'
-import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
-import ArticleList from '@/components/display/ArticleList.vue'
-import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
+import { IchangeParam } from '@/components/operate/Pagination.vue'
 
 import { ITopicListType } from '@apiModules/kol'
 import { setSearchHistory } from '@/utils/search'
-import { IArticleItemType } from '~/utils/type'
+import { IArticleItemType } from '@/typings/post'
 
 interface IData {
   detail: {
@@ -53,6 +47,7 @@ interface IData {
   kolId: string
   recommendList: ITopicListType[]
   activeTab: number
+  radioValue: number
   articleList: {
     list: IArticleItemType[]
     total: number
@@ -63,14 +58,6 @@ interface IData {
 }
 
 export default defineComponent({
-  components: {
-    Header,
-    Recommend,
-    // Tabs,
-    RadioAndSearch,
-    ArticleList,
-    Pagination,
-  },
   async asyncData({ app, route }) {
     // 获取分类详情
     const {
@@ -146,6 +133,7 @@ export default defineComponent({
       kolId: '',
       recommendList: [],
       activeTab: 0,
+      radioValue: 0,
       articleList: {
         list: [],
         total: 0,
@@ -160,7 +148,13 @@ export default defineComponent({
      * @description: tab切换
      */
     tabActive(key: number) {
-      console.log(key)
+      this.articleList.listLoad = true
+      this.activeTab = key
+      this.radioValue = 0
+      this.articleList.typeId = ''
+      this.articleList.page = 1
+
+      this.getArticleList()
     },
 
     /**
@@ -176,6 +170,7 @@ export default defineComponent({
     onRadio(value: number) {
       this.articleList.listLoad = true
       const typeId = value === 1 ? '0' : value === 2 ? '1' : ''
+      this.radioValue = value
       this.articleList.typeId = typeId
       this.articleList.page = 1
       this.getArticleList()
@@ -193,7 +188,6 @@ export default defineComponent({
 
     /**
      * @description: 获取文章列表
-     * @param typeId 类型 0图文，1视频，不选默认所有
      */
     getArticleList() {
       this.$http.kol

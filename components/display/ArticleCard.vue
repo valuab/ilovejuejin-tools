@@ -29,8 +29,9 @@
   </figure>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
-import { IArticleItemType } from '~/utils/type'
+import { defineComponent, PropType, toRefs } from '@nuxtjs/composition-api'
+import { IArticleItemType } from '@/typings/post'
+import { handleTime } from '@/utils/data'
 
 export default defineComponent({
   name: 'ContentCard',
@@ -40,8 +41,11 @@ export default defineComponent({
       default: null,
     },
   },
-  setup() {
-    const time = ''
+  setup(props) {
+    const { item } = toRefs(props)
+    const postTimeStamp = new Date(item.value.publishTime).getTime()
+    const time: string = handleTime(postTimeStamp)
+
     return {
       time,
     }

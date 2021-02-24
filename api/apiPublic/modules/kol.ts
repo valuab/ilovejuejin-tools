@@ -5,7 +5,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
-import { IArticleItemType } from '~/utils/type'
+import { IArticleItemType } from '~/typings/post'
 
 const userLinks = {
   getUsrInfo: '/api/user/getUsrInfo', // 获取单个用户对象

@@ -15,6 +15,8 @@ import {
   Dropdown,
   Icon,
   Carousel,
+  List,
+  Empty,
 } from 'ant-design-vue'
 
 Vue.use(Avatar)
@@ -32,3 +34,5 @@ Vue.use(Checkbox)
 Vue.use(Dropdown)
 Vue.use(Icon)
 Vue.use(Carousel)
+Vue.use(List)
+Vue.use(Empty)

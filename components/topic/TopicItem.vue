@@ -22,7 +22,7 @@
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import ArticleCard from '@/components/display/ArticleCard.vue'
 import TopicImg from '@/components/topic/TopicImg.vue'
-import { IArticleItemType } from '@/utils/type'
+import { IArticleItemType } from '@/typings/post'
 import { ICommendListType } from '@apiModules/program'
 
 interface IData {
@@ -47,8 +47,10 @@ export default defineComponent({
     }
   },
   async created() {
+    const userId = this.$accessor.userInfo.userId
     const { list } = await this.$http.program.getListByKeywordId({
       keywordId: this.$props.data.id,
+      viewUserId: userId,
     })
     this.articleList = list
   },

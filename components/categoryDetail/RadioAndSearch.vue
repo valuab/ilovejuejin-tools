@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-radio-group :default-value="defaultRadio" @change="onChange">
+    <a-radio-group v-model="value" @change="onChange">
       <a-space :size="10">
         <a-radio-button
           v-for="(item, index) in readioList"
@@ -26,7 +26,7 @@ import { defineComponent, ref } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'RadioAndSearch',
   props: {
-    defaultRadio: {
+    default: {
       type: Number,
       default: 0,
     },
@@ -58,6 +58,16 @@ export default defineComponent({
       onSearch,
       onChange,
     }
+  },
+  data() {
+    return {
+      value: 0,
+    }
+  },
+  watch: {
+    default(val) {
+      this.value = val
+    },
   },
 })
 </script>

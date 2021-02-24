@@ -9,6 +9,7 @@ export interface IArticleItemType {
   itemCategoryName: string
   itemKeywordName?: string
   smallImageUrl: string
+  publishTime: string
   totalViewCount?: number
   commentCount?: number
 }

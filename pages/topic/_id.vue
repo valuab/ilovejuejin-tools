@@ -42,7 +42,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { IchangeParam } from '@/components/operate/Pagination.vue'
-import { IArticleItemType } from '@/utils/type'
+import { IArticleItemType } from '@/typings/post'
 
 import { setSearchHistory } from '@/utils/search'
 

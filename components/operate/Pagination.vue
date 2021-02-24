@@ -42,7 +42,7 @@ export default defineComponent({
     // 每页数量
     defaultPageSize: {
       type: Number,
-      default: 20,
+      default: 16,
     },
   },
   emits: ['change'],
