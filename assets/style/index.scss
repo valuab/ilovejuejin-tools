@@ -7,10 +7,12 @@
 
 // flex
 
+// 左右居中
 .flex-row-horizontal-center {
   @include flex(row, center);
 }
 
+// 上下居中
 .flex-row-vertical-center {
   @include flex(row, flex-start, center);
 }

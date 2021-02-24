@@ -23,7 +23,8 @@
       "@nuxtjs/axios",
       "@types/node",
       "ant-design-vue",
-      "cookie-universal-nuxt/types"
+      "cookie-universal-nuxt/types",
+      "node"
     ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]

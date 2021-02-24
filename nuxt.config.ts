@@ -71,7 +71,11 @@ export default {
 
   // Modules: https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-build/#styleresources
   styleResources: {
-    scss: ['./assets/style/_variable.scss', './assets/style/_mixins.scss'],
+    scss: [
+      './assets/style/_variable.scss',
+      './assets/style/_mixins.scss',
+      './assets/style/index.scss',
+    ],
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -96,6 +100,7 @@ export default {
   // alias configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-alias
   alias: {
     '@images': resolve(__dirname, './assets/images'),
+    '@components': resolve(__dirname, './components'),
     '@icons': resolve(__dirname, './assets/images/icons'),
     '@apiModules': resolve(__dirname, './api/apiPublic/modules'),
   },
