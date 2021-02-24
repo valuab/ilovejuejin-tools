@@ -11,7 +11,7 @@
       :data-source="list"
       :split="false"
     >
-      <a-list-item slot="renderItem" slot-scope="item">
+      <a-list-item slot="renderItem" slot-scope="{ item }">
         <article-card :item="item"></article-card>
       </a-list-item>
     </a-list>

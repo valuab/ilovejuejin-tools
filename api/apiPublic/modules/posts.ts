@@ -5,7 +5,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
-import { IArticleItemType } from '~/utils/type'
+import { IArticleItemType } from '~/typings/post'
 
 const postLinks = {
   getPost: '/api//post/getPost', // 帖子对象
