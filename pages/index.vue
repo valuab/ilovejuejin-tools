@@ -141,8 +141,8 @@
           :hidden="categoryIndex !== index"
         >
           <article-list
-            :list="categoryColumn.list"
-            :load="!categoryColumn.list || !categoryColumn.list.length"
+            :list="categoryColumn.list || []"
+            :load="categoryTabsLoad"
           ></article-list>
           <pagination
             :total="categoryColumn.total || 0"
@@ -230,6 +230,7 @@ export default defineComponent({
       categoryList: [] as IGetCategoryIdResult['result'][],
       categoryIndex: 0,
       likeListLoad: false,
+      categoryTabsLoad: false,
     }
   },
   computed: {
@@ -280,18 +281,21 @@ export default defineComponent({
     },
     // 获取单个分类帖子
     async getListByCategoryId(index: number) {
-      this.categoryIndex = index
       const categoryId = this.categoryTabsList[index].id
       const categoryList = this.categoryList
 
       if (categoryId && !categoryList[index].list) {
+        this.categoryTabsLoad = true
         const { userId: viewUserId } = this.$accessor.userInfo
         const categoryItem = await this.$http.home.getListByCategoryId({
           viewUserId,
           categoryId,
         })
         this.$set(categoryList, index, categoryItem)
+        this.categoryTabsLoad = false
       }
+
+      this.categoryIndex = index
     },
     // 点击分类帖子分组分页
     async changeCategory(params: { page: number }) {

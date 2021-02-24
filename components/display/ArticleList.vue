@@ -11,34 +11,23 @@
       :data-source="list"
       :split="false"
     >
-      <a-list-item slot="renderItem" slot-scope="{ item }">
+      <a-list-item slot="renderItem" slot-scope="item">
         <article-card :item="item"></article-card>
       </a-list-item>
     </a-list>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
-import ArticleCard from './ArticleCard.vue'
+import { defineComponent } from '@nuxtjs/composition-api'
 // import LoadAni from './LoadAni.vue'
 
 export default defineComponent({
   name: 'ArticleList',
-  components: {
-    ArticleCard,
-    // LoadAni,
-  },
   props: {
     // 文章当前页列表
     list: {
       type: Array,
-      default: () => {
-        const list = reactive<Array<number>>([])
-        for (let i = 0; i < 20; i++) {
-          list.push(i)
-        }
-        return list
-      },
+      required: true,
     },
     none: {
       type: Boolean,
