@@ -56,7 +56,7 @@
       shape="round"
       @click="showSearchPopup"
     >
-      <icon icon="SearchOrange" />
+      <icon icon="SearchOrange" size="18" />
       <span class="search-btn-text">搜全站</span>
     </a-button>
     <login-button

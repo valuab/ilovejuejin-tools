@@ -16,11 +16,7 @@
     </a-layout>
   </a-layout>
 </template>
-<script lang="ts" scoped>
-import { defineComponent } from '@nuxtjs/composition-api'
 
-export default defineComponent({})
-</script>
 <style lang="scss">
 .root-container {
   background: #fff;
@@ -39,12 +35,15 @@ export default defineComponent({})
   }
 
   .content-wrap {
-    @include flex(column, space-between, center);
+    display: flex;
+    flex-direction: column;
 
     .root-footer {
-      width: 1240px;
-      margin: 0 auto;
+      justify-self: flex-end;
+      width: 100%;
+      max-width: 1240px;
       padding: 100px 0 0;
+      margin: 0 auto;
     }
   }
 }

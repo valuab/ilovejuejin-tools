@@ -1,10 +1,48 @@
 // 初始化滚动条样式
-::-webkit-scrollbar {
-	width: 6px;
+// ::-webkit-scrollbar {
+// 	width: 6px;
+// }
+
+// ::-webkit-scrollbar-thumb {
+// 	background-color: #e6e6e6;
+// }
+
+// 设置placeholder的默认样式
+:-moz-placeholder {
+	color: #ddd;
+	opacity: 1;
 }
 
-::-webkit-scrollbar-thumb {
-	background-color: #e6e6e6;
+::-moz-placeholder {
+	color: #ddd;
+	opacity: 1;
 }
 
-// 初始化标签样式
+// input 默认 and 聚焦样式
+input {
+	margin: 0;
+
+	/* 2 */
+	font-family: inherit;
+	border: 0;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+button:focus {
+	outline: 0;
+}
+
+// 超出文本省略
+.text-hidden-1 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/******* antd样式 *******/
+.ant-popover-inner-content {
+	padding: 0;
+}

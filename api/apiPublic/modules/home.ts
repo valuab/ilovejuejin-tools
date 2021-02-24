@@ -97,6 +97,7 @@ interface IGetGuessYouLikeListResult extends IApiResult {
 interface IGetListByCategoryIdParams {
   viewUserId: number
   categoryId: string
+  page?: number
 }
 
 interface IGetListByCategoryIdResult extends IApiResult {

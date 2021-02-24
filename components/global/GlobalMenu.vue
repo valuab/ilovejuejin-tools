@@ -18,8 +18,13 @@
         v-for="menuItem in groupItem.list"
         :key="menuItem.id"
         class="group-menu-item"
-        >{{ menuItem.name }}</a-menu-item
       >
+        <nuxt-link
+          class="text-hidden-1"
+          :to="{ name: groupItem.page, params: { id: menuItem.id } }"
+          >{{ menuItem.name }}</nuxt-link
+        >
+      </a-menu-item>
       <a-menu-item
         v-if="rawDataList[index].length > 5"
         class="group-menu-item"
@@ -56,6 +61,7 @@ export default defineComponent({
           title: '王牌节目',
           icon: 'NavStar',
           list: commendList.slice(0, 5),
+          page: 'topic-id',
           unfold: false,
         },
         {
@@ -63,6 +69,7 @@ export default defineComponent({
           title: '内容分类',
           icon: 'NavSort',
           list: opItemCategoryList.slice(0, 5),
+          page: 'category-id',
           unfold: false,
         },
         {
@@ -70,6 +77,7 @@ export default defineComponent({
           title: '我们的KOL',
           icon: 'NavKol',
           list: kolList.slice(0, 5),
+          page: 'kol-id',
           unfold: false,
         },
       ],
@@ -98,7 +106,7 @@ export default defineComponent({
   border-right: 1px solid #e6e6e6;
   box-sizing: border-box;
 
-  @include scrollHover;
+  // @include scrollHover;
 
   .menu-item-title {
     margin-left: 8px;

@@ -25,6 +25,11 @@ export default {
     ],
   },
 
+  // loading
+  loading: {
+    color: '#ff8022',
+  },
+
   // server config
   server: {
     host: internalIp.v4.sync(),

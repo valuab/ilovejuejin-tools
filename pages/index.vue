@@ -1,19 +1,18 @@
 <template>
   <div class="container">
     <!-- 栏目一 START -->
-    <a-row class="column-wrap" :gutter="20">
+    <a-row type="flex" :gutter="20">
       <a-col :span="12">
         <div class="column-item">
           <h2 class="column-title">最新推荐</h2>
-          <div class="column-carousel">
+          <div
+            class="column-carousel"
+            :style="{
+              background: `url(${newList[0].smallImageUrl}) no-repeat 100% / 100%`,
+            }"
+          >
             <no-ssr>
-              <a-carousel
-                class="carousel-wrap"
-                dots-class="dots"
-                :initial-slide="0"
-                autoplay
-                arrows
-              >
+              <a-carousel dots-class="dots" autoplay arrows>
                 <template #prevArrow>
                   <div class="custom-slick-arrow-left">
                     <icon icon="ArrowWhite"></icon>
@@ -50,7 +49,7 @@
             >查看全部 ></nuxt-link
           >
         </h2>
-        <a-row class="column-list-wrap" :gutter="20">
+        <a-row class="column-list-wrap" :gutter="20" type="flex">
           <a-col
             v-for="recommendItem in recommendList"
             :key="recommendItem.id"
@@ -67,7 +66,7 @@
     </a-row>
     <!-- 栏目一 END -->
     <!-- 栏目二 START -->
-    <a-row class="column-wrap">
+    <a-row type="flex" :gutter="40">
       <a-col flex="1">
         <h2 class="column-title">
           猜你喜欢
@@ -80,21 +79,24 @@
             换一批
           </a-button>
         </h2>
-        <div class="like-column-list-wrap">
-          <nuxt-link
-            v-for="guessYouLikeItem in guessYouLikeList"
-            :key="guessYouLikeItem.postId"
-            to="/"
-            class="like-column-item"
-          >
-            <img
-              width="100%"
-              height="106px"
-              :src="guessYouLikeItem.smallImageUrl"
-            />
-            <p>{{ guessYouLikeItem.title }}</p>
-          </nuxt-link>
-        </div>
+        <a-spin :spinning="likeListLoad">
+          <a-row type="flex" :gutter="20">
+            <a-col
+              v-for="guessYouLikeItem in guessYouLikeList"
+              :key="guessYouLikeItem.postId"
+              class="like-column-list"
+            >
+              <nuxt-link to="/" class="like-column-item">
+                <img
+                  width="100%"
+                  height="106px"
+                  :src="guessYouLikeItem.smallImageUrl"
+                />
+                <p>{{ guessYouLikeItem.title }}</p>
+              </nuxt-link>
+            </a-col>
+          </a-row>
+        </a-spin>
       </a-col>
       <a-col>
         <h2 class="column-title" :style="{ justifyContent: 'space-between' }">
@@ -140,11 +142,12 @@
         >
           <article-list
             :list="categoryColumn.list"
-            :load="!categoryColumn.list"
+            :load="!categoryColumn.list || !categoryColumn.list.length"
           ></article-list>
           <pagination
             :total="categoryColumn.total || 0"
             :default-page-size="16"
+            @change="changeCategory"
           ></pagination>
         </div>
       </template>
@@ -167,7 +170,6 @@ import {
 } from '~/api/apiPublic/modules/home'
 
 export default defineComponent({
-  name: 'Index',
   setup() {
     const kolGroupIndex = ref(0)
     const kolCarouselLeft = ref(0)
@@ -263,6 +265,7 @@ export default defineComponent({
     },
   },
   methods: {
+    // 点击换一批
     async changeLikeList() {
       const likeListLoad = this.likeListLoad
 
@@ -275,10 +278,9 @@ export default defineComponent({
         this.likeListLoad = false
       }
     },
+    // 获取单个分类帖子
     async getListByCategoryId(index: number) {
-      if (this.categoryIndex === index) return
       this.categoryIndex = index
-
       const categoryId = this.categoryTabsList[index].id
       const categoryList = this.categoryList
 
@@ -291,6 +293,30 @@ export default defineComponent({
         this.$set(categoryList, index, categoryItem)
       }
     },
+    // 点击分类帖子分组分页
+    async changeCategory(params: { page: number }) {
+      const { userId: viewUserId } = this.$accessor.userInfo
+      const categoryList = this.categoryList
+      const index = this.categoryIndex
+      const categoryId = this.categoryTabsList[index].id
+
+      if (categoryId) {
+        const categoryItem = await this.$http.home.getListByCategoryId({
+          viewUserId,
+          categoryId,
+          page: params.page,
+        })
+        this.$set(categoryList[index], 'list', categoryItem.list)
+      } else {
+        const result = await this.$http.home.getNewList({
+          viewUserId,
+          type: NEW_LIST_TYPE.ALL_YIELD,
+          page: params.page,
+        })
+        const categoryItem = result as IGetCategoryIdResult['result']
+        this.$set(categoryList[index], 'list', categoryItem.list)
+      }
+    },
   },
 })
 </script>
@@ -299,169 +325,159 @@ export default defineComponent({
 .container {
   max-width: 1280px;
   padding: 0 20px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
 
-  .column-wrap {
-    @include flex;
+  .column-item {
+    position: relative;
+    padding-right: 20px;
 
-    .column-item {
-      padding-right: 20px;
-
-      .custom-slick-arrow-left {
-        left: 0;
-        z-index: 1;
-        display: flex;
-        width: 30px;
-        height: 60px;
-        margin-top: -30px;
-        line-height: 80px;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.7);
-      }
-
-      .custom-slick-arrow-right {
-        right: 0;
-        z-index: 1;
-        display: flex;
-        width: 30px;
-        height: 60px;
-        margin-top: -30px;
-        line-height: 80px;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.7);
-      }
-
-      .dots {
-        padding: 0 16px;
-        text-align: left;
-      }
-
-      .column-carousel {
-        height: 332px;
-
-        .carousel-wrap {
-          width: auto;
-          height: 332px;
-
-          .carousel-item {
-            position: relative;
-            width: 100%;
-            height: 100%;
-
-            &-img {
-              width: 100%;
-              height: 100%;
-            }
-
-            .carousel-title {
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              width: 100%;
-              padding: 0 16px;
-              line-height: 24px;
-
-              @include text(24px, #fff, bold);
-            }
-          }
-        }
-      }
+    .custom-slick-arrow-left {
+      left: 0;
+      z-index: 1;
+      display: flex;
+      width: 30px;
+      height: 60px;
+      margin-top: -30px;
+      line-height: 80px;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.7);
     }
 
-    .column-title {
-      padding-top: 40px;
-      margin-bottom: 20px;
-
-      @include flex(row, flex-start, center);
-      @include text($font-size-heading, #000, bold);
-
-      .column-title-nav {
-        height: 20px;
-        padding-left: 10px;
-
-        @include flex(row, flex-start, center);
-        @include text($font-size-base, #666);
-        @include hoverColor(#333);
-
-        span {
-          margin: 0;
-        }
-      }
+    .custom-slick-arrow-right {
+      right: 0;
+      z-index: 1;
+      display: flex;
+      width: 30px;
+      height: 60px;
+      margin-top: -30px;
+      line-height: 80px;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.7);
     }
 
-    .column-list-item {
-      width: 295px;
+    .dots {
+      padding: 0 16px;
+      text-align: left;
+    }
+
+    .column-carousel {
       height: 332px;
-      background-color: #4d4d4d;
     }
 
-    .like-column-list-wrap {
+    .carousel-item {
       position: relative;
-      left: -10px;
-      flex-wrap: wrap;
+      height: 332px;
 
-      @include flex;
-
-      .like-column-item {
-        width: 210px;
-        height: 154px;
-        padding: 0 10px;
-        margin-bottom: 15px;
-
-        @include text($font-size-base, #000, bold);
-        @include hoverColor($primary-color);
-
-        p {
-          margin-top: 8px;
-        }
+      &-img {
+        width: 100%;
+        height: 100%;
       }
-    }
 
-    .kol-list-container {
-      width: 170px;
-      height: 320px;
-      overflow: hidden;
-
-      .kol-carousel {
-        position: relative;
+      .carousel-title {
+        position: absolute;
         left: 0;
-        transition: left 0.5s;
+        width: 100%;
+        padding: 0 16px;
+        line-height: 24px;
 
-        @include flex(row);
-
-        .kol-list-wrap {
-          width: 170px;
-          height: 320px;
-          padding: 20px 20px 0;
-          background-color: #fff;
-          border: solid 1px #e6e6e6;
-
-          @include flex(column);
-
-          .kol-item {
-            margin-bottom: 20px;
-            color: #000;
-            box-sizing: border-box;
-            word-break: break-all;
-
-            @include flex(row, flex-start, center);
-            @include hoverColor($primary-color);
-
-            .kol-name {
-              width: 100px;
-              padding-left: 10px;
-            }
-          }
-
-          .kol-item:last-child {
-            margin: 0;
-          }
-        }
+        @include text(24px, #fff, bold);
       }
     }
   }
 
+  .column-title {
+    padding-top: 40px;
+    margin-bottom: 20px;
+
+    @include flex(row, flex-start, center);
+    @include text($font-size-heading, #000, bold);
+
+    .column-title-nav {
+      height: 20px;
+      padding-left: 10px;
+
+      @include flex(row, flex-start, center);
+      @include text($font-size-base, #666);
+      @include hoverColor(#333);
+
+      span {
+        margin: 0;
+      }
+    }
+  }
+
+  .column-list-item {
+    width: 100%;
+    height: 332px;
+    background-color: #4d4d4d;
+  }
+
+  .like-column-list {
+    width: 20%;
+
+    .like-column-item {
+      height: 154px;
+      margin-bottom: 15px;
+
+      @include text($font-size-base, #000, bold);
+      @include hoverColor($primary-color);
+
+      p {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  .kol-list-container {
+    width: 170px;
+    height: 320px;
+    overflow: hidden;
+
+    .kol-carousel {
+      position: relative;
+      left: 0;
+      transition: left 0.5s;
+
+      @include flex(row);
+
+      .kol-list-wrap {
+        width: 170px;
+        height: 320px;
+        padding: 20px 20px 0;
+        background-color: #fff;
+        border: solid 1px #e6e6e6;
+
+        @include flex(column);
+
+        .kol-item {
+          margin-bottom: 20px;
+          color: #000;
+          box-sizing: border-box;
+          word-break: break-all;
+
+          @include flex(row, flex-start, center);
+          @include hoverColor($primary-color);
+
+          .kol-name {
+            width: 100px;
+            padding-left: 10px;
+          }
+        }
+
+        .kol-item:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
   .article-list {
     margin: 20px -20px 10px;
+  }
+
+  .all-list-wrap {
+    margin-top: 20px;
   }
 }
 </style>

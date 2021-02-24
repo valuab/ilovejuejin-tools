@@ -17,6 +17,7 @@ import {
   Carousel,
   List,
   Empty,
+  Spin,
 } from 'ant-design-vue'
 
 Vue.use(Avatar)
@@ -36,3 +37,4 @@ Vue.use(Icon)
 Vue.use(Carousel)
 Vue.use(List)
 Vue.use(Empty)
+Vue.use(Spin)
