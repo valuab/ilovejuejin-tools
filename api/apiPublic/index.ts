@@ -10,6 +10,8 @@ import homeModule, { IHomeModule } from './modules/home'
 import feedbackModule, { IFeedbackModule } from './modules/feedback'
 import categoryModule, { ICategoryModule } from './modules/category'
 import searchModule, { ISearchModule } from './modules/search'
+import commentModule, { ICommentModule } from './modules/comment'
+import postsModule, { IPostsModule } from './modules/posts'
 
 export type IApiResult = {
   err: number
@@ -23,6 +25,8 @@ export interface IRootHttpState {
   feedback: IFeedbackModule
   category: ICategoryModule
   search: ISearchModule
+  comment: ICommentModule
+  posts: IPostsModule
 }
 
 export default ($axios: NuxtAxiosInstance) => {
@@ -34,5 +38,7 @@ export default ($axios: NuxtAxiosInstance) => {
     feedback: feedbackModule($axios),
     category: categoryModule($axios),
     search: searchModule($axios),
+    comment: commentModule($axios),
+    posts: postsModule($axios),
   } as IRootHttpState
 }

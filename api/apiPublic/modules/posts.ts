@@ -130,7 +130,7 @@ export interface ISupportPost extends IApiResult {
  * 输出解耦 END
  */
 
-export interface IPostModule {
+export interface IPostsModule {
   getPost(params: IPostParams): Promise<IPostResult['result']>
   getItemListByHostUserId(
     params: INewListByHostParams
@@ -168,5 +168,5 @@ export default ($axios: NuxtAxiosInstance) => {
 
       return data.result
     },
-  } as IPostModule
+  } as IPostsModule
 }
