@@ -37,13 +37,13 @@
   .content-wrap {
     display: flex;
     flex-direction: column;
+    min-height: 90vh;
 
     .root-footer {
-      justify-self: flex-end;
       width: 100%;
       max-width: 1240px;
       padding: 100px 0 0;
-      margin: 0 auto;
+      margin: auto auto 0;
     }
   }
 }
