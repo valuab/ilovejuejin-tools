@@ -16,7 +16,6 @@
               <article-list
                 :load="articleList[index].listLoad"
                 :list="articleList[index].list || []"
-                :none="articleList[index].total == 0"
                 class="article-list"
               ></article-list>
             </div>
@@ -29,6 +28,7 @@
         </template>
       </tabs>
     </div>
+    <global-empty v-else />
   </div>
 </template>
 <script lang="ts">

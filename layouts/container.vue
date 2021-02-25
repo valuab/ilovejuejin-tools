@@ -5,7 +5,10 @@
     </a-layout-header>
     <a-layout class="root-main">
       <a-layout-content class="content-wrap">
-        <nuxt />
+        <a-config-provider>
+          <template #renderEmpty><global-empty /></template>
+          <nuxt />
+        </a-config-provider>
         <a-layout-footer class="root-footer">
           <global-footer></global-footer>
         </a-layout-footer>

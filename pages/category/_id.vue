@@ -16,7 +16,6 @@
               <article-list
                 :load="articleList[index].listLoad"
                 :list="articleList[index].list || []"
-                :none="articleList[index].total == 0"
               ></article-list>
             </div>
             <Pagination
@@ -28,6 +27,7 @@
         </template>
       </tabs>
     </div>
+    <global-empty v-else />
   </div>
 </template>
 <script lang="ts">
@@ -37,6 +37,7 @@ import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { IProgramListType } from '@apiModules/category'
 import { setSearchHistory } from '@/utils/search'
 import { IArticleList } from '@/typings/post'
+import GlobalEmpty from '~/components/global/GlobalEmpty.vue'
 
 interface IUserTabs {
   title: string
@@ -58,6 +59,7 @@ interface IData {
 }
 
 export default defineComponent({
+  components: { GlobalEmpty },
   async asyncData({ app, route }) {
     // 获取分类详情
     const {

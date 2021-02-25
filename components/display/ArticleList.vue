@@ -1,11 +1,6 @@
 <template>
   <div class="list-container">
-    <div v-if="none" class="none">
-      <icon icon="ArticleListNone" size="100"></icon>
-      <span>暂无出品</span>
-    </div>
     <a-list
-      v-else
       :grid="{ gutter: 16, column: 4 }"
       :loading="load"
       :data-source="list"
@@ -28,10 +23,6 @@ export default defineComponent({
     list: {
       type: Array,
       required: true,
-    },
-    none: {
-      type: Boolean,
-      default: false,
     },
     load: {
       type: Boolean,

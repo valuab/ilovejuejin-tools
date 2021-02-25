@@ -18,6 +18,7 @@ import {
   List,
   Empty,
   Spin,
+  ConfigProvider,
 } from 'ant-design-vue'
 
 Vue.use(Avatar)
@@ -38,3 +39,4 @@ Vue.use(Carousel)
 Vue.use(List)
 Vue.use(Empty)
 Vue.use(Spin)
+Vue.use(ConfigProvider)

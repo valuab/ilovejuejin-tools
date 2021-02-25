@@ -25,11 +25,7 @@
         @radio="onRadio"
       ></radio-and-search>
       <div class="article-list">
-        <article-list
-          :load="listLoad"
-          :none="total === 0"
-          :list="list"
-        ></article-list>
+        <article-list :load="listLoad" :list="list"></article-list>
       </div>
       <Pagination
         :total="total"
