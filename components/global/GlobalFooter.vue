@@ -3,86 +3,30 @@
     <div class="footer-top">
       <img width="125px" height="50px" src="@images/logo.png" />
       <div class="icons">
-        <a-popover placement="bottom">
-          <template #content>
-            <QRCode
-              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
-            />
-          </template>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionWechat" size="24"></icon>
+        <template v-for="iconItem in iconList">
+          <div :key="iconItem.icon" class="icon-item">
+            <a-popover
+              v-if="iconItem.codeUrl"
+              placement="bottom"
+              :overlay-style="{ width: '80px' }"
+            >
+              <template #content>
+                <QRCode :src="iconItem.codeUrl" />
+              </template>
+              <div class="icon-wrap flex-center">
+                <icon :icon="iconItem.icon" size="24"></icon>
+              </div>
+            </a-popover>
+            <a
+              v-else
+              class="icon-wrap flex-center"
+              :href="iconItem.url"
+              target="_blank"
+            >
+              <icon :icon="iconItem.icon" size="24"></icon>
+            </a>
           </div>
-        </a-popover>
-        <a-popover placement="bottom">
-          <template #content>
-            <QRCode
-              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
-            />
-          </template>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionWeibo" size="24"></icon>
-          </div>
-        </a-popover>
-        <a-popover placement="bottom">
-          <template #content>
-            <QRCode
-              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
-            />
-          </template>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionApple" size="24"></icon>
-          </div>
-        </a-popover>
-        <a-popover placement="bottom">
-          <template #content>
-            <QRCode
-              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
-            />
-          </template>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionAndroid" size="24"></icon>
-          </div>
-        </a-popover>
-        <a-popover placement="bottom">
-          <template #content>
-            <QRCode
-              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
-            />
-          </template>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionH5" size="24"></icon>
-          </div>
-        </a-popover>
-        <!-- <a
-          href="https://weibo.com/cheyanlun?is_all=1"
-          target="_blank"
-          class="icon-wrap flex-center"
-        >
-          <icon icon="OptionWeibo" size="24"></icon>
-        </a>
-        <a-popover placement="bottom">
-          <template #content>
-            <QRCode
-              src="https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110"
-            />
-          </template>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionApple" size="24"></icon>
-          </div>
-        </a-popover>
-        <a-popover>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionAndroid"></icon>
-          </div>
-        </a-popover>
-        <a-popover>
-          <div class="icon-wrap flex-center">
-            <icon icon="OptionH5"></icon>
-          </div>
-          <template #content>
-            <QRCode src="https://www.djcars.cn/" />
-          </template>
-        </a-popover> -->
+        </template>
       </div>
     </div>
     <p class="slogan">真人真话，道出专业与真实</p>
@@ -127,12 +71,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-import FeedBack from '../popup/FeedBack.vue'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'GlobalFooter',
-  components: { FeedBack },
+  setup() {
+    const iconList = ref([
+      { codeUrl: '@images/weixin_code.png', icon: 'OptionWechat' },
+      { url: 'https://weibo.com/cheyanlun', icon: 'OptionWeibo' },
+      { codeUrl: '@images/apple_code.png', icon: 'OptionApple' },
+      { codeUrl: '@images/android_code.png', icon: 'OptionAndroid' },
+      { codeUrl: '@images/h5_code.png', icon: 'OptionH5' },
+    ])
+    return {
+      iconList,
+    }
+  },
   methods: {
     showFeedBack() {
       this.$accessor.global.showFeedBack()

@@ -1,12 +1,3 @@
-// 初始化滚动条样式
-// ::-webkit-scrollbar {
-// 	width: 6px;
-// }
-
-// ::-webkit-scrollbar-thumb {
-// 	background-color: #e6e6e6;
-// }
-
 // 设置placeholder的默认样式
 :-moz-placeholder {
 	color: #ddd;
@@ -40,4 +31,13 @@ button:focus {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+/**
+ * antd 样式覆盖
+ */
+
+// popover 组件去掉默认边距
+.ant-popover-inner-content {
+  padding: 0;
 }

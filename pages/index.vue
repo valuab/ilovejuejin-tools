@@ -304,6 +304,7 @@ export default defineComponent({
       const index = this.categoryIndex
       const categoryId = this.categoryTabsList[index].id
 
+      this.categoryTabsLoad = true
       if (categoryId) {
         const categoryItem = await this.$http.home.getListByCategoryId({
           viewUserId,
@@ -320,6 +321,7 @@ export default defineComponent({
         const categoryItem = result as IGetCategoryIdResult['result']
         this.$set(categoryList[index], 'list', categoryItem.list)
       }
+      this.categoryTabsLoad = false
     },
   },
 })
