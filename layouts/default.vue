@@ -17,7 +17,7 @@
   </a-layout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .root-container {
   background: #fff;
 
