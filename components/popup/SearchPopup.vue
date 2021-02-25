@@ -6,7 +6,7 @@
       ></span>
 
       <h1>搜索</h1>
-      <!-- <search-input class="search-input" @search="onSearch"></search-input> -->
+      <search-input class="search-input" @search="onSearch"></search-input>
       <div v-if="history.length !== 0" class="search-history">
         <div class="header">
           <h2>搜索历史</h2>
@@ -42,9 +42,9 @@ import {
   setSearchHistory,
   deleteHistory,
 } from '@/utils/search'
-import SearchKOL from '../search/SearchKOL.vue'
+import SearchInput from '@/components/search/SearchInput.vue'
+import SearchKOL from '@/components/search/SearchKOL.vue'
 import PopupMask from './PopupMask.vue'
-// import SearchInput from '/@components/search/SearchInput.vue'
 
 interface IDataType {
   kolList: IKolListType[]
@@ -54,7 +54,7 @@ interface IDataType {
 export default defineComponent({
   name: 'SearchPopup',
   components: {
-    // SearchInput,
+    SearchInput,
     SearchKOL,
     PopupMask,
   },
@@ -95,9 +95,7 @@ export default defineComponent({
      * @description: 跳转至搜索页
      */
     navSearch(value: string) {
-      console.log(value)
-
-      this.$router.push('/')
+      this.$router.push({ path: '/Search?keyword=' + value })
       this.ifSearchpopup()
     },
 

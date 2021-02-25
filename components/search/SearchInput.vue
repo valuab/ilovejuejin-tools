@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'SearchInput',
@@ -22,25 +22,25 @@ export default defineComponent({
     },
   },
   emits: ['search'],
-  // setup(props, context) {
-  //   /**
-  //    * @description: 监听输入值
-  //    */
-  //   const inputValue = ref(props.keyword)
+  setup(props, context) {
+    /**
+     * @description: 监听输入值
+     */
+    const inputValue = ref(props.keyword)
 
-  //   /**
-  //    * @description: 监听搜索
-  //    */
+    /**
+     * @description: 监听搜索
+     */
 
-  //   const search = () => {
-  //     context.emit('search', inputValue.value)
-  //   }
+    const search = () => {
+      context.emit('search', inputValue.value)
+    }
 
-  //   return {
-  //     search,
-  //     inputValue,
-  //   }
-  // },
+    return {
+      search,
+      inputValue,
+    }
+  },
 })
 </script>
 
