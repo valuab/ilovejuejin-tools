@@ -178,7 +178,7 @@ export default defineComponent({
     min-height: 30rem;
 
     .radio-search {
-      padding-top: 20px;
+      padding: 20px 20px 0;
     }
 
     .main-bg {

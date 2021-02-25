@@ -13,3 +13,12 @@ export interface IArticleItemType {
   totalViewCount?: number
   commentCount?: number
 }
+
+// 分类&kol文章列表
+export interface IArticleList {
+  list: IArticleItemType[]
+  total: number
+  typeId: string
+  page: number
+  listLoad: boolean
+}

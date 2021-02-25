@@ -76,7 +76,6 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   max-width: 1280px;
-  padding: 0 20px;
   margin: 0 auto;
 
   .radio-btn {
