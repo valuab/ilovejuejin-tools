@@ -11,7 +11,7 @@
               background: `url(${newList[0].smallImageUrl}) no-repeat 100% / 100%`,
             }"
           >
-            <no-ssr>
+            <client-only>
               <a-carousel dots-class="dots" autoplay arrows>
                 <template #prevArrow>
                   <div class="custom-slick-arrow-left">
@@ -38,7 +38,7 @@
                   </p>
                 </div>
               </a-carousel>
-            </no-ssr>
+            </client-only>
           </div>
         </div>
       </a-col>
