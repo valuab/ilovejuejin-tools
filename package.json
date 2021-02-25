@@ -3,8 +3,8 @@
   "version": "3.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env BASE_URL=http://pcapi-beta.djcars.cn/ nuxt-ts",
-    "build": "cross-env BASE_URL=https://pc.djcars.cn build nuxt-ts",
+    "dev": "cross-env BASE_URL=https://pc-beta.djcars.cn nuxt-ts",
+    "build": "cross-env BASE_URL=https://pc.djcars.cn nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
