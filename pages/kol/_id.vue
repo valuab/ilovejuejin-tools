@@ -2,7 +2,7 @@
   <div :style="{ width: '100%' }">
     <Header :detail="detail"></Header>
     <Recommend :list="recommendList"></Recommend>
-    <div class="main">
+    <div v-if="categoryTabs.length !== 0" class="main">
       <div class="bg" :style="{ maxHeight: ListBgHeight }"></div>
       <tabs :tabs="categoryTabs" class="tabContainer" @tabActive="tabActive">
         <template v-for="(articleColumn, index) in articleList">
@@ -214,7 +214,7 @@ export default defineComponent({
     top: 0;
     left: 0;
     width: 100%;
-    height: 45rem;
+    height: 810px;
     background-image: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
   }
 
