@@ -5,7 +5,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
-import { IArticleItemType } from '~/typings/post'
+import { IArticleItemType } from '~/api/apiPublic/type'
 
 const topicLink = {
   getCommendItemList: '/api/item/getCommendItemList', // 获取王牌节目列表

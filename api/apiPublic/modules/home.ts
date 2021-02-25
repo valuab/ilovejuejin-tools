@@ -6,7 +6,7 @@ import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { NEW_LIST_TYPE } from '~/enums/content'
 import { handleUrlParams } from '~/utils/data'
-import { IArticleItemType } from '~/typings/post'
+import { IArticleItemType } from '~/api/apiPublic/type'
 
 export const homeLinks = {
   getCommendList: '/api/index/getCommendList', // 获取王牌节目

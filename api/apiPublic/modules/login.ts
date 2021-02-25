@@ -1,6 +1,6 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
-import wxConfig from '~/config/wxConfig'
+import wxConfig from '~/assets/ts/wxConfig'
 import { handleUrlParams } from '~/utils/data'
 
 const loginLinks = {

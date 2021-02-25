@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
 import CryptoJS from 'crypto-js'
-import config from '~/config/index'
+import config from '~/assets/ts/config'
 
 export interface IToken {
   sign: string

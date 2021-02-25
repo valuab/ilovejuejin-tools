@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import wxConfig from '~/config/wxConfig'
+import wxConfig from '~/assets/ts/wxConfig'
 
 const wxLoginCSSlink = `${process.env.BASE_URL}/public/stylesheets/wxLogin.css`
 export default defineComponent({
