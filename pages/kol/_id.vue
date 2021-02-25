@@ -3,12 +3,7 @@
     <Header :detail="detail"></Header>
     <Recommend :list="recommendList"></Recommend>
     <div class="main">
-      <div
-        class="bg"
-        :style="{
-          maxHeight: articleList[articleIndex].total < 5 ? '30rem' : '45rem',
-        }"
-      ></div>
+      <div class="bg" :style="{ maxHeight: ListBgHeight }"></div>
       <tabs :tabs="categoryTabs" class="tabContainer" @tabActive="tabActive">
         <template v-for="(articleColumn, index) in articleList">
           <div :key="index" :hidden="articleIndex !== index">
@@ -26,7 +21,7 @@
               ></article-list>
             </div>
             <Pagination
-              :total="articleList[index].total || 0"
+              :total="articleList[index].total"
               class="pagination"
               @change="pageChange"
             ></Pagination>
@@ -44,6 +39,12 @@ import { ITopicListType } from '@apiModules/kol'
 import { setSearchHistory } from '@/utils/search'
 import { IArticleList } from '@/typings/post'
 
+interface ICategoryTabs {
+  title: string
+  id: number
+  key: number
+}
+
 interface IData {
   detail: {
     name: string
@@ -52,11 +53,7 @@ interface IData {
   } // kol详情
   kolId: string // kolId
   recommendList: ITopicListType[] // 王牌推荐俩表
-  categoryTabs: {
-    title: string
-    id: number
-    key: number
-  }[]
+  categoryTabs: ICategoryTabs[]
   articleIndex: number // 分组选择index
   articleList: IArticleList[] // 文章数组
 }
@@ -80,13 +77,12 @@ export default defineComponent({
     )
 
     // 获取分类列表
-    let categoryTabs: any[] = []
+    let categoryTabs: ICategoryTabs[] = []
     const copyUserList = []
     let articleList: IArticleList[] = []
     const categoryRes = await app.$http.kol.getListByHostUserId({
       userId: route.params.id,
     })
-
     if (categoryRes.total) {
       for (let i = 0; i < categoryRes.list?.length; i++) {
         copyUserList.push({
@@ -103,6 +99,7 @@ export default defineComponent({
       })
       categoryTabs = copyUserList
       articleList = Array(copyUserList.length).fill({})
+
       articleList[0] = {
         list: articleRes.list,
         total: articleRes.total,
@@ -137,6 +134,11 @@ export default defineComponent({
       articleIndex: 0,
       articleList: [],
     }
+  },
+  computed: {
+    ListBgHeight(): string {
+      return this.articleList[this.articleIndex]?.total < 5 ? '478px' : '810px'
+    },
   },
   methods: {
     /**
@@ -218,7 +220,7 @@ export default defineComponent({
 
   .tabContainer {
     width: 1280px;
-    padding: 0 20px;
+    padding: 30px 20px 0;
     margin: 0 auto;
   }
 

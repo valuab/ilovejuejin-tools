@@ -62,8 +62,8 @@ export default defineComponent({
   setup() {
     /** ***** TOGGLE START ******************/
     const offsetX: number = 420
-    const listBox = ref<any>(null)
-    const listContainer = ref<any>(null)
+    const listBox = ref<null | HTMLElement>(null)
+    const listContainer = ref<null | HTMLElement>(null)
     const toggle = reactive({
       ifToggle: useToggleShowOrHide(listContainer, listBox),
       disabledLeft: true,

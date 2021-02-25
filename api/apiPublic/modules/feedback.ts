@@ -16,9 +16,9 @@ export const globalLinks = {
 interface ICreateParams {
   captcha: string
   categoryId: number
-  osTypeId: number
+  osTypeId: number | string
   model: string
-  versionCode: string
+  versionCode: string | number
   content: string
   contact: string
 }
@@ -28,21 +28,26 @@ export interface ICreateResult extends IApiResult {
   }
 }
 
-export interface IListType {
+export interface IAppVersionType {
   id: number
-  name: string
+  name?: string
+  versionName: string
 }
 
 export interface IAppVersionResult extends IApiResult {
   result: {
-    list: Array<IListType>
+    list: Array<IAppVersionType>
     total: number
   }
 }
 
+export interface ICategoryListType {
+  id: number
+  name: string
+}
 export interface ICategoryListResult extends IApiResult {
   result: {
-    list: Array<IListType>
+    list: Array<ICategoryListType>
     total: number
   }
 }
@@ -64,7 +69,7 @@ export default ($axios: NuxtAxiosInstance) => {
     },
 
     async getFeedbackCategory() {
-      const { data } = await $axios.get<IAppVersionResult>(
+      const { data } = await $axios.get<ICategoryListResult>(
         globalLinks.getFeedbackCategory
       )
 

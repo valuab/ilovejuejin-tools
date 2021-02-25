@@ -17,7 +17,7 @@
     <div class="main">
       <div
         class="main-bg"
-        :style="{ maxHeight: total < 5 ? '30rem' : '45rem' }"
+        :style="{ maxHeight: total < 5 ? '384px' : '716px' }"
       ></div>
       <radio-and-search
         class="radio-search"
@@ -182,7 +182,6 @@ export default defineComponent({
     }
 
     .main-bg {
-      display: none;
       position: absolute;
       top: 0;
       left: 0;

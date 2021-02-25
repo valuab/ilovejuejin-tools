@@ -2,13 +2,8 @@
   <div :style="{ width: '100%' }">
     <Header :detail="detail"></Header>
     <Recommend :list="recommendList"></Recommend>
-    <div class="main">
-      <div
-        class="bg"
-        :style="{
-          maxHeight: articleList[articleIndex].total < 5 ? '30rem' : '45rem',
-        }"
-      ></div>
+    <div v-if="userTabs.length !== 0" class="main">
+      <div class="bg" :style="{ maxHeight: ListBgHeight }"></div>
       <tabs :tabs="userTabs" class="tabContainer" @tabActive="tabActive">
         <template v-for="(articleColumn, index) in articleList">
           <div :key="index" :hidden="articleIndex !== index">
@@ -43,6 +38,12 @@ import { IProgramListType } from '@apiModules/category'
 import { setSearchHistory } from '@/utils/search'
 import { IArticleList } from '@/typings/post'
 
+interface IUserTabs {
+  title: string
+  id: number
+  key: number
+}
+
 interface IData {
   detail: {
     name: string
@@ -51,11 +52,7 @@ interface IData {
   }
   categoryId: string
   recommendList: IProgramListType[]
-  userTabs: {
-    title: string
-    id: number
-    key: number
-  }[]
+  userTabs: IUserTabs[]
   articleIndex: number // 分组选择index
   articleList: IArticleList[]
 }
@@ -79,7 +76,7 @@ export default defineComponent({
     })
 
     // 获取kol列表
-    let userTabs: any[] = []
+    let userTabs: IUserTabs[] = []
     const copyUserList = []
     let articleList: IArticleList[] = []
     const userRes = await app.$http.category.getHostListByCategoryId({
@@ -139,11 +136,16 @@ export default defineComponent({
       articleList: [],
     }
   },
+  computed: {
+    ListBgHeight(): string {
+      return this.articleList[this.articleIndex]?.total < 5 ? '478px' : '810px'
+    },
+  },
   methods: {
     /**
      * @description: tab切换
      */
-    tabActive(key: any) {
+    tabActive(key: number) {
       this.articleIndex = key
       if (!this.articleList[key]?.list) {
         this.getArticleList()
@@ -212,13 +214,13 @@ export default defineComponent({
     top: 0;
     left: 0;
     width: 100%;
-    height: 45rem;
+    height: 810px;
     background-image: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
   }
 
   .tabContainer {
     width: 1280px;
-    padding: 0 20px;
+    padding: 30px 20px 0;
     margin: 0 auto;
   }
 
@@ -234,5 +236,10 @@ export default defineComponent({
   .pagination {
     margin-top: 30px;
   }
+}
+.none {
+  margin-top: 50px;
+  @include flex(column, center, center);
+  @include text($font-size-base, #cccccc);
 }
 </style>

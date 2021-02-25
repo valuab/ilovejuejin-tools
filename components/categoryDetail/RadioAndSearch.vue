@@ -47,8 +47,9 @@ export default defineComponent({
     /**
      * @description: 监听radio改变
      */
-    const onChange = (e: any): void => {
-      const value = e.target.value
+    const onChange = (e: Event): void => {
+      const target = e.target as HTMLInputElement
+      const value = target.value
       context.emit('radio', value)
     }
 

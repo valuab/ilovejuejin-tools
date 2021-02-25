@@ -1,12 +1,12 @@
 import { mutationTree, actionTree } from 'typed-vuex'
-import { IListType } from '@apiModules/feedback'
+import { IAppVersionType, ICategoryListType } from '@apiModules/feedback'
 
 export interface IGlobalState {
   isSearchPopup: Boolean // 搜索弹窗显示
   isFeedBack: Boolean // 反馈弹窗显示
   isLoginPopUpShow: boolean // 登录弹窗显示
-  feedBackTabsList: IListType[] // 反馈弹窗单选列表
-  feedBackAppVersion: IListType[] // 反馈弹窗app版本列表
+  feedBackTabsList: ICategoryListType[] // 反馈弹窗单选列表
+  feedBackAppVersion: IAppVersionType[] // 反馈弹窗app版本列表
 }
 
 export const namespaced = true

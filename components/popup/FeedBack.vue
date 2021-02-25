@@ -137,14 +137,29 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 import { Radio, Input, Dropdown, Menu, message } from 'ant-design-vue'
 
-import { IListType, globalLinks } from '@apiModules/feedback'
+import {
+  IAppVersionType,
+  ICategoryListType,
+  globalLinks,
+} from '@apiModules/feedback'
 
 import PopupMask from './PopupMask.vue'
 
+interface IAppIssueList {
+  title: string
+  iconAni: string
+  items: IAppVersionType[]
+  value: number
+}
+
 interface IData {
-  radioList: Array<IListType>
+  radioList: Array<ICategoryListType>
   tabIndex: number
-  appIssue: any
+  appIssue: {
+    inputValue: string
+    textArea: string
+    list: IAppIssueList[]
+  }
   dropdownIndex: number
   issueValue: {
     contact: string
@@ -193,7 +208,7 @@ export default defineComponent({
           {
             title: '选择APP版本',
             iconAni: '',
-            items: this.$accessor.global.feedBackAppVersion,
+            items: [],
             value: NaN,
           },
         ],
@@ -209,13 +224,17 @@ export default defineComponent({
   },
   fetch() {
     this.$accessor.global.getFeedBackTabs()
-    this.$accessor.global.getFeedBackVersion()
+    this.$accessor.global.getFeedBackVersion().then(() => {
+      this.appIssue.list[1].items = this.$accessor.global.feedBackAppVersion
+    })
     this.toggleVerify()
   },
   computed: {
     disabled() {
       if (this.tabIndex === 1) {
-        const dropdownNull = this.appIssue.list.some((item: any) => !item.value)
+        const dropdownNull = this.appIssue.list.some(
+          (item: IAppIssueList) => !item.value
+        )
         if (
           this.appIssue.inputValue &&
           this.appIssue.textArea &&
@@ -249,8 +268,7 @@ export default defineComponent({
      * @description: 监听radio改变
      */
     onChange(e: any) {
-      const value = e.target.value
-      this.tabIndex = value
+      this.tabIndex = e.target.value
     },
 
     /**
@@ -265,8 +283,6 @@ export default defineComponent({
      * @description: 下拉列表显示与隐藏
      */
     visibleChange(visible: boolean) {
-      console.log(this.dropdownIndex, visible)
-
       this.appIssue.list[this.dropdownIndex].iconAni = visible
         ? 'transform: rotateX(180deg)'
         : ''
