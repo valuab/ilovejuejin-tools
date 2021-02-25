@@ -62,12 +62,15 @@ export default defineComponent({
 
   data(): IDataType {
     return {
-      kolList: [],
+      kolList: [] as IKolListType[],
       history: [],
     }
   },
 
-  async created() {},
+  async fetch() {
+    const { list } = await this.$http.search.getKolList()
+    this.kolList = list
+  },
 
   mounted() {
     this.history = getSearchHistory()

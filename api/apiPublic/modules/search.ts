@@ -129,20 +129,11 @@ export interface ISearchByCars extends IApiResult {
   }
 }
 
-export interface IKolListType extends IApiResult {
-  result: {
-    forumId: number
-    postId: number
-    title: string
-    smallImageUrl: string
-    totalViewCount: number
-    commentCount: number
-    publishTime: String
-    userId: number
-    userName: String
-    itemKeywordName: String
-    itemCategoryName: String
-  }
+export interface IKolListType {
+  userId: number
+  nickname: string
+  smallImageUrl: string
+  postCount: string
 }
 
 export interface IKolListResult extends IApiResult {
