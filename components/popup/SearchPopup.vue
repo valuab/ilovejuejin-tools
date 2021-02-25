@@ -59,7 +59,7 @@ export default defineComponent({
     PopupMask,
   },
   emits: ['showSearch'],
-
+  setup(_props, _context) {},
   data(): IDataType {
     return {
       kolList: [] as IKolListType[],

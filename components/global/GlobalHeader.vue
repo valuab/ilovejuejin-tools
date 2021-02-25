@@ -81,8 +81,13 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
+import SearchPopup from '@/components/popup/SearchPopup.vue'
+
 export default defineComponent({
   name: 'GlobalHeader',
+  components: {
+    SearchPopup,
+  },
   emits: ['showSearch'],
   setup() {
     // 商城menu子item样式
