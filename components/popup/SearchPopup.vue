@@ -67,10 +67,7 @@ export default defineComponent({
     }
   },
 
-  async created() {
-    const kolList = await this.$http.search.getKolList()
-    this.kolList = kolList
-  },
+  async created() {},
 
   mounted() {
     this.history = getSearchHistory()
