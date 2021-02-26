@@ -14,42 +14,45 @@ export default defineComponent({
   components: {
     Article,
   },
-  // setup(_props: any, _context: any) {
-  //   const route: any = useRoute()
-  //   const params = toRefs(route.params) // 参数
-  //   const { id, forumId, viewUserId, hostUserId } = params
+  async asyncData({ app, route }) {
+    const params = route.params
+    const headerData = localStorage.getItem('headerData') || '{}'
+    const viewUserId = JSON.parse(headerData)?.uid || 0
 
-  //   // 获取帖子
-  //   const getPostDetail = async () => {
-  //     return getPost(id, forumId, viewUserId)
-  //   }
-  //   // 最近发表
-  //   const getNewListByHostUserIdDetails = async () => {
-  //     return getNewListByHostUserId(hostUserId, viewUserId)
-  //   }
-  //   // 帖子浏览量更新
-  //   const updateViewCountForAsyncDetails = async () => {
-  //     return updateViewCountForAsync(id, forumId)
-  //   }
-  //   // 帖子点赞
-  //   const supportPostDetails = async () => {
-  //     return supportPost(id, forumId)
-  //   }
+    // 获取帖子对象
+    const post = await app.$http.posts.getPost({
+      id: Number(params.id),
+      forumId: Number(params.forumId),
+      viewUserId,
+    })
 
-  //   return {
-  //     getPostDetail,
-  //     getNewListByHostUserIdDetails,
-  //     updateViewCountForAsyncDetails,
-  //     supportPostDetails,
-  //   }
-  // },
-  // async asyncData({ app, route }) {
-  //   const params = route.params
-  //   const { id, forumId, viewUserId, hostUserId } = params
-  //   const getPostDetail = await app.$http.posts.getPost(
-  //     id,
-  //   )
-  // },
+    // 获取最近发表
+    const getItemListByHostUserId = await app.$http.posts.getItemListByHostUserId(
+      {
+        hostUserId: post.userId,
+        viewUserId,
+      }
+    )
+
+    // 帖子浏览量更新
+    const updateViewCountForAsync = app.$http.posts.updateViewCountForAsync({
+      id: Number(params.id),
+      forumId: Number(params.forumId),
+    })
+
+    // 帖子点赞
+    const supportPost = app.$http.posts.supportPost({
+      postId: Number(params.id),
+      forumId: Number(params.forumId),
+    })
+
+    return {
+      post,
+      getItemListByHostUserId,
+      updateViewCountForAsync,
+      supportPost,
+    }
+  },
 })
 </script>
 

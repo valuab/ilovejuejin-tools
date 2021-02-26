@@ -1,5 +1,5 @@
 <template>
-  <menu-container class="menu-container">
+  <default class="menu-container">
     <!-- 输入组件 -->
     <div class="search-content">
       <SearchInput :keyword="keyword" @search="search" />
@@ -21,7 +21,7 @@
     <!--  -->
     <!-- 需要添加异步 -->
     <SearchError v-if="!typeList.length && !allList.length" />
-  </menu-container>
+  </default>
 </template>
 
 <script lang="ts">
@@ -54,6 +54,7 @@ export default defineComponent({
     const keyword: string = query.keyword as string // 搜索关键字
 
     let categoryId: number, keywordId: number, hostUserId: number
+    // typeList: Array[IArticleList]
     switch (query.type) {
       case SEARCH_TYPE[1]:
         categoryId = Number(query.categoryId)
