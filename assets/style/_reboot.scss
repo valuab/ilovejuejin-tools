@@ -41,3 +41,9 @@ button:focus {
 .ant-popover-inner-content {
   padding: 0;
 }
+
+// 顶部栏menu设置fixed
+// 因为顶部popup定位默认是absolute  会随着页面滚动消失
+.ant-menu-submenu-popup {
+	position: fixed;
+}

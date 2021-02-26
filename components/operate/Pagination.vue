@@ -16,7 +16,6 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { Pagination } from 'ant-design-vue'
 
 function renderVNode(_: any, { attrs: { vnode } }: any) {
   return vnode
@@ -30,7 +29,6 @@ export interface IchangeParam {
 export default defineComponent({
   name: 'Pagination',
   components: {
-    APagination: Pagination,
     renderVNode,
   },
   props: {

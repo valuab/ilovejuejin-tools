@@ -19,6 +19,7 @@ import {
   Empty,
   Spin,
   ConfigProvider,
+  Pagination,
 } from 'ant-design-vue'
 
 Vue.use(Avatar)
@@ -40,3 +41,4 @@ Vue.use(List)
 Vue.use(Empty)
 Vue.use(Spin)
 Vue.use(ConfigProvider)
+Vue.use(Pagination)

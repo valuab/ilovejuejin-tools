@@ -111,6 +111,7 @@ export default defineComponent({
   border-right: 1px solid #e6e6e6;
   box-sizing: border-box;
   overflow: hidden;
+  @include scrollHover;
 
   &:hover {
     overflow-y: scroll;
@@ -145,5 +146,8 @@ export default defineComponent({
 // 去掉选中颜色
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #fff;
+  a {
+    color: #000;
+  }
 }
 </style>

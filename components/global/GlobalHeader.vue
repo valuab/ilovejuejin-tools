@@ -1,5 +1,5 @@
 <template>
-  <div class="header-wrap flex-center">
+  <div class="header-wrap">
     <nuxt-link to="/">
       <img src="@images/logo.png" width="160px" height="64px" alt="logo" />
     </nuxt-link>
@@ -143,10 +143,13 @@ export default defineComponent({
   padding: 8px 15px;
   background: #fff;
   box-shadow: inset 0 -1px 0 0 #e6e6e6;
+  display: flex;
+  align-items: center;
 
   .menu {
     padding-left: 30px;
     border: none;
+    display: flex;
 
     .menu-item {
       padding: 0 30px;
