@@ -10,7 +10,7 @@
           </div>
         </div>
         <aside class="qrimg">
-          <img src="/assets/images/logo.png" />
+          <img src="@images/logo.png" />
         </aside>
       </div>
     </header>
@@ -39,7 +39,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 import { IchangeParam } from '@/components/operate/Pagination.vue'
-import { IArticleItemType } from '@/typings/post'
+import { IArticleItemType } from '@/api/apiPublic/type'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 

@@ -32,8 +32,11 @@ export default {
 
   // server config
   server: {
-    host: internalIp.v4.sync(),
-    port: 3000,
+    host:
+      process.env.NODE_ENV !== 'production'
+        ? internalIp.v4.sync()
+        : '127.0.0.1',
+    port: 9038,
   },
 
   // router config
@@ -90,7 +93,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     retry: { retries: 3 },
-    debug: process.env._ENV !== 'production',
+    debug: process.env.NODE_ENV !== 'production',
     timeout: 5000,
     proxy: true,
   },

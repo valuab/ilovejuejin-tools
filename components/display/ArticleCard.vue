@@ -30,7 +30,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType, toRefs } from '@nuxtjs/composition-api'
-import { IArticleItemType } from '@/typings/post'
+import { IArticleItemType } from '@/api/apiPublic/type'
 import { handleTime } from '@/utils/data'
 
 export default defineComponent({

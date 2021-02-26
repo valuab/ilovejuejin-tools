@@ -15,7 +15,7 @@
 ## 资源
 
 ```
-测试域名: http://pcapi-beta.djcars.cn
+测试域名: https://pcapi-beta.djcars.cn
 正式域名: https://pc.djcars.cn
 ```
 ## 目录结构

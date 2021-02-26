@@ -43,7 +43,7 @@ import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { IProgramListType } from '@apiModules/category'
 import { POST_RADIO_TYPE } from '@/enums/content'
 import { setSearchHistory } from '@/utils/search'
-import { IArticleList } from '@/typings/post'
+import { IArticleList } from '@/api/apiPublic/type'
 import GlobalEmpty from '~/components/global/GlobalEmpty.vue'
 
 interface IUserTabs {
