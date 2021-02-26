@@ -39,7 +39,6 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { IchangeParam } from '@/components/operate/Pagination.vue'
-
 import { IProgramListType } from '@apiModules/category'
 import { POST_RADIO_TYPE } from '@/enums/content'
 import { setSearchHistory } from '@/utils/search'

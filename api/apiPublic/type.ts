@@ -1,6 +1,7 @@
 /**
  * api 公共类型
  */
+import { POST_RADIO_TYPE } from '~/enums/content'
 
 // 文章栏目类型
 export interface IArticleItemType {
@@ -18,7 +19,7 @@ export interface IArticleItemType {
 export interface IArticleList {
   list: IArticleItemType[]
   total: number
-  typeId: number | string
+  typeId: POST_RADIO_TYPE | string
   page: number
   listLoad: boolean
 }
