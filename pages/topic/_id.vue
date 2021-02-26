@@ -37,17 +37,18 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+
 import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { IArticleItemType } from '@/typings/post'
-
 import { setSearchHistory } from '@/utils/search'
+import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 
 interface IData {
-  id: number | string
+  id: string
   listLoad: Boolean
   list: Array<IArticleItemType>
   total: number
-  typeId: string
+  typeId: number | string
   page: number
 }
 
@@ -71,7 +72,7 @@ export default defineComponent({
   },
   data(): IData {
     return {
-      id: 0, // 节目ID
+      id: '', // 节目ID
       listLoad: true, // 加载动画
       list: [], // 文章列表
       total: 0, // 总数
@@ -85,7 +86,12 @@ export default defineComponent({
      */
     onRadio(value: number) {
       this.listLoad = true
-      const typeId = value === 1 ? '0' : value === 2 ? '1' : ''
+      const typeId =
+        value === 1
+          ? POST_RADIO_TYPE.IMAGE_POST
+          : value === 2
+          ? POST_RADIO_TYPE.VIDEO_POST
+          : ''
       this.typeId = typeId
       this.page = 1
       this.getArticleList()
@@ -95,7 +101,9 @@ export default defineComponent({
      * @description: 搜索
      */
     onSearch(value: string) {
-      setSearchHistory(value)
+      setSearchHistory(value).then(() => {
+        this.$router.push(`/search?type=${SEARCH_TYPE.LABEL}&keyword=${value}`)
+      })
     },
 
     /**

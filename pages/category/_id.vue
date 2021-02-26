@@ -4,7 +4,12 @@
     <Recommend :list="recommendList"></Recommend>
     <div v-if="userTabs.length !== 0" class="main">
       <div class="bg" :style="{ maxHeight: ListBgHeight }"></div>
-      <tabs :tabs="userTabs" class="tabContainer" @tabActive="tabActive">
+      <tabs
+        id="tabsAnchor"
+        :tabs="userTabs"
+        class="tabContainer"
+        @tabActive="tabActive"
+      >
         <template v-for="(articleColumn, index) in articleList">
           <div :key="index" :hidden="articleIndex !== index">
             <radio-and-search
@@ -19,6 +24,7 @@
               ></article-list>
             </div>
             <Pagination
+              v-anchor="'tabsAnchor'"
               :total="articleList[index].total || 0"
               class="pagination"
               @change="pageChange"
@@ -35,6 +41,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import { IchangeParam } from '@/components/operate/Pagination.vue'
 
 import { IProgramListType } from '@apiModules/category'
+import { POST_RADIO_TYPE } from '@/enums/content'
 import { setSearchHistory } from '@/utils/search'
 import { IArticleList } from '@/typings/post'
 import GlobalEmpty from '~/components/global/GlobalEmpty.vue'
@@ -98,7 +105,7 @@ export default defineComponent({
         {
           page: 1,
           categoryId: route.params.id,
-          hostUserId: copyUserList[0].key,
+          hostUserId: copyUserList[0].id,
           viewUserId: app.$accessor.userInfo.userId,
         }
       )
@@ -166,7 +173,12 @@ export default defineComponent({
      * @description: 单选框
      */
     onRadio(value: number) {
-      const typeId = value === 1 ? '0' : value === 2 ? '1' : ''
+      const typeId =
+        value === 1
+          ? POST_RADIO_TYPE.IMAGE_POST
+          : value === 2
+          ? POST_RADIO_TYPE.VIDEO_POST
+          : ''
       this.articleList[this.articleIndex].typeId = typeId
       this.articleList[this.articleIndex].page = 1
       this.getArticleList()

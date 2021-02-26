@@ -18,7 +18,7 @@ export interface IArticleItemType {
 export interface IArticleList {
   list: IArticleItemType[]
   total: number
-  typeId: string
+  typeId: number | string
   page: number
   listLoad: boolean
 }

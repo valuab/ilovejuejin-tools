@@ -133,7 +133,11 @@
     </a-row>
     <!-- 栏目二 END -->
     <!-- tabs START -->
-    <tabs :tabs="categoryTabsList" @tabActive="getListByCategoryId">
+    <tabs
+      id="tabsAnchor"
+      :tabs="categoryTabsList"
+      @tabActive="getListByCategoryId"
+    >
       <template v-for="(categoryColumn, index) in categoryList">
         <div
           :key="index"
@@ -145,6 +149,7 @@
             :load="categoryTabsLoad"
           ></article-list>
           <pagination
+            v-anchor="'tabsAnchor'"
             :total="categoryColumn.total || 0"
             :default-page-size="16"
             @change="changeCategory"

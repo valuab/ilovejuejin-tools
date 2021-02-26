@@ -135,7 +135,7 @@ export default defineComponent({
 
   & > h1 {
     margin-top: 60px;
-
+    line-height: 32px;
     @include text(32px, #000, bold);
   }
 

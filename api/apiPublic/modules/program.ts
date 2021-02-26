@@ -33,7 +33,7 @@ export interface ICommendListResult extends IApiResult {
 
 export interface ICommendItemParams {
   viewUserId?: number
-  keywordId: number | string
+  keywordId: string
 }
 export interface ICommendItemResult extends IApiResult {
   result: {
@@ -54,9 +54,9 @@ export interface IOpItemResult extends IApiResult {
 }
 
 export interface IArticleListParams {
-  itemId: string | number
+  itemId: string
   viewUserId?: number
-  typeId?: string
+  typeId?: number | string
   page: number
 }
 export interface IArticleListResult extends IApiResult {

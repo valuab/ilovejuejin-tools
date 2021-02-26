@@ -46,7 +46,11 @@ export default {
   css: ['./assets/style/index.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/antd-ui', '@/plugins/setup-axios'],
+  plugins: [
+    '@/plugins/antd-ui',
+    '@/plugins/setup-axios',
+    '@/plugins/directives',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

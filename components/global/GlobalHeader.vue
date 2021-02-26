@@ -83,6 +83,8 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 import SearchPopup from '@/components/popup/SearchPopup.vue'
 
+type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
+
 export default defineComponent({
   name: 'GlobalHeader',
   components: {
@@ -108,6 +110,25 @@ export default defineComponent({
 
     showSearchPopup() {
       this.$accessor.global.showSearchPopup()
+    },
+
+    menuClick(type: clickType) {
+      switch (type) {
+        case 'taobao':
+          window.open('https://djcars.taobao.com/', '_blank')
+          break
+        case 'tmall':
+          window.open('https://djcsccp.tmall.com/', '_blank')
+          break
+        case 'qhc':
+          window.open('https://vkool.djcars.cn/', '_blank')
+          break
+        case 'vkoll':
+          window.open('https://vkool.djcars.cn/', '_blank')
+          break
+        default:
+          break
+      }
     },
   },
 })
@@ -175,5 +196,9 @@ export default defineComponent({
 
 .ant-menu .ant-menu-item-selected {
   color: #000;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #fff;
 }
 </style>

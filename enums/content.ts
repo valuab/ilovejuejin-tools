@@ -12,3 +12,9 @@ export enum SEARCH_TYPE {
   HOST = 4, // 主持人搜索
   CAR = 5, // 搜索车型
 }
+
+// kol&节目&分类 文章选择
+export enum POST_RADIO_TYPE {
+  IMAGE_POST = 0,
+  VIDEO_POST = 1,
+}
