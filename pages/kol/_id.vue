@@ -96,6 +96,7 @@ export default defineComponent({
         page: 1,
         categoryId: copyUserList[0].id,
         hostUserId: route.params.id,
+        viewUserId: app.$accessor.userInfo.userId,
       })
       categoryTabs = copyUserList
       articleList = Array(copyUserList.length).fill({})
@@ -190,6 +191,7 @@ export default defineComponent({
           hostUserId: this.kolId,
           typeId,
           page,
+          viewUserId: this.$accessor.userInfo.userId,
         })
         .then(({ list, total }) => {
           this.$set(this.articleList, this.articleIndex, {

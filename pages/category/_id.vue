@@ -99,6 +99,7 @@ export default defineComponent({
           page: 1,
           categoryId: route.params.id,
           hostUserId: copyUserList[0].key,
+          viewUserId: app.$accessor.userInfo.userId,
         }
       )
       userTabs = copyUserList
@@ -192,6 +193,7 @@ export default defineComponent({
           hostUserId: this.userTabs[this.articleIndex].id,
           typeId,
           page,
+          viewUserId: this.$accessor.userInfo.userId,
         })
         .then(({ list, total }) => {
           this.$set(this.articleList, this.articleIndex, {

@@ -46,11 +46,10 @@ export default defineComponent({
       articleList: [],
     }
   },
-  async created() {
-    const userId = this.$accessor.userInfo.userId
+  async fetch() {
     const { list } = await this.$http.program.getListByKeywordId({
       keywordId: this.$props.data.id,
-      viewUserId: userId,
+      viewUserId: this.$accessor.userInfo.userId,
     })
     this.articleList = list
   },

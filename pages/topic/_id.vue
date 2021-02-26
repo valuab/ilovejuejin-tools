@@ -59,6 +59,7 @@ export default defineComponent({
     const { list, total } = await app.$http.program.getListByItemId({
       page: 1,
       itemId: route.params.id,
+      viewUserId: app.$accessor.userInfo.userId,
     })
     return {
       id: route.params.id,
