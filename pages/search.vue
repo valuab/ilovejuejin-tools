@@ -30,9 +30,9 @@ import SearchInput from '@/components/search/SearchInput.vue'
 import SearchError from '@/components/search/SearchError.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
 import { IArticleList } from '@/typings/post'
+import { SEARCH_TYPE } from '~/enums/content'
 
 // 参数列表 // 标记
-const TYPE = ['ALL', 'ITEM', 'LABEL', 'HOST', 'CAR']
 
 interface IData {
   allList: IArticleList[]
@@ -47,42 +47,42 @@ export default defineComponent({
     ArticleList,
   },
   async asyncData({ app, route }) {
-    const params = route.params
+    const query = route.query
     const headerData = localStorage.getItem('headerData') || '{}'
     const viewUserId = JSON.parse(headerData)?.uid || 0
 
-    const keyword = params.keyword // 搜索关键字
+    const keyword: string = query.keyword as string // 搜索关键字
 
     let categoryId: number, keywordId: number, hostUserId: number
-    switch (params.name) {
-      case TYPE[1]:
-        categoryId = Number(params.categoryId)
+    switch (query.type) {
+      case SEARCH_TYPE[1]:
+        categoryId = Number(query.categoryId)
         await app.$http.search.getSearchByItemCategoryId({
           keyword,
           categoryId,
           viewUserId,
         })
         break
-      case TYPE[2]:
-        keywordId = Number(params.keywordId)
+      case SEARCH_TYPE[2]:
+        keywordId = Number(query.keywordId)
         await app.$http.search.getSearchByItemKeywordId({
           keyword,
           keywordId,
           viewUserId,
         })
         break
-      case TYPE[3]:
-        hostUserId = Number(params.hostUserId)
+      case SEARCH_TYPE[3]:
+        hostUserId = Number(query.hostUserId)
         await app.$http.search.searchByHostUserId({
           keyword,
           hostUserId,
           viewUserId,
         })
         break
-      case TYPE[4]:
-        categoryId = Number(params.categoryId)
-        keywordId = Number(params.keywordId)
-        hostUserId = Number(params.hostUserId)
+      case SEARCH_TYPE[4]:
+        categoryId = Number(query.categoryId)
+        keywordId = Number(query.keywordId)
+        hostUserId = Number(query.hostUserId)
 
         await app.$http.search.searchByCars({
           keyword,
