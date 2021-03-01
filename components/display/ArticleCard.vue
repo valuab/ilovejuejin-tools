@@ -3,7 +3,7 @@
     class="container"
     @click="navDetail(item.postId || item.id, item.forumId)"
   >
-    <img class="img" :src="item.smallImageUrl" alt="图片加载失败" />
+    <img v-lazy="item.smallImageUrl" class="img" alt="图片加载失败" />
     <span v-if="item.itemKeywordName" class="column-tag">{{
       item.itemKeywordName
     }}</span>

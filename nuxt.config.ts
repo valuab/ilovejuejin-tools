@@ -53,6 +53,7 @@ export default {
     '@/plugins/antd-ui',
     '@/plugins/setup-axios',
     '@/plugins/directives',
+    '@/plugins/lazyload.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

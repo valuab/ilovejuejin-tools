@@ -77,11 +77,19 @@ export default defineComponent({
   name: 'GlobalFooter',
   setup() {
     const iconList = ref([
-      { codeUrl: '@images/weixin_code.png', icon: 'OptionWechat' },
+      {
+        codeUrl:
+          'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
+        icon: 'OptionWechat',
+      },
       { url: 'https://weibo.com/cheyanlun', icon: 'OptionWeibo' },
-      { codeUrl: '@images/apple_code.png', icon: 'OptionApple' },
-      { codeUrl: '@images/android_code.png', icon: 'OptionAndroid' },
-      { codeUrl: '@images/h5_code.png', icon: 'OptionH5' },
+      {
+        codeUrl:
+          'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
+        icon: 'OptionApple',
+      },
+      { codeUrl: 'https://www.djcars.cn/', icon: 'OptionAndroid' },
+      { codeUrl: 'https://www.djcars.cn/', icon: 'OptionH5' },
     ])
     return {
       iconList,
