@@ -2,7 +2,12 @@
   <default class="menu-container">
     <!-- 输入组件 -->
     <div class="search-content">
-      <SearchInput :keyword="keyword" @search="search" />
+      <SearchInput
+        :keyword="keyword"
+        :type="type"
+        :type-name="typeName"
+        @search="search"
+      />
     </div>
     <!-- 详情 -->
     <h2 v-if="typeList.length" class="column-title">
@@ -16,11 +21,15 @@
       :list="typeList"
     />
     <!-- 全部 -->
-    <h2 v-if="allList.length" class="column-title">全部出品</h2>
-    <article-list v-if="allList.length" class="article-list" :list="allList" />
+    <h2 v-if="allList.list.length" class="column-title">全部出品</h2>
+    <article-list
+      v-if="allList.list.length"
+      class="article-list"
+      :list="allList.list"
+    />
     <!--  -->
     <!-- 需要添加异步 -->
-    <SearchError v-if="!typeList.length && !allList.length" />
+    <SearchError v-if="!typeList.length && !allList.list.length" />
   </default>
 </template>
 
@@ -29,14 +38,16 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import SearchInput from '@/components/search/SearchInput.vue'
 import SearchError from '@/components/search/SearchError.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
-import { IArticleList } from '@/typings/post'
 import { SEARCH_TYPE } from '~/enums/content'
 
 // 参数列表 // 标记
 
 interface IData {
-  allList: IArticleList[]
-  typeList: IArticleList[]
+  keyword: String
+  type: number // 搜索类型
+  typeName: String // 搜索类型关键字
+  allList: []
+  typeList: []
 }
 
 export default defineComponent({
@@ -52,46 +63,55 @@ export default defineComponent({
     const viewUserId = JSON.parse(headerData)?.uid || 0
 
     const keyword: string = query.keyword as string // 搜索关键字
+    const type = Number(query.type) // 搜索关键字
 
     let categoryId: number, keywordId: number, hostUserId: number
-    // typeList: Array[IArticleList]
-    switch (query.type) {
-      case SEARCH_TYPE[1]:
+    const typeList = []
+    let itemList
+    let itemKeyList
+    let hostUserList
+    let carsList
+    switch (type) {
+      case SEARCH_TYPE.ITEM:
         categoryId = Number(query.categoryId)
-        await app.$http.search.getSearchByItemCategoryId({
+        itemList = await app.$http.search.getSearchByItemCategoryId({
           keyword,
           categoryId,
           viewUserId,
         })
+        typeList.push(itemList)
         break
-      case SEARCH_TYPE[2]:
+      case SEARCH_TYPE.LABEL:
         keywordId = Number(query.keywordId)
-        await app.$http.search.getSearchByItemKeywordId({
+        itemKeyList = await app.$http.search.getSearchByItemKeywordId({
           keyword,
           keywordId,
           viewUserId,
         })
+        typeList.push(itemKeyList)
         break
-      case SEARCH_TYPE[3]:
+      case SEARCH_TYPE.HOST:
         hostUserId = Number(query.hostUserId)
-        await app.$http.search.searchByHostUserId({
+        hostUserList = await app.$http.search.searchByHostUserId({
           keyword,
           hostUserId,
           viewUserId,
         })
+        typeList.push(hostUserList)
         break
-      case SEARCH_TYPE[4]:
+      case SEARCH_TYPE.CAR:
         categoryId = Number(query.categoryId)
         keywordId = Number(query.keywordId)
         hostUserId = Number(query.hostUserId)
 
-        await app.$http.search.searchByCars({
+        carsList = await app.$http.search.searchByCars({
           keyword,
           categoryId,
           keywordId,
           hostUserId,
           viewUserId,
         })
+        typeList.push(carsList)
         break
       default:
         break
@@ -105,13 +125,19 @@ export default defineComponent({
 
     return {
       allList,
+      keyword,
+      typeList,
+      type,
     }
   },
 
   data(): IData {
     return {
       allList: [], // 全部文章列表
+      keyword: '',
       typeList: [], // 搜索类型文章列表
+      type: 0,
+      typeName: '',
     }
   },
   methods: {

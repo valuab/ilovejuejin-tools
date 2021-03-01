@@ -13,7 +13,11 @@
           <span @click="removeHistory">清空</span>
         </div>
         <div class="main">
-          <p v-for="(item, index) in history" :key="index" @click="navSearch">
+          <p
+            v-for="(item, index) in history"
+            :key="index"
+            @click="navSearch(item)"
+          >
             {{ item }}
           </p>
         </div>
@@ -94,8 +98,10 @@ export default defineComponent({
     /**
      * @description: 跳转至搜索页
      */
-    navSearch(value: string) {
-      this.$router.push({ path: '/Search?keyword=' + value })
+    navSearch(value: string, type: number, typeName: String) {
+      this.$router.push({
+        path: `/Search?keyword=${value}&type=${type}&typeName=${typeName}`,
+      })
       this.ifSearchpopup()
     },
 
@@ -103,7 +109,7 @@ export default defineComponent({
      * @description: 点击搜索
      */
     onSearch(value: string) {
-      setSearchHistory(value).then(() => this.navSearch(value))
+      setSearchHistory(value).then(() => this.navSearch(value, 1, ''))
     },
 
     /**

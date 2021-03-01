@@ -1,7 +1,7 @@
 <template>
   <article class="search-input">
-    <div class="column">
-      <p>KOL名称</p>
+    <div v-if="type > 0" class="column">
+      <p>{{ typeName }}</p>
       <Icon icon="CloseOrange" />
     </div>
     <input v-model="inputValue" class="input" />
@@ -17,6 +17,14 @@ export default defineComponent({
   components: {},
   props: {
     keyword: {
+      type: String,
+      default: '',
+    },
+    type: {
+      type: Number,
+      default: 0,
+    },
+    typeName: {
       type: String,
       default: '',
     },

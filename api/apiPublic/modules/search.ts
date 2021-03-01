@@ -52,80 +52,49 @@ interface ISearchByCarsParmas {
 /**
  * 输出解耦 START
  */
+interface ISearchStandard {
+  forumId: number
+  postId: number
+  title: string
+  smallImageUrl: string
+  totalViewCount: number
+  commentCount: number
+  publishTime: String
+  userId: number
+  userName: String
+  itemKeywordName: String
+  itemCategoryName: String
+}
+
 export interface ISearchAll extends IApiResult {
   result: {
-    forumId: number
-    postId: number
-    title: string
-    smallImageUrl: string
-    totalViewCount: number
-    commentCount: number
-    publishTime: String
-    userId: number
-    userName: String
-    itemKeywordName: String
-    itemCategoryName: String
+    total: number
+    list: Array<ISearchStandard>
   }
 }
 export interface ISearchByItemCategoryId extends IApiResult {
   result: {
-    forumId: number
-    postId: number
-    title: string
-    smallImageUrl: string
-    totalViewCount: number
-    commentCount: number
-    publishTime: String
-    userId: number
-    userName: String
-    itemKeywordName: String
-    itemCategoryName: String
+    total: number
+    list: Array<ISearchStandard>
   }
 }
 export interface ISearchByItemKeywordId extends IApiResult {
   result: {
-    forumId: number
-    postId: number
-    title: string
-    smallImageUrl: string
-    totalViewCount: number
-    commentCount: number
-    publishTime: String
-    userId: number
-    userName: String
-    itemKeywordName: String
-    itemCategoryName: String
+    total: number
+    list: Array<ISearchStandard>
   }
 }
 export interface ISearchByHostUserId extends IApiResult {
   result: {
-    forumId: number
-    postId: number
-    title: string
-    smallImageUrl: string
-    totalViewCount: number
-    commentCount: number
-    publishTime: String
-    userId: number
-    userName: String
-    itemKeywordName: String
-    itemCategoryName: String
+    total: number
+    list: Array<ISearchStandard>
   }
 }
 
 export interface ISearchByCars extends IApiResult {
   result: {
-    forumId: number
-    postId: number
-    title: string
-    smallImageUrl: string
-    totalViewCount: number
-    commentCount: number
-    publishTime: String
-    userId: number
-    userName: String
-    itemKeywordName: String
-    itemCategoryName: String
+    total: number
+    list: Array<ISearchStandard>
   }
 }
 
