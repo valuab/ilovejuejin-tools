@@ -47,8 +47,8 @@ interface IPostCommentParmas {
  * 输出解耦 START
  */
 
-interface ApiCommentDto {
-  id: String
+export interface IApiCommentDto {
+  id: string
   userId: number
   typeId: number
   contentId: string
@@ -56,10 +56,10 @@ interface ApiCommentDto {
 }
 
 export interface NewsCommentListResult extends IApiResult {
-  result: ApiCommentDto
+  result: IApiCommentDto
 }
 export interface NewCommentReplyListResult extends IApiResult {
-  result: ApiCommentDto
+  result: IApiCommentDto
 }
 export interface SupportCommentResult extends IApiResult {
   result: {

@@ -2,32 +2,44 @@
   <article class="commentList"></article>
 </template>
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { IApiCommentDto } from '@apiModules/comment.ts'
+
+interface IPost {
+  typeId: number
+  id: number
+}
+
+interface IData {
+  newsCommentList: IApiCommentDto[]
+}
 
 export default defineComponent({
   name: 'CommentList',
   components: {},
   props: {
-    post: {
-      type: Object,
-      default: () => {
-        return {}
-      },
+    data: {
+      type: Object as PropType<IPost>,
+      default: null,
     },
   },
-  // async fetch({ app, route }) {
-  //   const viewUserId = app.$accessor.userInfo.userId
-  //   const { id, typeId } = this.$props.post
+  data(): IData {
+    return {
+      newsCommentList: [],
+    }
+  },
+  // async fetch() {
+  //   const viewUserId = this.$accessor.userInfo.userId
   //   const sort = 0
   //   // 获取评论列表
-  //   const getNewsCommentList = await app.$http.comment.getNewsCommentList({
-  //     id,
-  //     typeId,
+  //   const getNewsCommentList = await this.$http.comment.getNewsCommentList({
+  //     id: this.$props.data.id,
+  //     typeId: this.$props.data.typeId,
   //     sort,
   //   })
 
   //   return {
-  //     getNewsCommentList,
+  //     // getNewsCommentList,
   //   }
   // },
   methods: {
