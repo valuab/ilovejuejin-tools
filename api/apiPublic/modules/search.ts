@@ -19,30 +19,35 @@ const searchLink = {
  * 参数约束 START
  */
 interface ISearchAllParmas {
-  keyword: string
+  keyword: String
   viewUserId: number
+  page: number
 }
 interface ISearchByItemCategoryIdParmas {
-  keyword: string
+  keyword: String
   categoryId: number
   viewUserId: number
+  page: number
 }
 interface ISearchByItemKeywordIdParmas {
-  keyword: string
+  keyword: String
   keywordId: number
   viewUserId: number
+  page: number
 }
 interface ISearchByHostUserIdParmas {
-  keyword: string
+  keyword: String
   hostUserId: number
   viewUserId: number
+  page: number
 }
 interface ISearchByCarsParmas {
-  keyword: string
+  keyword: String
   categoryId: number
   keywordId: number
   hostUserId: number
   viewUserId: number
+  page: number
 }
 
 /**
@@ -100,9 +105,9 @@ export interface ISearchByCars extends IApiResult {
 
 export interface IKolListType {
   userId: number
-  nickname: string
-  smallImageUrl: string
-  postCount: string
+  nickname: String
+  smallImageUrl: String
+  postCount: String
 }
 
 export interface IKolListResult extends IApiResult {

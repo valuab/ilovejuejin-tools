@@ -1,6 +1,6 @@
 <template>
   <article class="search-input">
-    <div v-if="type > 0" class="column">
+    <div v-if="type > 1" class="column">
       <p>{{ typeName }}</p>
       <Icon icon="CloseOrange" />
     </div>

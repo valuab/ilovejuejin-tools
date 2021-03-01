@@ -16,7 +16,7 @@
           <p
             v-for="(item, index) in history"
             :key="index"
-            @click="navSearch(item)"
+            @click="navSearch(item, 1, '')"
           >
             {{ item }}
           </p>
