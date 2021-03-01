@@ -115,6 +115,7 @@ export default {
     '@components': resolve(__dirname, './components'),
     '@icons': resolve(__dirname, './assets/images/icons'),
     '@apiModules': resolve(__dirname, './api/apiPublic/modules'),
+    '@apiPublic': resolve(__dirname, './api/apiPublic'),
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

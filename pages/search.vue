@@ -38,6 +38,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import SearchInput from '@/components/search/SearchInput.vue'
 import SearchError from '@/components/search/SearchError.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
+import { ISearchList } from '@apiPublic/type'
 import { SEARCH_TYPE } from '~/enums/content'
 
 // 参数列表 // 标记
@@ -46,8 +47,8 @@ interface IData {
   keyword: String
   type: number // 搜索类型
   typeName: String // 搜索类型关键字
-  allList: []
-  typeList: []
+  allList: ISearchList[]
+  typeList: ISearchList[]
 }
 
 export default defineComponent({
@@ -59,8 +60,7 @@ export default defineComponent({
   },
   async asyncData({ app, route }) {
     const query = route.query
-    const headerData = localStorage.getItem('headerData') || '{}'
-    const viewUserId = JSON.parse(headerData)?.uid || 0
+    const viewUserId = app.$accessor.userInfo.userId
 
     const keyword: string = query.keyword as string // 搜索关键字
     const type = Number(query.type) // 搜索关键字

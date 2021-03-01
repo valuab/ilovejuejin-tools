@@ -1,7 +1,7 @@
 <template>
   <!-- 居中 -->
   <container class="container">
-    <Article :article="article" />
+    <Article :article="post" />
   </container>
 </template>
 
@@ -19,14 +19,13 @@ export default defineComponent({
     Article,
   },
   async asyncData({ app, route }) {
-    const params = route.params
-    const headerData = localStorage.getItem('headerData') || '{}'
-    const viewUserId = JSON.parse(headerData)?.uid || 0
+    const query = route.query
+    const viewUserId = app.$accessor.userInfo.userId
 
     // 获取帖子对象
     const post = await app.$http.posts.getPost({
-      id: Number(params.id),
-      forumId: Number(params.forumId),
+      id: Number(query.id),
+      forumId: Number(query.forumId),
       viewUserId,
     })
 
@@ -40,14 +39,14 @@ export default defineComponent({
 
     // 帖子浏览量更新
     const updateViewCountForAsync = app.$http.posts.updateViewCountForAsync({
-      id: Number(params.id),
-      forumId: Number(params.forumId),
+      id: Number(query.id),
+      forumId: Number(query.forumId),
     })
 
     // 帖子点赞
     const supportPost = app.$http.posts.supportPost({
-      postId: Number(params.id),
-      forumId: Number(params.forumId),
+      postId: Number(query.id),
+      forumId: Number(query.forumId),
     })
 
     return {
