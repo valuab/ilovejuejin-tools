@@ -25,3 +25,10 @@ export interface IArticleList {
   page: number
   listLoad: boolean
 }
+
+// 列表& 搜索
+
+export interface ISearchList {
+  list: IArticleItemType[]
+  total: number
+}
