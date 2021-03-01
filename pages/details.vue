@@ -9,6 +9,10 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import Article from '@/components/details/Article.vue'
 
+/**
+ * 参数 id 帖子id
+ * 参数 forumId  栏目id
+ */
 export default defineComponent({
   name: 'Details',
   components: {

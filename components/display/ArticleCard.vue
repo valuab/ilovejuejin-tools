@@ -1,5 +1,5 @@
 <template>
-  <figure class="container" @click="navDetail">
+  <figure class="container" @click="navDetail(item.id, item.forumId)">
     <img class="img" :src="item.smallImageUrl" alt="图片加载失败" />
     <span v-if="item.itemKeywordName" class="column-tag">{{
       item.itemKeywordName
@@ -51,8 +51,16 @@ export default defineComponent({
     }
   },
   methods: {
-    navDetail() {
+    /**
+     * 跳转详情
+     * @param id 帖子id
+     * @param forumId 帖子forumId
+     */
+    navDetail(id: number, forumId: number) {
       // const history = this.$router.resolve({name: '/TopicDetail')
+      this.$router.push({
+        path: `/details?id=${id}&forumId=${forumId}`,
+      })
     },
   },
 })
