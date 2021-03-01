@@ -9,6 +9,16 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import Article from '@/components/details/Article.vue'
 
+// 参数列表 // 标记
+
+interface IData {
+  post: Object
+  query: {
+    id: String
+    forumId: String
+  }
+}
+
 /**
  * 参数 id 帖子id
  * 参数 forumId  栏目id
@@ -28,7 +38,6 @@ export default defineComponent({
       forumId: Number(query.forumId),
       viewUserId,
     })
-
     // 获取最近发表
     const getItemListByHostUserId = await app.$http.posts.getItemListByHostUserId(
       {
@@ -37,24 +46,39 @@ export default defineComponent({
       }
     )
 
-    // 帖子浏览量更新
-    const updateViewCountForAsync = app.$http.posts.updateViewCountForAsync({
-      id: Number(query.id),
-      forumId: Number(query.forumId),
-    })
-
-    // 帖子点赞
-    const supportPost = app.$http.posts.supportPost({
-      postId: Number(query.id),
-      forumId: Number(query.forumId),
-    })
-
     return {
       post,
       getItemListByHostUserId,
-      updateViewCountForAsync,
-      supportPost,
+      query,
     }
+  },
+  data(): IData {
+    return {
+      post: {},
+      query: {
+        id: '',
+        forumId: '',
+      },
+    }
+  },
+  methods: {
+    /**
+     * @description: 点赞
+     */
+    supportPost() {
+      const { query } = this
+      return this.$http.posts.supportPost({
+        postId: Number(query.id),
+        forumId: Number(query.forumId),
+      })
+    },
+    updateViewCountForAsync() {
+      const { query } = this
+      return this.$http.posts.updateViewCountForAsync({
+        id: Number(query.id),
+        forumId: Number(query.forumId),
+      })
+    },
   },
 })
 </script>

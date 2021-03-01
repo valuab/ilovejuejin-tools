@@ -27,7 +27,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 // import { Layout } from 'ant-design-vue'
 
 export default defineComponent({
-  name: 'SearchInput',
+  name: 'SearchError',
   components: {},
 })
 </script>

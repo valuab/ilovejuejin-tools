@@ -8,7 +8,7 @@ import { handleUrlParams } from '~/utils/data'
 import { IArticleItemType } from '~/api/apiPublic/type'
 
 const postLinks = {
-  getPost: '/api//post/getPost', // 帖子对象
+  getPost: '/api/post/getPost', // 帖子对象
   getItemListByHostUserId: '/api/post/getItemListByHostUserId', // 最近发表
   updateViewCountForAsync: '/api/post/updateViewCountForAsync', // 帖子浏览量更新
   supportPost: '/api/post/supportPost', // 帖子点赞
@@ -64,8 +64,8 @@ export interface IPostResult extends IApiResult {
     typeId: number
     topicId: number
     userId: number
-    title: string
-    content: string
+    title: String
+    content: String
     imageNum: number
     videoNum: number
     voiceNum: number
@@ -83,22 +83,22 @@ export interface IPostResult extends IApiResult {
     wxViewCount: number
     totalViewCount: number
 
-    createTime: string
-    createBy: string
+    createTime: String
+    createBy: String
     isFavourite: number
     longCreateTime: number
-    topicName: string
-    userName: string
-    wxThirdLogo: string
-    smallUserIconUrl: string
-    userInviteText: string
+    topicName: String
+    userName: String
+    wxThirdLogo: String
+    smallUserIconUrl: String
+    userInviteText: String
     kol: number
     red: number
-    smallImageUrl: string
+    smallImageUrl: String
     stepList: Array<IBuPostStep>
 
-    nickname: string
-    description: string
+    nickname: String
+    description: String
   }
 }
 

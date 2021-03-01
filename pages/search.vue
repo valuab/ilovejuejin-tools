@@ -1,5 +1,5 @@
 <template>
-  <default class="menu-container">
+  <div class="menu-container">
     <!-- 输入组件 -->
     <div class="search-content">
       <SearchInput
@@ -38,7 +38,7 @@
     <!--  -->
     <!-- 需要添加异步 -->
     <SearchError v-if="!typeList.length && !allList[0].list.length" />
-  </default>
+  </div>
 </template>
 
 <script lang="ts">
@@ -59,6 +59,7 @@ interface IData {
   allList: IArticleList[]
   searchAllPage: number
   typeList: IArticleList[]
+  typePage: number
   query: {
     keyword: String
     type: number
@@ -174,6 +175,7 @@ export default defineComponent({
       searchAllPage: 0, // 初始页码
       keyword: '', // 搜索关键字
       typeList: [], // 搜索类型文章列表
+      typePage: 0, // 分类页码
       type: 0,
       typeName: '',
       query: {
@@ -183,9 +185,6 @@ export default defineComponent({
     }
   },
   methods: {
-    search(e: any) {
-      console.log(e)
-    },
     /**
      * @description: 页码改变
      */
