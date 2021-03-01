@@ -1,5 +1,10 @@
 <template>
-  <img :width="size" :height="size" :src="qrSrc" alt="加载二维码失败" />
+  <div class="qrcodeBox">
+    <img :width="size" :height="size" :src="qrSrc" alt="加载二维码失败" />
+    <div class="qrcodeIcon">
+      <icon icon="LogoDjcar" :size="30" />
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref, toRefs, unref } from '@nuxtjs/composition-api'
@@ -29,3 +34,17 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.qrcodeBox {
+  position: relative;
+  .qrcodeIcon {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    margin-top: -15px;
+    margin-left: -15px;
+  }
+}
+</style>

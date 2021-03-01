@@ -52,7 +52,7 @@ export default defineComponent({
       },
       {
         icon: 'LogoObservation',
-        name: '大家车观测',
+        name: '大家车观察',
         offic: 'blue',
         miniapp: 'blue',
       },

@@ -67,7 +67,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: inherit;
+  background-color: #ffff;
 
   h1 {
     margin-bottom: 10px;
@@ -82,7 +82,7 @@ export default defineComponent({
   }
 
   .nav-detail {
-    background-color: inherit;
+    background-color: #ffff;
     border: none;
     box-shadow: none;
 

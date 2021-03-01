@@ -5,6 +5,8 @@ import { POST_RADIO_TYPE } from '~/enums/content'
 
 // 文章栏目类型
 export interface IArticleItemType {
+  postId: string
+  forumId: number
   title: string
   userName: string
   itemCategoryName: string

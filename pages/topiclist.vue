@@ -1,11 +1,13 @@
 <template>
-  <div class="container">
-    <div v-for="(item, index) in list" :key="index">
-      <topic-item class="topic-item" :data="item"></topic-item>
+  <div class="bg">
+    <div class="container">
+      <template v-for="(item, index) in list">
+        <topic-item :key="index" class="topic-item" :data="item"></topic-item>
+      </template>
+      <a-button v-if="list.length < total" class="add-btn" @click="addList">
+        查看更多
+      </a-button>
     </div>
-    <a-button v-if="list.length < total" class="add-btn" @click="addList">
-      查看更多
-    </a-button>
   </div>
 </template>
 <script lang="ts">
@@ -23,6 +25,7 @@ export default defineComponent({
     const { list, total } = await app.$http.program.getCommendItemList({
       page: 1,
     })
+
     return {
       list,
       total,
@@ -48,6 +51,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.bg {
+  width: 100%;
+  background-color: #fff;
+}
 .container {
   width: 1280px;
   padding: 0 20px;
@@ -55,13 +62,16 @@ export default defineComponent({
 
   .topic-item {
     padding-top: 60px;
+    &:last-child {
+      margin-bottom: 60px;
+    }
   }
 
   .add-btn {
     display: block;
     width: 300px;
     height: 60px;
-    margin: 60px auto 0;
+    margin: 60px auto;
     font-size: 16px;
     line-height: 60px;
     color: #666;

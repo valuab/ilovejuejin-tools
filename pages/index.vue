@@ -392,6 +392,7 @@ export default defineComponent({
         width: 100%;
         padding: 0 16px;
         line-height: 24px;
+        bottom: 0;
 
         @include text(24px, #fff, bold);
       }

@@ -1,9 +1,11 @@
 <template>
-  <figure
-    class="container"
-    @click="navDetail(item.postId || item.id, item.forumId)"
-  >
-    <img v-lazy="item.smallImageUrl" class="img" alt="图片加载失败" />
+  <figure class="container" @click="navDetail(item.postId, item.forumId)">
+    <img
+      v-lazy="item.smallImageUrl"
+      :src="item.smallImageUrl"
+      class="img"
+      alt="图片加载失败"
+    />
     <span v-if="item.itemKeywordName" class="column-tag">{{
       item.itemKeywordName
     }}</span>
@@ -59,7 +61,7 @@ export default defineComponent({
      * @param id 帖子id
      * @param forumId 帖子forumId
      */
-    navDetail(id: number, forumId: number) {
+    navDetail(id: string, forumId: number) {
       // const history = this.$router.resolve({name: '/TopicDetail')
       this.$router.push({
         path: `/details?id=${id}&forumId=${forumId}`,
