@@ -65,7 +65,6 @@ interface IData {
   query: {
     keyword: String
     type: number
-
     categoryId?: number
     keywordId?: number
     hostUserId?: number
@@ -100,6 +99,7 @@ export default defineComponent({
           viewUserId,
           page,
         })
+        // typeList.push(itemList)
         break
       case SEARCH_TYPE.LABEL:
         keywordId = Number(query.keywordId)
@@ -109,6 +109,7 @@ export default defineComponent({
           viewUserId,
           page,
         })
+        // typeList.push(itemKeyList)
         break
       case SEARCH_TYPE.HOST:
         hostUserId = Number(query.hostUserId)
@@ -118,6 +119,7 @@ export default defineComponent({
           viewUserId,
           page,
         })
+        // typeList.push(hostUserList)
         break
       case SEARCH_TYPE.CAR:
         categoryId = Number(query.categoryId)
@@ -131,6 +133,7 @@ export default defineComponent({
           viewUserId,
           page,
         })
+        // typeList.push(carsList)
         break
       default:
         break
