@@ -8,7 +8,7 @@
         @mouseover="mouseOver($event, index)"
         @mouseout="mouseOut($event)"
       >
-        <icon :icon="item.icon" :size="'30'" />
+        <icon :icon="item.icon" size="30" />
         <span>{{ item.name }}</span>
       </div>
     </div>

@@ -2,7 +2,7 @@
   <div class="qrcodeBox">
     <img :width="size" :height="size" :src="qrSrc" alt="加载二维码失败" />
     <div class="qrcodeIcon">
-      <icon icon="LogoDjcar" :size="30" />
+      <icon icon="LogoDjcar" size="30" />
     </div>
   </div>
 </template>

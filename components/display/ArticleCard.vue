@@ -21,11 +21,11 @@
         </div>
         <div>
           <p>
-            <Icon icon="ListView" :size="'10'"></Icon
+            <Icon icon="ListView" size="10"></Icon
             ><span>{{ item.totalViewCount }}</span>
           </p>
           <p>
-            <Icon icon="ListComment" :size="'10'"></Icon
+            <Icon icon="ListComment" size="10"></Icon
             ><span>{{ item.commentCount }}</span>
           </p>
         </div>

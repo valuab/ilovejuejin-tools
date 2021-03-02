@@ -1,7 +1,7 @@
 <template>
   <div class="list-container">
     <a-list
-      :grid="{ gutter: 16, column: 4 }"
+      :grid="{ gutter: 20, column: 4 }"
       :loading="load"
       :data-source="list"
       :split="false"
