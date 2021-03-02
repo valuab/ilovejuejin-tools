@@ -38,9 +38,10 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
 import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
+import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
+
 import { IArticleItemType } from '@/api/apiPublic/type'
 import { IOpItemResult } from '@apiModules/program'
 import { setSearchHistory } from '@/utils/search'
