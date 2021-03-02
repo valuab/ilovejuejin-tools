@@ -13,7 +13,9 @@
     <h2 v-if="typeList.length" class="column-title">
       飞度
       <div class="tag">车型</div>
-      <router-link class="column-title-nav" to="/toAll">查看全部 ></router-link>
+      <div v-if="typeList.length > 4" class="column-title-nav" @click="seeAll">
+        查看全部 >
+      </div>
     </h2>
     <article-list
       v-if="typeList.length"
@@ -83,6 +85,7 @@ export default defineComponent({
 
     const keyword: string = query.keyword as string // 搜索关键字
     const type = Number(query.type) // 搜索关键字
+    const typeName = query.typeName // 搜索关键字
 
     let categoryId: number, keywordId: number, hostUserId: number
     let typeList: any[] = []
@@ -165,6 +168,7 @@ export default defineComponent({
       keyword,
       typeList,
       query,
+      typeName,
       type,
     }
   },
@@ -271,6 +275,10 @@ export default defineComponent({
       })
     },
   },
+  /**
+   * @descripttion 查看全部
+   */
+  seeAll() {},
 })
 </script>
 
