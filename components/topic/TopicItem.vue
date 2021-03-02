@@ -3,7 +3,7 @@
     <header class="header">
       <div>
         <h1>{{ data.name }}</h1>
-        <p>{{ data.description }}</p>
+        <p class="text-hidden-1">{{ data.description }}</p>
       </div>
       <a-button class="nav-detail" @click="navAllDetail">查看全部 ></a-button>
     </header>

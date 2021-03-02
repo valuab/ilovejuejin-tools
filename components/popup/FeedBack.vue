@@ -2,7 +2,7 @@
   <popup-mask :direction="'Center'" :show-header="false" @hide="showFeedBack">
     <div class="box">
       <span class="close" @click="showFeedBack"
-        ><Icon icon="CloseBlack" font-size="20px"></Icon
+        ><Icon icon="CloseBlack" size="20"></Icon
       ></span>
       <div class="header">
         <h1>意见反馈</h1>
@@ -48,7 +48,7 @@
                   <a-menu
                     :style="{
                       height: dropDownItem.items.length >= 5 ? '160px' : '',
-                      overflowY: 'scroll',
+                      overflowY: 'auto',
                     }"
                     mode="inline"
                   >

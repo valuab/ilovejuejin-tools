@@ -24,7 +24,7 @@
             :to="{ name: 'topic-id', params: { id: item.id } }"
           >
             <img :src="item.smallImageUrl" alt="图片加载失败" srcset="" />
-            <span>{{ item.name }}</span>
+            <span class="text-hidden-1">{{ item.name }}</span>
           </nuxt-link>
         </div>
       </div>
@@ -135,6 +135,7 @@ export default defineComponent({
 
         & > .list-item {
           margin-right: 20px;
+          width: 190px;
           color: #000;
           cursor: pointer;
 

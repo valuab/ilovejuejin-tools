@@ -32,6 +32,10 @@ export default defineComponent({
   display: flex;
   align-items: center;
 
+  &:hover {
+    color: $link-color;
+  }
+
   & > .right {
     margin-left: 10px;
 

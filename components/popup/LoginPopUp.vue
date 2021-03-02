@@ -73,15 +73,15 @@ export default defineComponent({
   @include flex(column, center, center);
 
   #login-main {
-    height: 250px;
+    height: 200px;
   }
 
   .qrcode-mask {
     position: absolute;
-    top: 75px;
+    top: 50px;
     height: 200px;
     width: 200px;
-    background: rgba(#fff, 0);
+    background: #f5f5f5;
     .tips {
       width: 200px;
       height: 200px;
@@ -94,7 +94,7 @@ export default defineComponent({
   }
 
   .login-title {
-    margin-bottom: 24px;
+    margin-bottom: 0;
     font-size: 24px;
     font-weight: bold;
     color: #000;
@@ -111,6 +111,7 @@ export default defineComponent({
 
   .login-operate {
     margin-top: 30px;
+    margin-bottom: 26px;
 
     .checkbox-text {
       font-size: 12px;

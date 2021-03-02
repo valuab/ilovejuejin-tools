@@ -39,3 +39,27 @@ export const handleTime = (postTimeStamp: number): string => {
 
   return time
 }
+
+/**
+ * @description: d多行省略
+ * @param str 字符串
+ * @param num 最大字节数
+ */
+export const substrByByte = function (str: string, num: number) {
+  let bytesCount = 0
+  for (let i = 0; i < str.length; i++) {
+    const c = str.charAt(i)
+    // eslint-disable-next-line no-control-regex
+    if (/^[\u0000-\u00FF]$/.test(c)) {
+      bytesCount += 1
+    } else {
+      bytesCount += 2
+    }
+    if (bytesCount > num) {
+      return str.substr(0, i) + '...'
+    } else if (bytesCount === num) {
+      return str.substr(0, i + 1) + '...'
+    }
+  }
+  return str
+}

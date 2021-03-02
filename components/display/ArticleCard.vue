@@ -4,7 +4,7 @@
       v-lazy="item.smallImageUrl"
       :src="item.smallImageUrl"
       class="img"
-      alt="图片加载失败"
+      :alt="item.title"
     />
     <span v-if="item.itemKeywordName" class="column-tag">{{
       item.itemKeywordName
@@ -12,7 +12,7 @@
     <figcaption>
       <cite>
         <p class="tag">{{ item.itemCategoryName }}</p>
-        <p class="name">{{ item.title }}</p>
+        <p class="name">{{ title }}</p>
       </cite>
       <aside>
         <div>
@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent, PropType, toRefs } from '@nuxtjs/composition-api'
 import { IArticleItemType } from '@/api/apiPublic/type'
-import { handleTime } from '@/utils/data'
+import { handleTime, substrByByte } from '@/utils/data'
 
 export default defineComponent({
   name: 'ContentCard',
@@ -51,8 +51,12 @@ export default defineComponent({
     const postTimeStamp = new Date(item.value.publishTime).getTime()
     const time: string = handleTime(postTimeStamp)
 
+    const title: string = substrByByte(item.value.title, 62)
+
     return {
       time,
+      substrByByte,
+      title,
     }
   },
   methods: {
