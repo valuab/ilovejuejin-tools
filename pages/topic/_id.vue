@@ -38,7 +38,9 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import { IchangeParam } from '@/components/operate/Pagination.vue'
+import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
+import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
+import ArticleList from '@/components/display/ArticleList.vue'
 import { IArticleItemType } from '@/api/apiPublic/type'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
@@ -53,6 +55,11 @@ interface IData {
 }
 
 export default defineComponent({
+  components: {
+    Pagination,
+    ArticleList,
+    RadioAndSearch,
+  },
   async asyncData({ app, route }) {
     const detail = await app.$http.program.getOpItem({
       id: route.params.id,

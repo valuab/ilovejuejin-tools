@@ -8,10 +8,11 @@ import { IApiCommentDto } from '@apiModules/comment.ts'
 interface IPost {
   typeId: number
   id: number
+  contentId: number
 }
 
 interface IData {
-  newsCommentList: IApiCommentDto[]
+  getNewsCommentList: IApiCommentDto[]
 }
 
 export default defineComponent({
@@ -25,39 +26,36 @@ export default defineComponent({
   },
   data(): IData {
     return {
-      newsCommentList: [],
+      getNewsCommentList: [],
     }
   },
-  // async fetch() {
-  //   const viewUserId = this.$accessor.userInfo.userId
-  //   const sort = 0
-  //   // 获取评论列表
-  //   const getNewsCommentList = await this.$http.comment.getNewsCommentList({
-  //     id: this.$props.data.id,
-  //     typeId: this.$props.data.typeId,
-  //     sort,
-  //   })
-
-  //   return {
-  //     // getNewsCommentList,
-  //   }
-  // },
+  async fetch() {
+    // const viewUserId = this.$accessor.userInfo.userId
+    const sort = 0
+    // 获取评论列表
+    const getNewsCommentList = await this.$http.comment.getNewsCommentList({
+      id: this.$props.data.id,
+      typeId: this.$props.data.typeId,
+      sort,
+    })
+    this.getNewsCommentList.push(getNewsCommentList)
+  },
   methods: {
     /**
      * @description: 评论回复
      */
-    // getNewCommentReplyList() {
-    //   const { id, contentId } = this.$props.post
-    //   const sort = 0
-    //   return this.$http.comment.getNewCommentReplyList({
-    //     id,
-    //     contentId,
-    //     sort,
-    //   })
-    // },
-    // /**
-    //  * @description: 评论点赞
-    //  */
+    getNewCommentReplyList() {
+      const { id, contentId } = this.$props.data
+      const sort = 0
+      return this.$http.comment.getNewCommentReplyList({
+        id,
+        contentId,
+        sort,
+      })
+    },
+    /**
+     * @description: 评论点赞
+     */
     // supportComment(index: number) {
     //   const {
     //     commentId,
@@ -67,9 +65,10 @@ export default defineComponent({
     //   } = this.getNewsCommentList[index]
     //   const sort = 0
     //   return this.$http.comment.supportComment({
-    //     id,
+    //     commentId,
     //     contentId,
-    //     sort,
+    //     shardId,
+    //     shardTypeId,
     //   })
     // },
     // /**
