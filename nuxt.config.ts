@@ -3,6 +3,8 @@ import { NuxtConfig } from '@nuxt/types'
 import { RuleSetRule } from 'webpack'
 import internalIp from 'internal-ip'
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 export default {
   // https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-env/
   env: {
@@ -32,10 +34,7 @@ export default {
 
   // server config
   server: {
-    host:
-      process.env.NODE_ENV !== 'production'
-        ? internalIp.v4.sync()
-        : '127.0.0.1',
+    host: !isProduction ? internalIp.v4.sync() : '127.0.0.1',
     port: 9038,
   },
 
@@ -50,6 +49,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/babel-polyfill',
     '@/plugins/antd-ui',
     '@/plugins/setup-axios',
     '@/plugins/directives',
@@ -94,7 +94,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     retry: { retries: 3 },
-    debug: process.env.NODE_ENV !== 'production',
+    debug: !isProduction,
     timeout: 5000,
     proxy: true,
   },
@@ -121,8 +121,14 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extend(config) {
+    analyze: true,
+    extractCSS: true,
+    extend(config, { isClient }) {
       const module = config.module
+
+      if (isClient) {
+        config.devtool = 'source-map'
+      }
 
       if (module) {
         const svgRule = module.rules.find((rule) =>
@@ -131,7 +137,7 @@ export default {
         svgRule.test = /\.(png|jpe?g|gif|webp)$/
         module.rules.push({
           test: /\.svg$/,
-          use: ['babel-loader', 'vue-svg-loader'],
+          use: ['vue-loader', 'vue-svg-loader'],
         })
         module.rules.push({
           test: /\.less/,
@@ -157,6 +163,7 @@ export default {
     transpile: ['ant-design-vue'],
     babel: {
       plugins: [
+        ['@babel/plugin-transform-runtime'],
         [
           'import',
           {
@@ -164,7 +171,6 @@ export default {
             libraryDirectory: 'es',
             style: true,
           },
-          'ant-design-vue',
         ],
       ],
     },

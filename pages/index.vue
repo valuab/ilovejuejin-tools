@@ -455,7 +455,6 @@ export default defineComponent({
       @include flex(row);
 
       .kol-list-wrap {
-        width: 170px;
         height: 320px;
         padding: 20px 20px 0;
         background-color: #fff;
