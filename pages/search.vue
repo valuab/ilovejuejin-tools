@@ -7,37 +7,59 @@
         :type="type"
         :type-name="typeName"
         @search="search"
+        @deleteSearch="deleteSearch"
       />
     </div>
-    <!-- 详情 -->
-    <h2 v-if="typeList.length" class="column-title">
-      飞度
+    <!-- 车型搜索详情 -->
+    <h2
+      v-if="type === 5 && typeList[typePage].list.length"
+      class="column-title"
+    >
+      {{ keyword }}
       <div class="tag">车型</div>
-      <div v-if="typeList.length > 4" class="column-title-nav" @click="seeAll">
+      <div
+        v-if="type > 1 && typeList[typePage].list.length > 4"
+        class="column-title-nav"
+        @click="seeAll"
+      >
         查看全部 >
       </div>
     </h2>
+    <!-- 查看全部结果 -->
+    <h2
+      v-if="type === 5 && typeList[typePage].list.length"
+      class="column-title"
+    >
+      <div class="backAll">返回全部</div>
+      <div class="tag">为你搜索到“飞度”车型结果：</div>
+    </h2>
     <article-list
-      v-if="typeList.length"
+      v-if="type > 1 && typeList[typePage].list.length"
       class="article-list"
       :list="typeList[0].list"
     />
     <!-- 全部 -->
-    <h2 v-if="allList.length" class="column-title">全部出品</h2>
+    <h2 v-if="allList[0].list.length" class="column-title">全部出品</h2>
     <article-list
-      v-if="allList.length"
+      v-if="allList[0].list.length"
       class="article-list"
       :list="allList[searchAllPage].list"
     />
 
-    <!-- 分页 -->
+    <!-- 搜索分页 -->
     <Pagination
+      v-anchor="'tabsAnchor'"
+      :total="allList[0].total"
+      class="pagination"
+      @change="pageChange"
+    ></Pagination>
+    <!-- 车型搜索分页 -->
+    <!-- <Pagination
       v-anchor="'tabsAnchor'"
       :total="allList[searchAllPage].total"
       class="pagination"
       @change="pageChange"
-    ></Pagination>
-    <!--  -->
+    ></Pagination> -->
     <!-- 需要添加异步 -->
     <SearchError v-if="!typeList.length && !allList[0].list.length" />
   </div>
@@ -45,7 +67,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { IchangeParam } from '@/components/operate/Pagination.vue'
+import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
 import SearchInput from '@/components/search/SearchInput.vue'
 import SearchError from '@/components/search/SearchError.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
@@ -77,6 +99,7 @@ export default defineComponent({
     SearchInput,
     SearchError,
     ArticleList,
+    Pagination,
   },
   async asyncData({ app, route }) {
     const query = route.query
@@ -111,7 +134,7 @@ export default defineComponent({
         break
       case SEARCH_TYPE.HOST:
         hostUserId = Number(query.hostUserId)
-        temporary = await app.$http.search.searchByHostUserId({
+        temporary = await app.$http.search.getSearchByHostUserId({
           keyword,
           hostUserId,
           viewUserId,
@@ -122,7 +145,7 @@ export default defineComponent({
         categoryId = Number(query.categoryId)
         keywordId = Number(query.keywordId)
         hostUserId = Number(query.hostUserId)
-        temporary = await app.$http.search.searchByCars({
+        temporary = await app.$http.search.getSearchByCars({
           keyword,
           categoryId,
           keywordId,
@@ -137,8 +160,8 @@ export default defineComponent({
     if (type > 1) {
       typeList = [
         {
-          list: temporary.list,
-          total: temporary.total,
+          list: temporary?.list,
+          total: temporary?.total,
           page: 1,
           listLoad: false,
         },
@@ -193,8 +216,11 @@ export default defineComponent({
      */
     pageChange(param: IchangeParam) {
       const { page } = param
-      this.allList[this.searchAllPage].page = page
-      this.getSearchAll()
+      return page
+      // console.log(this.allList[0].list)
+      // this.searchAllPage = page - 1
+      // this.allList[this.searchAllPage].page = page
+      // this.getSearchAll()
     },
     /**
      * @description: 搜索全部
@@ -247,7 +273,7 @@ export default defineComponent({
       const hostUserId = Number(this.query.keywordId)
       const page = this.typeList[this.searchAllPage].page
       const viewUserId = this.$accessor.userInfo.userId
-      return this.$http.search.searchByHostUserId({
+      return this.$http.search.getSearchByHostUserId({
         keyword,
         hostUserId,
         viewUserId,
@@ -264,7 +290,7 @@ export default defineComponent({
       const hostUserId = Number(this.query.keywordId)
       const page = this.typeList[this.searchAllPage].page
       const viewUserId = this.$accessor.userInfo.userId
-      return this.$http.search.searchByHostUserId({
+      return this.$http.search.getSearchByCars({
         keyword,
         categoryId,
         keywordId,
@@ -275,9 +301,46 @@ export default defineComponent({
     },
   },
   /**
-   * @descripttion 查看全部
+   * @description 查看全部
    */
   seeAll() {},
+  /**
+   * @description 搜索
+   */
+  search(value: string) {
+    // 重定向
+    this.keyword = value
+    switch (this.type) {
+      case SEARCH_TYPE.ITEM:
+        this.getSearchByItemCategoryId()
+        break
+      case SEARCH_TYPE.LABEL:
+        this.getSearchByItemKeywordId()
+        break
+      case SEARCH_TYPE.HOST:
+        this.searchByHostUserId()
+        break
+      case SEARCH_TYPE.CAR:
+        this.searchByCars()
+        break
+      default:
+        this.getSearchAll()
+        break
+    }
+  },
+  /**
+   * @description 清除搜索
+   */
+  deleteSearch() {
+    this.type = 1 // 改为全部搜索
+  },
+
+  /**
+   * @description 列表分页初始化
+   */
+  // turnDown(list) {
+
+  // },
 })
 </script>
 

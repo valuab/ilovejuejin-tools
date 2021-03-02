@@ -30,7 +30,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'Comment',
   components: {},
-  template: ``,
+  methods: {},
 })
 </script>
 <style lang="scss" scoped>

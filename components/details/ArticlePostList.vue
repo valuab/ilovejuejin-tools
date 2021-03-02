@@ -1,5 +1,5 @@
 <template>
-  <aside class="post">
+  <aside v-show="getNewListByHostUserId" class="post">
     <div class="post-title">最近发表</div>
     <div class="post-msg">
       <div class="post-msg-img">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="post-more">查看更多</div>
+    <div class="post-more" @click="seeMore">查看更多</div>
   </aside>
 </template>
 
@@ -22,7 +22,31 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ArticlePost',
-  template: ``,
+  props: {
+    // 帖子信息
+    post: {
+      type: Object,
+      default: () => {
+        return {}
+      },
+    },
+  },
+  async fetch() {
+    // 获取最近发表
+    const viewUserId = this.$accessor.userInfo.userId
+    this.getNewListByHostUserId = await this.$http.posts.getNewListByHostUserId(
+      {
+        hostUserId: this.$props.post.userId,
+        viewUserId,
+      }
+    )
+  },
+  methods: {
+    /**
+     * @description: 查看更多
+     */
+    seeMore() {},
+  },
 })
 </script>
 <style lang="scss" scoped>

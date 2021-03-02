@@ -1,16 +1,20 @@
 <template>
-  <aside v-if="getUserInfo" class="subs">
-    <div class="subs-title">节目主持人</div>
-    <div class="subs-msg">
+  <aside v-if="getListByHostUserId" class="subs">
+    <div class="subs-title">所属分类</div>
+    <div
+      v-for="item in getListByHostUserId.list"
+      :key="item.id"
+      class="subs-msg"
+    >
       <div class="subs-msg-img">
-        <img :src="getUserInfo.smallImageUrl" alt="" />
+        <img :src="item.smallImageUrl" alt="" />
       </div>
       <div class="subs-msg-text">
-        <div class="subs-msg-text-name">{{ getUserInfo.nickname }}</div>
+        <div class="subs-msg-text-name">{{ item.name }}</div>
         <div class="subs-msg-text-num">
-          {{ getUserInfo.imageCount }}图文 · {{ getUserInfo.videoCount }}视频
+          {{ item.imageCount }}图文 · {{ item.videoCount }}视频
         </div>
-        <div class="subs-msg-text-tips">{{ getUserInfo.introduction }}</div>
+        <div class="subs-msg-text-tips">{{ item.description }}</div>
       </div>
     </div>
   </aside>
@@ -20,7 +24,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'ArticleSubs',
+  name: 'ArticleSort',
   components: {},
   props: {
     // 帖子信息
@@ -32,10 +36,9 @@ export default defineComponent({
     },
   },
   async fetch() {
-    // 获取作者消息
-    const userId = this.$props.post.userId
-    this.getUserInfo = await this.$http.kol.getUserInfo({
-      userId,
+    // 获取节目分类
+    this.getListByHostUserId = await this.$http.kol.getListByHostUserId({
+      userId: this.$props.post.userId,
     })
   },
 })
@@ -60,7 +63,6 @@ export default defineComponent({
       margin-right: 20px;
       background-color: #e6e6e6;
       border-radius: 50%;
-      overflow: hidden;
       align-items: center;
       justify-content: center;
     }

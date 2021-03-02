@@ -34,21 +34,13 @@ export default defineComponent({
 
     // 获取帖子对象
     const post = await app.$http.posts.getPost({
-      id: Number(query.id),
+      id: String(query.id),
       forumId: Number(query.forumId),
       viewUserId,
     })
-    // 获取最近发表
-    const getItemListByHostUserId = await app.$http.posts.getItemListByHostUserId(
-      {
-        hostUserId: post.userId,
-        viewUserId,
-      }
-    )
 
     return {
       post,
-      getItemListByHostUserId,
       query,
     }
   },
@@ -68,14 +60,14 @@ export default defineComponent({
     supportPost() {
       const { query } = this
       return this.$http.posts.supportPost({
-        postId: Number(query.id),
+        postId: query.id,
         forumId: Number(query.forumId),
       })
     },
     updateViewCountForAsync() {
       const { query } = this
       return this.$http.posts.updateViewCountForAsync({
-        id: Number(query.id),
+        id: query.id,
         forumId: Number(query.forumId),
       })
     },

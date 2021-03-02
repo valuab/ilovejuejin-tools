@@ -9,7 +9,7 @@ import { IArticleItemType } from '~/api/apiPublic/type'
 
 const postLinks = {
   getPost: '/api/post/getPost', // 帖子对象
-  getItemListByHostUserId: '/api/post/getItemListByHostUserId', // 最近发表
+  getNewListByHostUserId: '/api/post/getNewListByHostUserId', // 最近发表
   updateViewCountForAsync: '/api/post/updateViewCountForAsync', // 帖子浏览量更新
   supportPost: '/api/post/supportPost', // 帖子点赞
 }
@@ -18,7 +18,7 @@ const postLinks = {
  * 参数约束 START
  */
 interface IPostParams {
-  id: number
+  id: String
   forumId: number
   viewUserId: number
 }
@@ -29,11 +29,11 @@ interface INewListByHostParams {
 }
 
 interface IPdateParams {
-  id: number
+  id: String
   forumId: number
 }
 interface ISupportParams {
-  postId: number
+  postId: String
   forumId: number
 }
 
@@ -132,7 +132,7 @@ export interface ISupportPost extends IApiResult {
 
 export interface IPostsModule {
   getPost(params: IPostParams): Promise<IPostResult['result']>
-  getItemListByHostUserId(
+  getNewListByHostUserId(
     params: INewListByHostParams
   ): Promise<IPostHost['result']>
   updateViewCountForAsync(parmas: IPdateParams): Promise<IUpdate['result']>
@@ -148,8 +148,8 @@ export default ($axios: NuxtAxiosInstance) => {
       return data.result
     },
 
-    async getItemListByHostUserId(params) {
-      const url = handleUrlParams(postLinks.getItemListByHostUserId, params)
+    async getNewListByHostUserId(params) {
+      const url = handleUrlParams(postLinks.getNewListByHostUserId, params)
       const { data } = await $axios.get<IPostHost>(url)
 
       return data.result

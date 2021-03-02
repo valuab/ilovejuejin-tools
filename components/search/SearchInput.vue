@@ -1,8 +1,8 @@
 <template>
   <article class="search-input">
-    <div v-if="type > 1" class="column">
-      <p>{{ typeName }}</p>
-      <Icon icon="CloseOrange" />
+    <div v-if="type > 1 && columnName" class="column">
+      <p>{{ columnName }}</p>
+      <Icon icon="CloseOrange" @click="deleteSearchColumn" />
     </div>
     <input v-model="inputValue" class="input" />
     <button type="button" class="button" @click="search">搜索</button>
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'SearchInput',
@@ -29,25 +29,31 @@ export default defineComponent({
       default: '',
     },
   },
-  emits: ['search'],
-  setup(props, context) {
-    /**
-     * @description: 监听输入值
-     */
-    const inputValue = ref(props.keyword)
-
+  emits: ['search', 'deleteSearch'],
+  data() {
+    return {
+      inputValue: '',
+      columnName: this.$props.typeName,
+    }
+  },
+  fetch() {
+    this.inputValue = this.$props.keyword
+  },
+  methods: {
     /**
      * @description: 监听搜索
      */
+    search() {
+      this.$emit('search', this.inputValue)
+    },
 
-    const search = () => {
-      context.emit('search', inputValue.value)
-    }
-
-    return {
-      search,
-      inputValue,
-    }
+    /**
+     * @description 清除搜索模式
+     */
+    deleteSearchColumn() {
+      this.columnName = ''
+      this.$emit('deleteSearch')
+    },
   },
 })
 </script>

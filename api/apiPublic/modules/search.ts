@@ -122,7 +122,6 @@ export interface IKolListResult extends IApiResult {
  */
 
 export interface ISearchModule {
-  [x: string]: any
   getSearchAll(params: ISearchAllParmas): Promise<ISearchAll['result']>
   getSearchByItemCategoryId(
     params: ISearchByItemCategoryIdParmas
