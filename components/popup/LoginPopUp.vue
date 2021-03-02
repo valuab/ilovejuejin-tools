@@ -73,12 +73,14 @@ export default defineComponent({
   @include flex(column, center, center);
 
   #login-main {
-    height: 200px;
+    height: 204px;
+    overflow: hidden;
   }
 
   .qrcode-mask {
     position: absolute;
     top: 50px;
+    left: 76px;
     height: 200px;
     width: 200px;
     background: #f5f5f5;

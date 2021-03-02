@@ -96,7 +96,7 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .container {
-  position: absolute;
+  position: relative;
   display: flex;
   background-color: #fff;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.15);

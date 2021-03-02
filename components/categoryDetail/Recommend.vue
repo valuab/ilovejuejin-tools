@@ -135,7 +135,6 @@ export default defineComponent({
 
         & > .list-item {
           margin-right: 20px;
-          width: 190px;
           color: #000;
           cursor: pointer;
 
@@ -149,6 +148,7 @@ export default defineComponent({
 
           & > span {
             display: block;
+            width: 190px;
             margin-top: 16px;
             font-size: 16px;
           }

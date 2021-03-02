@@ -48,7 +48,8 @@ export default defineComponent({
   },
   setup(props) {
     const { item } = toRefs(props)
-    const postTimeStamp = new Date(item.value.publishTime).getTime()
+    const date = item.value.publishTime.replace(/-/g, '/')
+    const postTimeStamp = new Date(date).getTime()
     const time: string = handleTime(postTimeStamp)
 
     const title: string = substrByByte(item.value.title, 62)
