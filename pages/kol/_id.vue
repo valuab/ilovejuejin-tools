@@ -42,7 +42,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { ITopicListType } from '@apiModules/kol'
 import { setSearchHistory } from '@/utils/search'
-import { POST_RADIO_TYPE } from '@/enums/content'
+import { SEARCH_TYPE, POST_RADIO_TYPE } from '@/enums/content'
 import { IArticleList } from '@/api/apiPublic/type'
 
 interface ICategoryTabs {
@@ -163,7 +163,11 @@ export default defineComponent({
      * @description: 点击搜索
      */
     onSearch(value: string) {
-      setSearchHistory(value)
+      setSearchHistory(value).then(() => {
+        this.$router.push(
+          `/search?type=${SEARCH_TYPE.HOST}&keyword=${value}&keywordId=${this.kolId}`
+        )
+      })
     },
 
     /**

@@ -8,11 +8,12 @@
   >
     <div class="login-wrap">
       <h2 class="login-title">微信扫码登录</h2>
-      <div id="login-main">
-        <!-- <div class="login-hint">同意协议后才可登录</div> -->
+      <div v-show="!isChecked" class="qrcode-mask">
+        <div class="tips">同意协议后才可登录</div>
       </div>
+      <div id="login-main"></div>
       <div class="login-operate">
-        <a-checkbox />
+        <a-checkbox :checked="isChecked" @change="change" />
         <span class="checkbox-text">
           已阅读并同意
           <a style="color: #ff8b00">"使用条款和隐私政策"</a>
@@ -32,6 +33,7 @@ export default defineComponent({
   data() {
     return {
       show: true,
+      isChecked: false,
     }
   },
   mounted() {
@@ -53,6 +55,10 @@ export default defineComponent({
     hideLoginPopUp() {
       this.$accessor.global.showLoginPopUpOrHide()
     },
+
+    change() {
+      this.isChecked = !this.isChecked
+    },
   },
 })
 </script>
@@ -63,7 +69,29 @@ export default defineComponent({
 }
 
 .login-wrap {
+  position: relative;
   @include flex(column, center, center);
+
+  #login-main {
+    height: 250px;
+  }
+
+  .qrcode-mask {
+    position: absolute;
+    top: 75px;
+    height: 200px;
+    width: 200px;
+    background: rgba(#fff, 0);
+    .tips {
+      width: 200px;
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.7);
+
+      @include text(14px, #ffffff);
+    }
+  }
 
   .login-title {
     margin-bottom: 24px;

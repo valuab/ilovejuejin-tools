@@ -40,7 +40,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { IProgramListType } from '@apiModules/category'
-import { POST_RADIO_TYPE } from '@/enums/content'
+import { SEARCH_TYPE, POST_RADIO_TYPE } from '@/enums/content'
 import { setSearchHistory } from '@/utils/search'
 import { IArticleList } from '@/api/apiPublic/type'
 import GlobalEmpty from '~/components/global/GlobalEmpty.vue'
@@ -165,7 +165,11 @@ export default defineComponent({
      * @description: 点击搜索
      */
     onSearch(value: string) {
-      setSearchHistory(value)
+      setSearchHistory(value).then(() => {
+        this.$router.push(
+          `/search?type=${SEARCH_TYPE.ITEM}&keyword=${value}&keywordId=${this.categoryId}`
+        )
+      })
     },
 
     /**

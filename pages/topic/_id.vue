@@ -42,11 +42,13 @@ import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
 import RadioAndSearch from '@/components/categoryDetail/RadioAndSearch.vue'
 import ArticleList from '@/components/display/ArticleList.vue'
 import { IArticleItemType } from '@/api/apiPublic/type'
+import { IOpItemResult } from '@apiModules/program'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 
 interface IData {
   id: string
+  detail: IOpItemResult['result']
   listLoad: Boolean
   list: Array<IArticleItemType>
   total: number
@@ -80,6 +82,11 @@ export default defineComponent({
   data(): IData {
     return {
       id: '', // 节目ID
+      detail: {
+        name: '',
+        description: '',
+        smallImageUrl: '',
+      }, // 节目详情
       listLoad: true, // 加载动画
       list: [], // 文章列表
       total: 0, // 总数
@@ -110,7 +117,7 @@ export default defineComponent({
     onSearch(value: string) {
       setSearchHistory(value).then(() => {
         this.$router.push(
-          `/search?type=${SEARCH_TYPE.LABEL}&keyword=${value}&keywordId=${this.id}`
+          `/search?type=${SEARCH_TYPE.LABEL}&keyword=${value}&keywordId=${this.id}&typeName=${this.detail.name}`
         )
       })
     },
