@@ -23,9 +23,10 @@
                     <icon icon="ArrowWhite" rotate="180"></icon>
                   </div>
                 </template>
-                <div
+                <nuxt-link
                   v-for="newItem in newList"
                   :key="newItem.postId"
+                  to="/"
                   class="carousel-item"
                 >
                   <img
@@ -36,7 +37,7 @@
                   <p class="carousel-title text-hidden-1">
                     {{ newItem.title }}
                   </p>
-                </div>
+                </nuxt-link>
               </a-carousel>
             </client-only>
           </div>
@@ -55,11 +56,15 @@
             :key="recommendItem.id"
             span="12"
           >
-            <img
-              class="column-list-item"
-              :src="recommendItem.smallImageUrl"
-              :alt="recommendItem.description"
-            />
+            <nuxt-link
+              :to="{ name: 'topic-id', params: { id: recommendItem.id } }"
+            >
+              <img
+                class="column-list-item"
+                :src="recommendItem.smallImageUrl"
+                :alt="recommendItem.description"
+              />
+            </nuxt-link>
           </a-col>
         </a-row>
       </a-col>
@@ -99,15 +104,17 @@
         </a-spin>
       </a-col>
       <a-col>
-        <h2 class="column-title" :style="{ justifyContent: 'space-between' }">
+        <h2 class="column-title">
           我们的KOL
-          <toggle
-            v-if="kolGroupList.length > 1"
-            :disabled-left="!kolGroupIndex"
-            :disabled-right="kolGroupIndex >= kolGroupList.length - 1"
-            @clickLeft="toggleKolLeftOrRight"
-            @clickRight="toggleKolLeftOrRight"
-          />
+          <div :style="{ marginLeft: '20px' }">
+            <toggle
+              v-if="kolGroupList.length > 1"
+              :disabled-left="!kolGroupIndex"
+              :disabled-right="kolGroupIndex >= kolGroupList.length - 1"
+              @clickLeft="toggleKolLeftOrRight"
+              @clickRight="toggleKolLeftOrRight"
+            />
+          </div>
         </h2>
         <div class="kol-list-container">
           <div
@@ -120,12 +127,17 @@
               :key="index"
               class="kol-list-wrap"
             >
-              <a v-for="kolItem in kolGroup" :key="kolItem.id" class="kol-item">
+              <nuxt-link
+                v-for="kolItem in kolGroup"
+                :key="kolItem.id"
+                class="kol-item"
+                :to="{ name: 'kol-id', params: { id: kolItem.userId } }"
+              >
                 <a-avatar :size="30" :src="kolItem.smallImageUrl"></a-avatar>
                 <strong class="kol-name text-hidden-1">{{
                   kolItem.name
                 }}</strong>
-              </a>
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -458,7 +470,6 @@ export default defineComponent({
         height: 320px;
         padding: 20px 20px 0;
         background-color: #fff;
-        border: solid 1px #e6e6e6;
 
         @include flex(column);
 
