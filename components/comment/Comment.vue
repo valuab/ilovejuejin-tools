@@ -1,36 +1,58 @@
 <template>
   <article class="comment">
-    <img
-      src="https://image.djcars.cn/7/377e7fb6-96cc-4099-8f40-b9593878d3db.jpg"
-      class="comment-profile"
-    />
+    <img :src="comment.smallUserIconUrl" class="comment-profile" />
     <article class="comment-msg">
       <div class="comment-user">
-        <div class="comment-user-name">用户名称</div>
+        <div class="comment-user-name">{{ comment.userName }}</div>
         <div class="comment-user-author">作者</div>
-        <div class="comment-user-time">5小时前</div>
+        <div class="comment-user-time">{{ comment.createTime }}</div>
       </div>
       <p class="comment-content">
-        评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容
+        {{ comment.content }}
       </p>
       <div class="comment-handle">
         <div class="comment-handle-suppot">
           <img src="" class="comment-handle-suppot-img" />
           <div>点赞</div>
         </div>
-        <div class="comment-handle-answer">回复</div>
+        <div class="comment-handle-answer" @click="reply">回复</div>
       </div>
+      <CommentInput v-if="isReply" />
     </article>
   </article>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import CommentInput from '@/components/comment/CommentInput.vue'
 
 export default defineComponent({
   name: 'Comment',
-  components: {},
-  methods: {},
+  components: {
+    CommentInput,
+  },
+  props: {
+    comment: {
+      type: Object,
+      default: () => {
+        return {}
+      },
+    },
+  },
+  emits: ['reply'],
+  data() {
+    return {
+      isReply: false,
+    }
+  },
+  methods: {
+    /**
+     * @description: 回复评论
+     */
+    reply() {
+      // 判断登录态
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>

@@ -19,8 +19,8 @@
       </div>
       <ArticleFooter v-if="article.tagNameList.length" :post="article" />
       <CommentInput :post="article" />
-      <p class="column-title">全部评论（673）</p>
-      <Comment :post="article" />
+      <p class="column-title">全部评论（{{ article.commentCount }}）</p>
+      <CommentList :post="article" />
     </article>
     <aside class="subs">
       <ArticleSort :post="article" />
@@ -33,7 +33,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import CommentInput from '@/components/comment/CommentInput.vue'
-import Comment from '@/components/comment/Comment.vue'
+import CommentList from '@/components/comment/CommentList.vue'
 import ArticleHeader from './ArticleHeader.vue'
 import ArticleFooter from './ArticleFooter.vue'
 import ArticleSubs from './ArticleSubs.vue'
@@ -49,7 +49,7 @@ export default defineComponent({
     ArticleSort,
     ArticlePostList,
     CommentInput,
-    Comment,
+    CommentList,
   },
   props: {
     // 帖子数据

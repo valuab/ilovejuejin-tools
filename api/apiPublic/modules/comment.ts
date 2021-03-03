@@ -48,11 +48,8 @@ interface IPostCommentParmas {
  */
 
 export interface IApiCommentDto {
-  id: string
-  userId: number
-  typeId: number
-  contentId: string
-  shardId: string
+  total: number
+  list: any[]
 }
 
 export interface NewsCommentListResult extends IApiResult {

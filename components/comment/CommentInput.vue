@@ -7,7 +7,7 @@
     <div v-else class="commentInput-table">
       <div class="commentInput-input">
         <div class="login-error">登录后可发表评论</div>
-        <div class="login">登录</div>
+        <LoginButton class="login"> 登录 </LoginButton>
       </div>
       <button type="button" class="commentInput-button">发布评论</button>
     </div>
@@ -16,13 +16,40 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import LoginButton from '@/components/operate/LoginButton.vue'
 
 export default defineComponent({
   name: 'CommentInput',
+  components: {
+    LoginButton,
+  },
   data() {
     return {
       isLogin: false,
     }
+  },
+  fetch() {
+    // 判断登录
+    if (this.$accessor.userInfo.userId) {
+      this.isLogin = true
+    } else {
+      this.isLogin = false
+    }
+  },
+  computed: {
+    userId() {
+      return this.$accessor.userInfo.userId
+    },
+  },
+  watch: {
+    userId(newName) {
+      this.userId = newName
+      if (this.userId !== 0) {
+        this.isLogin = true
+      } else {
+        this.isLogin = false
+      }
+    },
   },
 })
 </script>

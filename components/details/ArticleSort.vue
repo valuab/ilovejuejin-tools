@@ -1,11 +1,7 @@
 <template>
-  <aside v-if="getListByHostUserId" class="subs">
+  <aside v-if="listByHostUserId.list.length" class="subs">
     <div class="subs-title">所属分类</div>
-    <div
-      v-for="item in getListByHostUserId.list"
-      :key="item.id"
-      class="subs-msg"
-    >
+    <div v-for="item in listByHostUserId.list" :key="item.id" class="subs-msg">
       <div class="subs-msg-img">
         <img :src="item.smallImageUrl" alt="" />
       </div>
