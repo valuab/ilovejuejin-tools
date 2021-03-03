@@ -11,12 +11,14 @@
       <div v-show="!isChecked" class="qrcode-mask">
         <div class="tips">同意协议后才可登录</div>
       </div>
-      <div id="login-main"></div>
+      <div v-show="isChecked" id="login-main"></div>
       <div class="login-operate">
         <a-checkbox :checked="isChecked" @change="change" />
         <span class="checkbox-text">
           已阅读并同意
-          <a style="color: #ff8b00">"使用条款和隐私政策"</a>
+          <a style="color: #ff8b00" @click="navProtocol"
+            >"使用条款和隐私政策"</a
+          >
         </span>
       </div>
     </div>
@@ -59,6 +61,11 @@ export default defineComponent({
     change() {
       this.isChecked = !this.isChecked
     },
+
+    navProtocol() {
+      const history = this.$router.resolve('/loginProtocol')
+      window.open(history.href, '_blank')
+    },
   },
 })
 </script>
@@ -78,15 +85,13 @@ export default defineComponent({
   }
 
   .qrcode-mask {
-    position: absolute;
-    top: 50px;
-    left: 76px;
-    height: 200px;
-    width: 200px;
+    height: 180px;
+    width: 180px;
+    margin-top: 25px;
     background: #f5f5f5;
     .tips {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       line-height: 200px;
       text-align: center;
       background-color: rgba(0, 0, 0, 0.7);
@@ -98,6 +103,7 @@ export default defineComponent({
   .login-title {
     margin-bottom: 0;
     font-size: 24px;
+    line-height: 24px;
     font-weight: bold;
     color: #000;
   }

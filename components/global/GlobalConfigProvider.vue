@@ -10,7 +10,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 export default defineComponent({
   methods: {
     getPopupContainer(triggerNode: HTMLElement) {
-      return triggerNode.parentNode
+      return triggerNode?.parentNode || document.body
     },
   },
 })

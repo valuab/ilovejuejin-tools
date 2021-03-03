@@ -67,7 +67,6 @@ export default defineComponent({
      * @param forumId 帖子forumId
      */
     navDetail(id: string, forumId: number) {
-      // const history = this.$router.resolve({name: '/TopicDetail')
       this.$router.push({
         path: `/details?id=${id}&forumId=${forumId}`,
       })
@@ -78,10 +77,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .container {
   position: relative;
-  width: 295px;
+  max-width: 295px;
   height: 312px;
   margin: 0;
-  // overflow: hidden;
   cursor: pointer;
   background-color: #fff;
   border: solid 1px #e6e6e6;
@@ -138,6 +136,9 @@ export default defineComponent({
 
       .name {
         @include text($font-size-lg, $text-color, bold);
+
+        max-height: 48px;
+        overflow: hidden;
       }
     }
 
