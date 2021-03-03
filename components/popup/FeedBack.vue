@@ -354,6 +354,10 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+/deep/ .ant-dropdown {
+  position: fixed;
+}
+
 .box {
   width: 600px;
   overflow: hidden;

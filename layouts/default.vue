@@ -1,23 +1,22 @@
 <template>
-  <a-layout class="root-container">
-    <a-layout-header class="header">
-      <global-header></global-header>
-    </a-layout-header>
-    <a-layout class="root-main" :has-sider="true">
-      <a-layout-sider width="160px" theme="light">
-        <global-menu></global-menu>
-      </a-layout-sider>
-      <a-layout-content class="content-wrap">
-        <a-config-provider>
-          <template #renderEmpty><global-empty /></template>
+  <global-config-provider>
+    <a-layout class="root-container">
+      <a-layout-header class="header">
+        <global-header></global-header>
+      </a-layout-header>
+      <a-layout class="root-main" :has-sider="true">
+        <a-layout-sider width="160px" theme="light">
+          <global-menu></global-menu>
+        </a-layout-sider>
+        <a-layout-content class="content-wrap">
           <nuxt />
-        </a-config-provider>
-        <a-layout-footer class="root-footer">
-          <global-footer></global-footer>
-        </a-layout-footer>
-      </a-layout-content>
+          <a-layout-footer class="root-footer">
+            <global-footer></global-footer>
+          </a-layout-footer>
+        </a-layout-content>
+      </a-layout>
     </a-layout>
-  </a-layout>
+  </global-config-provider>
 </template>
 
 <style lang="scss" scoped>

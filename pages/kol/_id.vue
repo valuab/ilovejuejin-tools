@@ -142,6 +142,23 @@ export default defineComponent({
       articleList: [],
     }
   },
+  head() {
+    return {
+      title: 'kol',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'my website description',
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: 'my website keywords',
+        },
+      ],
+    }
+  },
   computed: {
     ListBgHeight(): string {
       return this.articleList[this.articleIndex]?.total < 5 ? '478px' : '810px'

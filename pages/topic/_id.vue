@@ -95,6 +95,23 @@ export default defineComponent({
       page: 1, // 页码
     }
   },
+  head() {
+    return {
+      title: 'topic',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'my website description',
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: 'my website keywords',
+        },
+      ],
+    }
+  },
   methods: {
     /**
      * @description: 单选框

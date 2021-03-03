@@ -39,6 +39,23 @@ export default defineComponent({
       page: 1,
     }
   },
+  head() {
+    return {
+      title: '王牌节目',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'my website description',
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: 'my website keywords',
+        },
+      ],
+    }
+  },
   methods: {
     async addList() {
       const { list } = await this.$http.program.getCommendItemList({
