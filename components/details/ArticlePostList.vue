@@ -1,5 +1,5 @@
 <template>
-  <aside v-show="getNewListByHostUserId" class="post">
+  <aside v-if="newListByHostUserId.list.length" class="post">
     <div class="post-title">最近发表</div>
     <div class="post-msg">
       <div class="post-msg-img">
@@ -20,6 +20,13 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
+interface IData {
+  newListByHostUserId: {
+    total: number
+    list: any[]
+  }
+}
+
 export default defineComponent({
   name: 'ArticlePost',
   props: {
@@ -31,15 +38,35 @@ export default defineComponent({
       },
     },
   },
+  data(): IData {
+    return {
+      newListByHostUserId: {
+        total: 0,
+        list: [],
+      },
+    }
+  },
   async fetch() {
     // 获取最近发表
     const viewUserId = this.$accessor.userInfo.userId
-    this.getNewListByHostUserId = await this.$http.posts.getNewListByHostUserId(
-      {
-        hostUserId: this.$props.post.userId,
-        viewUserId,
-      }
+    const newListByHostUserId = await this.$http.posts.getNewListByHostUserId({
+      hostUserId: this.$props.post.userId,
+      viewUserId,
+    })
+    this.newListByHostUserId.total = newListByHostUserId.total
+    this.newListByHostUserId.list = this.newListByHostUserId.list.concat(
+      newListByHostUserId.list
     )
+  },
+  computed: {
+    article(): any {
+      return Object.assign(
+        {
+          stepList: [],
+        },
+        this.posts
+      )
+    },
   },
   methods: {
     /**

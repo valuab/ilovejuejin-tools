@@ -1,7 +1,7 @@
 <template>
   <!-- 居中 -->
   <container class="container">
-    <Article :article="post" />
+    <Article :posts="post" />
   </container>
 </template>
 
@@ -28,6 +28,7 @@ export default defineComponent({
   components: {
     Article,
   },
+  layout: 'profile',
   async asyncData({ app, route }) {
     const query = route.query
     const viewUserId = app.$accessor.userInfo.userId

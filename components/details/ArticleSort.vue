@@ -23,6 +23,13 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
+interface IData {
+  listByHostUserId: {
+    total: number
+    list: any[]
+  }
+}
+
 export default defineComponent({
   name: 'ArticleSort',
   components: {},
@@ -35,11 +42,23 @@ export default defineComponent({
       },
     },
   },
+  data(): IData {
+    return {
+      listByHostUserId: {
+        total: 0,
+        list: [],
+      },
+    }
+  },
   async fetch() {
     // 获取节目分类
-    this.getListByHostUserId = await this.$http.kol.getListByHostUserId({
+    const listByHostUserId = await this.$http.kol.getListByHostUserId({
       userId: this.$props.post.userId,
     })
+    this.listByHostUserId.total = listByHostUserId.total
+    this.listByHostUserId.list = this.listByHostUserId.list.concat(
+      listByHostUserId.list
+    )
   },
 })
 </script>

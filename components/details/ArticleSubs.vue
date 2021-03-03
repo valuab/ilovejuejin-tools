@@ -1,16 +1,16 @@
 <template>
-  <aside v-if="getUserInfo" class="subs">
+  <aside v-if="userInfo" class="subs">
     <div class="subs-title">节目主持人</div>
     <div class="subs-msg">
       <div class="subs-msg-img">
-        <img :src="getUserInfo.smallImageUrl" alt="" />
+        <img :src="userInfo.smallImageUrl" alt="" />
       </div>
       <div class="subs-msg-text">
-        <div class="subs-msg-text-name">{{ getUserInfo.nickname }}</div>
+        <div class="subs-msg-text-name">{{ userInfo.nickname }}</div>
         <div class="subs-msg-text-num">
-          {{ getUserInfo.imageCount }}图文 · {{ getUserInfo.videoCount }}视频
+          {{ userInfo.imageCount }}图文 · {{ userInfo.videoCount }}视频
         </div>
-        <div class="subs-msg-text-tips">{{ getUserInfo.introduction }}</div>
+        <div class="subs-msg-text-tips">{{ userInfo.introduction }}</div>
       </div>
     </div>
   </aside>
@@ -18,6 +18,16 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+
+interface IData {
+  userInfo: {
+    userId: number
+    kol: number
+    nickname: string
+    description: string
+    smallImageUrl: string
+  }
+}
 
 export default defineComponent({
   name: 'ArticleSubs',
@@ -31,12 +41,25 @@ export default defineComponent({
       },
     },
   },
+  data(): IData {
+    return {
+      userInfo: {
+        userId: 0,
+        kol: 0,
+        nickname: 'suilong',
+        description: 'suilong',
+        smallImageUrl: '',
+      },
+    }
+  },
   async fetch() {
     // 获取作者消息
     const userId = this.$props.post.userId
-    this.getUserInfo = await this.$http.kol.getUserInfo({
+    const getUserInfo = await this.$http.kol.getUserInfo({
       userId,
     })
+
+    this.userInfo = Object.assign(getUserInfo)
   },
 })
 </script>
