@@ -1,5 +1,5 @@
 import { v4 } from 'uuid'
-import CryptoJS from 'crypto-js'
+import { HmacSHA1 } from 'crypto-js'
 import config from '~/assets/ts/config'
 
 export interface IToken {
@@ -12,7 +12,7 @@ export interface IToken {
 export default (sid = '', uid = 0) => {
   const _uuid = v4()
   const sessionId = sid || v4()
-  const sign = CryptoJS.HmacSHA1(sessionId + uid, config.APP_SECRET)
+  const sign = HmacSHA1(sessionId + uid, config.APP_SECRET)
 
   return {
     uuid: _uuid,

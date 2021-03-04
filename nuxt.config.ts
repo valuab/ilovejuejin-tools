@@ -152,6 +152,19 @@ export default {
     plugins: [
       new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
     ],
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          ant_design_vue: {
+            name: true,
+            test: /[\\/]ant-design-vue[\\/]/,
+            chunks: 'all',
+            reuseExistingChunk: true,
+            enforce: true,
+          },
+        },
+      },
+    },
     extend(config, { isClient }) {
       const module = config.module
 
