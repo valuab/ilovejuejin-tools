@@ -67,9 +67,10 @@ export default defineComponent({
      * @param forumId 帖子forumId
      */
     navDetail(id: string, forumId: number) {
-      this.$router.push({
-        path: `/details?id=${id}&forumId=${forumId}`,
-      })
+      const history = this.$router.resolve(
+        `/details?id=${id}&forumId=${forumId}`
+      )
+      window.open(history.href, '_blank')
     },
   },
 })

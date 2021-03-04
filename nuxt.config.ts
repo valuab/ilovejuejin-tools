@@ -12,7 +12,7 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'nuxt-with-vue3',
+    title: '大家车言论',
     htmlAttrs: {
       lang: 'en',
     },

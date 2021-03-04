@@ -26,7 +26,11 @@
                 <nuxt-link
                   v-for="newItem in newList"
                   :key="newItem.postId"
-                  to="/"
+                  :to="{
+                    name: 'details',
+                    query: { id: newItem.postId, forumId: newItem.forumId },
+                  }"
+                  target="_blank"
                   class="carousel-item"
                 >
                   <img
@@ -57,6 +61,7 @@
             span="12"
           >
             <nuxt-link
+              target="_blank"
               :to="{ name: 'topic-id', params: { id: recommendItem.id } }"
             >
               <img
@@ -91,7 +96,17 @@
               :key="guessYouLikeItem.postId"
               class="like-column-list"
             >
-              <nuxt-link to="/" class="like-column-item">
+              <nuxt-link
+                :to="{
+                  name: 'details',
+                  query: {
+                    id: guessYouLikeItem.postId,
+                    forumId: guessYouLikeItem.forumId,
+                  },
+                }"
+                class="like-column-item"
+                target="_blank"
+              >
                 <img
                   width="100%"
                   height="106px"
