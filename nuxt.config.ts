@@ -1,6 +1,6 @@
 import { resolve } from 'path'
 import { NuxtConfig } from '@nuxt/types'
-import { RuleSetRule } from 'webpack'
+import webpack, { RuleSetRule } from 'webpack'
 import internalIp from 'internal-ip'
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -121,13 +121,44 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    analyze: true,
-    extractCSS: true,
+    analyze: {
+      analyzerMode: 'static',
+    },
+    extractCSS: {
+      ignoreOrder: true,
+      esModule: true,
+    },
+    cssSourceMap: !isProduction,
+    transpile: ['ant-design-vue'],
+    babel: {
+      plugins: [
+        [
+          '@babel/plugin-transform-runtime',
+          {
+            corejs: 3,
+          },
+        ],
+        [
+          'import',
+          {
+            libraryName: 'ant-design-vue',
+            libraryDirectory: 'es',
+            style: true,
+          },
+          'ant-design-vue',
+        ],
+      ],
+    },
+    plugins: [
+      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
+    ],
     extend(config, { isClient }) {
       const module = config.module
 
       if (isClient) {
-        config.devtool = 'source-map'
+        config.devtool = !isProduction ? 'inline-source-map' : false
+      } else {
+        config.devtool = false
       }
 
       if (module) {
@@ -135,10 +166,13 @@ export default {
           (rule.test as RegExp).test('.svg')
         ) as RuleSetRule
         svgRule.test = /\.(png|jpe?g|gif|webp)$/
+
+        // 配置 svg
         module.rules.push({
           test: /\.svg$/,
           use: ['vue-loader', 'vue-svg-loader'],
         })
+        // 配置 antdvue 风格
         module.rules.push({
           test: /\.less/,
           loader: 'less-loader',
@@ -159,25 +193,13 @@ export default {
           },
         })
       }
-    },
-    transpile: ['ant-design-vue'],
-    babel: {
-      plugins: [
-        [
-          '@babel/plugin-transform-runtime',
-          {
-            corejs: 3,
-          },
-        ],
-        [
-          'import',
-          {
-            libraryName: 'ant-design-vue',
-            libraryDirectory: 'es',
-            style: true,
-          },
-        ],
-      ],
+      // 去掉 antd-vue icon
+      if (config.resolve?.alias) {
+        config.resolve.alias['@ant-design/icons/lib/dist$'] = resolve(
+          __dirname,
+          './plugins/antd-icons.ts'
+        )
+      }
     },
   },
 } as NuxtConfig
