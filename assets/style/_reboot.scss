@@ -10,9 +10,6 @@
 }
 
 // input 默认 and 聚焦样式
-html, body{
-  @include scrollHover();
-}
 
 input {
 	margin: 0;
