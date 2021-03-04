@@ -11,8 +11,8 @@
         {{ comment.content }}
       </p>
       <div class="comment-handle">
-        <div class="comment-handle-suppot">
-          <img src="" class="comment-handle-suppot-img" />
+        <div class="comment-handle-support" @click="support">
+          <img src="" class="comment-handle-support-img" />
           <div>点赞</div>
         </div>
         <div class="comment-handle-answer" @click="reply">回复</div>
@@ -51,6 +51,25 @@ export default defineComponent({
      */
     reply() {
       // 判断登录态
+      // 调出评论
+    },
+    /**
+     * @description: 点赞
+     */
+    support() {
+      // 判断登录态
+      if (this.$accessor.userInfo.userId === 0) {
+        // 调取登录弹窗
+        this.$accessor.global.showLoginPopUpOrHide()
+        return
+      }
+      const { commentId, contentId, shardId, shardTypeId } = this.$props.comment
+      this.$http.comment.supportComment({
+        commentId,
+        contentId,
+        shardId,
+        shardTypeId,
+      })
     },
   },
 })
@@ -117,7 +136,7 @@ export default defineComponent({
 
     @include text(12px, #666666);
 
-    &-suppot {
+    &-support {
       display: flex;
       margin-right: 16px;
       align-items: center;

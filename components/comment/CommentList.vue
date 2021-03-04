@@ -63,7 +63,7 @@ export default defineComponent({
       typeId: PROT_TYPE_TYPEID.BIG_WORK,
       sort,
     })
-    this.getNewsCommentList.total = getNewsCommentList.total
+    this.getNewsCommentList.total = Number(getNewsCommentList.total)
     this.getNewsCommentList.list = this.getNewsCommentList.list.concat(
       getNewsCommentList.list
     )

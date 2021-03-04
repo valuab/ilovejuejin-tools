@@ -9,7 +9,9 @@
         <div class="login-error">登录后可发表评论</div>
         <LoginButton class="login"> 登录 </LoginButton>
       </div>
-      <button type="button" class="commentInput-button">发布评论</button>
+      <button type="button" class="commentInput-button" @click="send">
+        发布评论
+      </button>
     </div>
   </article>
 </template>
@@ -50,6 +52,12 @@ export default defineComponent({
         this.isLogin = false
       }
     },
+  },
+  methods: {
+    /**
+     * @description: 发布内容
+     */
+    send() {},
   },
 })
 </script>

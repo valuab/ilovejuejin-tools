@@ -59,21 +59,10 @@ export interface NewCommentReplyListResult extends IApiResult {
   result: IApiCommentDto
 }
 export interface SupportCommentResult extends IApiResult {
-  result: {
-    commentId: number
-    shardId: number
-    contentId: number
-    shardTypeId: number
-  }
+  result: number
 }
 export interface PostCommentResult extends IApiResult {
-  result: {
-    commentId: number
-    shardId: number
-    contentId: number
-    content: string
-    djcarsmid: number
-  }
+  result: number
 }
 /**
  * 输出解耦 END

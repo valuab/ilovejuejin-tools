@@ -82,6 +82,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 import SearchPopup from '@/components/popup/SearchPopup.vue'
+import LoginPopUp from '@/components/popup/LoginPopUp.vue'
 import LoginButton from '@/components/operate/LoginButton.vue'
 
 type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
@@ -90,6 +91,7 @@ export default defineComponent({
   name: 'GlobalHeader',
   components: {
     SearchPopup,
+    LoginPopUp,
     LoginButton,
   },
   emits: ['showSearch'],
