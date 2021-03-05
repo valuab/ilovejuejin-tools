@@ -110,7 +110,7 @@ export default defineComponent({
     const query = route.query
     const viewUserId = app.$accessor.userInfo.userId
 
-    const keyword: string = query.keyword as string // 搜索关键字
+    const keyword: string = unescape(query.keyword as string) // 搜索关键字
     const type = Number(query.type) // 搜索关键字
     const typeName = query.typeName // 搜索关键字
 
@@ -352,50 +352,50 @@ export default defineComponent({
         page,
       })
     },
-  },
-  /**
-   * @description 查看全部
-   */
-  seeAll() {},
-  /**
-   * @description 搜索
-   */
-  search(value: string) {
-    // 重定向
-    this.keyword = value
-    switch (this.type) {
-      case SEARCH_TYPE.ALL:
-        this.getSearchAll()
-        break
-      case SEARCH_TYPE.ITEM:
-        this.getSearchByItemCategoryId()
-        break
-      case SEARCH_TYPE.LABEL:
-        this.getSearchByItemKeywordId()
-        break
-      case SEARCH_TYPE.HOST:
-        this.searchByHostUserId()
-        break
-      case SEARCH_TYPE.CAR:
-        this.searchByCars()
-        break
-      default:
-        break
-    }
-  },
-  /**
-   * @description 清除搜索
-   */
-  deleteSearch() {
-    this.type = 1 // 改为全部搜索
-  },
+    /**
+     * @description 查看全部
+     */
+    seeAll() {},
+    /**
+     * @description 搜索
+     */
+    search(value: string) {
+      // 重定向
+      this.keyword = value
+      switch (this.type) {
+        case SEARCH_TYPE.ALL:
+          this.getSearchAll()
+          break
+        case SEARCH_TYPE.ITEM:
+          this.getSearchByItemCategoryId()
+          break
+        case SEARCH_TYPE.LABEL:
+          this.getSearchByItemKeywordId()
+          break
+        case SEARCH_TYPE.HOST:
+          this.searchByHostUserId()
+          break
+        case SEARCH_TYPE.CAR:
+          this.searchByCars()
+          break
+        default:
+          break
+      }
+    },
+    /**
+     * @description 清除搜索
+     */
+    deleteSearch() {
+      this.type = 1 // 改为全部搜索
+    },
 
-  /**
-   * @description 列表分页初始化
-   */
-  // turnDown(list) {
+    /**
+     * @description 列表分页初始化
+     */
+    // turnDown(list) {
 
-  // },
+    // },
+  },
 })
 </script>
 
