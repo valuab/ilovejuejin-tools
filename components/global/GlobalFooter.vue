@@ -56,7 +56,7 @@
     </div>
     <div class="copyright">
       <span class="copyright-text"
-        >2015-2019 广州朋客网络科技有限公司版权所有</span
+        >2015-2021 广州朋客网络科技有限公司版权所有</span
       >
       <a
         class="copyright-text"

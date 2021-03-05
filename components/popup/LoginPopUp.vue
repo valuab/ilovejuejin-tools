@@ -28,8 +28,9 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import wxConfig from '~/assets/ts/wxConfig'
+import config from '~/assets/ts/config'
 
-const wxLoginCSSlink = `${process.env.BASE_URL}/public/stylesheets/wxLogin.css`
+const wxLoginCSSlink = `${config.ASSETS_URL}/public/stylesheets/wxLogin.css`
 export default defineComponent({
   name: 'LoginPopUp',
   data() {
