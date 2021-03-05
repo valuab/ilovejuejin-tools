@@ -99,7 +99,7 @@ export default defineComponent({
      * @description: 跳转至搜索页
      */
     navSearch(value: string, type: number, typeName: String) {
-      value = escape(value)
+      value = encodeURIComponent(value)
       this.$router.push({
         path: `/Search?keyword=${value}&type=${type}&typeName=${typeName}`,
       })
