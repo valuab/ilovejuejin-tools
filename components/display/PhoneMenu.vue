@@ -18,20 +18,20 @@
           width="160px"
           height="160px"
           alt="图片加载失败"
-          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          :src="imgSrc.left.img"
         />
-        <p class="title">公众号</p>
-        <p class="desc">真人真话，道出专业与事实</p>
+        <p class="title">{{ imgSrc.left.title }}</p>
+        <p class="desc">{{ imgSrc.left.desc }}</p>
       </div>
       <div class="qrbox">
         <img
           width="160px"
           height="160px"
-          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          :src="imgSrc.right.img"
           alt="图片加载失败"
         />
-        <p class="title">小程序</p>
-        <p class="desc">真人真话，道出专业与事实</p>
+        <p class="title">{{ imgSrc.right.title }}</p>
+        <p class="desc">{{ imgSrc.right.desc }}</p>
       </div>
     </div>
   </div>
@@ -42,33 +42,122 @@ export default defineComponent({
   name: 'PhoneMenu',
   setup() {
     const menuPhoneList = reactive([
-      { icon: 'LogoDjcar', name: '大家车言论', offic: 'red', miniapp: 'red' },
-      { icon: 'LogoMall', name: '大家车商城', offic: 'blue', miniapp: 'blue' },
+      {
+        icon: 'LogoDjcar',
+        name: '大家车言论',
+        left: {
+          title: '公众号',
+          desc: '真人真话，道出专业与事实',
+          img: '/qrcode/offic/djcars.png',
+        },
+        right: {
+          title: '小程序',
+          desc: '真人真话，道出专业与事实',
+          img: '/qrcode/miniapp/djcars.jpg',
+        },
+      },
+      {
+        icon: 'LogoMall',
+        name: '大家车商城',
+        left: {
+          title: '公众号',
+          desc: '信我们，得好车品',
+          img: '/qrcode/offic/shop.png',
+        },
+        right: {
+          title: '小程序',
+          desc: '信我们，得好车品',
+          img: '/qrcode/miniapp/shop.png',
+        },
+      },
       {
         icon: 'LogoQuestion',
         name: '大家车问',
-        offic: 'orange',
-        miniapp: 'red',
+        left: {
+          title: '公众号',
+          desc: '汽车领域的专业问答平台',
+          img: '/qrcode/offic/chewen.png',
+        },
+        right: {
+          title: '小程序',
+          desc: '汽车领域的专业问答平台',
+          img: '/qrcode/miniapp/chewen.jpg',
+        },
       },
       {
         icon: 'LogoObservation',
         name: '大家车观察',
-        offic: 'blue',
-        miniapp: 'blue',
+        left: {
+          title: '公众号',
+          desc: '大家车言论的汽车行业观察室',
+          img: '/qrcode/offic/observation.jpeg',
+        },
+        right: {
+          title: '小程序',
+          desc: '大家车言论的汽车行业观察室',
+          img: '/qrcode/miniapp/observation.png',
+        },
       },
-      { icon: 'LogoYue', name: '粤爱车', offic: 'red', miniapp: 'orange' },
-      { icon: 'LogoGame', name: '小游戏', offic: 'orange', miniapp: 'blue' },
-      { icon: 'LogoApp', name: '手机应用APP', offic: 'red', miniapp: 'orange' },
+      {
+        icon: 'LogoYue',
+        name: '粤爱车',
+        left: {
+          title: '公众号',
+          desc: '华人粤语汽车节目大本营',
+          img: '/qrcode/offic/yue.JPG',
+        },
+        right: {
+          title: '小程序',
+          desc: '华人粤语汽车节目大本营',
+          img: '/qrcode/offic/yue.JPG',
+        },
+      },
+      {
+        icon: 'LogoGame',
+        name: '小游戏',
+        left: {
+          title: '谁是车神',
+          desc: '车迷等级排位赛',
+          img: '/qrcode/miniapp/carGodGame.jpg',
+        },
+        right: {
+          title: '冲鸭大疯车',
+          desc: '可能是全银河系第二疯狂的赛车小游戏',
+          img: '/qrcode/miniapp/runCarGame.jpg',
+        },
+      },
+      {
+        icon: 'LogoApp',
+        name: '手机应用APP',
+        left: {
+          title: 'IOS',
+          desc: '微信扫一扫，看汽车态度',
+          img: '/qrcode/offic/ios.png',
+        },
+        right: {
+          title: 'Android',
+          desc: '微信扫一扫，看汽车态度',
+          img: '/qrcode/offic/android.png',
+        },
+      },
     ])
     const imgSrc = reactive({
-      offic: '',
-      miniapp: '',
+      left: {
+        title: '公众号',
+        desc: '真人真话，道出专业与事实',
+        img: '/qrcode/offic/djcars.png',
+      },
+      right: {
+        title: '小程序',
+        desc: '真人真话，道出专业与事实',
+        img: '/qrcode/miniapp/djcars.jpg',
+      },
     })
     const phoneItem = ref<null | HTMLElement>(null)
     const mouseOver = (event: MouseEvent, index: number) => {
       const dom = event.target as HTMLElement
-      imgSrc.offic = menuPhoneList[index].offic
-      imgSrc.miniapp = menuPhoneList[index].miniapp
+      imgSrc.left = menuPhoneList[index].left
+      imgSrc.right = menuPhoneList[index].right
       getDiv(dom, true)
     }
     const mouseOut = (event: MouseEvent) => {

@@ -128,7 +128,7 @@ export default defineComponent({
           window.open('https://vkool.djcars.cn/', '_blank')
           break
         case 'vkoll':
-          window.open('https://vkool.djcars.cn/', '_blank')
+          window.open('https://vkool.djcars.cn/#/product', '_blank')
           break
         default:
           break

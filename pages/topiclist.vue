@@ -44,14 +44,14 @@ export default defineComponent({
       title: '王牌节目',
       meta: [
         {
-          hid: 'description',
-          name: 'description',
-          content: 'my website description',
-        },
-        {
           hid: 'keywords',
           name: 'keywords',
-          content: 'my website keywords',
+          content: '大家车言论王牌节目',
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: '大家车言论王牌节目',
         },
       ],
     }

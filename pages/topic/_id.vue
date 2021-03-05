@@ -10,16 +10,17 @@
           </div>
         </div>
         <aside class="qrimg">
-          <img src="@images/logo.png" />
+          <img src="/qrcode/miniapp/djcars.jpg" />
         </aside>
       </div>
     </header>
     <div class="main">
       <div
         class="main-bg"
-        :style="{ maxHeight: total < 5 ? '384px' : '716px' }"
+        :style="{ maxHeight: list.length < 5 ? '384px' : '716px' }"
       ></div>
       <radio-and-search
+        id="radioAnchor"
         class="radio-search"
         @search="onSearch"
         @radio="onRadio"
@@ -28,6 +29,7 @@
         <article-list :load="listLoad" :list="list"></article-list>
       </div>
       <Pagination
+        v-anchor="'radioAnchor'"
         :total="total"
         class="pagination"
         @change="pageChange"
@@ -96,18 +98,21 @@ export default defineComponent({
     }
   },
   head() {
+    const title = this.$data.detail.name as string
+    const description = this.$data.detail.description as string
+
     return {
-      title: 'topic',
+      title,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: 'my website description',
+          content: description,
         },
         {
           hid: 'keywords',
           name: 'keywords',
-          content: 'my website keywords',
+          content: title,
         },
       ],
     }

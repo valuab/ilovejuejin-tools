@@ -143,25 +143,30 @@ export default defineComponent({
     }
   },
   head() {
+    const title = this.$data.detail.name as string
+    const description = this.$data.detail.description as string
+
     return {
-      title: 'kol',
+      title,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: 'my website description',
+          content: description,
         },
         {
           hid: 'keywords',
           name: 'keywords',
-          content: 'my website keywords',
+          content: title,
         },
       ],
     }
   },
   computed: {
     ListBgHeight(): string {
-      return this.articleList[this.articleIndex]?.total < 5 ? '478px' : '810px'
+      return this.articleList[this.articleIndex]?.list?.length < 5
+        ? '478px'
+        : '810px'
     },
   },
   methods: {
