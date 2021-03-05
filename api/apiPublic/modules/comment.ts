@@ -19,6 +19,7 @@ interface INewsCommentListParmas {
   id: number
   typeId: number
   sort: number
+  page: number
 }
 interface INewCommentReplyListParmas {
   id: number

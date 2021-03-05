@@ -2,7 +2,11 @@
   <aside class="article-body">
     <article class="article">
       <ArticleHeader :post="article" />
-
+      <ArticleVideo
+        v-if="article && videoType"
+        :post="article"
+        :video-url="videoUrl"
+      />
       <section></section>
       <!-- 文字段落 -->
       <div v-for="item in article.stepList" :key="item.id" class="article">
@@ -12,7 +16,7 @@
         <!-- 图片 -->
         <img class="poster" :src="item.smallShowImageUrl" />
         <!-- 视频展示    -->
-        <aside class="video">
+        <aside class="video" @click="playVideo(item.videoUrl)">
           <img class="video-poster" :src="item.smallShowImageUrl" />
           <!-- <img class="video-icon" src="~" /> -->
         </aside>
@@ -35,6 +39,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import CommentInput from '@/components/comment/CommentInput.vue'
 import CommentList from '@/components/comment/CommentList.vue'
 import ArticleHeader from './ArticleHeader.vue'
+import ArticleVideo from './ArticleVideo.vue'
 import ArticleFooter from './ArticleFooter.vue'
 import ArticleSubs from './ArticleSubs.vue'
 import ArticleSort from './ArticleSort.vue'
@@ -44,6 +49,7 @@ export default defineComponent({
   name: 'Article',
   components: {
     ArticleHeader,
+    ArticleVideo,
     ArticleFooter,
     ArticleSubs,
     ArticleSort,
@@ -60,6 +66,12 @@ export default defineComponent({
       },
     },
   },
+  data() {
+    return {
+      videoUrl: '', // 视频链接
+      videoType: false, // 切换视频
+    }
+  },
   fetch() {
     console.log(this.article)
   },
@@ -71,6 +83,15 @@ export default defineComponent({
         },
         this.posts
       )
+    },
+  },
+  methods: {
+    /**
+     * @description: 视频播放
+     */
+    playVideo(videoUrl: string) {
+      this.videoType = true
+      this.videoUrl = videoUrl
     },
   },
 })

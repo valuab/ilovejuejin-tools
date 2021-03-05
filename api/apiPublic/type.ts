@@ -25,3 +25,11 @@ export interface IArticleList {
   page: number
   listLoad: boolean
 }
+
+// 评论数据结构
+export interface ICommentList {
+  list: IArticleItemType[]
+  total: number
+  page: number
+  listLoad: boolean
+}

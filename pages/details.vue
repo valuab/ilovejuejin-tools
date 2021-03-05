@@ -27,7 +27,6 @@ export default defineComponent({
   name: 'Details',
   components: {
     Article,
-    // container,
   },
   layout: 'profile',
   async asyncData({ app, route }) {

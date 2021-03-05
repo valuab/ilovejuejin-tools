@@ -48,7 +48,20 @@ interface ICategoryListParams {
 export interface ICategoryListType {
   id: number
   name: string
+  userName: string
+  itemKeywordName: string
+  itemCategoryName: string
+  title: string
+  imageUrl: string
+  smallImageUrl: string
+  totalViewCount: string
+  publishTime: string
+  userId: number
+  commentCount: number
+  forumId: number
+  postId: number
 }
+
 export interface ICategoryListResult extends IApiResult {
   result: {
     total: number

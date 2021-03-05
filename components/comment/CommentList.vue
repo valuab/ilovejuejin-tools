@@ -1,14 +1,16 @@
 <template>
-  <article class="commentList">
+  <article v-if="newsCommentList.length" class="commentList">
     <Comment
-      v-for="item in getNewsCommentList.list"
+      v-for="item in newsCommentList[commentPage].list"
       :key="item.id"
       :comment="item"
+      class="Comment"
     />
     <!-- 搜索分页 -->
     <Pagination
       v-anchor="'tabsAnchor'"
-      :total="getNewsCommentList.total"
+      :default-page-size="10"
+      :total="newsCommentList[commentPage].total"
       class="pagination"
       @change="pageChange"
     ></Pagination>
@@ -18,16 +20,15 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
 
+import { ICommentList } from '@apiPublic/type'
+
 // 获取枚举类型
 import { PROT_TYPE_TYPEID } from '@/enums/content'
-
 import Comment from './Comment.vue'
 
 interface IData {
-  getNewsCommentList: {
-    total: number
-    list: any[]
-  }
+  newsCommentList: ICommentList[]
+  commentPage: number
 }
 export default defineComponent({
   name: 'CommentList',
@@ -46,10 +47,8 @@ export default defineComponent({
   },
   data(): IData {
     return {
-      getNewsCommentList: {
-        total: 0,
-        list: [],
-      },
+      newsCommentList: [],
+      commentPage: 0,
     }
   },
   async fetch() {
@@ -58,17 +57,46 @@ export default defineComponent({
     // const viewUserId = this.$accessor.userInfo.userId
     const sort = 0
     // 获取评论列表
-    const getNewsCommentList = await this.$http.comment.getNewsCommentList({
+    const newsCommentList = await this.$http.comment.getNewsCommentList({
       id: this.$props.post.id,
       typeId: PROT_TYPE_TYPEID.BIG_WORK,
       sort,
+      page: 1,
     })
-    this.getNewsCommentList.total = Number(getNewsCommentList.total)
-    this.getNewsCommentList.list = this.getNewsCommentList.list.concat(
-      getNewsCommentList.list
+    const data = Object.assign(
+      {
+        list: [],
+        total: 0,
+        page: 0,
+        listLoad: false,
+      },
+      newsCommentList
     )
+    data.total = Number(data.total)
+    this.newsCommentList.push(data)
+  },
+  watch: {
+    newsCommentList(val) {
+      console.log(val) // 有数据
+      this.$nextTick(() => {
+        // const curDom = document.getElementsByClassName('Comment')[0] // 有数据
+        // console.log(curDom)
+      })
+    },
   },
   methods: {
+    /**
+     * @description: 获取帖子评论列表
+     */
+    getNewsCommentList(page: number) {
+      const sort = 0
+      return this.$http.comment.getNewsCommentList({
+        id: this.$props.post.id,
+        typeId: PROT_TYPE_TYPEID.BIG_WORK,
+        sort,
+        page,
+      })
+    },
     /**
      * @description: 评论回复
      */
@@ -84,13 +112,33 @@ export default defineComponent({
     /**
      * @description: 页码改变
      */
-    pageChange(param: IchangeParam) {
+    async pageChange(param: IchangeParam) {
       const { page } = param
-      return page
-      // console.log(this.allList[0].list)
-      // this.searchAllPage = page - 1
-      // this.allList[this.searchAllPage].page = page
-      // this.getSearchAll()
+
+      // 评论列表切换
+      // 请求数据 or 直接切换页码
+      if (
+        this.newsCommentList.length > page &&
+        this.newsCommentList[page].list.length > 0
+      ) {
+        // 当前页有数据
+        this.commentPage = page - 1
+        return
+      }
+
+      const newsCommentList = await this.getNewsCommentList(page)
+
+      const data = Object.assign(
+        {
+          list: [],
+          total: 0,
+          page,
+          listLoad: false,
+        },
+        newsCommentList
+      )
+      this.newsCommentList[page - 1] = data
+      this.commentPage = page - 1
     },
     /**
      * @description: 评论点赞
@@ -101,7 +149,7 @@ export default defineComponent({
     //     contentId,
     //     shardId,
     //     shardTypeId,
-    //   } = this.getNewsCommentList[index]
+    //   } = this.newsCommentList[index]
     //   const sort = 0
     //   return this.$http.comment.supportComment({
     //     commentId,
@@ -119,7 +167,7 @@ export default defineComponent({
     //     shardId,
     //     content,
     //     djcarsmid, // 需要加密获取
-    //   } = this.getNewsCommentList[index]
+    //   } = this.newsCommentList[index]
     //   const sort = 0
     //   return this.$http.comment.postComment({
     //     id,

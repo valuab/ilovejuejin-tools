@@ -51,6 +51,7 @@ export default defineComponent({
     const listByHostUserId = await this.$http.kol.getListByHostUserId({
       userId: this.$props.post.userId,
     })
+    if (listByHostUserId.list.length === 0) return
     this.listByHostUserId.total = listByHostUserId.total
     this.listByHostUserId.list = this.listByHostUserId.list.concat(
       listByHostUserId.list
