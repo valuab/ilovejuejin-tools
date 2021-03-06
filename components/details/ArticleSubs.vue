@@ -1,7 +1,12 @@
 <template>
   <aside v-if="hostUserList.length" class="subs">
     <div class="subs-title">节目主持人</div>
-    <div v-for="item in hostUserList" :key="item.userId" class="subs-msg">
+    <div
+      v-for="item in hostUserList"
+      :key="item.userId"
+      class="subs-msg"
+      @click="navKolDetail(item.userId)"
+    >
       <div class="subs-msg-img">
         <img :src="item.smallImageUrl" alt="" />
       </div>
@@ -73,6 +78,14 @@ export default defineComponent({
 
     this.userInfo = Object.assign(getUserInfo)
     this.hostUserList.push(this.userInfo)
+  },
+  methods: {
+    /**
+     * @description: 跳转至kol详情页
+     */
+    navKolDetail(id: number) {
+      this.$router.push(`/kol/${id}`)
+    },
   },
 })
 </script>

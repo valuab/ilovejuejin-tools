@@ -14,7 +14,7 @@
         :key="item.id"
         class="article"
       >
-        <p>
+        <p v-if="item.content">
           {{ item.content }}
         </p>
         <!-- 图片 -->
@@ -30,7 +30,7 @@
         </aside>
       </div>
       <ArticleFooter v-if="article.tagNameList.length" :post="article" />
-      <CommentInput :post="article" />
+      <CommentInput :post="article" @send="send" />
       <p class="column-title">全部评论（{{ article.commentCount }}）</p>
       <CommentList :post="article" />
     </article>
@@ -44,14 +44,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import CommentInput from '@/components/comment/CommentInput.vue'
-import CommentList from '@/components/comment/CommentList.vue'
-import ArticleHeader from './ArticleHeader.vue'
-import ArticleVideo from './ArticleVideo.vue'
-import ArticleFooter from './ArticleFooter.vue'
-import ArticleSubs from './ArticleSubs.vue'
-import ArticleSort from './ArticleSort.vue'
-import ArticlePostList from './ArticlePostList.vue'
+
+// 加密脚本
+import { mid } from '@/assets/ts/mid'
 
 interface IStepList {
   qqVid: string
@@ -60,16 +55,6 @@ interface IStepList {
 
 export default defineComponent({
   name: 'Article',
-  components: {
-    ArticleHeader,
-    ArticleVideo,
-    ArticleFooter,
-    ArticleSubs,
-    ArticleSort,
-    ArticlePostList,
-    CommentInput,
-    CommentList,
-  },
   props: {
     // 帖子数据
     posts: {
@@ -105,6 +90,30 @@ export default defineComponent({
     playVideo(item: IStepList) {
       this.videoType = true
       this.videoUrl = item.realVideoUrl
+    },
+    /**
+     * @description: send
+     */
+    send(value: string) {
+      this.postComment(value)
+    },
+    /**
+     * @description: 添加帖子评论
+     */
+    postComment(content: string) {
+      const shardId = this.posts.forumId
+      const contentId = this.posts.id
+      const commentId = 0 // 对帖子评论填写0，对评论的回复填写评论id // 如果是对评论的 进行回复 contentid  就是 评论id shardid 就是 评论的contentid
+      const userId = this.$accessor.userInfo.userId
+      const path = this.$route.name || 'index'
+      const djcarsmid = mid(path, userId).toString()
+      return this.$http.comment.postComment({
+        commentId,
+        shardId,
+        contentId,
+        content,
+        djcarsmid,
+      })
     },
   },
 })

@@ -9,7 +9,14 @@
       class="Comment"
       @reply="reply"
     >
-      <Comment :open-reply-id="openReplyId" @reply="replyItem" />
+      <Comment
+        v-if="item.replayCommentDto"
+        :open-reply-id="openReplyId"
+        :post="post"
+        :comment="item.replayCommentDto"
+        :comment-type="true"
+        @reply="replyItem"
+      />
     </Comment>
     <!-- 搜索分页 -->
     <Pagination
@@ -33,7 +40,7 @@ import { PROT_TYPE_TYPEID } from '@/enums/content'
 interface IData {
   newsCommentList: ICommentList[]
   commentPage: number
-  openReplyId: string
+  openReplyId: String
 }
 export default defineComponent({
   name: 'CommentList',
@@ -77,14 +84,6 @@ export default defineComponent({
     data.total = Number(data.total)
     this.newsCommentList.push(data)
   },
-  // watch: {
-  //   newsCommentList(val) {
-  //     this.$nextTick(() => {
-  //       // const curDom = document.getElementsByClassName('Comment')[0] // 有数据
-  //       // console.log(curDom)
-  //     })
-  //   },
-  // },
   methods: {
     /**
      * @description: 获取帖子评论列表
@@ -147,24 +146,18 @@ export default defineComponent({
     reply(id: string) {
       this.openReplyId = id
     },
-
-    // /**
-    //  * @description: 添加帖子评论
-    //  */
-    // postComment(index: number) {
-    //   const {
-    //     commentId,
-    //     shardId,
-    //     content,
-    //     djcarsmid, // 需要加密获取
-    //   } = this.newsCommentList[index]
-    //   const sort = 0
-    //   return this.$http.comment.postComment({
-    //     id,
-    //     contentId,
-    //     sort,
-    //   })
-    // },
+    /**
+     * @description: 点击恢复
+     */
+    replyItem(id: string) {
+      this.openReplyId = id
+    },
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.Comment {
+  margin-bottom: 20px;
+}
+</style>

@@ -10,7 +10,13 @@ export default ({ app, $axios }: Context) => {
       Vue.prototype.$http = http
     },
   }
-  const token = getToken()
+  // 判断是否登录
+  let token
+  if (app.$accessor.userInfo.isLogin) {
+    token = app.$cookies.get('token')
+  } else {
+    token = getToken()
+  }
 
   $axios.setHeader('sign', token.sign)
   $axios.setHeader('sid', token.sid)

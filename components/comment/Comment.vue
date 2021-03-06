@@ -1,7 +1,10 @@
 <template>
   <article class="comment">
     <img :src="comment.smallUserIconUrl" class="comment-profile" />
-    <article class="comment-msg">
+    <article
+      class="comment-msg"
+      :class="commentType ? '' : 'comment-msg-border'"
+    >
       <div class="comment-user">
         <div class="comment-user-name">{{ comment.userName }}</div>
         <div v-if="comment.userId === post.userId" class="comment-user-author">
@@ -27,13 +30,12 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import CommentInput from '@/components/comment/CommentInput.vue'
+
+// 加密脚本
+import { mid } from '@/assets/ts/mid'
 
 export default defineComponent({
   name: 'Comment',
-  components: {
-    CommentInput,
-  },
   props: {
     comment: {
       type: Object,
@@ -53,6 +55,13 @@ export default defineComponent({
         return ''
       },
     },
+    // 是否是评论回复
+    commentType: {
+      type: Boolean,
+      default: () => {
+        return false
+      },
+    },
   },
   emits: ['reply'],
   data() {
@@ -60,13 +69,41 @@ export default defineComponent({
       isReply: false, // 评论展示
     }
   },
+  watch: {
+    openReplyId(newVal: string) {
+      if (this.comment.id === newVal) {
+        // 调出评论
+        this.isReply = true
+      } else {
+        this.isReply = false
+      }
+    },
+  },
   methods: {
     /**
      * @description: 发布评论
      */
     send(comentValue: any) {
       // console.log(comentValue)
-      return comentValue
+      this.postComment(comentValue)
+    },
+    /**
+     * @description: 添加评论回复
+     */
+    postComment(content: string) {
+      const shardId = this.comment.contentId
+      const contentId = this.post.id
+      const commentId = this.comment.id // 对帖子评论填写0，对评论的回复填写评论id // 如果是对评论的 进行回复 contentid  就是 评论id shardid 就是 评论的 contentid
+      const userId = this.$accessor.userInfo.userId
+      const path = this.$route.name || 'index'
+      const djcarsmid = mid(path, userId).toString()
+      return this.$http.comment.postComment({
+        commentId,
+        shardId,
+        contentId,
+        content,
+        djcarsmid,
+      })
     },
     /**
      * @description: 回复评论
@@ -78,9 +115,6 @@ export default defineComponent({
         this.$accessor.global.showLoginPopUpOrHide()
         return
       }
-      // 调出评论
-      this.isReply = true
-
       this.$emit('reply', this.comment.id)
     },
     /**
@@ -126,6 +160,10 @@ export default defineComponent({
     display: flex;
     flex: 1;
     flex-direction: column;
+
+    &-border {
+      border-bottom: 1px solid #e6e6e6;
+    }
   }
 
   &-user {
@@ -168,6 +206,7 @@ export default defineComponent({
   &-handle {
     display: flex;
     height: 20px;
+    margin-bottom: 20px;
     align-items: center;
 
     @include text(12px, #666666);

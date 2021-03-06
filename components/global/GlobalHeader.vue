@@ -71,7 +71,15 @@
       class="avatar"
       size="large"
       :src="$accessor.userInfo.smallImageUrl"
+      @click="showOutLogin"
     ></a-avatar>
+
+    <!-- 退出 -->
+    <div v-if="showOutLoginBox" class="outLogin">
+      <image class="code" :src="$accessor.userInfo.smallImageUrl"></image>
+      <p @click="outLogin">退出登录</p>
+    </div>
+
     <login-pop-up v-if="$accessor.global.isLoginPopUpShow"></login-pop-up>
     <!-- <global-login /> -->
     <search-popup v-if="$accessor.global.isSearchPopup"></search-popup>
@@ -81,19 +89,12 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import SearchPopup from '@/components/popup/SearchPopup.vue'
-import LoginPopUp from '@/components/popup/LoginPopUp.vue'
-import LoginButton from '@/components/operate/LoginButton.vue'
+import getToken from '~/api/token'
 
 type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
 
 export default defineComponent({
   name: 'GlobalHeader',
-  components: {
-    SearchPopup,
-    LoginPopUp,
-    LoginButton,
-  },
   emits: ['showSearch'],
   setup() {
     // 商城menu子item样式
@@ -105,6 +106,11 @@ export default defineComponent({
 
     return {
       shopMenuItem,
+    }
+  },
+  data() {
+    return {
+      showOutLoginBox: false,
     }
   },
   methods: {
@@ -133,6 +139,17 @@ export default defineComponent({
         default:
           break
       }
+    },
+
+    showOutLogin() {
+      this.showOutLoginBox = true
+    },
+    outLogin() {
+      // 退出登录
+      const token = getToken()
+      console.log(token)
+      // 清除token
+      // 清除登录态
     },
   },
 })
@@ -207,5 +224,30 @@ export default defineComponent({
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #fff;
+}
+
+.outLogin {
+  width: 180px;
+  height: 216px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.15);
+  position: absolute;
+  bottom: -215px;
+  right: 0;
+
+  .code {
+    width: 40px;
+    height: 40px;
+  }
+
+  > p {
+    height: 56px;
+    box-shadow: inset 0 -1px 0 0 #e6e6e6;
+    text-align: center;
+    line-height: 56px;
+    @include text(16px, #888);
+  }
 }
 </style>

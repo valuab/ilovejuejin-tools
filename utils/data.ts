@@ -29,9 +29,9 @@ export const handleTime = (postTimeStamp: number): string => {
 
   if (publishTime.year() < moment().year()) {
     time = publishTime.format('YYYY-MM-DD')
-  } else if (nowTimeStamp - postTimeStamp > 7 * 24 * 60 * 60 * 60) {
+  } else if (nowTimeStamp - postTimeStamp > 7 * 24 * 60 * 60 * 1000) {
     time = publishTime.format('MM-DD')
-  } else if (nowTimeStamp - postTimeStamp > 60 * 60 * 60) {
+  } else if (nowTimeStamp - postTimeStamp > 60 * 60 * 1000) {
     time = publishTime.fromNow()
   } else {
     time = '刚刚'

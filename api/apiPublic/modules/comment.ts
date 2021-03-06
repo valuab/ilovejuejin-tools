@@ -37,7 +37,7 @@ interface IPostCommentParmas {
   contentId: number
   shardId: number
   content: string
-  djcarsmid: number
+  djcarsmid: string
 }
 
 /**

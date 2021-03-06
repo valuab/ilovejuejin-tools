@@ -1,8 +1,6 @@
 <template>
   <!-- 居中 -->
-  <container class="container">
-    <Article :posts="post" />
-  </container>
+  <Article :posts="post" />
 </template>
 
 <script lang="ts">
@@ -24,7 +22,7 @@ interface IData {
  */
 export default defineComponent({
   name: 'Details',
-  layout: 'profile',
+  layout: 'container',
   async asyncData({ app, route }) {
     const query = route.query
     const viewUserId = app.$accessor.userInfo.userId

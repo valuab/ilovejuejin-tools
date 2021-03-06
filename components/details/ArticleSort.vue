@@ -1,7 +1,7 @@
 <template>
   <aside class="subs">
     <div class="subs-title">所属分类</div>
-    <div class="subs-msg">
+    <div class="subs-msg" @click="navCategory(post.opItemCategoryDto.id)">
       <div class="subs-msg-img">
         <img :src="post.opItemCategoryDto.smallImageUrl" alt="" />
       </div>
@@ -32,6 +32,14 @@ export default defineComponent({
       default: () => {
         return {}
       },
+    },
+  },
+  methods: {
+    /**
+     * @description: 跳转至分类
+     */
+    navCategory(id: number) {
+      this.$router.push(`/Category/${id}`)
     },
   },
 })

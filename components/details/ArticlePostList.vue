@@ -5,6 +5,7 @@
       v-for="item in newListByHostUserId.list"
       :key="item.postId"
       class="post-msg"
+      @click="navDetails(item.id, item.forumId)"
     >
       <div class="post-msg-img">
         <img :src="item.smallImageUrl" alt="" />
@@ -13,7 +14,16 @@
         <div class="post-msg-text-name">{{ item.title }}</div>
         <div class="post-msg-text-data">
           <div class="post-msg-text-data-time">{{ item.publishTime }}</div>
-          <div class="post-msg-text-data-num">{{ item.totalViewCount }}</div>
+
+          <div class="post-msg-text-data-num">
+            <Icon icon="ListView" size="10"></Icon>
+            <span>{{ item.commentCount }}</span>
+          </div>
+
+          <div class="post-msg-text-data-num">
+            <Icon icon="ListComment" size="10"></Icon>
+            <span>{{ item.totalViewCount }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -85,6 +95,15 @@ export default defineComponent({
     },
   },
   methods: {
+    /**
+     * @description: 跳转详情
+     */
+    navDetails(id: string, forumId: string) {
+      const history = this.$router.resolve(
+        `/details?id=${id}&forumId=${forumId}`
+      )
+      window.open(history.href, '_blank')
+    },
     /**
      * @description: 获取数据
      */
@@ -162,6 +181,15 @@ export default defineComponent({
           @include text(12px, #999999);
 
           display: flex;
+          align-items: center;
+
+          :nth-child(2) {
+            margin-right: 10px;
+          }
+
+          > span {
+            margin-left: 5px;
+          }
         }
       }
     }
