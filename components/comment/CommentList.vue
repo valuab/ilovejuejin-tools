@@ -5,9 +5,11 @@
       :key="item.id"
       :comment="item"
       :post="post"
+      :open-reply-id="openReplyId"
       class="Comment"
+      @reply="reply"
     >
-      <Comment />
+      <Comment :open-reply-id="openReplyId" @reply="replyItem" />
     </Comment>
     <!-- 搜索分页 -->
     <Pagination
@@ -31,6 +33,7 @@ import { PROT_TYPE_TYPEID } from '@/enums/content'
 interface IData {
   newsCommentList: ICommentList[]
   commentPage: number
+  openReplyId: string
 }
 export default defineComponent({
   name: 'CommentList',
@@ -47,6 +50,7 @@ export default defineComponent({
     return {
       newsCommentList: [],
       commentPage: 0,
+      openReplyId: '',
     }
   },
   async fetch() {
@@ -136,6 +140,12 @@ export default defineComponent({
       )
       this.newsCommentList[page - 1] = data
       this.commentPage = page - 1
+    },
+    /**
+     * @description: 点击恢复
+     */
+    reply(id: string) {
+      this.openReplyId = id
     },
 
     // /**

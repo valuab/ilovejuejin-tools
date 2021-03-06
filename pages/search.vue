@@ -223,14 +223,17 @@ export default defineComponent({
       // 判断是否是车型
 
       // 请求数据 or 直接切换页码
-      if (this.allList.length > page && this.allList[page].list.length > 0) {
+      if (
+        this.allList.length > page - 1 &&
+        this.allList[page - 1].list.length > 0
+      ) {
         // 当前页有数据
         this.searchAllPage = page
         return
       }
 
-      this.searchAllPage = page
-      const newsCommentList = await this.getSearchAll()
+      this.searchAllPage = page - 1
+      const newsCommentList = await this.getSearchAll(page)
 
       const data = Object.assign(
         {
@@ -252,6 +255,8 @@ export default defineComponent({
       // 获取数据存在本地变量
       const { page } = param
 
+      // 判断搜索状态
+
       // 请求数据 or 直接切换页码
       if (
         this.typeList.length > page &&
@@ -263,7 +268,7 @@ export default defineComponent({
       }
 
       this.typePage = page
-      const newsCommentList = await this.getSearchAll()
+      const newsCommentList = await this.getSearchAll(page)
 
       const data = Object.assign(
         {
@@ -281,9 +286,8 @@ export default defineComponent({
     /**
      * @description: 搜索全部
      */
-    getSearchAll() {
+    getSearchAll(page: number) {
       const keyword = this.query.keyword
-      const page = this.searchAllPage
       const viewUserId = this.$accessor.userInfo.userId
       return this.$http.search.getSearchAll({
         keyword,
@@ -367,7 +371,7 @@ export default defineComponent({
       this.keyword = value
       switch (this.type) {
         case SEARCH_TYPE.ALL:
-          this.getSearchAll()
+          this.getSearchAll(1)
           break
         case SEARCH_TYPE.ITEM:
           this.getSearchByItemCategoryId()

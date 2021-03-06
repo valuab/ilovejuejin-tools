@@ -7,18 +7,26 @@
         :post="article"
         :video-url="videoUrl"
       />
-      <section></section>
       <!-- 文字段落 -->
-      <div v-for="item in article.stepList" :key="item.id" class="article">
+      <div
+        v-for="item in article.stepList"
+        v-show="!videoType"
+        :key="item.id"
+        class="article"
+      >
         <p>
           {{ item.content }}
         </p>
         <!-- 图片 -->
-        <img class="poster" :src="item.smallShowImageUrl" />
+        <img
+          v-if="item.videoId === 0"
+          class="poster"
+          :src="item.smallShowImageUrl"
+        />
         <!-- 视频展示    -->
-        <aside class="video" @click="playVideo(item.videoUrl)">
+        <aside v-if="item.videoId !== 0" class="video" @click="playVideo(item)">
           <img class="video-poster" :src="item.smallShowImageUrl" />
-          <!-- <img class="video-icon" src="~" /> -->
+          <Icon icon="CloseOrange" class="video-icon" />
         </aside>
       </div>
       <ArticleFooter v-if="article.tagNameList.length" :post="article" />
@@ -44,6 +52,11 @@ import ArticleFooter from './ArticleFooter.vue'
 import ArticleSubs from './ArticleSubs.vue'
 import ArticleSort from './ArticleSort.vue'
 import ArticlePostList from './ArticlePostList.vue'
+
+interface IStepList {
+  qqVid: string
+  realVideoUrl: string
+}
 
 export default defineComponent({
   name: 'Article',
@@ -89,9 +102,9 @@ export default defineComponent({
     /**
      * @description: 视频播放
      */
-    playVideo(videoUrl: string) {
+    playVideo(item: IStepList) {
       this.videoType = true
-      this.videoUrl = videoUrl
+      this.videoUrl = item.realVideoUrl
     },
   },
 })

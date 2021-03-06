@@ -1,16 +1,19 @@
 <template>
-  <aside v-if="listByHostUserId.list.length" class="subs">
+  <aside class="subs">
     <div class="subs-title">所属分类</div>
-    <div v-for="item in listByHostUserId.list" :key="item.id" class="subs-msg">
+    <div class="subs-msg">
       <div class="subs-msg-img">
-        <img :src="item.smallImageUrl" alt="" />
+        <img :src="post.opItemCategoryDto.smallImageUrl" alt="" />
       </div>
       <div class="subs-msg-text">
-        <div class="subs-msg-text-name">{{ item.name }}</div>
+        <div class="subs-msg-text-name">{{ post.opItemCategoryDto.name }}</div>
         <div class="subs-msg-text-num">
-          {{ item.imageCount }}图文 · {{ item.videoCount }}视频
+          {{ post.opItemCategoryDto.imageCount }}图文 ·
+          {{ post.opItemCategoryDto.videoCount }}视频
         </div>
-        <div class="subs-msg-text-tips">{{ item.description }}</div>
+        <div class="subs-msg-text-tips">
+          {{ post.opItemCategoryDto.description }}
+        </div>
       </div>
     </div>
   </aside>
@@ -46,17 +49,6 @@ export default defineComponent({
       },
     }
   },
-  async fetch() {
-    // 获取节目分类
-    const listByHostUserId = await this.$http.kol.getListByHostUserId({
-      userId: this.$props.post.userId,
-    })
-    if (listByHostUserId.list.length === 0) return
-    this.listByHostUserId.total = listByHostUserId.total
-    this.listByHostUserId.list = this.listByHostUserId.list.concat(
-      listByHostUserId.list
-    )
-  },
 })
 </script>
 <style lang="scss" scoped>
@@ -79,6 +71,7 @@ export default defineComponent({
       margin-right: 20px;
       background-color: #e6e6e6;
       border-radius: 50%;
+      overflow: hidden;
       align-items: center;
       justify-content: center;
     }

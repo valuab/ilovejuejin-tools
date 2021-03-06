@@ -47,6 +47,12 @@ export default defineComponent({
         return {}
       },
     },
+    openReplyId: {
+      type: String,
+      default: () => {
+        return ''
+      },
+    },
   },
   emits: ['reply'],
   data() {
@@ -74,6 +80,8 @@ export default defineComponent({
       }
       // 调出评论
       this.isReply = true
+
+      this.$emit('reply', this.comment.id)
     },
     /**
      * @description: 点赞

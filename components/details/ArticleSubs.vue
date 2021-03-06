@@ -52,15 +52,6 @@ export default defineComponent({
       },
     }
   },
-  async fetch() {
-    // 获取作者消息
-    const userId = this.$props.post.userId
-    const getUserInfo = await this.$http.kol.getUserInfo({
-      userId,
-    })
-
-    this.userInfo = Object.assign(getUserInfo)
-  },
 })
 </script>
 <style lang="scss" scoped>

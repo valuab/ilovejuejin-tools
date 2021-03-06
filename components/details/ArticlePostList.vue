@@ -1,15 +1,19 @@
 <template>
   <aside v-if="newListByHostUserId.list.length" class="post">
     <div class="post-title">最近发表</div>
-    <div class="post-msg">
+    <div
+      v-for="item in newListByHostUserId.list"
+      :key="item.postId"
+      class="post-msg"
+    >
       <div class="post-msg-img">
-        <img src="" alt="" />
+        <img :src="item.smallImageUrl" alt="" />
       </div>
       <div class="post-msg-text">
-        <div class="post-msg-text-name">从来没有一台双门车，分量有它重</div>
+        <div class="post-msg-text-name">{{ item.title }}</div>
         <div class="post-msg-text-data">
-          <div class="post-msg-text-data-time">1小时前</div>
-          <div class="post-msg-text-data-num"></div>
+          <div class="post-msg-text-data-time">{{ item.publishTime }}</div>
+          <div class="post-msg-text-data-num">{{ item.totalViewCount }}</div>
         </div>
       </div>
     </div>
@@ -25,6 +29,7 @@ interface IData {
     total: number
     list: any[]
   }
+  page: number
 }
 
 export default defineComponent({
@@ -44,6 +49,7 @@ export default defineComponent({
         total: 0,
         list: [],
       },
+      page: 1, // 页码
     }
   },
   async fetch() {
@@ -52,6 +58,7 @@ export default defineComponent({
     const newListByHostUserId = await this.$http.posts.getNewListByHostUserId({
       hostUserId: this.$props.post.userId,
       viewUserId,
+      page: this.page,
     })
     this.newListByHostUserId.total = newListByHostUserId.total
     this.newListByHostUserId.list = this.newListByHostUserId.list.concat(
@@ -70,9 +77,34 @@ export default defineComponent({
   },
   methods: {
     /**
+     * @description: 获取数据
+     */
+    async getNewListByHostUserId() {
+      const viewUserId = this.$accessor.userInfo.userId
+      const newListByHostUserId = await this.$http.posts.getNewListByHostUserId(
+        {
+          hostUserId: this.$props.post.userId,
+          viewUserId,
+          page: this.page,
+        }
+      )
+
+      this.newListByHostUserId.total = newListByHostUserId.total
+      this.newListByHostUserId.list = this.newListByHostUserId.list.concat(
+        newListByHostUserId.list
+      )
+    },
+    /**
      * @description: 查看更多
      */
-    seeMore() {},
+    seeMore() {
+      if (
+        this.newListByHostUserId.list.length <
+        Number(this.newListByHostUserId.total)
+      ) {
+        this.getNewListByHostUserId()
+      }
+    },
   },
 })
 </script>

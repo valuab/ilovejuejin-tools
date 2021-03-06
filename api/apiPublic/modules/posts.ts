@@ -26,6 +26,7 @@ interface IPostParams {
 interface INewListByHostParams {
   hostUserId: number
   viewUserId: number
+  page: number
 }
 
 interface IPdateParams {
