@@ -7,7 +7,6 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import Article from '@/components/details/Article.vue'
 
 // 参数列表 // 标记
 
@@ -25,9 +24,6 @@ interface IData {
  */
 export default defineComponent({
   name: 'Details',
-  components: {
-    Article,
-  },
   layout: 'profile',
   async asyncData({ app, route }) {
     const query = route.query

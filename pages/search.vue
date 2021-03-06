@@ -18,7 +18,7 @@
       {{ keyword }}
       <div class="tag">车型</div>
       <div
-        v-if="type > 1 && typeList[typePage].list.length > 4"
+        v-if="type === 5 && typeList[typePage].list.length > 4"
         class="column-title-nav"
         @click="seeAll"
       >
@@ -34,7 +34,7 @@
       <div class="tag">为你搜索到“飞度”车型结果：</div>
     </h2>
     <article-list
-      v-if="type > 1 && typeList[typePage - 1].list.length"
+      v-if="type === 5 && typeList[typePage - 1].list.length"
       class="article-list"
       :list="typeList[0].list"
     />
@@ -71,10 +71,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
-import SearchInput from '@/components/search/SearchInput.vue'
-import SearchError from '@/components/search/SearchError.vue'
-import ArticleList from '@/components/display/ArticleList.vue'
+import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { ICommentList } from '@apiPublic/type'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 
@@ -100,12 +97,6 @@ interface IData {
 
 export default defineComponent({
   name: 'Search',
-  components: {
-    SearchInput,
-    SearchError,
-    ArticleList,
-    Pagination,
-  },
   async asyncData({ app, route }) {
     const query = route.query
     const viewUserId = app.$accessor.userInfo.userId
@@ -117,7 +108,7 @@ export default defineComponent({
     let categoryId: number, keywordId: number, hostUserId: number
     const allList: any[] = []
     const page = 1
-    let allRes: any, typeList
+    let allRes: any, temporary
     switch (type) {
       case SEARCH_TYPE.ALL:
         allRes = await app.$http.search.getSearchAll({
@@ -125,7 +116,6 @@ export default defineComponent({
           viewUserId,
           page: 1,
         })
-        allList.push(allRes)
         break
       case SEARCH_TYPE.ITEM:
         categoryId = Number(query.categoryId)
@@ -154,32 +144,45 @@ export default defineComponent({
           page,
         })
         break
+      case SEARCH_TYPE.CAR:
+        // 关键字匹配车型
+        categoryId = Number(query.categoryId) || 0
+        keywordId = Number(query.keywordId) || 0
+        hostUserId = Number(query.hostUserId) || 0
+        temporary = await app.$http.search.getSearchByCars({
+          keyword,
+          categoryId,
+          keywordId,
+          hostUserId,
+          viewUserId,
+          page,
+        })
+
+        // 搜索全部
+        allRes = await app.$http.search.getSearchAll({
+          keyword,
+          viewUserId,
+          page: 1,
+        })
+        break
       default:
         break
     }
 
-    // 关键字匹配车型
-    categoryId = Number(query.categoryId) || 0
-    keywordId = Number(query.keywordId) || 0
-    hostUserId = Number(query.hostUserId) || 0
-    const temporary = await app.$http.search.getSearchByCars({
-      keyword,
-      categoryId,
-      keywordId,
-      hostUserId,
-      viewUserId,
-      page,
-    })
+    allList.push(allRes)
 
-    if (temporary && temporary.list) {
-      typeList = [
+    const typeList = []
+    if (type === 5 && temporary && temporary?.list.length) {
+      const typeRes = Object.assign(
         {
-          list: temporary?.list,
-          total: temporary?.total,
+          list: [],
+          total: 0,
           page: 1,
           listLoad: false,
         },
-      ]
+        temporary
+      )
+      typeList.push(typeRes)
     }
 
     return {

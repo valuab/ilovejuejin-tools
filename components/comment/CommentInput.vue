@@ -1,17 +1,17 @@
 <template>
   <article class="commentInput">
     <div v-if="isLogin" class="commentInput-table">
-      <input value="" class="commentInput-input" />
-      <button type="button" class="commentInput-button">发布评论</button>
+      <input v-model="commentValue" class="commentInput-input" />
+      <button type="button" class="commentInput-button" @click="send">
+        发布评论
+      </button>
     </div>
     <div v-else class="commentInput-table">
       <div class="commentInput-input">
         <div class="login-error">登录后可发表评论</div>
         <LoginButton class="login"> 登录 </LoginButton>
       </div>
-      <button type="button" class="commentInput-button" @click="send">
-        发布评论
-      </button>
+      <button type="button" class="commentInput-button">发布评论</button>
     </div>
   </article>
 </template>
@@ -28,8 +28,10 @@ export default defineComponent({
   data() {
     return {
       isLogin: false,
+      commentValue: '',
     }
   },
+  emits: ['send'],
   fetch() {
     // 判断登录
     if (this.$accessor.userInfo.userId) {
@@ -57,7 +59,9 @@ export default defineComponent({
     /**
      * @description: 发布内容
      */
-    send() {},
+    send() {
+      this.$emit('send', this.commentValue)
+    },
   },
 })
 </script>

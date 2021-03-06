@@ -4,7 +4,9 @@
     <article class="comment-msg">
       <div class="comment-user">
         <div class="comment-user-name">{{ comment.userName }}</div>
-        <div class="comment-user-author">作者</div>
+        <div v-if="comment.userId === post.userId" class="comment-user-author">
+          作者
+        </div>
         <div class="comment-user-time">{{ comment.createTime }}</div>
       </div>
       <p class="comment-content">
@@ -17,7 +19,8 @@
         </div>
         <div class="comment-handle-answer" @click="reply">回复</div>
       </div>
-      <CommentInput v-if="isReply" />
+      <CommentInput v-if="isReply" @send="send" />
+      <slot />
     </article>
   </article>
 </template>
@@ -38,38 +41,63 @@ export default defineComponent({
         return {}
       },
     },
+    post: {
+      type: Object,
+      default: () => {
+        return {}
+      },
+    },
   },
   emits: ['reply'],
   data() {
     return {
-      isReply: false,
+      isReply: false, // 评论展示
     }
   },
   methods: {
     /**
+     * @description: 发布评论
+     */
+    send(comentValue: any) {
+      // console.log(comentValue)
+      return comentValue
+    },
+    /**
      * @description: 回复评论
      */
     reply() {
-      // 判断登录态
-      // 调出评论
-    },
-    /**
-     * @description: 点赞
-     */
-    support() {
       // 判断登录态
       if (this.$accessor.userInfo.userId === 0) {
         // 调取登录弹窗
         this.$accessor.global.showLoginPopUpOrHide()
         return
       }
-      const { commentId, contentId, shardId, shardTypeId } = this.$props.comment
-      this.$http.comment.supportComment({
+      // 调出评论
+      this.isReply = true
+    },
+    /**
+     * @description: 点赞
+     */
+    async support() {
+      // 判断登录态
+      if (this.$accessor.userInfo.userId === 0) {
+        // 调取登录弹窗
+        this.$accessor.global.showLoginPopUpOrHide()
+        return
+      }
+      const { contentId, shardId } = this.$props.comment
+      const shardTypeId = this.$props.comment.typeId
+      const commentId = this.$props.comment.id
+      const data: any = await this.$http.comment.supportComment({
         commentId,
         contentId,
         shardId,
         shardTypeId,
       })
+
+      if (data.id) {
+        this.$props.comment.supportCount += 1
+      }
     },
   },
 })

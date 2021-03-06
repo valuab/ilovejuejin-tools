@@ -4,8 +4,11 @@
       v-for="item in newsCommentList[commentPage].list"
       :key="item.id"
       :comment="item"
+      :post="post"
       class="Comment"
-    />
+    >
+      <Comment />
+    </Comment>
     <!-- 搜索分页 -->
     <Pagination
       v-anchor="'tabsAnchor'"
@@ -18,13 +21,12 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import Pagination, { IchangeParam } from '@/components/operate/Pagination.vue'
+import { IchangeParam } from '@/components/operate/Pagination.vue'
 
 import { ICommentList } from '@apiPublic/type'
 
 // 获取枚举类型
 import { PROT_TYPE_TYPEID } from '@/enums/content'
-import Comment from './Comment.vue'
 
 interface IData {
   newsCommentList: ICommentList[]
@@ -32,10 +34,6 @@ interface IData {
 }
 export default defineComponent({
   name: 'CommentList',
-  components: {
-    Comment,
-    Pagination,
-  },
   props: {
     // 帖子数据
     post: {
@@ -75,15 +73,14 @@ export default defineComponent({
     data.total = Number(data.total)
     this.newsCommentList.push(data)
   },
-  watch: {
-    newsCommentList(val) {
-      console.log(val) // 有数据
-      this.$nextTick(() => {
-        // const curDom = document.getElementsByClassName('Comment')[0] // 有数据
-        // console.log(curDom)
-      })
-    },
-  },
+  // watch: {
+  //   newsCommentList(val) {
+  //     this.$nextTick(() => {
+  //       // const curDom = document.getElementsByClassName('Comment')[0] // 有数据
+  //       // console.log(curDom)
+  //     })
+  //   },
+  // },
   methods: {
     /**
      * @description: 获取帖子评论列表
@@ -140,24 +137,7 @@ export default defineComponent({
       this.newsCommentList[page - 1] = data
       this.commentPage = page - 1
     },
-    /**
-     * @description: 评论点赞
-     */
-    // supportComment(index: number) {
-    //   const {
-    //     commentId,
-    //     contentId,
-    //     shardId,
-    //     shardTypeId,
-    //   } = this.newsCommentList[index]
-    //   const sort = 0
-    //   return this.$http.comment.supportComment({
-    //     commentId,
-    //     contentId,
-    //     shardId,
-    //     shardTypeId,
-    //   })
-    // },
+
     // /**
     //  * @description: 添加帖子评论
     //  */
