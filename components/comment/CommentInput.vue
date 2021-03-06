@@ -25,13 +25,13 @@ export default defineComponent({
   components: {
     LoginButton,
   },
+  emits: ['send'],
   data() {
     return {
       isLogin: false,
       commentValue: '',
     }
   },
-  emits: ['send'],
   fetch() {
     // 判断登录
     if (this.$accessor.userInfo.userId) {
