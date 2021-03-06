@@ -22,13 +22,6 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-interface IData {
-  listByHostUserId: {
-    total: number
-    list: any[]
-  }
-}
-
 export default defineComponent({
   name: 'ArticleSort',
   components: {},
@@ -40,14 +33,6 @@ export default defineComponent({
         return {}
       },
     },
-  },
-  data(): IData {
-    return {
-      listByHostUserId: {
-        total: 0,
-        list: [],
-      },
-    }
   },
 })
 </script>
@@ -93,6 +78,8 @@ export default defineComponent({
 
       &-tips {
         @include text(14px, #333333);
+
+        @include text-multi(2);
       }
     }
   }

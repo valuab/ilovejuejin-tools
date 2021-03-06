@@ -1,16 +1,16 @@
 <template>
-  <aside v-if="userInfo" class="subs">
+  <aside v-if="hostUserList.length" class="subs">
     <div class="subs-title">节目主持人</div>
-    <div class="subs-msg">
+    <div v-for="item in hostUserList" :key="item.userId" class="subs-msg">
       <div class="subs-msg-img">
-        <img :src="userInfo.smallImageUrl" alt="" />
+        <img :src="item.smallImageUrl" alt="" />
       </div>
       <div class="subs-msg-text">
-        <div class="subs-msg-text-name">{{ userInfo.nickname }}</div>
+        <div class="subs-msg-text-name">{{ item.nickname }}</div>
         <div class="subs-msg-text-num">
-          {{ userInfo.imageCount }}图文 · {{ userInfo.videoCount }}视频
+          {{ item.imageCount }}图文 · {{ item.videoCount }}视频
         </div>
-        <div class="subs-msg-text-tips">{{ userInfo.introduction }}</div>
+        <div class="subs-msg-text-tips">{{ item.introduction }}</div>
       </div>
     </div>
   </aside>
@@ -19,14 +19,17 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
+interface IUserInfo {
+  userId: number
+  kol: number
+  nickname: string
+  description: string
+  smallImageUrl: string
+}
+
 interface IData {
-  userInfo: {
-    userId: number
-    kol: number
-    nickname: string
-    description: string
-    smallImageUrl: string
-  }
+  userInfo: IUserInfo
+  hostUserList: IUserInfo[]
 }
 
 export default defineComponent({
@@ -50,7 +53,26 @@ export default defineComponent({
         description: 'suilong',
         smallImageUrl: '',
       },
+      hostUserList: [],
     }
+  },
+  async fetch() {
+    // 判断是否有作者
+    if (this.$props.post.hostUserList.length > 0) {
+      this.hostUserList = this.hostUserList.concat(
+        this.$props.post.hostUserList
+      )
+      return
+    }
+
+    // 获取作者消息
+    const userId = this.$props.post.userId
+    const getUserInfo = await this.$http.kol.getUserInfo({
+      userId,
+    })
+
+    this.userInfo = Object.assign(getUserInfo)
+    this.hostUserList.push(this.userInfo)
   },
 })
 </script>
@@ -96,6 +118,8 @@ export default defineComponent({
 
       &-tips {
         @include text(14px, #333333);
+
+        @include text-multi(2);
       }
     }
   }

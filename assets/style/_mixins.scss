@@ -1,9 +1,9 @@
 // mixins
 @mixin text($size, $color, $bold: normal, $decoration: none) {
-	font-size: $size;
-	font-weight: $bold;
-	color: $color;
-	text-decoration: $decoration;
+  font-size: $size;
+  font-weight: $bold;
+  color: $color;
+  text-decoration: $decoration;
 }
 
 @mixin flex($flex-direction: row, $justify-content: flex-start, $align-items: flex-start) {
@@ -14,11 +14,11 @@
 }
 
 @mixin hoverColor($color) {
-	@if & {
-		&:hover {
-			color: $color;
-		}
-	}
+  @if & {
+    &:hover {
+      color: $color;
+    }
+  }
 }
 
 @mixin scrollHover {
@@ -27,6 +27,7 @@
       width: 6px;
       background-color: #fff;
     }
+
     &::-webkit-scrollbar-thumb {
       width: 6px;
       background-color: #e6e6e6;
@@ -34,4 +35,14 @@
 
     scrollbar-width: thin;
   }
+}
+
+// 多行文字样式
+@mixin text-multi($multi) {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $multi;
+  line-clamp: $multi;
+  -webkit-box-orient: vertical;
 }

@@ -17,7 +17,16 @@
         </div>
       </div>
     </div>
-    <div class="post-more" @click="seeMore">查看更多</div>
+    <div
+      v-if="
+        newListByHostUserId.list.length > 10 &&
+        newListByHostUserId.list.length < newListByHostUserId.total
+      "
+      class="post-more"
+      @click="seeMore"
+    >
+      查看更多
+    </div>
   </aside>
 </template>
 
@@ -125,6 +134,7 @@ export default defineComponent({
       width: 120px;
       height: 68px;
       margin-right: 10px;
+      overflow: hidden;
     }
 
     &-text {
