@@ -10,7 +10,7 @@
         <div v-if="comment.userId === post.userId" class="comment-user-author">
           作者
         </div>
-        <div class="comment-user-time">{{ comment.createTime }}</div>
+        <div class="comment-user-time">{{ time }}</div>
       </div>
       <p class="comment-content">
         {{ comment.content }}
@@ -29,7 +29,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import { handleTime } from '@/utils/data'
 
 // 加密脚本
 import { mid } from '@/assets/ts/mid'
@@ -64,6 +65,16 @@ export default defineComponent({
     },
   },
   emits: ['reply'],
+  setup(props) {
+    const { comment } = toRefs(props)
+    const date = comment.value.createTime
+    const postTimeStamp = new Date(date).getTime()
+    const time: string = handleTime(postTimeStamp)
+
+    return {
+      time,
+    }
+  },
   data() {
     return {
       isReply: false, // 评论展示

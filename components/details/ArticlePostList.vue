@@ -13,7 +13,7 @@
       <div class="post-msg-text">
         <div class="post-msg-text-name">{{ item.title }}</div>
         <div class="post-msg-text-data">
-          <div class="post-msg-text-data-time">{{ item.publishTime }}</div>
+          <div class="post-msg-text-data-time">{{ time }}</div>
 
           <div class="post-msg-text-data-num">
             <Icon icon="ListView" size="10"></Icon>
@@ -28,10 +28,7 @@
       </div>
     </div>
     <div
-      v-if="
-        newListByHostUserId.list.length > 10 &&
-        newListByHostUserId.list.length < newListByHostUserId.total
-      "
+      v-if="newListByHostUserId.total > 10 && show"
       class="post-more"
       @click="seeMore"
     >
@@ -41,7 +38,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import { handleTime } from '@/utils/data'
 
 interface IData {
   newListByHostUserId: {
@@ -49,6 +47,8 @@ interface IData {
     list: any[]
   }
   page: number
+  list: any[]
+  show: boolean
 }
 
 export default defineComponent({
@@ -62,6 +62,16 @@ export default defineComponent({
       },
     },
   },
+  setup(props) {
+    const { post } = toRefs(props)
+    const date = post.value.publishTime.replace(/-/g, '/')
+    const postTimeStamp = new Date(date).getTime()
+    const time: string = handleTime(postTimeStamp)
+
+    return {
+      time,
+    }
+  },
   data(): IData {
     return {
       newListByHostUserId: {
@@ -69,6 +79,8 @@ export default defineComponent({
         list: [],
       },
       page: 1, // 页码
+      list: [],
+      show: true,
     }
   },
   async fetch() {
@@ -79,10 +91,20 @@ export default defineComponent({
       viewUserId,
       page: this.page,
     })
-    this.newListByHostUserId.total = newListByHostUserId.total
-    this.newListByHostUserId.list = this.newListByHostUserId.list.concat(
-      newListByHostUserId.list
-    )
+
+    if (newListByHostUserId.list.length < 10) {
+      this.newListByHostUserId.total = newListByHostUserId.total
+      this.newListByHostUserId.list = this.newListByHostUserId.list.concat(
+        newListByHostUserId.list
+      )
+    } else {
+      this.list = this.list.concat(newListByHostUserId.list)
+      newListByHostUserId.list.length = 10
+      this.newListByHostUserId.total = newListByHostUserId.total
+      this.newListByHostUserId.list = this.newListByHostUserId.list.concat(
+        newListByHostUserId.list
+      )
+    }
   },
   computed: {
     article(): any {
@@ -90,7 +112,7 @@ export default defineComponent({
         {
           stepList: [],
         },
-        this.posts
+        this.post
       )
     },
   },
@@ -126,12 +148,11 @@ export default defineComponent({
      * @description: 查看更多
      */
     seeMore() {
-      if (
-        this.newListByHostUserId.list.length <
-        Number(this.newListByHostUserId.total)
-      ) {
-        this.getNewListByHostUserId()
-      }
+      this.newListByHostUserId.list.length = 0
+      this.newListByHostUserId.list = this.newListByHostUserId.list.concat(
+        this.list
+      )
+      this.show = false
     },
   },
 })
@@ -170,6 +191,7 @@ export default defineComponent({
 
       &-data {
         display: flex;
+        margin-top: auto;
 
         &-time {
           @include text(12px, #717171);

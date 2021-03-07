@@ -34,6 +34,7 @@
     padding: 80px 0 0;
     min-height: 100vh;
     box-sizing: border-box;
+    background: #fff;
   }
 
   .content-wrap {
@@ -46,6 +47,7 @@
       max-width: 1240px;
       padding: 100px 0 0;
       margin: auto auto 0;
+      background: #fff;
     }
   }
 }

@@ -1,7 +1,11 @@
 <template>
   <article class="commentInput">
     <div v-if="isLogin" class="commentInput-table">
-      <input v-model="commentValue" class="commentInput-input" />
+      <input
+        v-model="commentValue"
+        class="commentInput-input"
+        placeholder="请输入评论内容："
+      />
       <button type="button" class="commentInput-button" @click="send">
         发布评论
       </button>
@@ -9,7 +13,7 @@
     <div v-else class="commentInput-table">
       <div class="commentInput-input">
         <div class="login-error">登录后可发表评论</div>
-        <LoginButton class="login"> 登录 </LoginButton>
+        <LoginButton class="login" @click="showLoginPopUp"> 登录 </LoginButton>
       </div>
       <button type="button" class="commentInput-button">发布评论</button>
     </div>
@@ -56,6 +60,12 @@ export default defineComponent({
     },
   },
   methods: {
+    /**
+     * @description: 发布内容
+     */
+    showLoginPopUp() {
+      this.$accessor.global.showLoginPopUpOrHide()
+    },
     /**
      * @description: 发布内容
      */

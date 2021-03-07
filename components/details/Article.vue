@@ -1,11 +1,19 @@
 <template>
   <aside class="article-body">
-    <article class="article">
+    <!-- 分享挂件 -->
+    <div v-if="!videoType" class="article-share">
+      <ArticleShare :post="article" />
+    </div>
+    <article
+      class="article"
+      :class="videoType ? 'article-video-width' : 'article-width'"
+    >
       <ArticleHeader :post="article" />
       <ArticleVideo
         v-if="article && videoType"
         :post="article"
         :video-url="videoUrl"
+        @seeDatails="seeDatails"
       />
       <!-- 文字段落 -->
       <div
@@ -13,6 +21,7 @@
         v-show="!videoType"
         :key="item.id"
         class="article"
+        :class="!item.content && !item.smallShowImageUrl ? 'article-none' : ''"
       >
         <p v-if="item.content">
           {{ item.content }}
@@ -72,6 +81,13 @@ export default defineComponent({
   },
   fetch() {
     console.log(this.article)
+
+    // 更新浏览量
+    const { id, forumId } = this.article
+    this.$http.posts.updateViewCountForAsync({
+      id,
+      forumId,
+    })
   },
   computed: {
     article(): any {
@@ -84,6 +100,9 @@ export default defineComponent({
     },
   },
   methods: {
+    /**
+     * @description: 增加浏览量
+     */
     /**
      * @description: 视频播放
      */
@@ -115,12 +134,29 @@ export default defineComponent({
         djcarsmid,
       })
     },
+    /**
+     * @description: 查看详情
+     */
+    seeDatails() {
+      this.videoType = false
+    },
   },
 })
 </script>
 <style lang="scss" scoped>
 .article-body {
   display: flex;
+  padding: 60px 0 0 0;
+}
+
+.article-none {
+  margin-bottom: 0;
+}
+.article-width {
+  width: 780px;
+}
+.article-video-width {
+  width: 886px;
 }
 
 .article {
@@ -128,6 +164,7 @@ export default defineComponent({
   width: 780px;
   margin-right: 60px;
   flex-direction: column;
+  position: relative;
 
   p {
     font-size: 16px;
@@ -164,5 +201,10 @@ export default defineComponent({
 
 .column-title {
   @include text(20px, #000000, bold);
+}
+
+.article-share {
+  margin-top: 124px;
+  margin-right: 45px;
 }
 </style>

@@ -54,6 +54,7 @@ export default defineComponent({
       width: 1240px;
       margin: 0 auto;
       padding-top: 100px;
+      background: #fff;
     }
   }
 }

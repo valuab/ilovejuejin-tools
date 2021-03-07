@@ -450,4 +450,8 @@ export default defineComponent({
     @include hoverColor(#333);
   }
 }
+
+.article-list {
+  margin-left: 20px;
+}
 </style>

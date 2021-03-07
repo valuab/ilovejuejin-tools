@@ -8,13 +8,13 @@
       class="video"
     ></iframe>
     <video v-else :src="videoUrl" class="video" controls="controls"></video>
-    <div class="videoShare"></div>
+    <ArticleVideoShare :post="post" />
     <p class="videoWord">
       <span v-for="item in post.stepList" :key="item.id">{{
         item.content
       }}</span>
     </p>
-    <p class="videoSee">查看内容详情 ></p>
+    <p class="videoSee" @click="seeDatails">查看内容详情 ></p>
   </div>
 </template>
 
@@ -23,7 +23,6 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ArticleVideo',
-  components: {},
   props: {
     post: {
       type: Object,
@@ -36,6 +35,12 @@ export default defineComponent({
       default: () => {
         return ''
       },
+    },
+  },
+  emits: ['seeDatails'],
+  methods: {
+    seeDatails() {
+      this.$emit('seeDatails')
     },
   },
 })

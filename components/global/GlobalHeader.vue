@@ -71,7 +71,8 @@
       class="avatar"
       size="large"
       :src="$accessor.userInfo.smallImageUrl"
-      @click="showOutLogin"
+      @mouseout="mouseout"
+      @mouseenter="mouseenter"
     ></a-avatar>
 
     <!-- 退出 -->
@@ -141,8 +142,11 @@ export default defineComponent({
       }
     },
 
-    showOutLogin() {
+    mouseenter() {
       this.showOutLoginBox = true
+    },
+    mouseout() {
+      this.showOutLoginBox = false
     },
     outLogin() {
       // 退出登录

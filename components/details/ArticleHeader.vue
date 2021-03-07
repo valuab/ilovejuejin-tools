@@ -2,11 +2,12 @@
   <header class="header">
     <!-- 文章标题部分 -->
     <h1 class="title">{{ post.title }}</h1>
-    <p class="article-msg">{{ post.createTime }} · 浏览 {{ post.viewCount }}</p>
+    <p class="article-msg">{{ time }} · 浏览 {{ post.viewCount }}</p>
   </header>
 </template>
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import { handleTime } from '@/utils/data'
 
 export default defineComponent({
   name: 'ArticleHeader',
@@ -19,6 +20,16 @@ export default defineComponent({
         return {}
       },
     },
+  },
+  setup(props) {
+    const { post } = toRefs(props)
+    const date = post.value.publishTime.replace(/-/g, '/')
+    const postTimeStamp = new Date(date).getTime()
+    const time: string = handleTime(postTimeStamp)
+
+    return {
+      time,
+    }
   },
 })
 </script>
