@@ -35,6 +35,13 @@ import { handleTime } from '@/utils/data'
 // 加密脚本
 import { mid } from '@/assets/ts/mid'
 
+// 回复数据结构
+import { IComment } from '@apiModules/comment'
+
+interface IData {
+  isReply: boolean
+  IComment: IComment
+}
 export default defineComponent({
   name: 'Comment',
   props: {
@@ -75,9 +82,13 @@ export default defineComponent({
       time,
     }
   },
-  data() {
+  data(): IData {
     return {
       isReply: false, // 评论展示
+      // 初始化评论数据
+      IComment: {
+        ...this.$props.comment,
+      },
     }
   },
   watch: {
@@ -92,11 +103,23 @@ export default defineComponent({
   },
   methods: {
     /**
+     * @description: 评论数据结构
+     */
+    splicing() {},
+    /**
      * @description: 发布评论
      */
-    send(comentValue: any) {
+    async send(comentValue: any) {
       // console.log(comentValue)
-      this.postComment(comentValue)
+      if (!comentValue) return
+      const post: any = await this.postComment(comentValue)
+
+      // 回复内容
+      this.IComment.content = comentValue
+
+      if (post.id) {
+        this.$emit('send', this.IComment)
+      }
     },
     /**
      * @description: 添加评论回复
@@ -126,6 +149,10 @@ export default defineComponent({
       if (this.$accessor.userInfo.userId === 0) {
         // 调取登录弹窗
         this.$accessor.global.showLoginPopUpOrHide()
+        return
+      }
+      // 自己不能回复自己
+      if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
         return
       }
       this.$emit('reply', this.comment.id)

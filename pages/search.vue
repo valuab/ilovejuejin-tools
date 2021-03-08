@@ -369,25 +369,44 @@ export default defineComponent({
     search(value: string) {
       // 重定向
       this.keyword = value
-      switch (this.type) {
-        case SEARCH_TYPE.ALL:
-          this.getSearchAll(1)
-          break
-        case SEARCH_TYPE.ITEM:
-          this.getSearchByItemCategoryId()
-          break
-        case SEARCH_TYPE.LABEL:
-          this.getSearchByItemKeywordId()
-          break
-        case SEARCH_TYPE.HOST:
-          this.searchByHostUserId()
-          break
-        case SEARCH_TYPE.CAR:
-          this.searchByCars()
-          break
-        default:
-          break
-      }
+      // const allList: any[] = []
+      // const temporary: any[] = []
+      // const allRes: any
+      // // 搜索车型
+      // allRes = this.searchByCars()
+
+      // switch (this.type) {
+      //   case SEARCH_TYPE.ALL:
+      //     allList = this.getSearchAll(1)
+      //     break
+      //   case SEARCH_TYPE.ITEM:
+      //     allList = this.getSearchByItemCategoryId()
+      //     break
+      //   case SEARCH_TYPE.LABEL:
+      //     allList = this.getSearchByItemKeywordId()
+      //     break
+      //   case SEARCH_TYPE.HOST:
+      //     allList = this.searchByHostUserId()
+      //     break
+      //   default:
+      //     break
+      // }
+
+      // allList.push(allRes)
+
+      // const typeList = []
+      // if (temporary && temporary?.list.length) {
+      //   const typeRes = Object.assign(
+      //     {
+      //       list: [],
+      //       total: 0,
+      //       page: 1,
+      //       listLoad: false,
+      //     },
+      //     temporary
+      //   )
+      //   typeList.push(typeRes)
+      // }
     },
     /**
      * @description 清除搜索
@@ -399,9 +418,6 @@ export default defineComponent({
     /**
      * @description 列表分页初始化
      */
-    // turnDown(list) {
-
-    // },
   },
 })
 </script>

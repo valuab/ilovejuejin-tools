@@ -39,9 +39,13 @@
         </aside>
       </div>
       <ArticleFooter v-if="article.tagNameList.length" :post="article" />
-      <CommentInput :post="article" @send="send" />
+      <CommentInput
+        :comment-value="commentValue"
+        :post="article"
+        @send="send"
+      />
       <p class="column-title">全部评论（{{ article.commentCount }}）</p>
-      <CommentList :post="article" />
+      <CommentList ref="commentListRef" :post="article" />
     </article>
     <aside class="subs">
       <ArticleSort :post="article" />
@@ -53,9 +57,12 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import { handleTime } from '@/utils/data'
 
 // 加密脚本
 import { mid } from '@/assets/ts/mid'
+
+// 评论数据结构
 
 interface IStepList {
   qqVid: string
@@ -75,8 +82,16 @@ export default defineComponent({
   },
   data() {
     return {
+      IComment: {
+        ...this.$accessor.userInfo,
+        smallUserIconUrl: '',
+        userName: '',
+        time: '',
+        content: '',
+      },
       videoUrl: '', // 视频链接
       videoType: false, // 切换视频
+      commentValue: '', // 输入清除
     }
   },
   fetch() {
@@ -101,9 +116,6 @@ export default defineComponent({
   },
   methods: {
     /**
-     * @description: 增加浏览量
-     */
-    /**
      * @description: 视频播放
      */
     playVideo(item: IStepList) {
@@ -113,8 +125,43 @@ export default defineComponent({
     /**
      * @description: send
      */
-    send(value: string) {
-      this.postComment(value)
+    async send(comentValue: string) {
+      if (!comentValue) return
+      const post: any = await this.postComment(comentValue)
+      if (post.id) {
+        this.IComment.time = handleTime(Date.now())
+        this.IComment.content = comentValue
+        this.IComment.userName = this.$accessor.userInfo.nickname
+        this.IComment.smallUserIconUrl = this.$accessor.userInfo.smallImageUrl
+
+        // 添加帖子
+        const { newsCommentList, commentPage }: any = this.$refs.commentListRef
+
+        // 0 回复
+        if (newsCommentList.length === 0) {
+          const data = Object.assign(
+            {
+              list: [this.IComment],
+              total: 1,
+              page: 1,
+              listLoad: false,
+            },
+            newsCommentList
+          )
+          newsCommentList.push(data)
+        } else {
+          const { list } = newsCommentList[commentPage]
+          list.reverse()
+          list.push(this.IComment)
+          list.reverse()
+        }
+
+        // 评论数自增
+        this.article.commentCount++
+
+        // 清除评论内容
+        this.commentValue = ''
+      }
     },
     /**
      * @description: 添加帖子评论

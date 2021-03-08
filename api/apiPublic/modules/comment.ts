@@ -45,6 +45,32 @@ interface IPostCommentParmas {
  */
 
 /**
+ * 列表数据结构 START
+ */
+export interface IComment {
+  id: string
+  rootId: string
+  parentId: string
+  parentUserId: string
+  content: string
+  userName: string
+  smallUserIconUrl: string
+  parentName: string
+  userId: number
+  typeId: number
+  contentId: number
+  shardId: number
+  auditId: number
+  createTime: number
+  kol: number
+  red: number
+  userVoteCommentFlag: number
+  supportCount: number
+}
+/**
+ * 列表数据结构 END
+ */
+/**
  * 输出解耦 START
  */
 

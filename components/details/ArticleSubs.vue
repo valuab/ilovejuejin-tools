@@ -13,7 +13,8 @@
       <div class="subs-msg-text">
         <div class="subs-msg-text-name">{{ item.nickname }}</div>
         <div class="subs-msg-text-num">
-          {{ item.imageCount }}图文 · {{ item.videoCount }}视频
+          <!-- {{ item.imageCount }}图文 · {{ item.videoCount }}视频 -->
+          暂不开放
         </div>
         <div class="subs-msg-text-tips">{{ item.introduction }}</div>
       </div>

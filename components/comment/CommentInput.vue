@@ -2,7 +2,7 @@
   <article class="commentInput">
     <div v-if="isLogin" class="commentInput-table">
       <input
-        v-model="commentValue"
+        v-model="comment"
         class="commentInput-input"
         placeholder="请输入评论内容："
       />
@@ -22,18 +22,22 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import LoginButton from '@/components/operate/LoginButton.vue'
 
 export default defineComponent({
   name: 'CommentInput',
-  components: {
-    LoginButton,
+  props: {
+    commentValue: {
+      type: String,
+      default: () => {
+        return ''
+      },
+    },
   },
   emits: ['send'],
   data() {
     return {
       isLogin: false,
-      commentValue: '',
+      comment: this.$props.commentValue,
     }
   },
   fetch() {
@@ -43,11 +47,6 @@ export default defineComponent({
     } else {
       this.isLogin = false
     }
-  },
-  computed: {
-    userId() {
-      return this.$accessor.userInfo.userId
-    },
   },
   watch: {
     userId(newName) {
@@ -70,7 +69,7 @@ export default defineComponent({
      * @description: 发布内容
      */
     send() {
-      this.$emit('send', this.commentValue)
+      this.$emit('send', this.comment)
     },
   },
 })

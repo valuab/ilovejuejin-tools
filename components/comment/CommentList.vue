@@ -8,6 +8,7 @@
       :open-reply-id="openReplyId"
       class="Comment"
       @reply="reply"
+      @send="send"
     >
       <Comment
         v-if="item.replayCommentDto"
@@ -15,8 +16,10 @@
         :post="post"
         :comment="item.replayCommentDto"
         :comment-type="true"
-        @reply="replyItem"
+        @send="sendItem"
       />
+      <!-- 查看全部6条回复 -->
+      <p class="seeCommentDatails">查看全部6条回复-暂未开放</p>
     </Comment>
     <!-- 搜索分页 -->
     <Pagination
@@ -141,16 +144,24 @@ export default defineComponent({
       this.commentPage = page - 1
     },
     /**
-     * @description: 点击恢复
+     * @description: 点击回复评论
      */
-    reply(id: string) {
-      this.openReplyId = id
+    send(value: any) {
+      this.openReplyId = '' // 清除回复框
+      console.log(value)
     },
     /**
-     * @description: 点击恢复
+     * @description: 点击回复评论回复
      */
-    replyItem(id: string) {
-      this.openReplyId = id
+    sendItem(value: any) {
+      this.openReplyId = '' // 清除回复框
+      console.log(value)
+    },
+    /**
+     * @description: 点击回复
+     */
+    reply(id: string) {
+      this.openReplyId = id // 清除回复框
     },
   },
 })
@@ -159,5 +170,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .Comment {
   margin-bottom: 20px;
+}
+
+.seeCommentDatails {
+  @include text(14px, #ff8b00);
 }
 </style>
