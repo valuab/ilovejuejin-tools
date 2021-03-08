@@ -103,9 +103,6 @@ export default defineComponent({
     )
     data.total = Number(data.total)
     this.newsCommentList.push(data)
-
-    console.log(JSON.stringify(this.newsCommentList), 'this')
-
     // 获取评论回复列表
   },
   methods: {
@@ -169,12 +166,12 @@ export default defineComponent({
      */
     send(comment: any) {
       this.openReplyId = '' // 清除回复框
-      console.log(comment)
       for (const i in this.newsCommentList[this.commentPage].list) {
         const { id }: any = this.newsCommentList[this.commentPage].list[i]
         if (comment.parentId === id) {
           // 造作
-          console.log(this.newsCommentList[this.commentPage].list[i])
+          // console.log(comment)
+          // console.log(this.newsCommentList[this.commentPage].list[i])
           const { newCommentReplyList }: any = this.newsCommentList[
             this.commentPage
           ].list[i]

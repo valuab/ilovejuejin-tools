@@ -5,17 +5,6 @@ export function mid(path: string, userId: any, uuid: string) {
   // MD5(PATH+NO+TIME+userId+uuid)
   const data = path + no + time + userId + uuid
   const sign = MD5(data).toString()
-  console.log('path=' + path)
-  console.log('no=' + no)
-  console.log('time=' + time)
-  console.log('userId=' + userId)
-  console.log('uuid=' + uuid)
-  console.log('data=' + data)
-  console.log('sign=' + sign.toString())
-  console.log(
-    MD5('details1klzwx57p20386901a206f3-3418-44e6-9b82-19e7dd088045').toString()
-  )
-  console.log(path + '.' + no + '.' + time + '.' + sign)
   return path + '.' + no + '.' + time + '.' + sign
 }
 

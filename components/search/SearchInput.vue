@@ -44,6 +44,7 @@ export default defineComponent({
      * @description: 监听搜索
      */
     search() {
+      if (!this.inputValue) return
       this.$emit('search', this.inputValue)
     },
 

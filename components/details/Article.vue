@@ -95,7 +95,7 @@ export default defineComponent({
     }
   },
   fetch() {
-    console.log(this.article)
+    // console.log(this.article)
 
     // 更新浏览量
     const { id, forumId } = this.article

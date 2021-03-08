@@ -111,7 +111,6 @@ export default defineComponent({
      * @description: 发布评论
      */
     async send(comentValue: any) {
-      // console.log(comentValue)
       if (!comentValue) return
       const post: any = await this.postComment(comentValue)
 

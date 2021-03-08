@@ -39,18 +39,21 @@
       :list="typeList[0].list"
     />
     <!-- 全部 -->
-    <h2 v-if="allList[searchAllPage - 1].list.length" class="column-title">
+    <h2
+      v-if="allList.length && allList[searchAllPage - 1].list.length"
+      class="column-title"
+    >
       全部出品
     </h2>
     <article-list
-      v-if="allList[searchAllPage - 1].list.length"
+      v-if="allList.length && allList[searchAllPage - 1].list.length"
       class="article-list"
       :list="allList[searchAllPage - 1].list"
     />
 
     <!-- 搜索分页 -->
     <Pagination
-      v-if="!openCarType"
+      v-if="!openCarType && allList.length && allList[0].list.length"
       v-anchor="'tabsAnchor'"
       :total="allList[searchAllPage - 1].total"
       class="pagination"
@@ -58,7 +61,7 @@
     ></Pagination>
     <!-- 车型搜索分页 -->
     <Pagination
-      v-if="openCarType"
+      v-if="openCarType && typeList.length && typeList[0].list.length"
       v-anchor="'tabsAnchor'"
       :total="typeList[typePage - 1].total"
       class="pagination"
@@ -143,6 +146,18 @@ export default defineComponent({
           viewUserId,
           page,
         })
+
+        categoryId = Number(query.categoryId) || 0
+        keywordId = Number(query.keywordId) || 0
+        hostUserId = Number(query.hostUserId) || 0
+        temporary = await app.$http.search.getSearchByCars({
+          keyword,
+          categoryId,
+          keywordId,
+          hostUserId,
+          viewUserId,
+          page,
+        })
         break
       case SEARCH_TYPE.CAR:
         // 关键字匹配车型
@@ -172,7 +187,7 @@ export default defineComponent({
     allList.push(allRes)
 
     const typeList = []
-    if (type === 5 && temporary && temporary?.list.length) {
+    if (type === 5 && temporary && temporary?.list.length !== 0) {
       const typeRes = Object.assign(
         {
           list: [],
@@ -254,9 +269,7 @@ export default defineComponent({
     async typePageChange(param: IchangeParam) {
       // 获取数据存在本地变量
       const { page } = param
-
       // 判断搜索状态
-
       // 请求数据 or 直接切换页码
       if (
         this.typeList.length > page &&
@@ -268,7 +281,7 @@ export default defineComponent({
       }
 
       this.typePage = page
-      const newsCommentList = await this.getSearchAll(page)
+      const newsCommentList = await this.searchByCars(page)
 
       const data = Object.assign(
         {
@@ -298,10 +311,9 @@ export default defineComponent({
     /**
      * @description: 搜索分类
      */
-    getSearchByItemCategoryId() {
+    getSearchByItemCategoryId(page: number) {
       const { keyword } = this.query
       const categoryId = Number(this.query.categoryId)
-      const page = this.typeList[this.searchAllPage].page
       const viewUserId = this.$accessor.userInfo.userId
       return this.$http.search.getSearchByItemCategoryId({
         keyword,
@@ -313,10 +325,9 @@ export default defineComponent({
     /**
      * @description: 搜索标签
      */
-    getSearchByItemKeywordId() {
+    getSearchByItemKeywordId(page: number) {
       const { keyword } = this.query
       const keywordId = Number(this.query.keywordId)
-      const page = this.typeList[this.searchAllPage].page
       const viewUserId = this.$accessor.userInfo.userId
       return this.$http.search.getSearchByItemKeywordId({
         keyword,
@@ -328,10 +339,9 @@ export default defineComponent({
     /**
      * @description: 搜索kol
      */
-    searchByHostUserId() {
+    searchByHostUserId(page: number) {
       const { keyword } = this.query
       const hostUserId = Number(this.query.keywordId)
-      const page = this.typeList[this.searchAllPage].page
       const viewUserId = this.$accessor.userInfo.userId
       return this.$http.search.getSearchByHostUserId({
         keyword,
@@ -343,12 +353,11 @@ export default defineComponent({
     /**
      * @description: 搜索车型
      */
-    searchByCars() {
+    searchByCars(page: number) {
       const { keyword } = this.query
-      const categoryId = Number(this.query.categoryId)
-      const keywordId = Number(this.query.keywordId)
-      const hostUserId = Number(this.query.keywordId)
-      const page = this.typeList[this.searchAllPage].page
+      const categoryId = Number(this.query.categoryId) || 0
+      const keywordId = Number(this.query.keywordId) || 0
+      const hostUserId = Number(this.query.keywordId) || 0
       const viewUserId = this.$accessor.userInfo.userId
       return this.$http.search.getSearchByCars({
         keyword,
@@ -359,54 +368,66 @@ export default defineComponent({
         page,
       })
     },
-    /**
-     * @description 查看全部
-     */
-    seeAll() {},
+
     /**
      * @description 搜索
      */
-    search(value: string) {
+    async search(value: string) {
       // 重定向
       this.keyword = value
-      // const allList: any[] = []
-      // const temporary: any[] = []
-      // const allRes: any
-      // // 搜索车型
-      // allRes = this.searchByCars()
+      this.query.keyword = value
+      let allRes: any
+      const page = 1
 
-      // switch (this.type) {
-      //   case SEARCH_TYPE.ALL:
-      //     allList = this.getSearchAll(1)
-      //     break
-      //   case SEARCH_TYPE.ITEM:
-      //     allList = this.getSearchByItemCategoryId()
-      //     break
-      //   case SEARCH_TYPE.LABEL:
-      //     allList = this.getSearchByItemKeywordId()
-      //     break
-      //   case SEARCH_TYPE.HOST:
-      //     allList = this.searchByHostUserId()
-      //     break
-      //   default:
-      //     break
-      // }
+      switch (this.type) {
+        case SEARCH_TYPE.ALL:
+          allRes = await this.getSearchAll(page)
+          break
+        case SEARCH_TYPE.ITEM:
+          allRes = await this.getSearchByItemCategoryId(page)
+          break
+        case SEARCH_TYPE.LABEL:
+          allRes = await this.getSearchByItemKeywordId(page)
+          break
+        case SEARCH_TYPE.HOST:
+          allRes = await this.searchByHostUserId(page)
+          break
+        default:
+          break
+      }
 
-      // allList.push(allRes)
-
-      // const typeList = []
-      // if (temporary && temporary?.list.length) {
-      //   const typeRes = Object.assign(
-      //     {
-      //       list: [],
-      //       total: 0,
-      //       page: 1,
-      //       listLoad: false,
-      //     },
-      //     temporary
-      //   )
-      //   typeList.push(typeRes)
-      // }
+      if (allRes && allRes?.list.length !== 0) {
+        const allResType = Object.assign(
+          {
+            list: [],
+            total: 0,
+            page: 1,
+            listLoad: false,
+          },
+          allRes
+        )
+        this.allList.length = 0 // 清除之前数据
+        this.allList.push(allResType)
+      } else {
+        this.allList.length = 0 // 清除之前数据
+      }
+      // 搜索车型
+      const temporary: any = await this.searchByCars(page)
+      if (temporary && temporary?.list.length !== 0) {
+        const typeRes = Object.assign(
+          {
+            list: [],
+            total: 0,
+            page: 1,
+            listLoad: false,
+          },
+          temporary
+        )
+        this.typeList.length = 0 // 清除之前数据
+        this.typeList.push(typeRes)
+      } else {
+        this.typeList.length = 0 // 清除之前数据
+      }
     },
     /**
      * @description 清除搜索
@@ -414,10 +435,18 @@ export default defineComponent({
     deleteSearch() {
       this.type = 1 // 改为全部搜索
     },
-
     /**
-     * @description 列表分页初始化
+     * @description 查看全部
      */
+    seeAll() {
+      this.openCarType = true
+    },
+    /**
+     * @description 返回全部
+     */
+    backAll() {
+      this.openCarType = true
+    },
   },
 })
 </script>
