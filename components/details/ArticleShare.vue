@@ -2,8 +2,12 @@
   <aside class="share">
     <template v-for="(iconItem, index) in iconList">
       <div :key="iconItem.icon" class="share-tab">
+        <div v-if="index === 0" class="support" @click="support">
+          <icon :icon="iconItem.icon" size="24"></icon>
+          <div v-if="index === 0" class="num">{{ post.supportCount }}</div>
+        </div>
         <a-popover
-          v-if="iconItem.codeUrl"
+          v-else-if="iconItem.codeUrl"
           placement="right"
           :overlay-style="{ width: '80px' }"
         >
@@ -12,7 +16,6 @@
           </template>
           <div class="icon-wrap flex-column-horizontal-center">
             <icon :icon="iconItem.icon" size="24"></icon>
-            <div v-if="index === 0" class="num">{{ post.supportCount }}</div>
           </div>
         </a-popover>
         <a
@@ -43,11 +46,11 @@ export default defineComponent({
       },
     },
   },
+  emits: ['support'],
   setup(props) {
     const iconList = ref([
       {
         icon: props.post.isSupport ? 'ArticleLikeOrange' : 'ArticleLikeGrey',
-        // icon: 'ArticleLikeOrange',
       },
       {
         codeUrl:
@@ -78,13 +81,18 @@ export default defineComponent({
     /**
      * @description: 点赞
      */
-    support() {
+    async support() {
+      if (this.$props.post.isSupport) return
       const postId = this.post.id
       const forumId = this.post.forumId
-      this.$http.posts.supportPost({
+      const support: any = await this.$http.posts.supportPost({
         postId,
         forumId,
       })
+
+      if (support.id) {
+        this.$emit('support')
+      }
     },
   },
 })
@@ -134,5 +142,11 @@ export default defineComponent({
     transform: translate(0, -50%);
     z-index: 100;
   }
+}
+
+.support {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

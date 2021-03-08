@@ -1,21 +1,27 @@
 <template>
   <aside class="video-share">
     <div class="support" @click="support">
-      <Icon v-if="post.isSupport" icon="ArticleLikeOrange" />
-      <Icon v-else icon="ArticleLikeGrey" />
+      <div class="video-icon">
+        <Icon v-if="post.isSupport" icon="ArticleLikeOrange" />
+        <Icon v-else icon="ArticleLikeGrey" />
+      </div>
       <div class="support-num">{{ post.supportCount }}</div>
     </div>
     <div class="share">
       <div class="share-word">分享到：</div>
       <template v-for="iconItem in iconList">
         <div :key="iconItem.icon" class="video-icon">
+          <div v-if="index === 0" class="support" @click="support">
+            <icon :icon="iconItem.icon" size="24"></icon>
+            <div v-if="index === 0" class="num">{{ post.supportCount }}</div>
+          </div>
           <a-popover
-            v-if="iconItem.codeUrl"
+            v-else-if="iconItem.codeUrl"
             placement="right"
             :overlay-style="{ width: '80px' }"
           >
-            <div class="icon-wrap flex-column-horizontal-center">
-              <icon :icon="iconItem.icon" size="20"></icon>
+            <div class="icon-wrap">
+              <icon :icon="iconItem.icon" size="24"></icon>
             </div>
           </a-popover>
           <a
@@ -24,13 +30,16 @@
             :href="iconItem.url"
             target="_blank"
           >
-            <icon :icon="iconItem.icon" size="20"></icon>
+            <icon :icon="iconItem.icon" size="24"></icon>
           </a>
         </div>
       </template>
     </div>
     <div class="skip">
-      <Icon icon="ArticleQR" class="video-icon" />
+      <div class="video-icon">
+        <Icon icon="ArticleQR" />
+      </div>
+
       <div class="skip-word">手机扫一扫，5秒跳广告</div>
     </div>
   </aside>
@@ -51,6 +60,7 @@ export default defineComponent({
       },
     },
   },
+  emits: ['support'],
   setup() {
     const iconList = ref([
       {
@@ -76,13 +86,18 @@ export default defineComponent({
     /**
      * @description: 点赞
      */
-    support() {
+    async support() {
+      if (this.$props.post.isSupport) return
       const postId = this.post.id
       const forumId = this.post.forumId
-      this.$http.posts.supportPost({
+      const support: any = await this.$http.posts.supportPost({
         postId,
         forumId,
       })
+
+      if (support.id) {
+        this.$emit('support')
+      }
     },
   },
 })
@@ -110,12 +125,6 @@ export default defineComponent({
       margin-right: 2px;
       @include text(12px, #888);
     }
-
-    .video-icon {
-      width: 21px;
-      height: 19px;
-      margin-right: 10px;
-    }
   }
   .skip {
     display: flex;
@@ -125,5 +134,12 @@ export default defineComponent({
       @include text(14px, #000, bold);
     }
   }
+}
+.video-icon {
+  margin-right: 10px;
+}
+.support {
+  display: flex;
+  align-items: center;
 }
 </style>

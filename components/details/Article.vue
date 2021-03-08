@@ -2,7 +2,7 @@
   <aside class="article-body">
     <!-- 分享挂件 -->
     <div v-if="!videoType" class="article-share">
-      <ArticleShare :post="article" />
+      <ArticleShare :post="article" @ />
     </div>
     <article
       class="article"
@@ -35,7 +35,7 @@
         <!-- 视频展示    -->
         <aside v-if="item.videoId !== 0" class="video" @click="playVideo(item)">
           <img class="video-poster" :src="item.smallShowImageUrl" />
-          <Icon icon="CloseOrange" class="video-icon" />
+          <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
         </aside>
       </div>
       <ArticleFooter v-if="article.tagNameList.length" :post="article" />
@@ -125,7 +125,9 @@ export default defineComponent({
       const commentId = 0 // 对帖子评论填写0，对评论的回复填写评论id // 如果是对评论的 进行回复 contentid  就是 评论id shardid 就是 评论的contentid
       const userId = this.$accessor.userInfo.userId
       const path = this.$route.name || 'index'
-      const djcarsmid = mid(path, userId).toString()
+      const token = this.$cookies.get('token')
+      const uuid = token.uuid
+      const djcarsmid = mid(path, userId, uuid).toString()
       return this.$http.comment.postComment({
         commentId,
         shardId,
@@ -139,6 +141,13 @@ export default defineComponent({
      */
     seeDatails() {
       this.videoType = false
+    },
+    /**
+     * @description: 点赞
+     */
+    support() {
+      this.$props.posts.isSupport = 1
+      this.$props.posts.supportCount++
     },
   },
 })
@@ -190,8 +199,8 @@ export default defineComponent({
 
   .video-icon {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 30px !important;
+    height: 20px !important;
   }
 
   > * {

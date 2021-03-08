@@ -21,6 +21,7 @@ import ArticleQR from '@icons/icon_qr.svg'
 import ArticleLikeGrey from '@icons/icon_option_like_grey.svg'
 import ArticleLikeOrange from '@icons/icon_option_like_orange.svg'
 import ArticleLikeMoment from '@icons/icon_option_moment.svg'
+import ArticleVideoPaly from '@icons/video_play.svg'
 /** ****** SHARE START ********/
 
 /** ****** SideMenu START ********/
@@ -82,6 +83,7 @@ export type IconType =
   | 'ArticleLikeOrange'
   | 'ArticleLikeGrey'
   | 'ArticleLikeMoment'
+  | 'ArticleVideoPaly'
 
 /**
  * 引入要使用的svg
@@ -125,6 +127,7 @@ const iconManager: Record<IconType, Component> = {
   ArticleLikeOrange,
   ArticleLikeGrey,
   ArticleLikeMoment,
+  ArticleVideoPaly,
 }
 
 export default iconManager

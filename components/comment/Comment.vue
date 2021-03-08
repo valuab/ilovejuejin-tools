@@ -107,7 +107,9 @@ export default defineComponent({
       const commentId = this.comment.id // 对帖子评论填写0，对评论的回复填写评论id // 如果是对评论的 进行回复 contentid  就是 评论id shardid 就是 评论的 contentid
       const userId = this.$accessor.userInfo.userId
       const path = this.$route.name || 'index'
-      const djcarsmid = mid(path, userId).toString()
+      const token = this.$cookies.get('token')
+      const uuid = token.uuid
+      const djcarsmid = mid(path, userId, uuid).toString()
       return this.$http.comment.postComment({
         commentId,
         shardId,

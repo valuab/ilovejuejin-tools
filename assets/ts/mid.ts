@@ -1,21 +1,21 @@
 import { MD5 } from 'crypto-js'
-import { v4 } from 'uuid'
-// 引入uuid
-import Uuid from '~/api/token'
-export function mid(path: string, userId: any) {
+export function mid(path: string, userId: any, uuid: string) {
   const no = 1
   const time = scale36(Date.now())
-  const sid = '' || v4()
-  const { uuid } = Uuid(sid, userId)
   // MD5(PATH+NO+TIME+userId+uuid)
   const data = path + no + time + userId + uuid
-  const sign = MD5(data)
+  const sign = MD5(data).toString()
   console.log('path=' + path)
   console.log('no=' + no)
   console.log('time=' + time)
   console.log('userId=' + userId)
   console.log('uuid=' + uuid)
-  console.log('sign=' + sign)
+  console.log('data=' + data)
+  console.log('sign=' + sign.toString())
+  console.log(
+    MD5('details1klzwx57p20386901a206f3-3418-44e6-9b82-19e7dd088045').toString()
+  )
+  console.log(path + '.' + no + '.' + time + '.' + sign)
   return path + '.' + no + '.' + time + '.' + sign
 }
 
