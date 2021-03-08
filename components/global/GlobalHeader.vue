@@ -151,9 +151,13 @@ export default defineComponent({
     outLogin() {
       // 退出登录
       const token = getToken()
-      console.log(token)
       // 清除token
+      this.$axios.setHeader('sign', token.sign)
+      this.$axios.setHeader('sid', token.sid)
+      this.$axios.setHeader('uid', token.uid.toString())
+      this.$axios.setHeader('uuid', token.uuid)
       // 清除登录态
+      this.$accessor.userInfo.isLogin = false
     },
   },
 })

@@ -10,16 +10,26 @@
       @reply="reply"
       @send="send"
     >
-      <Comment
-        v-if="item.replayCommentDto"
-        :open-reply-id="openReplyId"
-        :post="post"
-        :comment="item.replayCommentDto"
-        :comment-type="true"
-        @send="sendItem"
-      />
+      <!-- 回复列表 -->
+      <div v-if="item.newCommentReplyList.length" class="commentItemList">
+        <Comment
+          v-for="kind in item.newCommentReplyList"
+          :key="kind.id"
+          :open-reply-id="openReplyId"
+          :post="post"
+          :comment="kind"
+          :comment-type="true"
+          @send="send"
+        />
+      </div>
       <!-- 查看全部6条回复 -->
-      <p class="seeCommentDatails">查看全部6条回复-暂未开放</p>
+      <p
+        v-if="item.floorReplyCount > 1 && !item.openAllReply.length"
+        class="seeCommentDatails"
+        @click="seeCommentDatails(item)"
+      >
+        查看全部{{ item.floorReplyCount }}条回复
+      </p>
     </Comment>
     <!-- 搜索分页 -->
     <Pagination
@@ -75,6 +85,13 @@ export default defineComponent({
       sort,
       page: 1,
     })
+    for (const i in newsCommentList.list) {
+      newsCommentList.list[i].openAllReply = [] // 关闭全部回复
+      newsCommentList.list[i].newCommentReplyList = []
+      newsCommentList.list[i].newCommentReplyList.push(
+        newsCommentList.list[i].replayCommentDto
+      ) // 查看全部回复管理
+    }
     const data = Object.assign(
       {
         list: [],
@@ -86,6 +103,10 @@ export default defineComponent({
     )
     data.total = Number(data.total)
     this.newsCommentList.push(data)
+
+    console.log(JSON.stringify(this.newsCommentList), 'this')
+
+    // 获取评论回复列表
   },
   methods: {
     /**
@@ -101,10 +122,10 @@ export default defineComponent({
       })
     },
     /**
-     * @description: 评论回复
+     * @description: 评论回复列表
      */
-    getNewCommentReplyList() {
-      const { id, contentId } = this.$props.post
+    getNewCommentReplyList(comment: object) {
+      const { id, contentId }: any = comment
       const sort = 0
       return this.$http.comment.getNewCommentReplyList({
         id,
@@ -144,18 +165,44 @@ export default defineComponent({
       this.commentPage = page - 1
     },
     /**
-     * @description: 点击回复评论
+     * @description: 回复当前评论
      */
-    send(value: any) {
+    send(comment: any) {
       this.openReplyId = '' // 清除回复框
-      console.log(value)
+      console.log(comment)
+      for (const i in this.newsCommentList[this.commentPage].list) {
+        const { id }: any = this.newsCommentList[this.commentPage].list[i]
+        if (comment.parentId === id) {
+          // 造作
+          console.log(this.newsCommentList[this.commentPage].list[i])
+          const { newCommentReplyList }: any = this.newsCommentList[
+            this.commentPage
+          ].list[i]
+          newCommentReplyList.push(comment)
+        }
+      }
     },
     /**
-     * @description: 点击回复评论回复
+     * @description: 查看全部回复
      */
-    sendItem(value: any) {
-      this.openReplyId = '' // 清除回复框
-      console.log(value)
+    async seeCommentDatails(comment: any) {
+      const allNewCommentReplyList = await this.getNewCommentReplyList(comment)
+      // 获取
+      for (const i in this.newsCommentList[this.commentPage].list) {
+        const { id }: any = this.newsCommentList[this.commentPage].list[i]
+        if (comment.id === id) {
+          const { newCommentReplyList }: any = this.newsCommentList[
+            this.commentPage
+          ].list[i]
+          newCommentReplyList.length = 0
+          newCommentReplyList.push(allNewCommentReplyList.list)
+
+          const { openAllReply }: any = this.newsCommentList[
+            this.commentPage
+          ].list[i]
+          openAllReply.push(1)
+        }
+      }
     },
     /**
      * @description: 点击回复

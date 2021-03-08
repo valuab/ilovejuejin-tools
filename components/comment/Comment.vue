@@ -7,6 +7,10 @@
     >
       <div class="comment-user">
         <div class="comment-user-name">{{ comment.userName }}</div>
+        <div v-if="comment.parentName" class="comment-parent">
+          <span>回复</span>
+          {{ comment.parentName }}
+        </div>
         <div v-if="comment.userId === post.userId" class="comment-user-author">
           作者
         </div>
@@ -17,8 +21,9 @@
       </p>
       <div class="comment-handle">
         <div class="comment-handle-support" @click="support">
-          <img src="" class="comment-handle-support-img" />
-          <div>点赞</div>
+          <Icon v-if="comment.isSupport" icon="ArticleLikeOrange" size="24" />
+          <Icon v-else icon="ArticleLikeGrey" size="24" />
+          <span>点赞</span>
         </div>
         <div class="comment-handle-answer" @click="reply">回复</div>
       </div>
@@ -103,10 +108,6 @@ export default defineComponent({
   },
   methods: {
     /**
-     * @description: 评论数据结构
-     */
-    splicing() {},
-    /**
      * @description: 发布评论
      */
     async send(comentValue: any) {
@@ -116,16 +117,22 @@ export default defineComponent({
 
       // 回复内容
       this.IComment.content = comentValue
+      this.IComment.parentId = this.comment.id
+      this.IComment.parentName = this.commentType ? this.comment.userName : ''
 
-      if (post.id) {
+      if (post?.id) {
         this.$emit('send', this.IComment)
+      } else {
+        // 评论失败
       }
     },
     /**
      * @description: 添加评论回复
      */
     postComment(content: string) {
-      const shardId = this.comment.contentId
+      const shardId = this.commentType
+        ? this.comment.contentId
+        : this.post.forumId
       const contentId = this.post.id
       const commentId = this.comment.id // 对帖子评论填写0，对评论的回复填写评论id // 如果是对评论的 进行回复 contentid  就是 评论id shardid 就是 评论的 contentid
       const userId = this.$accessor.userInfo.userId
@@ -165,6 +172,10 @@ export default defineComponent({
       if (this.$accessor.userInfo.userId === 0) {
         // 调取登录弹窗
         this.$accessor.global.showLoginPopUpOrHide()
+        return
+      }
+      // 自己不能点赞自己
+      if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
         return
       }
       const { contentId, shardId } = this.$props.comment
@@ -215,6 +226,14 @@ export default defineComponent({
       @include text(12px, #333333);
     }
 
+    // 回复
+    &-parent {
+      @include text(12px, #333333);
+      > span {
+        @include text(12px, #666);
+      }
+    }
+
     &-author {
       display: flex;
       width: 24px;
@@ -253,13 +272,11 @@ export default defineComponent({
 
     &-support {
       display: flex;
-      margin-right: 16px;
       align-items: center;
+      margin-right: 16px;
 
-      &-img {
-        width: 20px;
-        height: 20px;
-        margin-right: 4px;
+      > span {
+        margin-left: 4px;
       }
     }
 

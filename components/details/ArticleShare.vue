@@ -3,7 +3,10 @@
     <template v-for="(iconItem, index) in iconList">
       <div :key="iconItem.icon" class="share-tab">
         <div v-if="index === 0" class="support" @click="support">
-          <icon :icon="iconItem.icon" size="24"></icon>
+          <icon
+            :icon="post.isSupport ? 'ArticleLikeOrange' : iconItem.icon"
+            size="24"
+          ></icon>
           <div v-if="index === 0" class="num">{{ post.supportCount }}</div>
         </div>
         <a-popover
@@ -47,10 +50,11 @@ export default defineComponent({
     },
   },
   emits: ['support'],
-  setup(props) {
+  setup() {
+    // props.post.isSupport ? 'ArticleLikeOrange' :
     const iconList = ref([
       {
-        icon: props.post.isSupport ? 'ArticleLikeOrange' : 'ArticleLikeGrey',
+        icon: 'ArticleLikeGrey',
       },
       {
         codeUrl:
@@ -91,6 +95,7 @@ export default defineComponent({
       })
 
       if (support.id) {
+        this.$props.post.isSupport = 1
         this.$emit('support')
       }
     },

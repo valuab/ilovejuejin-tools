@@ -12,13 +12,13 @@
     </div>
     <!-- 车型搜索详情 -->
     <h2
-      v-if="type === 5 && typeList[typePage].list.length"
+      v-if="typeList.length && typeList[typePage - 1].list.length"
       class="column-title"
     >
       {{ keyword }}
       <div class="tag">车型</div>
       <div
-        v-if="type === 5 && typeList[typePage].list.length > 4"
+        v-if="typeList.length && typeList[typePage - 1].list.length > 4"
         class="column-title-nav"
         @click="seeAll"
       >
@@ -27,14 +27,14 @@
     </h2>
     <!-- 查看全部结果 -->
     <h2
-      v-if="type === 5 && typeList[typePage].list.length"
+      v-if="openCarType && typeList[typePage - 1].list.length"
       class="column-title"
     >
-      <div class="backAll">返回全部</div>
+      <div class="backAll" @click="backAll">返回全部</div>
       <div class="tag">为你搜索到“飞度”车型结果：</div>
     </h2>
     <article-list
-      v-if="type === 5 && typeList[typePage - 1].list.length"
+      v-if="openCarType && typeList[typePage - 1].list.length"
       class="article-list"
       :list="typeList[0].list"
     />
@@ -50,7 +50,7 @@
 
     <!-- 搜索分页 -->
     <Pagination
-      v-if="!judge"
+      v-if="!openCarType"
       v-anchor="'tabsAnchor'"
       :total="allList[searchAllPage - 1].total"
       class="pagination"
@@ -58,9 +58,9 @@
     ></Pagination>
     <!-- 车型搜索分页 -->
     <Pagination
-      v-if="judge"
+      v-if="openCarType"
       v-anchor="'tabsAnchor'"
-      :total="typeList[typePage].total"
+      :total="typeList[typePage - 1].total"
       class="pagination"
       @change="typePageChange"
     ></Pagination>
@@ -85,7 +85,7 @@ interface IData {
   searchAllPage: number
   typeList: ICommentList[]
   typePage: number
-  judge: boolean
+  openCarType: boolean
   query: {
     keyword: String
     type: number
@@ -202,7 +202,7 @@ export default defineComponent({
       keyword: '', // 搜索关键字
       typeList: [], // 搜索类型文章列表
       typePage: 1, // 分类页码
-      judge: false, // 车型搜索切换
+      openCarType: false, // 车型搜索切换
       type: 0, // 模式类型
       typeName: '',
       query: {
