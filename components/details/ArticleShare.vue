@@ -43,12 +43,19 @@ export default defineComponent({
       },
     },
   },
-  setup() {
+  setup(props) {
     const iconList = ref([
+      {
+        icon: props.post.isSupport ? 'ArticleLikeOrange' : 'ArticleLikeGrey',
+        // icon: 'ArticleLikeOrange',
+      },
       {
         codeUrl:
           'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
         icon: 'OptionWechat',
+      },
+      {
+        icon: 'ArticleLikeMoment',
       },
       { url: 'https://weibo.com/cheyanlun', icon: 'OptionWeibo' },
     ])

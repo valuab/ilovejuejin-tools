@@ -1,7 +1,8 @@
 <template>
   <aside class="video-share">
     <div class="support" @click="support">
-      <Icon icon="CloseOrange" class="video-icon" />
+      <Icon v-if="post.isSupport" icon="ArticleLikeOrange" />
+      <Icon v-else icon="ArticleLikeGrey" />
       <div class="support-num">{{ post.supportCount }}</div>
     </div>
     <div class="share">
@@ -29,7 +30,7 @@
       </template>
     </div>
     <div class="skip">
-      <Icon icon="CloseOrange" class="video-icon" />
+      <Icon icon="ArticleQR" class="video-icon" />
       <div class="skip-word">手机扫一扫，5秒跳广告</div>
     </div>
   </aside>
@@ -56,6 +57,9 @@ export default defineComponent({
         codeUrl:
           'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
         icon: 'OptionWechat',
+      },
+      {
+        icon: 'ArticleLikeMoment',
       },
       { url: 'https://weibo.com/cheyanlun', icon: 'OptionWeibo' },
     ])

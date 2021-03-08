@@ -16,6 +16,13 @@ import ListSwitchNormal from '@icons/icon_list_switch_normal.svg'
 import ArrowOrange from '@icons/icon_arrow_orange.svg'
 import ArticleListNone from '@icons/icon_none.svg'
 
+/** ****** SHARE START ********/
+import ArticleQR from '@icons/icon_qr.svg'
+import ArticleLikeGrey from '@icons/icon_option_like_grey.svg'
+import ArticleLikeOrange from '@icons/icon_option_like_orange.svg'
+import ArticleLikeMoment from '@icons/icon_option_moment.svg'
+/** ****** SHARE START ********/
+
 /** ****** SideMenu START ********/
 import NavHome from '@icons/icon_nav_home.svg'
 import NavStar from '@icons/icon_nav_star.svg'
@@ -71,6 +78,10 @@ export type IconType =
   | 'LogoTaobao'
   | 'LogoTmall'
   | 'ArticleListNone'
+  | 'ArticleQR'
+  | 'ArticleLikeOrange'
+  | 'ArticleLikeGrey'
+  | 'ArticleLikeMoment'
 
 /**
  * 引入要使用的svg
@@ -110,6 +121,10 @@ const iconManager: Record<IconType, Component> = {
   LogoTaobao,
   LogoTmall,
   ArticleListNone,
+  ArticleQR,
+  ArticleLikeOrange,
+  ArticleLikeGrey,
+  ArticleLikeMoment,
 }
 
 export default iconManager
