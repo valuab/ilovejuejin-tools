@@ -341,7 +341,7 @@ export default defineComponent({
      */
     searchByHostUserId(page: number) {
       const { keyword } = this.query
-      const hostUserId = Number(this.query.keywordId)
+      const hostUserId = Number(this.query.hostUserId)
       const viewUserId = this.$accessor.userInfo.userId
       return this.$http.search.getSearchByHostUserId({
         keyword,
