@@ -2,7 +2,9 @@
   <article class="search-input">
     <div v-if="type > 1 && columnName" class="column">
       <p>{{ columnName }}</p>
-      <Icon icon="CloseOrange" @click="deleteSearchColumn" />
+      <div class="delete" @click="deleteSearchColumn">
+        <Icon icon="CloseOrange" />
+      </div>
     </div>
     <input v-model="inputValue" class="input" />
     <button type="button" class="button" @click="search">搜索</button>
