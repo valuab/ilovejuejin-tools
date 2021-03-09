@@ -9,11 +9,15 @@
       </p>
       <div class="code-content">
         <div class="code">
-          <div class="code-img"></div>
+          <div class="code-img">
+            <img width="190px" height="190px" src="/qrcode/offic/djcars.png" />
+          </div>
           <div class="code-text">扫一扫关注公众号</div>
         </div>
         <div class="code">
-          <div class="code-img"></div>
+          <div class="code-img">
+            <img width="190px" height="190px" src="/qrcode/offic/android.png" />
+          </div>
           <div class="code-text">扫一扫下载App</div>
         </div>
       </div>
@@ -66,9 +70,9 @@ export default defineComponent({
       flex-direction: column;
       align-items: center;
 
-      .code-img {
+      &-img {
         width: 190px;
-        height: 175px;
+        height: 190px;
         margin-bottom: 10px;
         background-color: #fff;
       }
