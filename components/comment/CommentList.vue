@@ -11,7 +11,10 @@
       @send="send"
     >
       <!-- 回复列表 -->
-      <div v-if="item.newCommentReplyList.length" class="commentItemList">
+      <div
+        v-if="item.newCommentReplyList && item.newCommentReplyList.length"
+        class="commentItemList"
+      >
         <Comment
           v-for="kind in item.newCommentReplyList"
           :key="kind.id"

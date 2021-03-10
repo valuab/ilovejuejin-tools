@@ -47,7 +47,7 @@ export default defineComponent({
         appid: wxConfig.APP_ID,
         scope: 'snsapi_login,snsapi_userinfo',
         redirect_uri: encodeURIComponent(
-          wxConfig.REDIRECT_URL + this.$route.path
+          wxConfig.REDIRECT_URL + this.$route.path // 加参数
         ),
         state: 'wxLogin',
         href: wxLoginCSSlink,
