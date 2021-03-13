@@ -12,7 +12,11 @@
     >
       <!-- 回复列表 -->
       <div
-        v-if="item.newCommentReplyList && item.newCommentReplyList.length"
+        v-if="
+          item.replayCommentDto &&
+          item.newCommentReplyList &&
+          item.newCommentReplyList.length
+        "
         class="commentItemList"
       >
         <Comment
@@ -56,7 +60,7 @@ import { PROT_TYPE_TYPEID } from '@/enums/content'
 interface IData {
   newsCommentList: ICommentList[]
   commentPage: number
-  openReplyId: String
+  openReplyId: string
 }
 export default defineComponent({
   name: 'CommentList',

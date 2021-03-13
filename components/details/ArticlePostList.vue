@@ -175,6 +175,11 @@ export default defineComponent({
       height: 68px;
       margin-right: 10px;
       overflow: hidden;
+
+      > img {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     &-text {

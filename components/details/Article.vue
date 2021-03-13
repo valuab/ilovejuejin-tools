@@ -2,7 +2,7 @@
   <aside class="article-body">
     <!-- 分享挂件 -->
     <div v-if="!videoType" class="article-share">
-      <ArticleShare :post="article" @ />
+      <ArticleShare :post="article" />
     </div>
     <article
       class="article"
@@ -95,8 +95,6 @@ export default defineComponent({
     }
   },
   fetch() {
-    // console.log(this.article)
-
     // 更新浏览量
     const { id, forumId } = this.article
     this.$http.posts.updateViewCountForAsync({

@@ -1,6 +1,6 @@
 <template>
   <aside v-if="hostUserList.length" class="subs">
-    <div class="subs-title">节目主持人</div>
+    <div class="subs-title">本文作者</div>
     <div
       v-for="item in hostUserList"
       :key="item.userId"
