@@ -2,7 +2,7 @@
   <header class="header">
     <!-- 文章标题部分 -->
     <h1 class="title">{{ post.title }}</h1>
-    <p class="article-msg">{{ time }} · 浏览 {{ post.viewCount }}</p>
+    <p class="article-msg">{{ time }} · 浏览 {{ post.totalViewCount }}</p>
   </header>
 </template>
 <script lang="ts">

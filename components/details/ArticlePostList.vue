@@ -5,10 +5,11 @@
       v-for="item in newListByHostUserId.list"
       :key="item.postId"
       class="post-msg"
-      @click="navDetails(item.id, item.forumId)"
+      @click="navDetails(item.postId, item.forumId)"
     >
       <div class="post-msg-img">
         <img :src="item.smallImageUrl" alt="" />
+        <Icon icon="NavKol" size="12"></Icon>
       </div>
       <div class="post-msg-text">
         <div class="post-msg-text-name">{{ item.title }}</div>
@@ -16,13 +17,13 @@
           <div class="post-msg-text-data-time">{{ time }}</div>
 
           <div class="post-msg-text-data-num">
-            <Icon icon="ListView" size="10"></Icon>
-            <span>{{ item.commentCount }}</span>
+            <Icon icon="ListView" size="12"></Icon>
+            <span>{{ item.totalViewCount }}</span>
           </div>
 
           <div class="post-msg-text-data-num">
-            <Icon icon="ListComment" size="10"></Icon>
-            <span>{{ item.totalViewCount }}</span>
+            <Icon icon="ListComment" size="12"></Icon>
+            <span>{{ item.commentCount }}</span>
           </div>
         </div>
       </div>
