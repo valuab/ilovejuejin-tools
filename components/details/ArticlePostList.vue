@@ -9,7 +9,6 @@
     >
       <div class="post-msg-img">
         <img :src="item.smallImageUrl" alt="" />
-        <Icon icon="NavKol" size="12"></Icon>
       </div>
       <div class="post-msg-text">
         <div class="post-msg-text-name">{{ item.title }}</div>

@@ -51,7 +51,6 @@ export default defineComponent({
   },
   emits: ['support'],
   setup() {
-    // props.post.isSupport ? 'ArticleLikeOrange' :
     const iconList = ref([
       {
         icon: 'ArticleLikeGrey',
@@ -97,6 +96,29 @@ export default defineComponent({
       if (support.id) {
         this.$props.post.isSupport = 1
         this.$emit('support')
+      }
+    },
+    /**
+     * @description: 分享微博
+     * @param pic 图片
+     */
+    weibo(pic?: string) {
+      const title = this.post.title
+      const pathname = window.location.pathname.substr(1)
+      const origin = window.location.origin
+      let search = window.location.search.substr(1)
+      search = search.replace(/&/g, '_').replace(/=/g, '-')
+      const link = `${origin}/share/${pathname}?search=${search}`
+      if (pic) {
+        return window.open(
+          `http://v.t.sina.com.cn/share/share.php?url=${link}&title=${title}&content=utf-8&pic=${pic}&appkey=1589128892`,
+          `_blank`
+        )
+      } else {
+        return window.open(
+          `http://v.t.sina.com.cn/share/share.php?url=${link}&title=${title}&content=utf-8&appkey=1589128892`,
+          `_blank`
+        )
       }
     },
   },

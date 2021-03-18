@@ -9,6 +9,9 @@
     >
       <div class="subs-msg-img">
         <img :src="item.smallImageUrl" alt="" />
+        <div v-if="item.kol" class="icon">
+          <Icon icon="NavKol" size="24"></Icon>
+        </div>
       </div>
       <div class="subs-msg-text">
         <div class="subs-msg-text-name">{{ item.nickname }}</div>
@@ -108,10 +111,24 @@ export default defineComponent({
       height: 80px;
       margin-right: 20px;
       background-color: #e6e6e6;
-      border-radius: 50%;
-      overflow: hidden;
       align-items: center;
       justify-content: center;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 20px;
+      height: 20px;
     }
 
     &-text {
