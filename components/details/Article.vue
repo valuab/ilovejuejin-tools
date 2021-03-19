@@ -9,12 +9,14 @@
       :class="videoType ? 'article-video-width' : 'article-width'"
     >
       <ArticleHeader :post="article" />
+      <!-- 视频组件 -->
       <ArticleVideo
         v-if="article && videoType"
         :post="article"
         :video-url="videoUrl"
         @seeDatails="seeDatails"
       />
+      <!-- 文章内容组件 -->
       <!-- 文字段落 -->
       <div
         v-for="item in article.stepList"

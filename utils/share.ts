@@ -13,3 +13,7 @@ export const getWeiboUrl = (title: string, pic?: string) => {
     return `http://v.t.sina.com.cn/share/share.php?url=${link}&title=${title}&content=utf-8&appkey=1589128892`
   }
 }
+
+/**
+ * @description: 生成微博链接
+ */

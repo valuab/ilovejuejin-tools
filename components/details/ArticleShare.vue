@@ -79,9 +79,9 @@ export default defineComponent({
         url: '',
       },
       {
+        icon: 'OptionWechat',
         codeUrl:
           'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
-        icon: 'OptionWechat',
         url: '',
       },
       {
@@ -90,9 +90,9 @@ export default defineComponent({
         url: '',
       },
       {
-        url: weiboUrl,
         icon: 'OptionWeibo',
         codeUrl: '',
+        url: weiboUrl,
       },
     ]
   },
