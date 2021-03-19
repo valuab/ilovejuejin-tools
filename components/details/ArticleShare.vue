@@ -35,7 +35,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { getWeiboUrl } from '@/utils/share'
+
+interface IIconItem {
+  icon: string
+  codeUrl: string
+  url: string
+}
+
+interface IData {
+  showWechat: boolean
+  iconList: IIconItem[]
+}
 
 export default defineComponent({
   name: 'ArticleSort',
@@ -50,29 +62,39 @@ export default defineComponent({
     },
   },
   emits: ['support'],
-  setup() {
-    const iconList = ref([
+  data(): IData {
+    return {
+      showWechat: false,
+      iconList: [],
+    }
+  },
+  fetch() {
+    const title = this.post.title
+    const weiboUrl = getWeiboUrl(title)
+
+    this.iconList = [
       {
         icon: 'ArticleLikeGrey',
+        codeUrl: '',
+        url: '',
       },
       {
         codeUrl:
           'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
         icon: 'OptionWechat',
+        url: '',
       },
       {
         icon: 'ArticleLikeMoment',
+        codeUrl: '',
+        url: '',
       },
-      { url: 'https://weibo.com/cheyanlun', icon: 'OptionWeibo' },
-    ])
-    return {
-      iconList,
-    }
-  },
-  data() {
-    return {
-      showWechat: false,
-    }
+      {
+        url: weiboUrl,
+        icon: 'OptionWeibo',
+        codeUrl: '',
+      },
+    ]
   },
   methods: {
     mouseout() {
@@ -96,29 +118,6 @@ export default defineComponent({
       if (support.id) {
         this.$props.post.isSupport = 1
         this.$emit('support')
-      }
-    },
-    /**
-     * @description: 分享微博
-     * @param pic 图片
-     */
-    weibo(pic?: string) {
-      const title = this.post.title
-      const pathname = window.location.pathname.substr(1)
-      const origin = window.location.origin
-      let search = window.location.search.substr(1)
-      search = search.replace(/&/g, '_').replace(/=/g, '-')
-      const link = `${origin}/share/${pathname}?search=${search}`
-      if (pic) {
-        return window.open(
-          `http://v.t.sina.com.cn/share/share.php?url=${link}&title=${title}&content=utf-8&pic=${pic}&appkey=1589128892`,
-          `_blank`
-        )
-      } else {
-        return window.open(
-          `http://v.t.sina.com.cn/share/share.php?url=${link}&title=${title}&content=utf-8&appkey=1589128892`,
-          `_blank`
-        )
       }
     },
   },
