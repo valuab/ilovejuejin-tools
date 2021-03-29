@@ -4,10 +4,16 @@
       <div :key="iconItem.icon" class="share-tab">
         <div v-if="index === 0" class="support" @click="support">
           <icon
-            :icon="post.isSupport ? 'ArticleLikeOrange' : iconItem.icon"
+            :icon="posts.isSupport ? 'ArticleLikeOrange' : iconItem.icon"
             size="24"
           ></icon>
-          <div v-if="index === 0" class="num">{{ post.supportCount }}</div>
+          <div
+            v-if="index === 0"
+            class="num"
+            :class="posts.isSupport ? 'num_1' : ''"
+          >
+            {{ post.supportCount }}
+          </div>
         </div>
         <a-popover
           v-else-if="iconItem.codeUrl"
@@ -47,6 +53,9 @@ interface IIconItem {
 interface IData {
   showWechat: boolean
   iconList: IIconItem[]
+  posts: {
+    isSupport: number
+  }
 }
 
 export default defineComponent({
@@ -66,11 +75,15 @@ export default defineComponent({
     return {
       showWechat: false,
       iconList: [],
+      posts: this.$props.post,
     }
   },
   fetch() {
     const title = this.post.title
-    const weiboUrl = getWeiboUrl(title)
+    const pathname = this.$route.name || ''
+    const origin = this.$route.path
+    const search = JSON.stringify(this.$route.query)
+    const weiboUrl = getWeiboUrl(title, pathname, origin, search)
 
     this.iconList = [
       {
@@ -108,6 +121,11 @@ export default defineComponent({
      */
     async support() {
       if (this.$props.post.isSupport) return
+      // 判断登录
+      if (this.$accessor.userInfo.userId === 0) {
+        this.$accessor.global.showLoginPopUpOrHide()
+        return
+      }
       const postId = this.post.id
       const forumId = this.post.forumId
       const support: any = await this.$http.posts.supportPost({
@@ -116,7 +134,7 @@ export default defineComponent({
       })
 
       if (support.id) {
-        this.$props.post.isSupport = 1
+        this.posts.isSupport = 1
         this.$emit('support')
       }
     },
@@ -139,6 +157,10 @@ export default defineComponent({
     font-size: 10px;
     line-height: 10px;
     color: #666;
+  }
+
+  .num_1 {
+    color: #ff8022;
   }
 }
 

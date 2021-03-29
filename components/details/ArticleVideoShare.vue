@@ -88,6 +88,11 @@ export default defineComponent({
      */
     async support() {
       if (this.$props.post.isSupport) return
+      // 判断登录
+      if (this.$accessor.userInfo.userId === 0) {
+        this.$accessor.global.showLoginPopUpOrHide()
+        return
+      }
       const postId = this.post.id
       const forumId = this.post.forumId
       const support: any = await this.$http.posts.supportPost({

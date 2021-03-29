@@ -81,6 +81,13 @@ export default defineComponent({
         return {}
       },
     },
+    // 是否切入视频页
+    // videoType: {
+    //   type: Boolean,
+    //   default: () => {
+    //     return false
+    //   },
+    // },
   },
   data() {
     return {

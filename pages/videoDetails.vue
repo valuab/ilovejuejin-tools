@@ -7,7 +7,6 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 // 参数列表 // 标记
-
 interface IData {
   post: Object
   query: {
