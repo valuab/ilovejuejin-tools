@@ -34,7 +34,13 @@
   </figure>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, toRefs } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  PropType,
+  toRefs,
+  watch,
+  ref,
+} from '@nuxtjs/composition-api'
 import { IArticleItemType } from '@/api/apiPublic/type'
 import { handleTime, substrByByte } from '@/utils/data'
 
@@ -48,15 +54,21 @@ export default defineComponent({
   },
   setup(props) {
     const { item } = toRefs(props)
-    const date = item.value.publishTime.replace(/-/g, '/')
-    const postTimeStamp = new Date(date).getTime()
-    const time: string = handleTime(postTimeStamp)
+    const time = ref('')
+    const title = ref('')
+    const dataInit = () => {
+      const date = item.value.publishTime.replace(/-/g, '/')
+      const postTimeStamp = new Date(date).getTime()
+      time.value = handleTime(postTimeStamp)
+      title.value = substrByByte(item.value.title, 62)
+    }
 
-    const title: string = substrByByte(item.value.title, 62)
+    dataInit()
+
+    watch(item, () => dataInit())
 
     return {
       time,
-      substrByByte,
       title,
     }
   },
