@@ -66,7 +66,7 @@
             >
               <img
                 class="column-list-item"
-                :src="recommendItem.smallImageUrl"
+                :src="recommendItem.recommendSmallImageUrl"
                 :alt="recommendItem.description"
               />
             </nuxt-link>
@@ -353,6 +353,7 @@ export default defineComponent({
         const categoryItem = result as IGetCategoryIdResult['result']
         this.$set(categoryList[index], 'list', categoryItem.list)
       }
+
       this.categoryTabsLoad = false
     },
   },
@@ -472,6 +473,8 @@ export default defineComponent({
   .kol-list-container {
     width: 170px;
     height: 320px;
+    background-color: #fff;
+    border: solid 1px #e6e6e6;
     overflow: hidden;
 
     .kol-carousel {

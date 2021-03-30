@@ -70,6 +70,7 @@ export interface IRecommendListData {
   id: string
   smallImageUrl: string
   description: string
+  recommendSmallImageUrl: string
 }
 interface IGetRecommendList extends IApiResult {
   result: {

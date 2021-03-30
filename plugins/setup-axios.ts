@@ -3,7 +3,7 @@ import { Context } from '@nuxt/types'
 import createHttpModule from '~/api/apiPublic/index'
 import getToken from '~/api/token'
 
-export default ({ app, $axios }: Context) => {
+export default ({ app, $axios, redirect }: Context) => {
   const http = createHttpModule($axios)
   const httpInstance = {
     install(Vue: VueConstructor) {
@@ -17,6 +17,15 @@ export default ({ app, $axios }: Context) => {
   } else {
     token = getToken()
   }
+  // 监听请求
+  $axios.onError(() => {
+    redirect('/error')
+  })
+  $axios.onResponse(({ data }) => {
+    if (data.err) {
+      redirect('/error')
+    }
+  })
 
   $axios.setHeader('sign', token.sign)
   $axios.setHeader('sid', token.sid)

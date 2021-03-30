@@ -47,7 +47,9 @@ export default async ({ route, app, $axios, redirect }: Context) => {
       $axios.setHeader('sid', token.sid)
       $axios.setHeader('uid', token.uid.toString())
       $axios.setHeader('uuid', token.uuid)
-      app.$cookies.set('token', token)
+      app.$cookies.set('token', token, {
+        maxAge: 60 * 60 * 24 * 30,
+      })
       redirect(route.path)
     } catch (err) {
       redirect(route.path)

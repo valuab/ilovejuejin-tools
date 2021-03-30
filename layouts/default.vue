@@ -41,13 +41,14 @@
     display: flex;
     flex-direction: column;
     min-height: 90vh;
+    background: #f5f5f5;
 
     .root-footer {
       width: 100%;
       max-width: 1240px;
       padding: 100px 0 0;
       margin: auto auto 0;
-      background: #fff;
+      background: #f5f5f5;
     }
   }
 }

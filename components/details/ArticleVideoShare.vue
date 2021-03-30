@@ -9,7 +9,7 @@
     </div>
     <div class="share">
       <div class="share-word">分享到：</div>
-      <template v-for="iconItem in iconList">
+      <template v-for="(iconItem, index) in iconList">
         <div :key="iconItem.icon" class="video-icon">
           <div v-if="index === 0" class="support" @click="support">
             <icon :icon="iconItem.icon" size="24"></icon>

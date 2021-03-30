@@ -63,7 +63,7 @@ export default {
     '@/plugins/antd-ui',
     '@/plugins/setup-axios',
     '@/plugins/directives',
-    { src: '@/plugins/lazyload.ts', ssr: false },
+    { src: '@/plugins/lazyload.ts', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -131,9 +131,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    analyze: {
-      analyzerMode: 'static',
-    },
+    analyze: false,
     extractCSS: {
       ignoreOrder: true,
       esModule: true,
@@ -141,13 +139,9 @@ export default {
     cssSourceMap: !isProduction,
     transpile: ['ant-design-vue'],
     babel: {
+      presets: ['es2015', 'stage-2'],
       plugins: [
-        [
-          '@babel/plugin-transform-runtime',
-          {
-            corejs: 3,
-          },
-        ],
+        ['@babel/plugin-transform-runtime'],
         [
           'import',
           {
