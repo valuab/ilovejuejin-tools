@@ -14,7 +14,7 @@
     </a-radio-group>
     <a-input-search
       class="search"
-      placeholder="节目内搜索"
+      :placeholder="placeholder"
       :style="searchStyle"
       @search="onSearch"
     />
@@ -40,7 +40,7 @@ export default defineComponent({
      * @description: 监听搜索
      */
     const onSearch = (value: string): void => {
-      if (!value) return
+      if (!value.trim()) return
       context.emit('search', value)
     }
 
@@ -63,12 +63,32 @@ export default defineComponent({
   data() {
     return {
       value: 0,
+      placeholder: '',
     }
   },
   watch: {
     default(val) {
       this.value = val
     },
+  },
+  created() {
+    let placeholder = ''
+    const routeName = this.$route.name
+    switch (routeName) {
+      case 'category-id':
+        placeholder = '分类内搜索'
+        break
+      case 'topic-id':
+        placeholder = '节目内搜索'
+        break
+      case 'kol-id':
+        placeholder = '搜索Ta的出品'
+        break
+      default:
+        break
+    }
+
+    this.placeholder = placeholder
   },
 })
 </script>

@@ -84,8 +84,7 @@ export default defineComponent({
     })
 
     // 获取kol列表
-    let userTabs: IUserTabs[] = []
-    const copyUserList = []
+    const userTabs: IUserTabs[] = []
     let articleList: IArticleList[] = []
     const userRes = await app.$http.category.getHostListByCategoryId({
       categoryId: route.params.id,
@@ -93,23 +92,27 @@ export default defineComponent({
 
     if (userRes.total) {
       for (let i = 0; i < userRes.list?.length; i++) {
-        copyUserList.push({
+        userTabs.push({
           title: userRes.list[i].nickname,
           id: userRes.list[i].userId,
-          key: i,
+          key: i + 1,
         })
       }
+
+      userTabs.unshift({
+        title: '全部出品',
+        id: 0,
+        key: 0,
+      })
+
       // 获取文章列表
-      const articleRes = await app.$http.category.getListByCategoryIdHostUserId(
-        {
-          page: 1,
-          categoryId: route.params.id,
-          hostUserId: copyUserList[0].id,
-          viewUserId: app.$accessor.userInfo.userId,
-        }
-      )
-      userTabs = copyUserList
-      articleList = Array(copyUserList.length).fill({})
+      const articleRes = await app.$http.category.getListByCategoryId({
+        page: 1,
+        categoryId: route.params.id,
+        viewUserId: app.$accessor.userInfo.userId,
+        typeId: -1,
+      })
+      articleList = Array(userTabs.length).fill({})
       articleList[0] = {
         list: articleRes.list,
         total: articleRes.total,
@@ -222,25 +225,45 @@ export default defineComponent({
      * @description: 获取文章列表
      */
     getArticleList() {
-      const { typeId, page } = this.articleList[this.articleIndex]
+      const { typeId = '', page = 1 } = this.articleList[this.articleIndex]
       this.articleList[this.articleIndex].listLoad = true
-      this.$http.category
-        .getListByCategoryIdHostUserId({
-          categoryId: this.categoryId,
-          hostUserId: this.userTabs[this.articleIndex].id,
-          typeId,
-          page,
-          viewUserId: this.$accessor.userInfo.userId,
-        })
-        .then(({ list, total }) => {
-          this.$set(this.articleList, this.articleIndex, {
-            listLoad: false,
-            list,
-            total,
+
+      if (this.articleIndex === 0) {
+        this.$http.category
+          .getListByCategoryId({
+            categoryId: this.categoryId,
+            typeId: typeId || -1,
             page,
-            typeId,
+            viewUserId: this.$accessor.userInfo.userId,
           })
-        })
+          .then(({ list, total }) => {
+            this.$set(this.articleList, this.articleIndex, {
+              listLoad: false,
+              list,
+              total,
+              page,
+              typeId,
+            })
+          })
+      } else {
+        this.$http.category
+          .getListByCategoryIdHostUserId({
+            categoryId: this.categoryId,
+            hostUserId: this.userTabs[this.articleIndex].id,
+            typeId,
+            page,
+            viewUserId: this.$accessor.userInfo.userId,
+          })
+          .then(({ list, total }) => {
+            this.$set(this.articleList, this.articleIndex, {
+              listLoad: false,
+              list,
+              total,
+              page,
+              typeId,
+            })
+          })
+      }
     },
   },
 })
@@ -256,7 +279,10 @@ export default defineComponent({
     left: 0;
     width: 100%;
     height: 810px;
-    background-image: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
+    background-image: linear-gradient(
+      rgba(255, 255, 255, 1),
+      rgba(245, 245, 245, 1)
+    );
   }
 
   .tabContainer {

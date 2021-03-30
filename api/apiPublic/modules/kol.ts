@@ -11,6 +11,7 @@ const userLinks = {
   getUsrInfo: '/api/user/getUsrInfo', // 获取单个用户对象
   getItemListByHostUserId: '/api/user/getItemListByHostUserId', // 获取王牌节目推荐
   getListByHostUserId: '/api/user/getListByHostUserId', // 获取KOL内容分类列表
+  getNewListByHostUserId: '/api/post/getNewListByHostUserId', // 获取KOL内容分类列表
   getListByCategoryIdHostUserId: '/api/user/getListByCategoryIdHostUserId', // 获取内容分类帖子列表
 }
 
@@ -69,6 +70,13 @@ export interface ICategoryListResult extends IApiResult {
   }
 }
 
+interface INewArticleListParams {
+  hostUserId: string
+  viewUserId?: number
+  typeId?: number | string
+  page: number
+}
+
 interface IArticleListParams {
   categoryId: number
   hostUserId: string
@@ -91,6 +99,9 @@ export interface IKolModule {
   getListByHostUserId(
     params: ICategoryListParams
   ): Promise<ICategoryListResult['result']>
+  getNewListByHostUserId(
+    params: INewArticleListParams
+  ): Promise<IArticleListResult['result']>
   getListByCategoryIdHostUserId(
     params: IArticleListParams
   ): Promise<IArticleListResult['result']>
@@ -115,6 +126,13 @@ export default ($axios: NuxtAxiosInstance) => {
     async getListByHostUserId(params) {
       const url = handleUrlParams(userLinks.getListByHostUserId, params)
       const { data } = await $axios.get<ICategoryListResult>(url)
+
+      return data.result
+    },
+
+    async getNewListByHostUserId(params) {
+      const url = handleUrlParams(userLinks.getNewListByHostUserId, params)
+      const { data } = await $axios.get<IArticleListResult>(url)
 
       return data.result
     },

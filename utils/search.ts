@@ -10,8 +10,12 @@ export const setSearchHistory = (value: string) => {
     const localHistory: string | null = window.localStorage.getItem(
       'searchHistory'
     )
-    const history = localHistory ? JSON.parse(localHistory) : []
+    let history = localHistory ? JSON.parse(localHistory) : []
     history.unshift(value)
+    history = [...new Set(history)]
+    if (history.length > 100) {
+      history = history.slice(0, 100)
+    }
     localStorage.setItem('searchHistory', JSON.stringify(history))
     resolve()
   })

@@ -1,25 +1,16 @@
 <template>
   <a-pagination
     class="pagination"
-    :total="total"
-    :default-page-size="defaultPageSize"
+    :default-page-size="16"
+    v-bind="$attrs"
+    :item-render="itemRender"
     hide-on-single-page
     show-less-items
     @change="onChange"
-  >
-    <template #itemRender="{ type, originalElement }">
-      <a v-if="type === 'prev'">上一页</a>
-      <a v-else-if="type === 'next'">下一页</a>
-      <renderVNode v-else :vnode="originalElement"></renderVNode>
-    </template>
-  </a-pagination>
+  />
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-
-function renderVNode(_: any, { attrs: { vnode } }: any) {
-  return vnode
-}
 
 export interface IchangeParam {
   page: number
@@ -28,21 +19,6 @@ export interface IchangeParam {
 
 export default defineComponent({
   name: 'Pagination',
-  components: {
-    renderVNode,
-  },
-  props: {
-    // 总数
-    total: {
-      type: Number,
-      default: 100,
-    },
-    // 每页数量
-    defaultPageSize: {
-      type: Number,
-      default: 16,
-    },
-  },
   emits: ['change'],
   setup(_props, context) {
     /**
@@ -56,6 +32,24 @@ export default defineComponent({
     return {
       onChange,
     }
+  },
+  methods: {
+    itemRender(_current: number, type: string, originalElement: any): any {
+      if (type === 'prev') {
+        return this.$createElement(
+          'a',
+          { class: originalElement.data.class, style: { width: '78px' } },
+          ['上一页']
+        )
+      } else if (type === 'next') {
+        return this.$createElement(
+          'a',
+          { class: originalElement.data.class, style: { width: '78px' } },
+          ['下一页']
+        )
+      }
+      return originalElement
+    },
   },
 })
 </script>

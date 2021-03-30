@@ -47,9 +47,10 @@ export default defineComponent({
     }
   },
   async fetch() {
-    const { list } = await this.$http.program.getListByKeywordId({
-      keywordId: this.$props.data.id,
+    const { list } = await this.$http.program.getListByItemId({
+      itemId: this.$props.data.id,
       viewUserId: this.$accessor.userInfo.userId,
+      count: 3,
     })
     this.articleList = list
   },

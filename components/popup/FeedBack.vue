@@ -69,7 +69,7 @@
               placeholder="填写品牌型号"
             ></a-input>
           </div>
-          <a-text-area
+          <a-textarea
             v-model="appIssue.textArea"
             class="contact-textArea"
             :max-length="140"
@@ -80,7 +80,7 @@
 请用140字描述操作中遇到的问题"
             show-count
             :auto-size="{ minRows: 6, maxRows: 6 }"
-          ></a-text-area>
+          ></a-textarea>
         </div>
         <!-- APP问题END -->
 
@@ -92,14 +92,14 @@
             :max-length="30"
             placeholder="我们如何方便与您取得联系：QQ、邮件、微信、手机号？"
           ></a-input>
-          <a-text-area
+          <a-textarea
             v-model="issueValue.textArea"
             class="contact-textArea"
             :max-length="140"
             placeholder="请填写您需要反馈的问题，内容控制在140个字以内"
             show-count
             :auto-size="{ minRows: 6, maxRows: 6 }"
-          ></a-text-area>
+          ></a-textarea>
         </div>
         <!-- 其余问题END -->
       </div>
@@ -134,16 +134,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-
-import { Radio, Input, Dropdown, Menu, message } from 'ant-design-vue'
-
 import {
   IAppVersionType,
   ICategoryListType,
   globalLinks,
 } from '@apiModules/feedback'
-
-import PopupMask from './PopupMask.vue'
 
 interface IAppIssueList {
   title: string
@@ -171,16 +166,6 @@ interface IData {
 
 export default defineComponent({
   name: 'FeedBack',
-  components: {
-    ARadioGroup: Radio.Group,
-    ARadioButton: Radio.Button,
-    AInput: Input,
-    ATextArea: Input.TextArea,
-    ADropdown: Dropdown,
-    AMenu: Menu,
-    AMenuItem: Menu.Item,
-    PopupMask,
-  },
   props: {
     // tab默认选择
     defaultRadio: {
@@ -342,12 +327,12 @@ export default defineComponent({
           contact,
         })
         .then((res) => {
-          if (!res.id) {
-            message.error('提交失败')
-            return
+          if (res?.id > 0) {
+            this.$message.success('提交成功')
+            this.showFeedBack()
+          } else {
+            this.$message.error('提交失败')
           }
-          message.success('提交成功')
-          this.showFeedBack()
         })
     },
   },
@@ -369,6 +354,7 @@ export default defineComponent({
     position: absolute;
     top: 30px;
     right: 30px;
+    cursor: pointer;
   }
 
   .header {
@@ -454,6 +440,7 @@ export default defineComponent({
 
       .verify-input {
         text-align: center;
+        border: solid 1px #e6e6e6;
       }
 
       .verify-image {

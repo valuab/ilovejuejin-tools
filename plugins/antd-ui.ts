@@ -20,6 +20,7 @@ import {
   Spin,
   ConfigProvider,
   Pagination,
+  message,
 } from 'ant-design-vue'
 
 Vue.use(Avatar)
@@ -42,3 +43,5 @@ Vue.use(Empty)
 Vue.use(Spin)
 Vue.use(ConfigProvider)
 Vue.use(Pagination)
+
+Vue.prototype.$message = message

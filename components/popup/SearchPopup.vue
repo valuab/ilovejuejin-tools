@@ -26,7 +26,7 @@
         <h2>内容出品人</h2>
         <a-row :gutter="16">
           <a-col
-            v-for="(item, index) in kolList"
+            v-for="(item, index) in this.$accessor.layouts.kolList.slice(0, 12)"
             :key="index"
             :span="6"
             @click="navKolDetail(item.userId)"
@@ -40,7 +40,6 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { IKolListType } from '@apiModules/search'
 import {
   getSearchHistory,
   setSearchHistory,
@@ -51,7 +50,6 @@ import SearchKOL from '@/components/search/SearchKOL.vue'
 import PopupMask from './PopupMask.vue'
 
 interface IDataType {
-  kolList: IKolListType[]
   history: Array<string>
 }
 
@@ -65,14 +63,8 @@ export default defineComponent({
   emits: ['showSearch'],
   data(): IDataType {
     return {
-      kolList: [] as IKolListType[],
       history: [],
     }
-  },
-
-  async fetch() {
-    const { list } = await this.$http.search.getKolList()
-    this.kolList = list
   },
 
   mounted() {
@@ -110,7 +102,9 @@ export default defineComponent({
      * @description: 点击搜索
      */
     onSearch(value: string) {
-      setSearchHistory(value).then(() => this.navSearch(value, 1, ''))
+      if (value.trim()) {
+        setSearchHistory(value).then(() => this.navSearch(value, 1, ''))
+      }
     },
 
     /**

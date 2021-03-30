@@ -6,9 +6,9 @@
       class="img"
       :alt="item.title"
     />
-    <span v-if="item.itemKeywordName" class="column-tag">{{
-      item.itemKeywordName
-    }}</span>
+    <span v-if="item.itemKeywordName" class="column-tag">
+      {{ item.itemKeywordName }}
+    </span>
     <figcaption>
       <cite>
         <p class="tag">{{ item.itemCategoryName }}</p>
@@ -20,7 +20,7 @@
           <p>{{ time }}</p>
         </div>
         <div>
-          <p>
+          <p v-if="isViewCount">
             <Icon icon="ListView" size="10"></Icon
             ><span>{{ item.totalViewCount }}</span>
           </p>
@@ -54,11 +54,14 @@ export default defineComponent({
   },
   setup(props) {
     const { item } = toRefs(props)
-    const time = ref('')
-    const title = ref('')
+    const time = ref('') // 文章时间
+    const title = ref('') // 文章标题
+    const isViewCount = ref(true) // 阅读数展示
     const dataInit = () => {
       const date = item.value.publishTime.replace(/-/g, '/')
       const postTimeStamp = new Date(date).getTime()
+      isViewCount.value =
+        new Date().getTime() - postTimeStamp >= 24 * 60 * 60 * 1000
       time.value = handleTime(postTimeStamp)
       title.value = substrByByte(item.value.title, 62)
     }
@@ -70,6 +73,7 @@ export default defineComponent({
     return {
       time,
       title,
+      isViewCount,
     }
   },
   methods: {
