@@ -1,6 +1,4 @@
 # djcars-newpc-web
-
-
 ## 注意事项
 
 1. 项目使用 `create-nuxt-app` 构建项目
