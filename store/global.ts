@@ -4,7 +4,8 @@ import { IAppVersionType, ICategoryListType } from '@apiModules/feedback'
 export interface IGlobalState {
   isSearchPopup: Boolean // 搜索弹窗显示
   isFeedBack: Boolean // 反馈弹窗显示
-  isLoginPopUpShow: boolean // 登录弹窗显示
+  isLoginPopUpShow: Boolean // 登录弹窗显示
+  isAdPopupShow: Boolean // 广告弹窗显示
   feedBackTabsList: ICategoryListType[] // 反馈弹窗单选列表
   feedBackAppVersion: IAppVersionType[] // 反馈弹窗app版本列表
 }
@@ -15,6 +16,7 @@ export const state: () => IGlobalState = () => ({
   isSearchPopup: false,
   isFeedBack: false,
   isLoginPopUpShow: false,
+  isAdPopupShow: true,
   feedBackTabsList: [],
   feedBackAppVersion: [],
 })
@@ -28,6 +30,9 @@ export const mutations = mutationTree(state, {
   },
   showLoginPopUpOrHide(state) {
     state.isLoginPopUpShow = !state.isLoginPopUpShow
+  },
+  showAdPopup(state) {
+    state.isAdPopupShow = !state.isAdPopupShow
   },
   setFeedBackTabs(state, list) {
     state.feedBackTabsList = list

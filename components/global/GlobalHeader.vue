@@ -82,14 +82,15 @@
     </div>
 
     <login-pop-up v-if="$accessor.global.isLoginPopUpShow"></login-pop-up>
-    <!-- <global-login /> -->
     <search-popup v-if="$accessor.global.isSearchPopup"></search-popup>
+    <ad-pop-up
+      v-if="$accessor.global.isAdPopupShow && this.$route.name === 'index'"
+    ></ad-pop-up>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-
 import getToken from '~/api/token'
 
 type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
