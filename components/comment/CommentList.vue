@@ -50,7 +50,6 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { IchangeParam } from '@/components/operate/Pagination.vue'
 
 import { ICommentList } from '@apiPublic/type'
 
@@ -140,9 +139,7 @@ export default defineComponent({
     /**
      * @description: 页码改变
      */
-    async pageChange(param: IchangeParam) {
-      const { page } = param
-
+    async pageChange(page: number) {
       // 评论列表切换
       // 请求数据 or 直接切换页码
       if (

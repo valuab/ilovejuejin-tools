@@ -38,7 +38,6 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { IProgramListType } from '@apiModules/category'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '@/enums/content'
 import { setSearchHistory } from '@/utils/search'
@@ -215,8 +214,7 @@ export default defineComponent({
     /**
      * @description: 页码改变
      */
-    pageChange(param: IchangeParam) {
-      const { page } = param
+    pageChange(page: number) {
       this.articleList[this.articleIndex].page = page
       this.getArticleList()
     },

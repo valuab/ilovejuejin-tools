@@ -16,18 +16,12 @@
       </cite>
       <aside>
         <div>
-          <p>{{ item.userName }}</p>
-          <p>{{ time }}</p>
+          <span>{{ item.userName }}</span>
+          <span>{{ time }}</span>
         </div>
-        <div>
-          <p v-if="isViewCount">
-            <Icon icon="ListView" size="10"></Icon
-            ><span>{{ item.totalViewCount }}</span>
-          </p>
-          <p>
-            <Icon icon="ListComment" size="10"></Icon
-            ><span>{{ item.commentCount }}</span>
-          </p>
+        <div v-if="isViewCount">
+          <Icon icon="ListView" size="10"></Icon>
+          <span>{{ item.totalViewCount }}</span>
         </div>
       </aside>
     </figcaption>
@@ -175,7 +169,7 @@ export default defineComponent({
       }
 
       & > div:nth-child(1) {
-        p:nth-child(1) {
+        span:nth-child(1) {
           margin-right: 8px;
         }
       }
@@ -183,17 +177,8 @@ export default defineComponent({
       & > div:nth-child(2) {
         color: #999;
 
-        p {
-          display: flex;
-          align-items: center;
-
-          span {
-            margin-left: 5px;
-          }
-        }
-
-        p:nth-child(1) {
-          margin-right: 8px;
+        span {
+          margin-left: 5px;
         }
       }
     }

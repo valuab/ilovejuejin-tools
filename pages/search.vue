@@ -74,7 +74,6 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { IchangeParam } from '@/components/operate/Pagination.vue'
 import { ICommentList } from '@apiPublic/type'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 
@@ -230,10 +229,9 @@ export default defineComponent({
     /**
      * @description: 全部列表页码改变
      */
-    async pageChange(param: IchangeParam) {
+    async pageChange(page: number) {
       // 每页十六条数据
       // 获取数据存在本地变量
-      const { page } = param
 
       // 判断是否是车型
 
@@ -266,9 +264,8 @@ export default defineComponent({
     /**
      * @description: 车型页码改变
      */
-    async typePageChange(param: IchangeParam) {
+    async typePageChange(page: number) {
       // 获取数据存在本地变量
-      const { page } = param
       // 判断搜索状态
       // 请求数据 or 直接切换页码
       if (

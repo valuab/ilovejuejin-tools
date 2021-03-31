@@ -330,7 +330,7 @@ export default defineComponent({
       this.categoryIndex = index
     },
     // 点击分类帖子分组分页
-    async changeCategory(params: { page: number }) {
+    async changeCategory(page: number) {
       const { userId: viewUserId } = this.$accessor.userInfo
       const categoryList = this.categoryList
       const index = this.categoryIndex
@@ -341,14 +341,14 @@ export default defineComponent({
         const categoryItem = await this.$http.home.getListByCategoryId({
           viewUserId,
           categoryId,
-          page: params.page,
+          page,
         })
         this.$set(categoryList[index], 'list', categoryItem.list)
       } else {
         const result = await this.$http.home.getNewList({
           viewUserId,
           type: NEW_LIST_TYPE.ALL_YIELD,
-          page: params.page,
+          page,
         })
         const categoryItem = result as IGetCategoryIdResult['result']
         this.$set(categoryList[index], 'list', categoryItem.list)
