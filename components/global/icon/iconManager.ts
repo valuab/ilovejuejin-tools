@@ -15,6 +15,8 @@ import ListSwitchUnable from '@icons/icon_list_switch_unable.svg'
 import ListSwitchNormal from '@icons/icon_list_switch_normal.svg'
 import ArrowOrange from '@icons/icon_arrow_orange.svg'
 import ArticleListNone from '@icons/icon_none.svg'
+import KolBadgeK from '@icons/icon_kol_badge_k.svg'
+import KolBadgeV from '@icons/icon_kol_badge_V.svg'
 
 /** ****** SHARE START ********/
 import ArticleQR from '@icons/icon_qr.svg'
@@ -84,6 +86,8 @@ export type IconType =
   | 'ArticleLikeGrey'
   | 'ArticleLikeMoment'
   | 'ArticleVideoPaly'
+  | 'KolBadgeK'
+  | 'KolBadgeV'
 
 /**
  * 引入要使用的svg
@@ -128,6 +132,8 @@ const iconManager: Record<IconType, Component> = {
   ArticleLikeGrey,
   ArticleLikeMoment,
   ArticleVideoPaly,
+  KolBadgeK,
+  KolBadgeV,
 }
 
 export default iconManager

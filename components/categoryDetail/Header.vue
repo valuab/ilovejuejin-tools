@@ -2,7 +2,16 @@
   <header class="header-container">
     <div class="header-box">
       <div class="header-left">
-        <a-avatar :src="detail.imgUrl" :size="100"></a-avatar>
+        <div class="header-avatar">
+          <a-avatar :src="detail.imgUrl" :size="100"></a-avatar>
+          <icon
+            v-if="this.$route.name === 'kol-id'"
+            class="avatar-kol"
+            :icon="
+              detail.kol === 1 ? 'KolBadgeK' : kol === 2 ? 'KolBadgeV' : ''
+            "
+          />
+        </div>
         <div class="desc">
           <h1>{{ detail.name }}</h1>
           <p>{{ detail.description }}</p>
@@ -18,6 +27,7 @@ export interface IDetail {
   name: string
   description: string
   imgUrl: string
+  kol?: number
 }
 export default defineComponent({
   name: '',
@@ -46,6 +56,16 @@ export default defineComponent({
     .header-left {
       display: flex;
       align-items: center;
+
+      .header-avatar {
+        position: relative;
+
+        .avatar-kol {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+        }
+      }
 
       .desc {
         margin-left: 20px;

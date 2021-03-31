@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>icon/icon_kol_badge_V</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/icon_kol_badge_V" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="椭圆形" fill="#FFFFFF" cx="10" cy="10" r="10"></circle>
+        <circle id="形状结合" fill="#3CABF4" cx="10" cy="10" r="8"></circle>
+        <polygon id="V" fill="#FFFFFF" fill-rule="nonzero" points="11.122 14.22 14.606 6.862 12.11 6.862 9.614 11.971 8.626 6.862 6 6.862 6.247 7.226 7.625 14.22"></polygon>
+    </g>
+</svg>

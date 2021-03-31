@@ -56,6 +56,7 @@ interface IData {
     name: string
     description: string
     imgUrl: string
+    kol: number
   } // kol详情
   kolId: string // kolId
   recommendList: ITopicListType[] // 王牌推荐俩表
@@ -69,8 +70,9 @@ export default defineComponent({
     // 获取分类详情
     const {
       nickname: name,
-      description,
+      introduction: description,
       smallImageUrl,
+      kol,
     } = await app.$http.kol.getUserInfo({
       userId: Number(route.params.id),
     })
@@ -126,6 +128,7 @@ export default defineComponent({
         name,
         description,
         imgUrl: smallImageUrl,
+        kol,
       },
       kolId: route.params.id,
       recommendList,
@@ -139,6 +142,7 @@ export default defineComponent({
         name: '',
         description: '',
         imgUrl: '',
+        kol: 0,
       },
       kolId: '',
       recommendList: [],

@@ -19,7 +19,7 @@ export const state: () => IRootState = () => ({
     kol: 0,
     smallImageUrl: '',
     nickname: '',
-    description: '',
+    introduction: '',
     isLogin: false,
   },
 })

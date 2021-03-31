@@ -23,7 +23,7 @@ export interface IUserInfoResult extends IApiResult {
     userId: number
     kol: number
     nickname: string
-    description: string
+    introduction: string
     smallImageUrl: string
   }
 }
