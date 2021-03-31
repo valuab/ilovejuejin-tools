@@ -1,14 +1,7 @@
 <template>
   <article :style="{ width: '100%' }" class="container">
     <header class="header-bg">
-      <a v-if="adList[0]" :href="adList[0].url" class="ad1-box">
-        <img
-          :src="adList[0].smallImageUrl || adList[0].smallImage2Url"
-          width="100%"
-          height="120px"
-          alt="ad"
-        />
-      </a>
+      <ad-box v-if="adList[0]" :ad-source="adList[0]" :ad-height="120"></ad-box>
       <div class="header-box">
         <div class="header-left">
           <topic-img :img-url="detail.smallImageUrl"></topic-img>
@@ -21,14 +14,7 @@
           <img src="/qrcode/miniapp/djcars.jpg" />
         </aside>
       </div>
-      <a v-if="adList[1]" :href="adList[1].url" class="ad1-box">
-        <img
-          :src="adList[1].smallImageUrl || adList[1].smallImage2Url"
-          width="100%"
-          height="100px "
-          alt="ad"
-        />
-      </a>
+      <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100"></ad-box>
     </header>
     <div class="main">
       <div
@@ -50,14 +36,7 @@
         class="pagination"
         @change="pageChange"
       ></Pagination>
-      <a v-if="adList[2]" :href="adList[2].url" class="ad1-box">
-        <img
-          :src="adList[2].smallImageUrl || adList[2].smallImage2Url"
-          width="100%"
-          height="100px "
-          alt="ad"
-        />
-      </a>
+      <ad-box v-if="adList[2]" :ad-source="adList[2]" :ad-height="100"></ad-box>
     </div>
   </article>
 </template>
@@ -69,6 +48,7 @@ import { IAdListType, AD_NUMBER_TYPE } from '@apiPublic/modules/adList'
 import { IOpItemResult } from '@apiModules/program'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
+import AdBox from '~/components/display/AdBox.vue'
 
 interface IData {
   id: string
@@ -82,6 +62,7 @@ interface IData {
 }
 
 export default defineComponent({
+  components: { AdBox },
   async asyncData({ app, route }) {
     const detail = await app.$http.program.getOpItem({
       id: route.params.id,
@@ -89,9 +70,10 @@ export default defineComponent({
     const adTopicNames = ['驾值观', '大疯车']
     const adList = []
     if (adTopicNames.includes(detail.name)) {
+      const pageName = detail.name === adTopicNames[0] ? 'jzg' : 'dfc'
       for (let i = 0; i < 3; i++) {
         const ad = await app.$http.adList.getAdList({
-          pageName: detail.name === adTopicNames[0] ? 'jzg' : 'dfc',
+          pageName,
           number: AD_NUMBER_TYPE[i],
         })
         adList.push(ad[0])
@@ -203,13 +185,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .container {
-  .ad1-box {
-    width: 1240px;
-    margin: 0 auto;
-    padding-top: 40px;
-    display: block;
-  }
-
   .header-bg {
     width: 100%;
     background-color: #fff;
