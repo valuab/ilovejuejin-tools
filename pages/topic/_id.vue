@@ -26,7 +26,7 @@
         @radio="onRadio"
       ></radio-and-search>
       <div class="article-list">
-        <article-list :load="listLoad" :list="list"></article-list>
+        <article-list :loading="listLoad" :data-source="list"></article-list>
       </div>
       <Pagination
         v-anchor="'radioAnchor'"

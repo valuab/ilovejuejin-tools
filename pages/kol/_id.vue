@@ -19,8 +19,8 @@
             ></radio-and-search>
             <div class="article-list">
               <article-list
-                :load="articleList[index].listLoad"
-                :list="articleList[index].list || []"
+                :loading="articleList[index].listLoad"
+                :data-source="articleList[index].list || []"
                 class="article-list"
               ></article-list>
             </div>

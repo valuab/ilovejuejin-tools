@@ -1,11 +1,6 @@
 <template>
   <div class="list-container">
-    <a-list
-      :grid="{ gutter: 20, column: 4 }"
-      :loading="load"
-      :data-source="list"
-      :split="false"
-    >
+    <a-list :grid="{ gutter: 20, column: 4 }" v-bind="$attrs" :split="false">
       <a-list-item slot="renderItem" slot-scope="item">
         <article-card :item="item"></article-card>
       </a-list-item>
@@ -20,17 +15,6 @@ export default defineComponent({
   name: 'ArticleList',
   components: {
     ArticleCard,
-  },
-  props: {
-    // 文章当前页列表
-    list: {
-      type: Array,
-      required: true,
-    },
-    load: {
-      type: Boolean,
-      default: false,
-    },
   },
 })
 </script>

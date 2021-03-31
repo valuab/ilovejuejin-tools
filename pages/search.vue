@@ -36,7 +36,7 @@
     <article-list
       v-if="openCarType && typeList[typePage - 1].list.length"
       class="article-list"
-      :list="typeList[0].list"
+      :data-source="typeList[0].list"
     />
     <!-- 全部 -->
     <h2
@@ -48,7 +48,7 @@
     <article-list
       v-if="allList.length && allList[searchAllPage - 1].list.length"
       class="article-list"
-      :list="allList[searchAllPage - 1].list"
+      :data-source="allList[searchAllPage - 1].list"
     />
 
     <!-- 搜索分页 -->

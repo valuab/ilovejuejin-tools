@@ -172,8 +172,8 @@
           :hidden="categoryIndex !== index"
         >
           <article-list
-            :list="categoryColumn.list || []"
-            :load="categoryTabsLoad"
+            :data-source="categoryColumn.list || []"
+            :loading="categoryTabsLoad"
           ></article-list>
           <pagination
             v-anchor="'tabsAnchor'"
