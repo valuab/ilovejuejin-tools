@@ -79,11 +79,12 @@ export default defineComponent({
     }
   },
   fetch() {
+    const domain = process.env.BASE_URL
     const title = this.post.title
     const pathname = this.$route.name || ''
     const origin = this.$route.path
     const search = JSON.stringify(this.$route.query)
-    const weiboUrl = getWeiboUrl(title, pathname, origin, search)
+    const weiboUrl = domain + getWeiboUrl(title, pathname, origin, search)
 
     this.iconList = [
       {

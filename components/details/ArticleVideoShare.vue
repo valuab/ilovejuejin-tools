@@ -17,9 +17,12 @@
           </div>
           <a-popover
             v-else-if="iconItem.codeUrl"
-            placement="right"
+            placement="top"
             :overlay-style="{ width: '80px' }"
           >
+            <template #content>
+              <QRCode :src="iconItem.codeUrl" />
+            </template>
             <div class="icon-wrap">
               <icon :icon="iconItem.icon" size="24"></icon>
             </div>
@@ -35,18 +38,21 @@
         </div>
       </template>
     </div>
-    <div class="skip">
+    <a-popover placement="top" :overlay-style="{ width: '80px' }" class="skip">
+      <template #content>
+        <QRCode src="https://www.baidu.com/" />
+      </template>
       <div class="video-icon">
         <Icon icon="ArticleQR" />
       </div>
-
       <div class="skip-word">手机扫一扫，5秒跳广告</div>
-    </div>
+    </a-popover>
   </aside>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { getWeiboUrl } from '@/utils/share'
 
 export default defineComponent({
   name: 'ArticleSort',
@@ -61,8 +67,19 @@ export default defineComponent({
     },
   },
   emits: ['support'],
-  setup() {
-    const iconList = ref([
+  data() {
+    return {
+      showWechat: false,
+    }
+  },
+  fetch() {
+    const domain = process.env.BASE_URL
+    const title = this.$props.post.title
+    const pathname = this.$route.name || ''
+    const origin = this.$route.path
+    const search = JSON.stringify(this.$route.query)
+    const weiboUrl = domain + getWeiboUrl(title, pathname, origin, search)
+    this.iconList = [
       {
         codeUrl:
           'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
@@ -71,23 +88,15 @@ export default defineComponent({
       {
         icon: 'ArticleLikeMoment',
       },
-      { url: 'https://weibo.com/cheyanlun', icon: 'OptionWeibo' },
-    ])
-    return {
-      iconList,
-    }
-  },
-  data() {
-    return {
-      showWechat: false,
-    }
+      { url: weiboUrl, icon: 'OptionWeibo' },
+    ]
   },
   methods: {
     /**
      * @description: 点赞
      */
     async support() {
-      if (this.$props.post.isSupport) return
+      if (this.post.isSupport) return
       // 判断登录
       if (this.$accessor.userInfo.userId === 0) {
         this.$accessor.global.showLoginPopUpOrHide()
