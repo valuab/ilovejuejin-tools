@@ -1,11 +1,11 @@
 <template>
   <a-pagination
     class="pagination"
-    :default-page-size="16"
-    v-bind="$attrs"
     :item-render="itemRender"
     hide-on-single-page
     show-less-items
+    :default-page-size="16"
+    v-bind="$attrs"
     v-on="$listeners"
   />
 </template>
@@ -14,6 +14,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'Pagination',
+  inheritAttrs: false,
   methods: {
     itemRender(_current: number, type: string, originalElement: any): any {
       if (type === 'prev') {

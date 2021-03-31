@@ -6,10 +6,10 @@ import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
 
 const commentLink = {
-  getNewsCommentList: '/api/comment/getNewsCommentList', // 搜索全部
-  getNewCommentReplyList: '/api/comment/getNewCommentReplyList', // 分类搜索
-  supportComment: '/api/comment/supportComment', // 标签搜索
-  postComment: '/api/comment/postComment', // 主持人搜索
+  getNewsCommentList: '/api/pc/comment/getNewsCommentList', // 搜索全部
+  getNewCommentReplyList: '/api/pc/comment/getNewCommentReplyList', // 分类搜索
+  supportComment: '/api/pc/comment/supportComment', // 标签搜索
+  postComment: '/api/pc/comment/postComment', // 主持人搜索
 }
 
 /**

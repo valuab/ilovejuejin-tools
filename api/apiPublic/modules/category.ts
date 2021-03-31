@@ -8,11 +8,11 @@ import { handleUrlParams } from '~/utils/data'
 import { IArticleItemType } from '~/api/apiPublic/type'
 
 const userLinks = {
-  getOpItemCategory: '/api/category/getOpItemCategory', // 获取分类对象
-  getItemListByCategoryId: '/api/category/getItemListByCategoryId', // 获取分类王牌节目推荐
-  getHostListByCategoryId: '/api/category/getHostListByCategoryId', // 获取分类主持人列表
-  getListByCategoryId: '/api/index/getListByCategoryId',
-  getListByCategoryIdHostUserId: '/api/user/getListByCategoryIdHostUserId', // 获取内容分类帖子列表
+  getOpItemCategory: '/api/pc/category/getOpItemCategory', // 获取分类对象
+  getItemListByCategoryId: '/api/pc/category/getItemListByCategoryId', // 获取分类王牌节目推荐
+  getHostListByCategoryId: '/api/pc/category/getHostListByCategoryId', // 获取分类主持人列表
+  getListByCategoryId: '/api/pc/index/getListByCategoryId',
+  getListByCategoryIdHostUserId: '/api/pc/user/getListByCategoryIdHostUserId', // 获取内容分类帖子列表
 }
 
 interface ICategoryParams {

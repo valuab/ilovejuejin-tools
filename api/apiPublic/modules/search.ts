@@ -7,12 +7,12 @@ import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
 
 const searchLink = {
-  searchAll: '/api/search/searchAll', // 搜索全部
-  searchByItemCategoryId: '/api/search/searchByItemCategoryId', // 分类搜索
-  searchByItemKeywordId: '/api/search/searchByItemKeywordId', // 标签搜索
-  searchByHostUserId: '/api/search/searchByHostUserId', // 主持人搜索
-  searchByCars: '/api/search/searchByCars', // 搜索车型
-  getKolList: '/api/search/getHostList', // 获取王牌节目列表
+  searchAll: '/api/pc/search/searchAll', // 搜索全部
+  searchByItemCategoryId: '/api/pc/search/searchByItemCategoryId', // 分类搜索
+  searchByItemKeywordId: '/api/pc/search/searchByItemKeywordId', // 标签搜索
+  searchByHostUserId: '/api/pc/search/searchByHostUserId', // 主持人搜索
+  searchByCars: '/api/pc/search/searchByCars', // 搜索车型
+  getKolList: '/api/pc/search/getHostList', // 获取王牌节目列表
 }
 
 /**

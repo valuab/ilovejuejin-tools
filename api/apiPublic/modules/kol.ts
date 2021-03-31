@@ -8,11 +8,11 @@ import { handleUrlParams } from '~/utils/data'
 import { IArticleItemType } from '~/api/apiPublic/type'
 
 const userLinks = {
-  getUsrInfo: '/api/user/getUsrInfo', // 获取单个用户对象
-  getItemListByHostUserId: '/api/user/getItemListByHostUserId', // 获取王牌节目推荐
-  getListByHostUserId: '/api/user/getListByHostUserId', // 获取KOL内容分类列表
-  getNewListByHostUserId: '/api/post/getNewListByHostUserId', // 获取KOL内容分类列表
-  getListByCategoryIdHostUserId: '/api/user/getListByCategoryIdHostUserId', // 获取内容分类帖子列表
+  getUsrInfo: '/api/pc/user/getUsrInfo', // 获取单个用户对象
+  getItemListByHostUserId: '/api/pc/user/getItemListByHostUserId', // 获取王牌节目推荐
+  getListByHostUserId: '/api/pc/user/getListByHostUserId', // 获取KOL内容分类列表
+  getNewListByHostUserId: '/api/pc/post/getNewListByHostUserId', // 获取KOL内容分类列表
+  getListByCategoryIdHostUserId: '/api/pc/user/getListByCategoryIdHostUserId', // 获取内容分类帖子列表
 }
 
 interface IUserInfoParams {

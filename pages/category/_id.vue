@@ -42,7 +42,6 @@ import { IProgramListType } from '@apiModules/category'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '@/enums/content'
 import { setSearchHistory } from '@/utils/search'
 import { IArticleList } from '@/api/apiPublic/type'
-import GlobalEmpty from '~/components/global/GlobalEmpty.vue'
 
 interface IUserTabs {
   title: string
@@ -64,7 +63,6 @@ interface IData {
 }
 
 export default defineComponent({
-  components: { GlobalEmpty },
   async asyncData({ app, route }) {
     // 获取分类详情
     const {

@@ -9,13 +9,10 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import ArticleCard from './ArticleCard.vue'
 
 export default defineComponent({
   name: 'ArticleList',
-  components: {
-    ArticleCard,
-  },
+  inheritAttrs: false,
 })
 </script>
 <style lang="scss" scoped>

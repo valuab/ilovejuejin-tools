@@ -111,11 +111,11 @@ export default {
 
   // cross domain
   proxy: {
-    '/api/': {
+    '/api': {
       target: process.env.BASE_URL,
       changeOrigin: true,
       pathRewrite: {
-        '^/api/': 'pc/',
+        '^/api': '',
       },
     },
   },

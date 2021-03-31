@@ -8,10 +8,10 @@ import { handleUrlParams } from '~/utils/data'
 import { IArticleItemType } from '~/api/apiPublic/type'
 
 const postLinks = {
-  getPost: '/api/post/getPost', // 帖子对象
-  getNewListByHostUserId: '/api/post/getNewListByHostUserId', // 最近发表
-  updateViewCountForAsync: '/api/post/updateViewCountForAsync', // 帖子浏览量更新
-  supportPost: '/api/post/supportPost', // 帖子点赞
+  getPost: '/api/pc/post/getPost', // 帖子对象
+  getNewListByHostUserId: '/api/pc/post/getNewListByHostUserId', // 最近发表
+  updateViewCountForAsync: '/api/pc/post/updateViewCountForAsync', // 帖子浏览量更新
+  supportPost: '/api/pc/post/supportPost', // 帖子点赞
 }
 
 /**

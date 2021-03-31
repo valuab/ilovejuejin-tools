@@ -26,6 +26,7 @@
             </div>
             <pagination
               v-anchor="'tabsAnchor'"
+              :current="articleList[index].page"
               :total="articleList[index].total"
               class="pagination"
               @change="pageChange"

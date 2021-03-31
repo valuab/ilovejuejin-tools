@@ -9,13 +9,13 @@ import { handleUrlParams } from '~/utils/data'
 import { IArticleItemType } from '~/api/apiPublic/type'
 
 export const homeLinks = {
-  getCommendList: '/api/index/getCommendList', // 获取王牌节目
-  getOpItemCategory: '/api/index/getOpItemCategory', // 获取内容分类
-  getKolList: '/api/index/getKolList', // 获取大咖列表
-  getNewList: '/api/index/getNewList', // 获取最新推荐或全部出品
-  getRecommendList: '/api/index/getRecommendList', // 获取精选王牌节目
-  getGuessYouLikeList: '/api/index/getGuessYouLikeList', // 获取猜你喜欢
-  getListByCategoryId: '/api/index/getListByCategoryId', // 获取分类帖子
+  getCommendList: '/api/pc/index/getCommendList', // 获取王牌节目
+  getOpItemCategory: '/api/pc/index/getOpItemCategory', // 获取内容分类
+  getKolList: '/api/pc/index/getKolList', // 获取大咖列表
+  getNewList: '/api/pc/index/getNewList', // 获取最新推荐或全部出品
+  getRecommendList: '/api/pc/index/getRecommendList', // 获取精选王牌节目
+  getGuessYouLikeList: '/api/pc/index/getGuessYouLikeList', // 获取猜你喜欢
+  getListByCategoryId: '/api/pc/index/getListByCategoryId', // 获取分类帖子
 }
 
 export interface ILayoutListData {

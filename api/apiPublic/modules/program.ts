@@ -8,9 +8,9 @@ import { handleUrlParams } from '~/utils/data'
 import { IArticleItemType } from '~/api/apiPublic/type'
 
 const topicLink = {
-  getCommendItemList: '/api/item/getCommendItemList', // 获取王牌节目列表
-  getOpItem: '/api/item/getOpItem', // 获取单个节目对象
-  getListByItemId: '/api/item/getListByItemId', // 获取节目帖子列表
+  getCommendItemList: '/api/pc/item/getCommendItemList', // 获取王牌节目列表
+  getOpItem: '/api/pc/item/getOpItem', // 获取单个节目对象
+  getListByItemId: '/api/pc/item/getListByItemId', // 获取节目帖子列表
 }
 
 export interface ICommendListParams {

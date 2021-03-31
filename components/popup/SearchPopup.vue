@@ -31,7 +31,7 @@
             :span="6"
             @click="navKolDetail(item.userId)"
           >
-            <search-KOL class="kol" :item="item"></search-KOL>
+            <search-kol class="kol" :item="item"></search-kol>
           </a-col>
         </a-row>
       </div>
@@ -45,9 +45,6 @@ import {
   setSearchHistory,
   deleteHistory,
 } from '@/utils/search'
-import SearchInput from '@/components/search/SearchInput.vue'
-import SearchKOL from '@/components/search/SearchKOL.vue'
-import PopupMask from './PopupMask.vue'
 
 interface IDataType {
   history: Array<string>
@@ -55,11 +52,6 @@ interface IDataType {
 
 export default defineComponent({
   name: 'SearchPopup',
-  components: {
-    SearchInput,
-    SearchKOL,
-    PopupMask,
-  },
   emits: ['showSearch'],
   data(): IDataType {
     return {

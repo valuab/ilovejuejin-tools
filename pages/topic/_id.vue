@@ -1,6 +1,14 @@
 <template>
   <article :style="{ width: '100%' }" class="container">
     <header class="header-bg">
+      <a v-if="adList[0]" :href="adList[0].url" class="ad1-box">
+        <img
+          :src="adList[0].smallImageUrl || adList[0].smallImage2Url"
+          width="100%"
+          height="120px"
+          alt="ad"
+        />
+      </a>
       <div class="header-box">
         <div class="header-left">
           <topic-img :img-url="detail.smallImageUrl"></topic-img>
@@ -13,6 +21,14 @@
           <img src="/qrcode/miniapp/djcars.jpg" />
         </aside>
       </div>
+      <a v-if="adList[1]" :href="adList[1].url" class="ad1-box">
+        <img
+          :src="adList[1].smallImageUrl || adList[1].smallImage2Url"
+          width="100%"
+          height="100px "
+          alt="ad"
+        />
+      </a>
     </header>
     <div class="main">
       <div
@@ -34,6 +50,14 @@
         class="pagination"
         @change="pageChange"
       ></Pagination>
+      <a v-if="adList[2]" :href="adList[2].url" class="ad1-box">
+        <img
+          :src="adList[2].smallImageUrl || adList[2].smallImage2Url"
+          width="100%"
+          height="100px "
+          alt="ad"
+        />
+      </a>
     </div>
   </article>
 </template>
@@ -41,6 +65,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 import { IArticleItemType } from '@/api/apiPublic/type'
+import { IAdListType, AD_NUMBER_TYPE } from '@apiPublic/modules/adList'
 import { IOpItemResult } from '@apiModules/program'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
@@ -53,6 +78,7 @@ interface IData {
   total: number
   typeId: number | string
   page: number
+  adList: Array<IAdListType>
 }
 
 export default defineComponent({
@@ -60,6 +86,17 @@ export default defineComponent({
     const detail = await app.$http.program.getOpItem({
       id: route.params.id,
     })
+    const adTopicNames = ['驾值观', '大疯车']
+    const adList = []
+    if (adTopicNames.includes(detail.name)) {
+      for (let i = 0; i < 3; i++) {
+        const ad = await app.$http.adList.getAdList({
+          pageName: detail.name === adTopicNames[0] ? 'jzg' : 'dfc',
+          number: AD_NUMBER_TYPE[i],
+        })
+        adList.push(ad[0])
+      }
+    }
     const { list, total } = await app.$http.program.getListByItemId({
       page: 1,
       itemId: route.params.id,
@@ -71,6 +108,7 @@ export default defineComponent({
       list,
       total,
       listLoad: false,
+      adList,
     }
   },
   data(): IData {
@@ -86,6 +124,7 @@ export default defineComponent({
       total: 0, // 总数
       typeId: '', // 单选id
       page: 1, // 页码
+      adList: [],
     }
   },
   head() {
@@ -164,6 +203,13 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .container {
+  .ad1-box {
+    width: 1240px;
+    margin: 0 auto;
+    padding-top: 40px;
+    display: block;
+  }
+
   .header-bg {
     width: 100%;
     background-color: #fff;

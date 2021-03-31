@@ -12,7 +12,7 @@ import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import { IKolListType } from '@apiModules/search'
 
 export default defineComponent({
-  name: 'SearchKOL',
+  name: 'SearchKol',
   props: {
     item: {
       type: Object as PropType<IKolListType>,

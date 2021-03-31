@@ -5,7 +5,7 @@ Vue.directive('anchor', {
     el.onclick = function () {
       if (binding.value) {
         const vnode = document.getElementById(binding.value) as HTMLElement
-        document.documentElement.scrollTop = vnode.offsetTop
+        document.documentElement.scrollTop = vnode?.offsetTop || 0
       }
     }
   },

@@ -7,10 +7,10 @@ import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
 
 export const globalLinks = {
-  getAppVersionList: '/api/feedback/getAppVersionList', // 获取app版本列表
-  getFeedbackCategory: '/api/feedback/getFeedbackCategory', // 获取反馈类型列表
-  createForSite: '/api/feedback/createForSite', // 保存反馈
-  getVerifyImg: '/api/feedback/show', // 获取随机图
+  getAppVersionList: '/api/pc/feedback/getAppVersionList', // 获取app版本列表
+  getFeedbackCategory: '/api/pc/feedback/getFeedbackCategory', // 获取反馈类型列表
+  createForSite: '/api/pc/feedback/createForSite', // 保存反馈
+  getVerifyImg: '/api/pc/feedback/show', // 获取随机图
 }
 
 interface ICreateParams {
