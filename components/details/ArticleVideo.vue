@@ -1,11 +1,13 @@
 <template>
   <div class="ArticleVideo">
     <iframe
-      v-if="post.qqVid"
+      v-if="qqVid"
       frameborder="0"
-      :src="videoUrl"
+      :src="url"
       allowFullScreen="true"
       class="video"
+      width="100%"
+      height="100%"
     ></iframe>
     <video v-else :src="videoUrl" class="video" controls="controls"></video>
     <ArticleVideoShare :post="post" />
@@ -36,6 +38,36 @@ export default defineComponent({
         return ''
       },
     },
+    // 是否是腾讯视频
+    qqVid: {
+      type: String,
+      default: () => {
+        return ''
+      },
+    },
+  },
+  data() {
+    return {
+      url: this.$props.videoUrl,
+    }
+  },
+  fetch() {
+    let videoUrl = ''
+    // 处理video链接
+    if (
+      this.$props.videoUrl.includes('https://v.qq.com/iframe/preview.html?vid')
+    ) {
+      const newVideoUrl = this.$props.videoUrl.split(
+        'https://v.qq.com/iframe/preview.html?vid'
+      )
+      videoUrl = 'https://v.qq.com/txp/iframe/player.html?vid' + newVideoUrl[1]
+      this.url = videoUrl
+      // console.log(newVideoUrl)
+    } else if (this.$props.videoUrl.includes('https://v.qq.com')) {
+      const newVideoUrl = this.$props.videoUrl.split('https://v.qq.com')
+      videoUrl = 'https://v.qq.com/txp' + newVideoUrl[1]
+      this.url = videoUrl
+    }
   },
   methods: {
     seeDatails() {
@@ -53,6 +85,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .video {
   width: 100%;
+  height: calc(780px * 0.5625);
   max-height: 500px;
 }
 

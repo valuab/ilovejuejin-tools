@@ -14,6 +14,7 @@
         v-if="article && query.videoType"
         :post="article"
         :video-url="query.videoUrl"
+        :qq-vid="query.qqVid"
       />
       <!-- 文章内容组件 -->
       <!-- 文字段落 -->
@@ -37,6 +38,14 @@
         <!-- 视频展示    -->
         <aside v-if="item.videoId !== 0" class="video" @click="playVideo(item)">
           <img class="video-poster" :src="item.smallShowImageUrl" />
+          <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
+        </aside>
+        <!-- 腾讯视频展示 -->
+        <aside v-else-if="item.qqVid" class="video" @click="playVideo(item)">
+          <img
+            class="video-poster"
+            :src="item.smallShowImageUrl || article.smallImageUrl"
+          />
           <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
         </aside>
       </div>
@@ -69,6 +78,7 @@ import { mid } from '@/assets/ts/mid'
 interface IStepList {
   qqVid: string
   realVideoUrl: string
+  url: string
 }
 
 export default defineComponent({
@@ -101,7 +111,6 @@ export default defineComponent({
     }
   },
   fetch() {
-    console.log(this.$props.query)
     // 更新浏览量
     const { id, forumId } = this.article
     this.$http.posts.updateViewCountForAsync({
@@ -183,13 +192,16 @@ export default defineComponent({
     },
     /**
      * @description: 视频播放
+     * @param item 数据
      */
     playVideo(item: IStepList) {
       const id = this.$props.posts.id || this.$props.posts.postId
       const forumId = this.$props.posts.forumId
       const videoType = true
       const { href } = this.$router.resolve({
-        path: `/videoDetails?id=${id}&forumId=${forumId}&videoUrl=${item.realVideoUrl}&videoType=${videoType}`,
+        path: `/videoDetails?id=${id}&forumId=${forumId}&videoUrl=${
+          item.realVideoUrl || item.url
+        }&videoType=${videoType}&qqVid=${item.qqVid}`,
       })
       window.open(href, '_blank')
     },

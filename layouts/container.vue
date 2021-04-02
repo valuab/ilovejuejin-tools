@@ -48,6 +48,7 @@ export default defineComponent({
   }
 
   .content-wrap {
+    background: #fff !important;
     @include flex(column, space-between, center);
 
     .root-footer {

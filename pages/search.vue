@@ -489,7 +489,6 @@ export default defineComponent({
     padding-left: 10px;
 
     @extend .flex-row-vertical-center;
-
     @include text($font-size-base, #666);
     @include hoverColor(#333);
   }
@@ -497,5 +496,6 @@ export default defineComponent({
 
 .article-list {
   margin-left: 20px;
+  max-width: 1280px !important;
 }
 </style>

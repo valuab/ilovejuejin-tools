@@ -173,9 +173,6 @@ export default defineComponent({
       for (const i in this.newsCommentList[this.commentPage].list) {
         const { id }: any = this.newsCommentList[this.commentPage].list[i]
         if (comment.parentId === id) {
-          // 造作
-          // console.log(comment)
-          // console.log(this.newsCommentList[this.commentPage].list[i])
           const { newCommentReplyList }: any = this.newsCommentList[
             this.commentPage
           ].list[i]
