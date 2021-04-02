@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <ad-box v-if="adList[0]" :ad-source="adList[0]" :ad-height="120"></ad-box>
     <!-- 栏目一 START -->
     <a-row type="flex" :gutter="20">
       <a-col :span="12">
@@ -75,6 +76,7 @@
       </a-col>
     </a-row>
     <!-- 栏目一 END -->
+    <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100"></ad-box>
     <!-- 栏目二 START -->
     <a-row type="flex" :gutter="40">
       <a-col flex="1">
@@ -159,6 +161,7 @@
       </a-col>
     </a-row>
     <!-- 栏目二 END -->
+    <ad-box v-if="adList[2]" :ad-source="adList[2]" :ad-height="100"></ad-box>
     <!-- tabs START -->
     <tabs
       id="tabsAnchor"
@@ -185,11 +188,13 @@
       </template>
     </tabs>
     <!-- tabs END -->
+    <ad-box v-if="adList[3]" :ad-source="adList[3]" :ad-height="100"></ad-box>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { AD_NUMBER_TYPE, IAdListType } from '@apiModules/adList'
 import { NEW_LIST_TYPE } from '~/enums/content'
 import { ToggleType } from '~/components/operate/Toggle.vue'
 import {
@@ -247,11 +252,21 @@ export default defineComponent({
 
     categoryList[0] = yieldListData
 
+    const adList = []
+    for (let i = 1; i < 5; i++) {
+      const ad = await app.$http.adList.getAdList({
+        pageName: 'index',
+        number: AD_NUMBER_TYPE[i],
+      })
+      adList.push(ad[0])
+    }
+
     return {
       newList: newListData.list, // 最新推荐
       recommendList: recommendList.slice(0, 2), // 王牌节目
       guessYouLikeList, // 猜你喜欢
       categoryList,
+      adList,
     }
   },
   data() {
@@ -260,6 +275,7 @@ export default defineComponent({
       recommendList: [] as IRecommendListData[],
       guessYouLikeList: [] as IGuessYouLikeItem[],
       categoryList: [] as IGetCategoryIdResult['result'][],
+      adList: [] as IAdListType[],
       categoryIndex: 0,
       likeListLoad: false,
       categoryTabsLoad: false,

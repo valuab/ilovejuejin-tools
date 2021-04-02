@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a :href="adData.url">
+    <a target="_blank" :href="adData.url">
       <img :src="adData.smallImageUrl || adData.smallImage2Url" alt="ad" />
     </a>
     <span @click="hidePopUp">×</span>
@@ -39,7 +39,6 @@ export default defineComponent({
   top: 0;
   left: 50%;
   margin-left: -500px;
-  background-color: $primary-color;
   animation: aniTranslate 1s 2s;
   transform: translateY(-600px);
   animation-fill-mode: forwards;

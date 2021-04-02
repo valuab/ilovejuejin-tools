@@ -67,6 +67,8 @@ export default defineComponent({
     const detail = await app.$http.program.getOpItem({
       id: route.params.id,
     })
+
+    // 获取广告
     const adTopicNames = ['驾值观', '大疯车']
     const adList = []
     if (adTopicNames.includes(detail.name)) {
@@ -79,6 +81,7 @@ export default defineComponent({
         adList.push(ad[0])
       }
     }
+
     const { list, total } = await app.$http.program.getListByItemId({
       page: 1,
       itemId: route.params.id,
