@@ -1,6 +1,6 @@
 <template>
   <!-- 居中 -->
-  <Article :posts="post" />
+  <Article :posts="post" :query="query" />
 </template>
 
 <script lang="ts">
@@ -12,6 +12,8 @@ interface IData {
   query: {
     id: String
     forumId: String
+    videoType?: Boolean
+    videoUrl?: String
   }
 }
 
@@ -46,25 +48,6 @@ export default defineComponent({
         forumId: '',
       },
     }
-  },
-  methods: {
-    /**
-     * @description: 点赞
-     */
-    supportPost() {
-      const { query } = this
-      return this.$http.posts.supportPost({
-        postId: query.id,
-        forumId: Number(query.forumId),
-      })
-    },
-    updateViewCountForAsync() {
-      const { query } = this
-      return this.$http.posts.updateViewCountForAsync({
-        id: query.id,
-        forumId: Number(query.forumId),
-      })
-    },
   },
 })
 </script>

@@ -77,9 +77,24 @@ export default defineComponent({
      * @param forumId 帖子forumId
      */
     navDetail(id: string, forumId: number) {
-      const history = this.$router.resolve(
-        `/details?id=${id}&forumId=${forumId}`
-      )
+      // 判断视频数量 videoNum === 1 跳转视频详情
+      const { videoNum } = this.$props.item
+      console.log(this.$props.item)
+      let history
+      console.log(videoNum)
+      if (videoNum === 1) {
+        let videoUrl = ''
+        for (const i in this.$props.item.stepList) {
+          if (this.$props.item.stepList[i].showVideoUrl) {
+            videoUrl = this.$props.item.stepList[i].showVideoUrl
+          }
+        }
+        history = this.$router.resolve(
+          `/videoDetails?id=${id}&forumId=${forumId}&videoType=${true}&videoUrl=${videoUrl}`
+        )
+      } else {
+        history = this.$router.resolve(`/details?id=${id}&forumId=${forumId}`)
+      }
       window.open(history.href, '_blank')
     },
   },

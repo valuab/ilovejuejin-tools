@@ -79,12 +79,13 @@ export default defineComponent({
     }
   },
   fetch() {
-    const domain = process.env.BASE_URL
     const title = this.post.title
-    const pathname = this.$route.name || ''
-    const origin = this.$route.path
-    const search = JSON.stringify(this.$route.query)
-    const weiboUrl = domain + getWeiboUrl(title, pathname, origin, search)
+    const pathname = this.$route.name || '' // string 页面名
+    const origin = this.$route.path // string 域名
+    const search = JSON.stringify(this.$route.query) // string 参数
+    const domain = process.env.BASE_URL + origin
+    const link = `${domain}/share/${pathname}?search=${search}` // 当前页面链接
+    const weiboUrl = getWeiboUrl(title, link)
 
     this.iconList = [
       {
@@ -94,13 +95,12 @@ export default defineComponent({
       },
       {
         icon: 'OptionWechat',
-        codeUrl:
-          'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
+        codeUrl: link,
         url: '',
       },
       {
         icon: 'ArticleLikeMoment',
-        codeUrl: '',
+        codeUrl: link,
         url: '',
       },
       {

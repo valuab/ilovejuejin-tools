@@ -48,25 +48,6 @@ export default defineComponent({
       },
     }
   },
-  methods: {
-    /**
-     * @description: 点赞
-     */
-    supportPost() {
-      const { query } = this
-      return this.$http.posts.supportPost({
-        postId: query.id,
-        forumId: Number(query.forumId),
-      })
-    },
-    updateViewCountForAsync() {
-      const { query } = this
-      return this.$http.posts.updateViewCountForAsync({
-        id: query.id,
-        forumId: Number(query.forumId),
-      })
-    },
-  },
 })
 </script>
 

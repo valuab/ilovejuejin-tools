@@ -2,21 +2,17 @@
   <aside class="video-share">
     <div class="support" @click="support">
       <div class="video-icon">
-        <Icon v-if="post.isSupport" icon="ArticleLikeOrange" />
+        <Icon v-if="post.isSupport" icon="ArticleLikeOrange" size="24" />
         <Icon v-else icon="ArticleLikeGrey" />
       </div>
       <div class="support-num">{{ post.supportCount }}</div>
     </div>
     <div class="share">
       <div class="share-word">分享到：</div>
-      <template v-for="(iconItem, index) in iconList">
+      <template v-for="iconItem in iconList">
         <div :key="iconItem.icon" class="video-icon">
-          <div v-if="index === 0" class="support" @click="support">
-            <icon :icon="iconItem.icon" size="24"></icon>
-            <div v-if="index === 0" class="num">{{ post.supportCount }}</div>
-          </div>
           <a-popover
-            v-else-if="iconItem.codeUrl"
+            v-if="iconItem.codeUrl"
             placement="top"
             :overlay-style="{ width: '80px' }"
           >
@@ -73,19 +69,21 @@ export default defineComponent({
     }
   },
   fetch() {
-    const domain = process.env.BASE_URL
-    const title = this.$props.post.title
-    const pathname = this.$route.name || ''
-    const origin = this.$route.path
-    const search = JSON.stringify(this.$route.query)
-    const weiboUrl = domain + getWeiboUrl(title, pathname, origin, search)
+    const title = this.post.title
+    const pathname = this.$route.name || '' // string 页面名
+    const origin = this.$route.path // string 域名
+    const search = JSON.stringify(this.$route.query) // string 参数
+    const domain = process.env.BASE_URL + origin
+    const link = `${domain}/share/${pathname}?search=${search}` // 当前页面链接
+    const weiboUrl = getWeiboUrl(title, link)
+
     this.iconList = [
       {
-        codeUrl:
-          'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
+        codeUrl: link,
         icon: 'OptionWechat',
       },
       {
+        codeUrl: link,
         icon: 'ArticleLikeMoment',
       },
       { url: weiboUrl, icon: 'OptionWeibo' },

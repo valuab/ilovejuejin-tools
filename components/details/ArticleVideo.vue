@@ -14,7 +14,7 @@
         item.content
       }}</span>
     </p>
-    <p class="videoSee" @click="seeDatails">查看内容详情 ></p>
+    <a class="videoSee" @click="seeDatails">查看内容详情 ></a>
   </div>
 </template>
 
@@ -37,10 +37,15 @@ export default defineComponent({
       },
     },
   },
-  emits: ['seeDatails'],
   methods: {
     seeDatails() {
-      this.$emit('seeDatails')
+      // 跳转文章详情
+      const id = this.$props.post.id || this.$props.post.postId
+      const forumId = this.$props.post.forumId
+      const { href } = this.$router.resolve({
+        path: `/details?id=${id}&forumId=${forumId}`,
+      })
+      window.open(href, '_blank')
     },
   },
 })
@@ -48,10 +53,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 .video {
   width: 100%;
-  height: 500px;
+  max-height: 500px;
 }
 
 .videoWord {
+  line-height: 32px;
   @include text-multi(2);
 }
 

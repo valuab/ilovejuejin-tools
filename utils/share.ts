@@ -6,14 +6,7 @@
  * @param search string 参数
  * @param pic string 图片链接
  */
-export const getWeiboUrl = (
-  title: string,
-  pathname: string,
-  origin: string,
-  search: string,
-  pic?: string
-) => {
-  const link = `${origin}/share/${pathname}?search=${search}`
+export const getWeiboUrl = (title: string, link: string, pic?: string) => {
   if (pic) {
     return `http://v.t.sina.com.cn/share/share.php?url=${link}&title=${title}&content=utf-8&pic=${pic}&appkey=1589128892`
   } else {

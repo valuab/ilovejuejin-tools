@@ -3,6 +3,12 @@
  */
 import { POST_RADIO_TYPE } from '~/enums/content'
 
+// 文章详情
+export interface IStepList {
+  id: number
+  forumId: number
+  showVideoUrl: string
+}
 // 文章栏目类型
 export interface IArticleItemType {
   postId: string
@@ -15,6 +21,8 @@ export interface IArticleItemType {
   publishTime: string
   totalViewCount?: number
   commentCount?: number
+  videoNum?: number
+  stepList: Array<IStepList>
 }
 
 // 分类&kol文章列表

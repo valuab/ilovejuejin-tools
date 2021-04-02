@@ -35,8 +35,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .header {
-  margin-bottom: 40px;
-
   .title {
     margin-bottom: 10px;
     font-size: 40px;

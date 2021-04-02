@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-container">
+  <div id="tabsAnchor" class="menu-container">
     <!-- 输入组件 -->
     <div class="search-content">
       <SearchInput
@@ -56,17 +56,19 @@
       v-if="!openCarType && allList.length && allList[0].list.length"
       v-anchor="'tabsAnchor'"
       :total="allList[searchAllPage - 1].total"
+      :current="allList[searchAllPage - 1].page"
       class="pagination"
       @change="pageChange"
-    ></Pagination>
+    />
     <!-- 车型搜索分页 -->
     <Pagination
       v-if="openCarType && typeList.length && typeList[0].list.length"
       v-anchor="'tabsAnchor'"
       :total="typeList[typePage - 1].total"
+      :current="typeList[typePage - 1].page"
       class="pagination"
       @change="typePageChange"
-    ></Pagination>
+    />
     <!-- 需要添加异步 -->
     <SearchError v-if="!typeList.length && !allList[0].list.length" />
   </div>

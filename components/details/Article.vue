@@ -1,26 +1,25 @@
 <template>
   <aside class="article-body">
     <!-- 分享挂件 -->
-    <div v-if="!videoType" class="article-share">
+    <div v-if="!query.videoTyp" class="article-share">
       <ArticleShare :post="article" />
     </div>
     <article
       class="article"
-      :class="videoType ? 'article-video-width' : 'article-width'"
+      :class="query.videoTyp ? 'article-video-width' : 'article-width'"
     >
       <ArticleHeader :post="article" />
       <!-- 视频组件 -->
       <ArticleVideo
-        v-if="article && videoType"
+        v-if="article && query.videoType"
         :post="article"
-        :video-url="videoUrl"
-        @seeDatails="seeDatails"
+        :video-url="query.videoUrl"
       />
       <!-- 文章内容组件 -->
       <!-- 文字段落 -->
       <div
         v-for="item in article.stepList"
-        v-show="!videoType"
+        v-show="!query.videoType"
         :key="item.id"
         class="article"
         :class="!item.content && !item.smallShowImageUrl ? 'article-none' : ''"
@@ -33,6 +32,7 @@
           v-if="item.videoId === 0"
           class="poster"
           :src="item.smallShowImageUrl"
+          :class="!item.smallShowImageUrl ? 'article-none' : ''"
         />
         <!-- 视频展示    -->
         <aside v-if="item.videoId !== 0" class="video" @click="playVideo(item)">
@@ -81,13 +81,12 @@ export default defineComponent({
         return {}
       },
     },
-    // 是否切入视频页
-    // videoType: {
-    //   type: Boolean,
-    //   default: () => {
-    //     return false
-    //   },
-    // },
+    query: {
+      type: Object,
+      default: () => {
+        return {}
+      },
+    },
   },
   data() {
     return {
@@ -98,12 +97,11 @@ export default defineComponent({
         time: '',
         content: '',
       },
-      videoUrl: '', // 视频链接
-      videoType: false, // 切换视频
       commentValue: '', // 输入清除
     }
   },
   fetch() {
+    console.log(this.$props.query)
     // 更新浏览量
     const { id, forumId } = this.article
     this.$http.posts.updateViewCountForAsync({
@@ -122,13 +120,6 @@ export default defineComponent({
     },
   },
   methods: {
-    /**
-     * @description: 视频播放
-     */
-    playVideo(item: IStepList) {
-      this.videoType = true
-      this.videoUrl = item.realVideoUrl
-    },
     /**
      * @description: send
      */
@@ -191,10 +182,16 @@ export default defineComponent({
       })
     },
     /**
-     * @description: 查看详情
+     * @description: 视频播放
      */
-    seeDatails() {
-      this.videoType = false
+    playVideo(item: IStepList) {
+      const id = this.$props.posts.id || this.$props.posts.postId
+      const forumId = this.$props.posts.forumId
+      const videoType = true
+      const { href } = this.$router.resolve({
+        path: `/videoDetails?id=${id}&forumId=${forumId}&videoUrl=${item.realVideoUrl}&videoType=${videoType}`,
+      })
+      window.open(href, '_blank')
     },
     /**
      * @description: 点赞
@@ -212,9 +209,6 @@ export default defineComponent({
   padding: 60px 0 0 0;
 }
 
-.article-none {
-  margin-bottom: 0;
-}
 .article-width {
   width: 780px;
 }
@@ -269,5 +263,9 @@ export default defineComponent({
 .article-share {
   margin-top: 124px;
   margin-right: 45px;
+}
+
+.article-none {
+  margin-bottom: 0;
 }
 </style>
