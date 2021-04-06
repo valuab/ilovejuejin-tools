@@ -20,7 +20,7 @@
           <span>{{ time }}</span>
         </div>
         <div v-if="isViewCount">
-          <Icon icon="ListView" size="10"></Icon>
+          <Icon icon="ListView" :size="12" />
           <span>{{ item.totalViewCount }}</span>
         </div>
       </aside>
@@ -79,7 +79,6 @@ export default defineComponent({
     navDetail(id: string, forumId: number) {
       // 判断视频数量 videoNum === 1 跳转视频详情
       const { videoNum } = this.$props.item
-      console.log(this.$props.item)
       let history
       if (videoNum === 1) {
         let videoUrl = ''

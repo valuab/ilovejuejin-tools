@@ -13,15 +13,15 @@
       <div class="post-msg-text">
         <div class="post-msg-text-name">{{ item.title }}</div>
         <div class="post-msg-text-data">
-          <div class="post-msg-text-data-time">{{ time }}</div>
+          <div class="post-msg-text-data-time">{{ item.time }}</div>
 
           <div v-if="isViewCount" class="post-msg-text-data-num">
-            <Icon icon="ListView" size="12"></Icon>
+            <Icon icon="ListView" :size="12" />
             <span>{{ item.totalViewCount }}</span>
           </div>
 
           <div class="post-msg-text-data-num">
-            <Icon icon="ListComment" size="12"></Icon>
+            <Icon icon="ListComment" :size="12" />
             <span>{{ item.commentCount }}</span>
           </div>
         </div>
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { handleTime } from '@/utils/data'
 
 interface IData {
@@ -49,6 +49,7 @@ interface IData {
   page: number
   list: any[]
   show: boolean
+  isViewCount: boolean
 }
 
 export default defineComponent({
@@ -62,21 +63,6 @@ export default defineComponent({
       },
     },
   },
-  setup(props) {
-    const { post } = toRefs(props)
-    const isViewCount = ref(true) // 阅读数展示
-
-    const date = post.value.publishTime.replace(/-/g, '/')
-    const postTimeStamp = new Date(date).getTime()
-    const time: string = handleTime(postTimeStamp)
-    isViewCount.value =
-      new Date().getTime() - postTimeStamp >= 24 * 60 * 60 * 1000
-
-    return {
-      time,
-      isViewCount,
-    }
-  },
   data(): IData {
     return {
       newListByHostUserId: {
@@ -86,6 +72,7 @@ export default defineComponent({
       page: 1, // 页码
       list: [],
       show: true,
+      isViewCount: true, // 阅读数展示
     }
   },
   async fetch() {
@@ -110,6 +97,17 @@ export default defineComponent({
         newListByHostUserId.list
       )
     }
+
+    // 处理列表阅读数
+    this.newListByHostUserId.list.forEach((val) => {
+      const date = val.publishTime.replace(/-/g, '/')
+      const postTimeStamp = new Date(date).getTime()
+      val.time = handleTime(postTimeStamp)
+      val.isViewCount =
+        new Date().getTime() - postTimeStamp >= 24 * 60 * 60 * 1000
+
+      return val
+    })
   },
   computed: {
     article(): any {

@@ -10,7 +10,7 @@
       <div class="subs-msg-img">
         <img :src="item.smallImageUrl" alt="" />
         <div v-if="item.kol" class="icon">
-          <Icon icon="NavKol" size="24" />
+          <Icon icon="NavKol" :size="12" />
         </div>
       </div>
       <div class="subs-msg-text">
