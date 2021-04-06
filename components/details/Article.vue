@@ -1,5 +1,7 @@
 <template>
   <aside class="article-body">
+    <ad-box v-if="adList[0]" :ad-source="adList[0]" :ad-height="100"></ad-box>
+    <!-- 广告 -->
     <!-- 分享挂件 -->
     <div v-if="!query.videoTyp" class="article-share">
       <ArticleShare :post="article" />
@@ -69,6 +71,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { handleTime } from '@/utils/data'
+import { AD_NUMBER_TYPE, IAdListType } from '@apiModules/adList'
 
 // 加密脚本
 import { mid } from '@/assets/ts/mid'
@@ -108,15 +111,27 @@ export default defineComponent({
         content: '',
       },
       commentValue: '', // 输入清除
+      adList: [] as IAdListType[],
     }
   },
-  fetch() {
+  async fetch() {
     // 更新浏览量
     const { id, forumId } = this.article
     this.$http.posts.updateViewCountForAsync({
       id,
       forumId,
     })
+
+    // 获取广告
+    const adList = []
+    for (let i = 1; i < 2; i++) {
+      const ad = await this.$http.adList.getAdList({
+        pageName: 'article',
+        number: AD_NUMBER_TYPE[i],
+      })
+      adList.push(ad[0])
+    }
+    this.adList = adList
   },
   computed: {
     article(): any {

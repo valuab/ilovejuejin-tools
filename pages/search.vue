@@ -106,8 +106,8 @@ export default defineComponent({
     const viewUserId = app.$accessor.userInfo.userId
 
     const keyword: string = unescape(query.keyword as string) // 搜索关键字
-    const type = Number(query.type) // 搜索关键字
-    const typeName = query.typeName // 搜索关键字
+    const type = Number(query.type) // 搜索类型
+    const typeName = query.typeName // 搜索分类名称
 
     let categoryId: number, keywordId: number, hostUserId: number
     const allList: any[] = []
@@ -227,6 +227,16 @@ export default defineComponent({
       },
     }
   },
+  watch: {
+    // 监听路由
+    $route() {
+      // const query = this.$route.query
+      // const viewUserId = this.$accessor.userInfo.userId
+      // const keyword: string = unescape(query.keyword as string) // 搜索关键字
+      // const type = Number(query.type) // 搜索类型
+      // const typeName = query.typeName // 搜索类型名称
+    },
+  },
   methods: {
     /**
      * @description: 全部列表页码改变
@@ -234,9 +244,7 @@ export default defineComponent({
     async pageChange(page: number) {
       // 每页十六条数据
       // 获取数据存在本地变量
-
       // 判断是否是车型
-
       // 请求数据 or 直接切换页码
       if (
         this.allList.length > page - 1 &&
@@ -370,6 +378,8 @@ export default defineComponent({
 
     /**
      * @description 搜索
+     * @param type 搜索类型区分
+     * @param value 搜索关键字
      */
     async search(value: string) {
       // 重定向

@@ -20,7 +20,7 @@
               <QRCode :src="iconItem.codeUrl" />
             </template>
             <div class="icon-wrap">
-              <icon :icon="iconItem.icon" size="24"></icon>
+              <Icon :icon="iconItem.icon" size="24" />
             </div>
           </a-popover>
           <a
@@ -29,7 +29,7 @@
             :href="iconItem.url"
             target="_blank"
           >
-            <icon :icon="iconItem.icon" size="24"></icon>
+            <Icon :icon="iconItem.icon" size="24" />
           </a>
         </div>
       </template>

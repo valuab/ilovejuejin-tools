@@ -3,10 +3,10 @@
     <template v-for="(iconItem, index) in iconList">
       <div :key="iconItem.icon" class="share-tab">
         <div v-if="index === 0" class="support" @click="support">
-          <icon
+          <Icon
             :icon="posts.isSupport ? 'ArticleLikeOrange' : iconItem.icon"
             size="24"
-          ></icon>
+          />
           <div
             v-if="index === 0"
             class="num"
@@ -24,7 +24,7 @@
             <QRCode :src="iconItem.codeUrl" />
           </template>
           <div class="icon-wrap flex-column-horizontal-center">
-            <icon :icon="iconItem.icon" size="24"></icon>
+            <Icon :icon="iconItem.icon" size="24" />
           </div>
         </a-popover>
         <a
@@ -33,7 +33,7 @@
           :href="iconItem.url"
           target="_blank"
         >
-          <icon :icon="iconItem.icon" size="24"></icon>
+          <Icon :icon="iconItem.icon" size="24" />
         </a>
       </div>
     </template>
@@ -84,7 +84,7 @@ export default defineComponent({
     const origin = this.$route.path // string 域名
     const search = JSON.stringify(this.$route.query) // string 参数
     const domain = process.env.BASE_URL + origin
-    const link = `${domain}/share/${pathname}?search=${search}` // 当前页面链接
+    const link = `${domain}/share/${pathname}?search=${search}` // 拼接分享链接
     const weiboUrl = getWeiboUrl(title, link)
 
     this.iconList = [
