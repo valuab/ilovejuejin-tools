@@ -152,8 +152,8 @@ export default defineComponent({
     }
   },
   head() {
-    const title = this.$data.detail.name as string
-    const description = this.$data.detail.description as string
+    const title = this.detail.name as string
+    const description = this.detail.description as string
 
     return {
       title,

@@ -55,9 +55,9 @@
       </div>
     </div>
     <div class="copyright">
-      <span class="copyright-text"
-        >2015-2021 广州朋客网络科技有限公司版权所有</span
-      >
+      <span class="copyright-text">
+        2015-{{ new Date().getFullYear() }}广州朋客网络科技有限公司版权所有
+      </span>
       <a
         class="copyright-text"
         href="https://beian.miit.gov.cn/#/Integrated/index"
