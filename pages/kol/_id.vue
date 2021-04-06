@@ -228,13 +228,13 @@ export default defineComponent({
      * @description: 获取文章列表
      */
     getArticleList() {
-      const { typeId, page } = this.articleList[this.articleIndex]
+      const { typeId = '', page = 1 } = this.articleList[this.articleIndex]
       this.articleList[this.articleIndex].listLoad = true
       if (this.articleIndex === 0) {
         this.$http.kol
           .getNewListByHostUserId({
             hostUserId: this.kolId,
-            typeId: typeId || -1,
+            typeId: typeId !== '' ? typeId : -1,
             page,
             viewUserId: this.$accessor.userInfo.userId,
           })

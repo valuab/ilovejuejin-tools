@@ -228,7 +228,7 @@ export default defineComponent({
         this.$http.category
           .getListByCategoryId({
             categoryId: this.categoryId,
-            typeId: typeId || -1,
+            typeId: typeId !== '' ? typeId : -1,
             page,
             viewUserId: this.$accessor.userInfo.userId,
           })
