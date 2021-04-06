@@ -81,12 +81,16 @@ export default defineComponent({
       const { videoNum } = this.$props.item
       console.log(this.$props.item)
       let history
-      console.log(videoNum)
       if (videoNum === 1) {
         let videoUrl = ''
         for (const i in this.$props.item.stepList) {
-          if (this.$props.item.stepList[i].showVideoUrl) {
-            videoUrl = this.$props.item.stepList[i].showVideoUrl
+          if (
+            this.$props.item.stepList[i].showVideoUrl ||
+            this.$props.item.stepList[i].url
+          ) {
+            videoUrl =
+              this.$props.item.stepList[i].showVideoUrl ||
+              this.$props.item.stepList[i].url
           }
         }
         history = this.$router.resolve(

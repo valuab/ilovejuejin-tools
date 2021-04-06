@@ -15,7 +15,7 @@
         <div class="post-msg-text-data">
           <div class="post-msg-text-data-time">{{ time }}</div>
 
-          <div class="post-msg-text-data-num">
+          <div v-if="isViewCount" class="post-msg-text-data-num">
             <Icon icon="ListView" size="12"></Icon>
             <span>{{ item.totalViewCount }}</span>
           </div>
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, ref } from '@nuxtjs/composition-api'
 import { handleTime } from '@/utils/data'
 
 interface IData {
@@ -64,12 +64,17 @@ export default defineComponent({
   },
   setup(props) {
     const { post } = toRefs(props)
+    const isViewCount = ref(true) // 阅读数展示
+
     const date = post.value.publishTime.replace(/-/g, '/')
     const postTimeStamp = new Date(date).getTime()
     const time: string = handleTime(postTimeStamp)
+    isViewCount.value =
+      new Date().getTime() - postTimeStamp >= 24 * 60 * 60 * 1000
 
     return {
       time,
+      isViewCount,
     }
   },
   data(): IData {

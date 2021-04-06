@@ -1,76 +1,81 @@
 <template>
   <div id="tabsAnchor" class="menu-container">
     <!-- 输入组件 -->
-    <div class="search-content">
-      <SearchInput
-        :keyword="keyword"
-        :type="type"
-        :type-name="typeName"
-        @search="search"
-        @deleteSearch="deleteSearch"
-      />
-    </div>
-    <!-- 车型搜索详情 -->
-    <h2
-      v-if="typeList.length && typeList[typePage - 1].list.length"
-      class="column-title"
-    >
-      {{ keyword }}
-      <div class="tag">车型</div>
-      <div
-        v-if="typeList.length && typeList[typePage - 1].list.length > 4"
-        class="column-title-nav"
-        @click="seeAll"
-      >
-        查看全部 >
+    <div class="search-bg">
+      <div class="search">
+        <SearchInput
+          class="searchInput"
+          :keyword="keyword"
+          :type="type"
+          :type-name="typeName"
+          @search="search"
+          @deleteSearch="deleteSearch"
+        />
       </div>
-    </h2>
-    <!-- 查看全部结果 -->
-    <h2
-      v-if="openCarType && typeList[typePage - 1].list.length"
-      class="column-title"
-    >
-      <div class="backAll" @click="backAll">返回全部</div>
-      <div class="tag">为你搜索到“飞度”车型结果：</div>
-    </h2>
-    <article-list
-      v-if="openCarType && typeList[typePage - 1].list.length"
-      class="article-list"
-      :data-source="typeList[0].list"
-    />
-    <!-- 全部 -->
-    <h2
-      v-if="allList.length && allList[searchAllPage - 1].list.length"
-      class="column-title"
-    >
-      全部出品
-    </h2>
-    <article-list
-      v-if="allList.length && allList[searchAllPage - 1].list.length"
-      class="article-list"
-      :data-source="allList[searchAllPage - 1].list"
-    />
+    </div>
+    <div class="search-content">
+      <!-- 车型搜索详情 -->
+      <h2
+        v-if="typeList.length && typeList[typePage - 1].list.length"
+        class="column-title"
+      >
+        {{ keyword }}
+        <div class="tag">车型</div>
+        <div
+          v-if="typeList.length && typeList[typePage - 1].list.length > 4"
+          class="column-title-nav"
+          @click="seeAll"
+        >
+          查看全部 >
+        </div>
+      </h2>
+      <!-- 查看全部结果 -->
+      <h2
+        v-if="openCarType && typeList[typePage - 1].list.length"
+        class="column-title"
+      >
+        <div class="backAll" @click="backAll">返回全部</div>
+        <div class="tag">为你搜索到“飞度”车型结果：</div>
+      </h2>
+      <article-list
+        v-if="openCarType && typeList[typePage - 1].list.length"
+        class="article-list"
+        :data-source="typeList[0].list"
+      />
+      <!-- 全部 -->
+      <h2
+        v-if="allList.length && allList[searchAllPage - 1].list.length"
+        class="column-title"
+      >
+        全部出品
+      </h2>
+      <article-list
+        v-if="allList.length && allList[searchAllPage - 1].list.length"
+        class="article-list"
+        :data-source="allList[searchAllPage - 1].list"
+      />
 
-    <!-- 搜索分页 -->
-    <Pagination
-      v-if="!openCarType && allList.length && allList[0].list.length"
-      v-anchor="'tabsAnchor'"
-      :total="allList[searchAllPage - 1].total"
-      :current="allList[searchAllPage - 1].page"
-      class="pagination"
-      @change="pageChange"
-    />
-    <!-- 车型搜索分页 -->
-    <Pagination
-      v-if="openCarType && typeList.length && typeList[0].list.length"
-      v-anchor="'tabsAnchor'"
-      :total="typeList[typePage - 1].total"
-      :current="typeList[typePage - 1].page"
-      class="pagination"
-      @change="typePageChange"
-    />
-    <!-- 需要添加异步 -->
-    <SearchError v-if="!typeList.length && !allList[0].list.length" />
+      <!-- 搜索分页 -->
+      <Pagination
+        v-if="!openCarType && allList.length && allList[0].list.length"
+        v-anchor="'tabsAnchor'"
+        :total="allList[searchAllPage - 1].total"
+        :current="allList[searchAllPage - 1].page"
+        class="pagination"
+        @change="pageChange"
+      />
+      <!-- 车型搜索分页 -->
+      <Pagination
+        v-if="openCarType && typeList.length && typeList[0].list.length"
+        v-anchor="'tabsAnchor'"
+        :total="typeList[typePage - 1].total"
+        :current="typeList[typePage - 1].page"
+        class="pagination"
+        @change="typePageChange"
+      />
+      <!-- 需要添加异步 -->
+      <SearchError v-if="!typeList.length && !allList[0].list.length" />
+    </div>
   </div>
 </template>
 
@@ -465,13 +470,24 @@ export default defineComponent({
   margin: 0 0 !important;
 }
 
-.search-content {
+.search-bg {
   width: 100%;
   min-height: 88px;
-  padding: 20px 0 20px 20px;
+  padding: 20px 0;
   background: #fff;
   align-items: center;
   justify-content: center;
+
+  .search {
+    width: 1280px;
+    padding-left: 20px;
+    margin: 0 auto;
+  }
+}
+
+.search-content {
+  max-width: 1280px !important;
+  margin: 0 auto;
 }
 
 .column-title {
@@ -506,6 +522,5 @@ export default defineComponent({
 
 .article-list {
   margin-left: 20px;
-  max-width: 1280px !important;
 }
 </style>

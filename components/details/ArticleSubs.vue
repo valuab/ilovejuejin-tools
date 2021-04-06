@@ -1,6 +1,6 @@
 <template>
   <aside v-if="hostUserList.length" class="subs">
-    <div class="subs-title">本文作者</div>
+    <div class="subs-title">{{ change ? '节目主持人' : '本文作者' }}</div>
     <div
       v-for="item in hostUserList"
       :key="item.userId"
@@ -10,7 +10,7 @@
       <div class="subs-msg-img">
         <img :src="item.smallImageUrl" alt="" />
         <div v-if="item.kol" class="icon">
-          <Icon icon="NavKol" size="24"></Icon>
+          <Icon icon="NavKol" size="24" />
         </div>
       </div>
       <div class="subs-msg-text">
@@ -49,6 +49,13 @@ export default defineComponent({
       type: Object,
       default: () => {
         return {}
+      },
+    },
+    // 切换名称
+    change: {
+      type: Boolean,
+      default: () => {
+        return false
       },
     },
   },

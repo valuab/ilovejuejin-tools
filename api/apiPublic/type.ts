@@ -8,6 +8,7 @@ export interface IStepList {
   id: number
   forumId: number
   showVideoUrl: string
+  url: string
 }
 // 文章栏目类型
 export interface IArticleItemType {
