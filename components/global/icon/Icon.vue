@@ -7,7 +7,7 @@
   ></a-icon>
 </template>
 
-<script lang="ts" type="x-template">
+<script lang="ts">
 import type { PropType } from '@nuxtjs/composition-api'
 import { defineComponent, watch, shallowRef } from '@nuxtjs/composition-api'
 import type { IconType } from './iconManager'
