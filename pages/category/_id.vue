@@ -1,6 +1,6 @@
 <template>
   <div :style="{ width: '100%' }">
-    <header :detail="detail"></header>
+    <column-header :detail="detail"></column-header>
     <recommend :list="recommendList"></recommend>
     <div v-if="userTabs.length !== 0" class="main">
       <div class="bg" :style="{ maxHeight: ListBgHeight }"></div>
