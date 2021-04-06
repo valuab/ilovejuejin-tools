@@ -1,7 +1,7 @@
 <template>
   <div :style="{ width: '100%' }">
-    <Header :detail="detail"></Header>
-    <Recommend :list="recommendList"></Recommend>
+    <header :detail="detail"></header>
+    <recommend :list="recommendList"></recommend>
     <div v-if="categoryTabs.length !== 0" class="main">
       <div class="bg" :style="{ maxHeight: ListBgHeight }"></div>
       <tabs

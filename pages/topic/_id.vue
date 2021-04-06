@@ -30,12 +30,12 @@
       <div class="article-list">
         <article-list :loading="listLoad" :data-source="list"></article-list>
       </div>
-      <Pagination
+      <pagination
         v-anchor="'radioAnchor'"
         :total="total"
         class="pagination"
         @change="pageChange"
-      ></Pagination>
+      ></pagination>
       <ad-box v-if="adList[2]" :ad-source="adList[2]" :ad-height="100"></ad-box>
     </div>
   </article>
@@ -48,7 +48,6 @@ import { IAdListType, AD_NUMBER_TYPE } from '@apiPublic/modules/adList'
 import { IOpItemResult } from '@apiModules/program'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
-import AdBox from '~/components/display/AdBox.vue'
 
 interface IData {
   id: string
@@ -62,7 +61,6 @@ interface IData {
 }
 
 export default defineComponent({
-  components: { AdBox },
   async asyncData({ app, route }) {
     const detail = await app.$http.program.getOpItem({
       id: route.params.id,

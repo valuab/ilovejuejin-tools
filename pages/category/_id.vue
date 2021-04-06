@@ -1,7 +1,7 @@
 <template>
   <div :style="{ width: '100%' }">
-    <Header :detail="detail"></Header>
-    <Recommend :list="recommendList"></Recommend>
+    <header :detail="detail"></header>
+    <recommend :list="recommendList"></recommend>
     <div v-if="userTabs.length !== 0" class="main">
       <div class="bg" :style="{ maxHeight: ListBgHeight }"></div>
       <tabs
@@ -23,12 +23,12 @@
                 :data-source="articleList[index].list || []"
               ></article-list>
             </div>
-            <Pagination
+            <pagination
               v-anchor="'tabsAnchor'"
               :total="articleList[index].total || 0"
               class="pagination"
               @change="pageChange"
-            ></Pagination>
+            ></pagination>
           </div>
         </template>
       </tabs>
