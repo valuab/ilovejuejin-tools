@@ -1,6 +1,6 @@
 <template>
-  <div class="qrcodeBox">
-    <img :width="size" :height="size" :src="qrSrc" alt="加载二维码失败" />
+  <div class="qrcodeBox" :style="{ '--size': size }">
+    <img width="100%" height="100%" :src="qrSrc" alt="加载二维码失败" />
     <div class="qrcodeIcon">
       <icon icon="LogoDjcar" size="30" />
     </div>
@@ -38,6 +38,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .qrcodeBox {
   position: relative;
+  width: var(--size);
+  height: var(--size);
   .qrcodeIcon {
     position: absolute;
     z-index: 1;
