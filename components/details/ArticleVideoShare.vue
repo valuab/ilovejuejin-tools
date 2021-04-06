@@ -2,8 +2,8 @@
   <aside class="video-share">
     <div class="support" @click="support">
       <div class="video-icon">
-        <Icon v-if="post.isSupport" icon="ArticleLikeOrange" size="24" />
-        <Icon v-else icon="ArticleLikeGrey" />
+        <icon v-if="post.isSupport" icon="ArticleLikeOrange" size="24" />
+        <icon v-else icon="ArticleLikeGrey" />
       </div>
       <div class="support-num">{{ post.supportCount }}</div>
     </div>
@@ -39,7 +39,7 @@
         <QRCode src="https://www.baidu.com/" />
       </template>
       <div class="video-icon">
-        <Icon icon="ArticleQR" />
+        <icon icon="ArticleQR" />
       </div>
       <div class="skip-word">手机扫一扫，5秒跳广告</div>
     </a-popover>
