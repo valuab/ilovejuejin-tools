@@ -21,7 +21,6 @@ interface IData {
  * 参数 forumId  栏目id
  */
 export default defineComponent({
-  name: 'Details',
   layout: 'container',
   async asyncData({ app, route }) {
     const query = route.query

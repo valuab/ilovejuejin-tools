@@ -2,8 +2,8 @@
   <aside class="video-share">
     <div class="support" @click="support">
       <div class="video-icon">
-        <Icon v-if="post.isSupport" icon="ArticleLikeOrange" :size="'24'" />
-        <Icon v-else icon="ArticleLikeGrey" />
+        <icon v-if="post.isSupport" icon="ArticleLikeOrange" :size="'24'" />
+        <icon v-else icon="ArticleLikeGrey" />
       </div>
       <div class="support-num">{{ post.supportCount }}</div>
     </div>
@@ -20,7 +20,7 @@
               <QRCode :src="iconItem.codeUrl" />
             </template>
             <div class="icon-wrap">
-              <Icon :icon="iconItem.icon" :size="'24'" />
+              <icon :icon="iconItem.icon" size="24" />
             </div>
           </a-popover>
           <a
@@ -29,7 +29,7 @@
             :href="iconItem.url"
             target="_blank"
           >
-            <Icon :icon="iconItem.icon" :size="'24'" />
+            <icon :icon="iconItem.icon" size="24" />
           </a>
         </div>
       </template>

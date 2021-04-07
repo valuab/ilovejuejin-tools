@@ -23,7 +23,7 @@ export default defineComponent({
       required: true,
     },
     size: {
-      type: String,
+      type: [String, Number],
       default: '20',
     },
     rotate: {
