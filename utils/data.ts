@@ -25,14 +25,19 @@ export const handleUrlParams = <T extends Object, K extends keyof T>(
 export const handleTime = (postTimeStamp: number): string => {
   const nowTimeStamp = new Date().getTime()
   const publishTime = moment(postTimeStamp).locale('zh-cn')
+  const timeDiff = nowTimeStamp - postTimeStamp
   let time: string = ''
 
   if (publishTime.year() < moment().year()) {
     time = publishTime.format('YYYY-MM-DD')
-  } else if (nowTimeStamp - postTimeStamp > 7 * 24 * 60 * 60 * 1000) {
+  } else if (timeDiff > 7 * 24 * 60 * 60 * 1000) {
     time = publishTime.format('MM-DD')
-  } else if (nowTimeStamp - postTimeStamp > 60 * 60 * 1000) {
-    time = publishTime.fromNow()
+  } else if (timeDiff > 24 * 60 * 60 * 1000) {
+    time = Math.floor(timeDiff / (24 * 60 * 60 * 1000)) + '天前'
+  } else if (timeDiff > 60 * 60 * 1000) {
+    time = Math.floor(timeDiff / (60 * 60 * 1000)) + '小时前'
+  } else if (timeDiff > 60 * 1000) {
+    time = Math.floor(timeDiff / (60 * 1000)) + '分钟前'
   } else {
     time = '刚刚'
   }
