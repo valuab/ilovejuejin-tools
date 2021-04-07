@@ -50,6 +50,12 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import { getWeiboUrl } from '@/utils/share'
 
+interface IIconListType {
+  codeUrl?: string
+  url?: string
+  icon: string
+}
+
 export default defineComponent({
   name: 'ArticleSort',
   components: {},
@@ -65,6 +71,7 @@ export default defineComponent({
   emits: ['support'],
   data() {
     return {
+      iconList: [] as IIconListType[],
       showWechat: false,
     }
   },

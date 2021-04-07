@@ -5,6 +5,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { IApiResult } from '../index'
 import { NEW_LIST_TYPE } from '~/enums/content'
+import { CATEGORY_LIST_SORT } from '~/enums/index'
 import { handleUrlParams } from '~/utils/data'
 import { IArticleItemType } from '~/api/apiPublic/type'
 
@@ -21,6 +22,10 @@ export const homeLinks = {
 export interface ILayoutListData {
   id: string
   name: string
+}
+
+interface IGetOpItemCategoryParams {
+  sort: CATEGORY_LIST_SORT
 }
 
 interface ILayoutsResult extends IApiResult {
@@ -109,7 +114,9 @@ interface IGetListByCategoryIdResult extends IApiResult {
 }
 export interface IHomeModule {
   getCommendList: () => Promise<ILayoutListData[]>
-  getOpItemCategory: () => Promise<ILayoutListData[]>
+  getOpItemCategory: (
+    params: IGetOpItemCategoryParams
+  ) => Promise<ILayoutListData[]>
   getKolList: () => Promise<IKolListData[]>
   getNewList: (
     params: IGetNewListParams
@@ -133,8 +140,10 @@ export default ($axios: NuxtAxiosInstance) => {
       return data.result.list
     },
     // 获取内容分类
-    async getOpItemCategory() {
-      const url = homeLinks.getOpItemCategory
+    async getOpItemCategory(
+      params = { sort: CATEGORY_LIST_SORT.WEIGHTED_SORT }
+    ) {
+      const url = handleUrlParams(homeLinks.getOpItemCategory, params)
       const { data } = await $axios.get<ILayoutsResult>(url)
 
       return data.result.list

@@ -1,5 +1,6 @@
 import { actionTree, mutationTree } from 'typed-vuex'
 import { ILayoutListData, IKolListData } from '~/api/apiPublic/modules/home'
+import { CATEGORY_LIST_SORT } from '~/enums/index'
 
 type IkolItem = ILayoutListData & IKolListData
 export interface ILayoutsState {
@@ -36,7 +37,9 @@ export const actions = actionTree(
       commit('setCommendList', commendList)
     },
     async getOpItemCategoryList({ commit }) {
-      const opItemCategoryList = await this.app.$http.home.getOpItemCategory()
+      const opItemCategoryList = await this.app.$http.home.getOpItemCategory({
+        sort: CATEGORY_LIST_SORT.WEIGHTED_SORT,
+      })
       commit('setOpItemCategoryList', opItemCategoryList)
     },
     async getKolList({ commit }) {

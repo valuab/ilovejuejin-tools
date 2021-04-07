@@ -196,6 +196,7 @@
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { AD_NUMBER_TYPE, IAdListType } from '@apiModules/adList'
 import { NEW_LIST_TYPE } from '~/enums/content'
+import { CATEGORY_LIST_SORT } from '~/enums/index'
 import { ToggleType } from '~/components/operate/Toggle.vue'
 import {
   INewListData,
@@ -247,12 +248,14 @@ export default defineComponent({
       viewUserId,
       type: NEW_LIST_TYPE.ALL_YIELD,
     })
-    const list = app.$accessor.layouts.opItemCategoryList
-    const categoryList = Array(list.length + 1).fill({})
+    const categoryRawList = await app.$http.home.getOpItemCategory({
+      sort: CATEGORY_LIST_SORT.UPDATE_SORT,
+    })
+    const categoryList = Array(categoryRawList.length + 1).fill({})
+    const adList = []
 
     categoryList[0] = yieldListData
 
-    const adList = []
     for (let i = 1; i < 5; i++) {
       const ad = await app.$http.adList.getAdList({
         pageName: 'index',
@@ -262,6 +265,7 @@ export default defineComponent({
     }
 
     return {
+      categoryRawList,
       newList: newListData.list, // 最新推荐
       recommendList: recommendList.slice(0, 2), // 王牌节目
       guessYouLikeList, // 猜你喜欢
@@ -276,6 +280,7 @@ export default defineComponent({
       guessYouLikeList: [] as IGuessYouLikeItem[],
       categoryList: [] as IGetCategoryIdResult['result'][],
       adList: [] as IAdListType[],
+      categoryRawList: [],
       categoryIndex: 0,
       likeListLoad: false,
       categoryTabsLoad: false,
@@ -295,7 +300,7 @@ export default defineComponent({
       return kolGroupList
     },
     categoryTabsList() {
-      const list = this.$accessor.layouts.opItemCategoryList
+      const list = this.categoryRawList as ILayoutListData[]
       const categoryTabsList = list.map((categoryItem, index) => {
         return {
           title: categoryItem.name,
