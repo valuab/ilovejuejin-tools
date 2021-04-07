@@ -62,7 +62,7 @@
     </article>
     <aside class="subs">
       <ArticleSort :post="article" />
-      <ArticleSubs :post="article" :change="videoType" />
+      <ArticleSubs :post="article" :change="query.videoType" />
       <ArticlePostList :post="article" />
     </aside>
   </aside>

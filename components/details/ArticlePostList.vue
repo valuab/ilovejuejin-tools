@@ -16,12 +16,12 @@
           <div class="post-msg-text-data-time">{{ item.time }}</div>
 
           <div v-if="isViewCount" class="post-msg-text-data-num">
-            <Icon icon="ListView" :size="12" />
+            <Icon icon="ListView" :size="'12'" />
             <span>{{ item.totalViewCount }}</span>
           </div>
 
           <div class="post-msg-text-data-num">
-            <Icon icon="ListComment" :size="12" />
+            <Icon icon="ListComment" :size="'12'" />
             <span>{{ item.commentCount }}</span>
           </div>
         </div>

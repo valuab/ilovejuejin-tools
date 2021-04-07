@@ -5,7 +5,7 @@
         <div v-if="index === 0" class="support" @click="support">
           <Icon
             :icon="posts.isSupport ? 'ArticleLikeOrange' : iconItem.icon"
-            size="24"
+            :size="'24'"
           />
           <div
             v-if="index === 0"
@@ -24,7 +24,7 @@
             <QRCode :src="iconItem.codeUrl" />
           </template>
           <div class="icon-wrap flex-column-horizontal-center">
-            <Icon :icon="iconItem.icon" size="24" />
+            <Icon :icon="iconItem.icon" :size="'24'" />
           </div>
         </a-popover>
         <a
