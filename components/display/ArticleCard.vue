@@ -20,7 +20,7 @@
           <span>{{ time }}</span>
         </div>
         <div v-if="isViewCount">
-          <Icon icon="ListView" :size="12" />
+          <icon icon="ListView" size="12" />
           <span>{{ item.totalViewCount }}</span>
         </div>
       </aside>
