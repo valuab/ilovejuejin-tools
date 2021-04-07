@@ -3,10 +3,10 @@
     <span>继续阅读与本文标签相同的文章：</span>
     <div class="tag-list">
       <div
-        v-for="(item, index) in post.tagNameList"
+        v-for="item in post.tagNameList"
         :key="item"
         class="tag"
-        @click="navSearch(item, 3, '', post.tagIdList[index])"
+        @click="navSearch(item, 1)"
       >
         {{ item }}
       </div>
@@ -32,15 +32,10 @@ export default defineComponent({
     /**
      * @description: 跳转至搜索页  标签搜索
      */
-    navSearch(
-      value: string,
-      type: number,
-      typeName: String,
-      keywordId: String
-    ) {
+    navSearch(value: string, type: number) {
       value = encodeURIComponent(value)
       this.$router.push({
-        path: `/Search?keyword=${value}&type=${type}&typeName=${typeName}&keywordId=${keywordId}`,
+        path: `/Search?keyword=${value}&type=${type}`,
       })
     },
   },

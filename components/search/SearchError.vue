@@ -1,7 +1,7 @@
 <template>
   <div class="search-content">
     <article class="search-error">
-      <p class="Tips">很抱歉，没有找到“搜索不到结果的一个词“相关的信息</p>
+      <p class="Tips">很抱歉，没有找到“{{ keyword }}“相关的信息</p>
       <p class="Tips-msg">
         您现在可以：<br />
         · 可能您想要找到的内容，我们未收录或者未发表过，<a>我要爆料</a> <br />·
@@ -32,7 +32,12 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'SearchError',
-  components: {},
+  props: {
+    keyword: {
+      type: String,
+      default: '',
+    },
+  },
 })
 </script>
 

@@ -74,7 +74,10 @@
         @change="typePageChange"
       />
       <!-- 需要添加异步 -->
-      <SearchError v-if="!typeList.length && !allList[0].list.length" />
+      <SearchError
+        v-if="!typeList.length && !allList[0].list.length"
+        :keyword="keyword"
+      />
     </div>
   </div>
 </template>
@@ -108,13 +111,13 @@ export default defineComponent({
   name: 'Search',
   async asyncData({ app, route }) {
     const query = route.query
-    const viewUserId = app.$accessor.userInfo.userId
+    const viewUserId = app.$accessor.userInfo.userId.toString()
 
     const keyword: string = unescape(query.keyword as string) // 搜索关键字
     const type = Number(query.type) // 搜索类型
     const typeName = query.typeName // 搜索分类名称
 
-    let categoryId: number, keywordId: number, hostUserId: number
+    let categoryId, keywordId: string, hostUserId: string
     const allList: any[] = []
     const page = 1
     let allRes: any, temporary
@@ -127,7 +130,7 @@ export default defineComponent({
         })
         break
       case SEARCH_TYPE.ITEM:
-        categoryId = Number(query.categoryId)
+        categoryId = query.categoryId.toString()
         allRes = await app.$http.search.getSearchByItemCategoryId({
           keyword,
           categoryId,
@@ -136,7 +139,7 @@ export default defineComponent({
         })
         break
       case SEARCH_TYPE.LABEL:
-        keywordId = Number(query.keywordId)
+        keywordId = query.keywordId.toString()
         allRes = await app.$http.search.getSearchByItemKeywordId({
           keyword,
           keywordId,
@@ -145,7 +148,7 @@ export default defineComponent({
         })
         break
       case SEARCH_TYPE.HOST:
-        hostUserId = Number(query.hostUserId)
+        hostUserId = query?.hostUserId?.toString() || '0'
         allRes = await app.$http.search.getSearchByHostUserId({
           keyword,
           hostUserId,
@@ -153,9 +156,9 @@ export default defineComponent({
           page,
         })
 
-        categoryId = Number(query.categoryId) || 0
-        keywordId = Number(query.keywordId) || 0
-        hostUserId = Number(query.hostUserId) || 0
+        categoryId = query?.categoryId?.toString() || '0'
+        keywordId = query?.keywordId?.toString() || '0'
+        hostUserId = query?.hostUserId?.toString() || '0'
         temporary = await app.$http.search.getSearchByCars({
           keyword,
           categoryId,
@@ -167,9 +170,9 @@ export default defineComponent({
         break
       case SEARCH_TYPE.CAR:
         // 关键字匹配车型
-        categoryId = Number(query.categoryId) || 0
-        keywordId = Number(query.keywordId) || 0
-        hostUserId = Number(query.hostUserId) || 0
+        categoryId = query?.categoryId?.toString() || '0'
+        keywordId = query?.keywordId?.toString() || '0'
+        hostUserId = query?.hostUserId?.toString() || '0'
         temporary = await app.$http.search.getSearchByCars({
           keyword,
           categoryId,
@@ -312,8 +315,8 @@ export default defineComponent({
      * @description: 搜索全部
      */
     getSearchAll(page: number) {
-      const keyword = this.query.keyword
-      const viewUserId = this.$accessor.userInfo.userId
+      const keyword = this.query.keyword.toString()
+      const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchAll({
         keyword,
         viewUserId,
@@ -324,9 +327,10 @@ export default defineComponent({
      * @description: 搜索分类
      */
     getSearchByItemCategoryId(page: number) {
-      const { keyword } = this.query
-      const categoryId = Number(this.query.categoryId)
-      const viewUserId = this.$accessor.userInfo.userId
+      const { query } = this
+      const keyword = query.keyword.toString()
+      const categoryId = query?.categoryId?.toString() || '0'
+      const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByItemCategoryId({
         keyword,
         categoryId,
@@ -338,9 +342,10 @@ export default defineComponent({
      * @description: 搜索标签
      */
     getSearchByItemKeywordId(page: number) {
-      const { keyword } = this.query
-      const keywordId = Number(this.query.keywordId)
-      const viewUserId = this.$accessor.userInfo.userId
+      const { query } = this
+      const keyword = query.keyword.toString()
+      const keywordId = query?.keywordId?.toString() || '0'
+      const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByItemKeywordId({
         keyword,
         keywordId,
@@ -352,9 +357,10 @@ export default defineComponent({
      * @description: 搜索kol
      */
     searchByHostUserId(page: number) {
-      const { keyword } = this.query
-      const hostUserId = Number(this.query.hostUserId)
-      const viewUserId = this.$accessor.userInfo.userId
+      const { query } = this
+      const keyword = query.keyword.toString()
+      const hostUserId = query?.hostUserId?.toString() || '0'
+      const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByHostUserId({
         keyword,
         hostUserId,
@@ -366,11 +372,12 @@ export default defineComponent({
      * @description: 搜索车型
      */
     searchByCars(page: number) {
-      const { keyword } = this.query
-      const categoryId = Number(this.query.categoryId) || 0
-      const keywordId = Number(this.query.keywordId) || 0
-      const hostUserId = Number(this.query.keywordId) || 0
-      const viewUserId = this.$accessor.userInfo.userId
+      const { query } = this
+      const keyword = query.keyword.toString()
+      const categoryId = query?.categoryId?.toString() || '0'
+      const keywordId = query?.keywordId?.toString() || '0'
+      const hostUserId = query?.keywordId?.toString() || '0'
+      const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByCars({
         keyword,
         categoryId,

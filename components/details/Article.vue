@@ -1,71 +1,80 @@
 <template>
-  <aside class="article-body">
-    <ad-box v-if="adList[0]" :ad-source="adList[0]" :ad-height="100"></ad-box>
+  <div class="body">
+    <ad-box v-if="adList[0]" :ad-source="adList[0]" :ad-height="100" />
     <!-- 广告 -->
-    <!-- 分享挂件 -->
-    <div v-if="!query.videoTyp" class="article-share">
-      <ArticleShare :post="article" />
-    </div>
-    <article
-      class="article"
-      :class="query.videoTyp ? 'article-video-width' : 'article-width'"
-    >
-      <ArticleHeader :post="article" />
-      <!-- 视频组件 -->
-      <ArticleVideo
-        v-if="article && query.videoType"
-        :post="article"
-        :video-url="query.videoUrl"
-        :qq-vid="query.qqVid"
-      />
-      <!-- 文章内容组件 -->
-      <!-- 文字段落 -->
-      <div
-        v-for="item in article.stepList"
-        v-show="!query.videoType"
-        :key="item.id"
-        class="article"
-        :class="!item.content && !item.smallShowImageUrl ? 'article-none' : ''"
-      >
-        <p v-if="item.content">
-          {{ item.content }}
-        </p>
-        <!-- 图片 -->
-        <img
-          v-if="item.videoId === 0"
-          class="poster"
-          :src="item.smallShowImageUrl"
-          :class="!item.smallShowImageUrl ? 'article-none' : ''"
-        />
-        <!-- 视频展示    -->
-        <aside v-if="item.videoId !== 0" class="video" @click="playVideo(item)">
-          <img class="video-poster" :src="item.smallShowImageUrl" />
-          <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
-        </aside>
-        <!-- 腾讯视频展示 -->
-        <aside v-else-if="item.qqVid" class="video" @click="playVideo(item)">
-          <img
-            class="video-poster"
-            :src="item.smallShowImageUrl || article.smallImageUrl"
-          />
-          <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
-        </aside>
+    <aside class="article-body">
+      <!-- 分享挂件 -->
+      <div v-if="!query.videoTyp" class="article-share">
+        <ArticleShare :post="article" />
       </div>
-      <ArticleFooter v-if="article.tagNameList.length" :post="article" />
-      <CommentInput
-        :comment-value="commentValue"
-        :post="article"
-        @send="send"
-      />
-      <p class="column-title">全部评论（{{ article.commentCount }}）</p>
-      <CommentList ref="commentListRef" :post="article" />
-    </article>
-    <aside class="subs">
-      <ArticleSort :post="article" />
-      <ArticleSubs :post="article" :change="query.videoType" />
-      <ArticlePostList :post="article" />
+
+      <article
+        class="article"
+        :class="query.videoTyp ? 'article-video-width' : 'article-width'"
+      >
+        <ArticleHeader :post="article" />
+        <!-- 视频组件 -->
+        <ArticleVideo
+          v-if="article && query.videoType"
+          :post="article"
+          :video-url="query.videoUrl"
+          :qq-vid="query.qqVid"
+        />
+        <!-- 文章内容组件 -->
+        <!-- 文字段落 -->
+        <div
+          v-for="item in article.stepList"
+          v-show="!query.videoType"
+          :key="item.id"
+          class="article"
+          :class="
+            !item.content && !item.smallShowImageUrl ? 'article-none' : ''
+          "
+        >
+          <p v-if="item.content">
+            {{ item.content }}
+          </p>
+          <!-- 图片 -->
+          <img
+            v-if="item.videoId === 0"
+            class="poster"
+            :src="item.smallShowImageUrl"
+            :class="!item.smallShowImageUrl ? 'article-none' : ''"
+          />
+          <!-- 视频展示    -->
+          <aside
+            v-if="item.videoId !== 0"
+            class="video"
+            @click="playVideo(item)"
+          >
+            <img class="video-poster" :src="item.smallShowImageUrl" />
+            <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
+          </aside>
+          <!-- 腾讯视频展示 -->
+          <aside v-else-if="item.qqVid" class="video" @click="playVideo(item)">
+            <img
+              class="video-poster"
+              :src="item.smallShowImageUrl || article.smallImageUrl"
+            />
+            <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
+          </aside>
+        </div>
+        <ArticleFooter v-if="article.tagNameList.length" :post="article" />
+        <CommentInput
+          :comment-value="commentValue"
+          :post="article"
+          @send="send"
+        />
+        <p class="column-title">全部评论（{{ article.commentCount }}）</p>
+        <CommentList ref="commentListRef" :post="article" />
+      </article>
+      <aside class="subs">
+        <ArticleSort :post="article" />
+        <ArticleSubs :post="article" :change="query.videoType" />
+        <ArticlePostList :post="article" />
+      </aside>
     </aside>
-  </aside>
+  </div>
 </template>
 
 <script lang="ts">

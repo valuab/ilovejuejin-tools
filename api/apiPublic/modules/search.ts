@@ -19,34 +19,34 @@ const searchLink = {
  * 参数约束 START
  */
 interface ISearchAllParmas {
-  keyword: String
-  viewUserId: number
+  keyword: string
+  viewUserId: string
   page: number
 }
 interface ISearchByItemCategoryIdParmas {
-  keyword: String
-  categoryId: number
-  viewUserId: number
+  keyword: string
+  categoryId: string
+  viewUserId: string
   page: number
 }
 interface ISearchByItemKeywordIdParmas {
-  keyword: String
-  keywordId: number
-  viewUserId: number
+  keyword: string
+  keywordId: string
+  viewUserId: string
   page: number
 }
 interface ISearchByHostUserIdParmas {
-  keyword: String
-  hostUserId: number
-  viewUserId: number
+  keyword: string
+  hostUserId: string
+  viewUserId: string
   page: number
 }
 interface ISearchByCarsParmas {
-  keyword: String
-  categoryId: number
-  keywordId: number
-  hostUserId: number
-  viewUserId: number
+  keyword: string
+  categoryId: string
+  keywordId: string
+  hostUserId: string
+  viewUserId: string
   page: number
 }
 
