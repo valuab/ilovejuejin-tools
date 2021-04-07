@@ -1,5 +1,5 @@
 <template>
-  <a target="_blank" :href="adSource.url" class="ad-container">
+  <a target="_blank" :href="adSource.url" class="advertis-container">
     <img
       :src="adSource.smallImageUrl || adSource.smallImage2Url"
       width="100%"
@@ -28,7 +28,7 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-.ad-container {
+.advertis-container {
   max-width: 1240px;
   padding: 40px 0 0;
   margin: 0 auto;
