@@ -133,7 +133,7 @@ export default defineComponent({
 
     // 获取广告
     const adList = []
-    for (let i = 1; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
       const ad = await this.$http.adList.getAdList({
         pageName: 'article',
         number: AD_NUMBER_TYPE[i],
