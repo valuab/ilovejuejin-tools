@@ -14,7 +14,12 @@
           <img src="/qrcode/miniapp/djcars.jpg" />
         </aside>
       </div>
-      <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100"></ad-box>
+      <ad-box
+        v-if="adList[1]"
+        :style="{ marginTop: '-40px' }"
+        :ad-source="adList[1]"
+        :ad-height="100"
+      ></ad-box>
     </header>
     <div class="main">
       <div
