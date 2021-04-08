@@ -6,7 +6,7 @@ import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
 
 const commentLink = {
-  getNewsCommentList: '/api/pc/comment/getNewsCommentList', // 搜索全部
+  getWxSelectCommentList: '/api/pc/comment/getWxSelectCommentList', // 搜索全部
   getNewCommentReplyList: '/api/pc/comment/getNewCommentReplyList', // 分类搜索
   supportComment: '/api/pc/comment/supportComment', // 标签搜索
   postComment: '/api/pc/comment/postComment', // 主持人搜索
@@ -18,7 +18,6 @@ const commentLink = {
 interface INewsCommentListParmas {
   id: number
   typeId: number
-  sort: number
   page: number
 }
 interface INewCommentReplyListParmas {
@@ -96,7 +95,7 @@ export interface PostCommentResult extends IApiResult {
  */
 
 export interface ICommentModule {
-  getNewsCommentList(
+  getWxSelectCommentList(
     params: INewsCommentListParmas
   ): Promise<NewsCommentListResult['result']>
   getNewCommentReplyList(
@@ -110,8 +109,8 @@ export interface ICommentModule {
 
 export default ($axios: NuxtAxiosInstance) => {
   return {
-    async getNewsCommentList(params) {
-      const url = handleUrlParams(commentLink.getNewsCommentList, params)
+    async getWxSelectCommentList(params) {
+      const url = handleUrlParams(commentLink.getWxSelectCommentList, params)
       const { data } = await $axios.get<NewsCommentListResult>(url)
 
       return data.result

@@ -4,8 +4,10 @@
       <p class="Tips">很抱歉，没有找到“{{ keyword }}“相关的信息</p>
       <p class="Tips-msg">
         您现在可以：<br />
-        · 可能您想要找到的内容，我们未收录或者未发表过，<a>我要爆料</a> <br />·
-        关注我们的公众号，我们会将新发布的信息通知您。
+        · 可能您想要找到的内容，我们未收录或者未发表过，<a @click="showFeedBack"
+          >我要爆料</a
+        >
+        <br />· 关注我们的公众号，我们会将新发布的信息通知您。
       </p>
       <div class="code-content">
         <div class="code">
@@ -36,6 +38,14 @@ export default defineComponent({
     keyword: {
       type: String,
       default: '',
+    },
+  },
+  methods: {
+    /**
+     * @description 问题反馈
+     */
+    showFeedBack() {
+      this.$accessor.global.showFeedBack()
     },
   },
 })

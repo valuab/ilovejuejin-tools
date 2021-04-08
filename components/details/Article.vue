@@ -60,6 +60,7 @@
           </aside>
         </div>
         <ArticleFooter v-if="article.tagNameList.length" :post="article" />
+        <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100" />
         <CommentInput
           :comment-value="commentValue"
           :post="article"
@@ -154,7 +155,7 @@ export default defineComponent({
   },
   methods: {
     /**
-     * @description: send
+     * @description: 发布评论
      */
     async send(comentValue: string) {
       if (!comentValue) return

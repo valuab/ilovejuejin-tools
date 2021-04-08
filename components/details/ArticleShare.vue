@@ -83,7 +83,10 @@ export default defineComponent({
     const pathname = this.$route.name || '' // string 页面名
     const origin = this.$route.path // string 域名
     const search = JSON.stringify(this.$route.query) // string 参数
-    const domain = process.env.BASE_URL + origin
+    console.log(search)
+    // .replace(/-/g, '=').replace(/_/g, '&')
+    const domain =
+      'https://www.djcars.cn/' + origin || process.env.BASE_URL + origin
     const link = `${domain}/share/${pathname}?search=${search}` // 拼接分享链接
     const weiboUrl = getWeiboUrl(title, link)
 

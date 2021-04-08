@@ -83,12 +83,10 @@ export default defineComponent({
     // 判断是否有评论列表
     if (this.$props.post.commentCount === 0) return
     // const viewUserId = this.$accessor.userInfo.userId
-    const sort = 0
     // 获取评论列表
-    const newsCommentList = await this.$http.comment.getNewsCommentList({
+    const newsCommentList = await this.$http.comment.getWxSelectCommentList({
       id: this.$props.post.id,
       typeId: PROT_TYPE_TYPEID.BIG_WORK,
-      sort,
       page: 1,
     })
     for (const i in newsCommentList.list) {
@@ -115,9 +113,9 @@ export default defineComponent({
     /**
      * @description: 获取帖子评论列表
      */
-    getNewsCommentList(page: number) {
+    getWxSelectCommentList(page: number) {
       const sort = 0
-      return this.$http.comment.getNewsCommentList({
+      return this.$http.comment.getWxSelectCommentList({
         id: this.$props.post.id,
         typeId: PROT_TYPE_TYPEID.BIG_WORK,
         sort,
@@ -151,7 +149,7 @@ export default defineComponent({
         return
       }
 
-      const newsCommentList = await this.getNewsCommentList(page)
+      const newsCommentList = await this.getWxSelectCommentList(page)
 
       const data = Object.assign(
         {
