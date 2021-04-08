@@ -83,10 +83,9 @@ export default defineComponent({
      * @description: 跳转至搜索页
      */
     navSearch(value: string, type: number, typeName: String) {
-      const keyword: string = encodeURI(value)
-      const path = `/Search?keyword=${keyword}&type=${type}&typeName=${typeName}`
+      value = encodeURIComponent(value)
       this.$router.push({
-        path,
+        path: `/Search?keyword=${value}&type=${type}&typeName=${typeName}`,
       })
       this.ifSearchpopup()
     },

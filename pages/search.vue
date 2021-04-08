@@ -125,7 +125,7 @@ export default defineComponent({
     switch (type) {
       case SEARCH_TYPE.ALL:
         allRes = await app.$http.search.getSearchAll({
-          keyword,
+          keyword: encodeURI(keyword),
           viewUserId,
           page: 1,
         })
@@ -133,7 +133,7 @@ export default defineComponent({
       case SEARCH_TYPE.ITEM:
         categoryId = query.categoryId.toString()
         allRes = await app.$http.search.getSearchByItemCategoryId({
-          keyword,
+          keyword: encodeURI(keyword),
           categoryId,
           viewUserId,
           page,
@@ -142,7 +142,7 @@ export default defineComponent({
       case SEARCH_TYPE.LABEL:
         keywordId = query.keywordId.toString()
         allRes = await app.$http.search.getSearchByItemKeywordId({
-          keyword,
+          keyword: encodeURI(keyword),
           keywordId,
           viewUserId,
           page,
@@ -151,7 +151,7 @@ export default defineComponent({
       case SEARCH_TYPE.HOST:
         hostUserId = query?.hostUserId?.toString() || '0'
         allRes = await app.$http.search.getSearchByHostUserId({
-          keyword,
+          keyword: encodeURI(keyword),
           hostUserId,
           viewUserId,
           page,
@@ -169,7 +169,7 @@ export default defineComponent({
     keywordId = query?.keywordId?.toString() || '0'
     hostUserId = query?.hostUserId?.toString() || '0'
     const temporary = await app.$http.search.getSearchByCars({
-      keyword,
+      keyword: encodeURI(keyword),
       categoryId,
       keywordId,
       hostUserId,
@@ -302,7 +302,7 @@ export default defineComponent({
       const keyword = this.query.keyword.toString()
       const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchAll({
-        keyword,
+        keyword: encodeURI(keyword),
         viewUserId,
         page,
       })
@@ -316,7 +316,7 @@ export default defineComponent({
       const categoryId = query?.categoryId?.toString() || '0'
       const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByItemCategoryId({
-        keyword,
+        keyword: encodeURI(keyword),
         categoryId,
         viewUserId,
         page,
@@ -331,7 +331,7 @@ export default defineComponent({
       const keywordId = query?.keywordId?.toString() || '0'
       const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByItemKeywordId({
-        keyword,
+        keyword: encodeURI(keyword),
         keywordId,
         viewUserId,
         page,
@@ -346,7 +346,7 @@ export default defineComponent({
       const hostUserId = query?.hostUserId?.toString() || '0'
       const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByHostUserId({
-        keyword,
+        keyword: encodeURI(keyword),
         hostUserId,
         viewUserId,
         page,
@@ -363,7 +363,7 @@ export default defineComponent({
       const hostUserId = query?.keywordId?.toString() || '0'
       const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByCars({
-        keyword,
+        keyword: encodeURI(keyword),
         categoryId,
         keywordId,
         hostUserId,
