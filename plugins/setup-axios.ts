@@ -18,14 +18,14 @@ export default ({ app, $axios, redirect }: Context) => {
     token = getToken()
   }
   // 监听请求
-  // $axios.onError(() => {
-  //   redirect('/error')
-  // })
-  // $axios.onResponse(({ data }) => {
-  //   if (data.err) {
-  //     redirect('/error')
-  //   }
-  // })
+  $axios.onError(() => {
+    redirect('/error')
+  })
+  $axios.onResponse(({ data }) => {
+    if (data.err) {
+      redirect('/error')
+    }
+  })
 
   $axios.setHeader('sign', token.sign)
   $axios.setHeader('sid', token.sid)
