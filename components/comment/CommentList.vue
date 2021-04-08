@@ -81,7 +81,7 @@ export default defineComponent({
   },
   async fetch() {
     // 判断是否有评论列表
-    if (this.$props.post.commentCount === 0) return
+    // if (this.$props.post.commentCount === 0) return
     // const viewUserId = this.$accessor.userInfo.userId
     // 获取评论列表
     const newsCommentList = await this.$http.comment.getWxSelectCommentList({
