@@ -114,11 +114,9 @@ export default defineComponent({
      * @description: 获取帖子评论列表
      */
     getWxSelectCommentList(page: number) {
-      const sort = 0
       return this.$http.comment.getWxSelectCommentList({
         id: this.$props.post.id,
         typeId: PROT_TYPE_TYPEID.BIG_WORK,
-        sort,
         page,
       })
     },

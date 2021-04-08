@@ -110,10 +110,11 @@ interface IData {
 export default defineComponent({
   name: 'Search',
   async asyncData({ app, route }) {
+    console.log(route)
     const query = route.query
     const viewUserId = app.$accessor.userInfo.userId.toString()
 
-    const keyword: string = unescape(query.keyword as string) // 搜索关键字
+    const keyword: string = decodeURI(query.keyword as string) // 搜索关键字
     const type = Number(query.type) // 搜索类型
     const typeName = query.typeName // 搜索分类名称
 
