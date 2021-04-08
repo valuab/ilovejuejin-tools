@@ -110,7 +110,6 @@ interface IData {
 export default defineComponent({
   name: 'Search',
   async asyncData({ app, route }) {
-    console.log(route)
     const query = route.query
     const viewUserId = app.$accessor.userInfo.userId.toString()
 
