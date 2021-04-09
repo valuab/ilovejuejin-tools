@@ -124,6 +124,7 @@ export default defineComponent({
     position: absolute;
     top: 30px;
     right: 30px;
+    cursor: pointer;
   }
 
   & > h1 {

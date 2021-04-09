@@ -200,6 +200,7 @@ export default defineComponent({
       height: 60px;
       padding-left: 20px;
       align-items: center;
+      cursor: pointer;
 
       span {
         margin-left: 16px;

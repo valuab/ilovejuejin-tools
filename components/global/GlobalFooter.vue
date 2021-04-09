@@ -119,6 +119,7 @@ export default defineComponent({
         margin-left: 20px;
         background-color: #fff;
         border-radius: 50%;
+        cursor: pointer;
 
         &:hover {
           background-color: rgba(255, 255, 255, 40);
