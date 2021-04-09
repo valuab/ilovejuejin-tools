@@ -43,10 +43,10 @@ interface ISearchByHostUserIdParmas {
 }
 interface ISearchByCarsParmas {
   keyword: string
-  categoryId: string
-  keywordId: string
-  hostUserId: string
-  viewUserId: string
+  categoryId?: string
+  keywordId?: string
+  hostUserId?: string
+  viewUserId?: string
   page: number
 }
 

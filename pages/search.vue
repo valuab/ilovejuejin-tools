@@ -15,7 +15,7 @@
     </div>
     <div class="search-content">
       <!-- 车型搜索详情 -->
-      <h2 v-if="ifTypeShow()" class="column-title">
+      <h2 v-if="ifTypeShow() && !openCarType" class="column-title">
         {{ keyword }}
         <div class="tag">车型</div>
         <div
@@ -30,12 +30,12 @@
       <article-list
         v-if="!openCarType && ifTypeShow()"
         class="article-list"
-        :data-source="typeList[0].list"
+        :data-source="typeList[0].copyList"
       />
       <!-- 查看全部结果 -->
       <h2 v-if="openCarType && ifTypeShow()" class="column-title">
         <div class="backAll" @click="backAll">返回全部</div>
-        <div class="tag">为你搜索到“飞度”车型结果：</div>
+        <div class="tag">为你搜索到“{{ keyword }}”车型结果：</div>
       </h2>
       <article-list
         v-if="openCarType && ifTypeShow()"
@@ -44,13 +44,21 @@
       />
       <!-- 全部 -->
       <h2
-        v-if="allList.length && allList[searchAllPage - 1].list.length"
+        v-if="
+          allList.length &&
+          allList[searchAllPage - 1].list.length &&
+          !openCarType
+        "
         class="column-title"
       >
         全部出品
       </h2>
       <article-list
-        v-if="allList.length && allList[searchAllPage - 1].list.length"
+        v-if="
+          allList.length &&
+          allList[searchAllPage - 1].list.length &&
+          !openCarType
+        "
         class="article-list"
         :data-source="allList[searchAllPage - 1].list"
       />
@@ -186,6 +194,7 @@ export default defineComponent({
     const typeRes = Object.assign(
       {
         list: [],
+        copyList: [],
         total: 0,
         page: 1,
         listLoad: false,
@@ -193,6 +202,14 @@ export default defineComponent({
       temporary
     )
     typeList.push(typeRes)
+
+    console.log(temporary)
+    if (temporary && temporary.list.length > 4) {
+      for (let i = 0; i < 4; i++) {
+        typeList[0].copyList.push(typeList[0].list[i])
+      }
+      console.log(typeList)
+    }
 
     return {
       allList,
@@ -226,6 +243,7 @@ export default defineComponent({
       const query = this.$route.query
       const keyword = query.keyword.toString() // 搜索关键字
       this.type = Number(query.type) // 搜索类型
+      this.openCarType = true
       this.search(keyword)
     },
   },
@@ -361,12 +379,21 @@ export default defineComponent({
       const keywordId = query?.keywordId?.toString() || '0'
       const hostUserId = query?.keywordId?.toString() || '0'
       const viewUserId = this.$accessor.userInfo.userId.toString()
-      return this.$http.search.getSearchByCars({
-        keyword: encodeURI(keyword),
+      const parmas: any = {
         categoryId,
         keywordId,
         hostUserId,
         viewUserId,
+      }
+      // 排空
+      for (const key in parmas) {
+        if (+parmas[key] === 0) {
+          delete parmas[key]
+        }
+      }
+      return this.$http.search.getSearchByCars({
+        keyword: encodeURI(keyword),
+        ...parmas,
         page,
       })
     },
@@ -415,17 +442,27 @@ export default defineComponent({
       this.allList.push(allResType)
       // 搜索车型
       const temporary: any = await this.searchByCars(page)
+      const typeList = []
       const typeRes = Object.assign(
         {
           list: [],
+          copyList: [],
           total: 0,
           page: 1,
           listLoad: false,
         },
         temporary
       )
-      this.typeList.length = 0 // 清除之前数据
-      this.typeList.push(typeRes)
+      typeList.push(typeRes)
+
+      console.log(temporary)
+      if (temporary && temporary.list.length > 4) {
+        for (let i = 0; i < 4; i++) {
+          typeList[0].copyList.push(typeList[0].list[i])
+        }
+      }
+      this.typeList = typeList
+      console.log(this.typeList)
     },
     /**
      * @description 清除搜索
@@ -444,7 +481,7 @@ export default defineComponent({
      * @description 返回全部
      */
     backAll() {
-      this.openCarType = true
+      this.openCarType = false
     },
     /**
      * @description 判断是否展示车型
@@ -510,6 +547,10 @@ export default defineComponent({
     @extend .flex-row-vertical-center;
     @include text($font-size-base, #666);
     @include hoverColor(#333);
+  }
+
+  .backAll {
+    color: #ff8022;
   }
 }
 
