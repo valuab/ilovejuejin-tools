@@ -9,4 +9,6 @@ mkdir dist
 
 # 拷贝文件
 cp -a {.nuxt,static,package.json,tsconfig.json,nuxt.config.ts} ./dist/
-zip -q -r dist.zip ./dist/
+cd ./dist
+rm ./dist.zip
+zip -r -q ../dist.zip ./*
