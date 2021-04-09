@@ -1,6 +1,11 @@
 <template>
   <div class="container">
-    <ad-box v-if="adList[0]" :ad-source="adList[0]" :ad-height="120"></ad-box>
+    <ad-box
+      v-if="adList[0]"
+      class="advertis-margin"
+      :ad-source="adList[0]"
+      :ad-height="120"
+    ></ad-box>
     <!-- 栏目一 START -->
     <a-row type="flex" :gutter="20">
       <a-col :span="12">
@@ -76,7 +81,12 @@
       </a-col>
     </a-row>
     <!-- 栏目一 END -->
-    <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100"></ad-box>
+    <ad-box
+      v-if="adList[1]"
+      class="advertis-margin"
+      :ad-source="adList[1]"
+      :ad-height="100"
+    ></ad-box>
     <!-- 栏目二 START -->
     <a-row type="flex" :gutter="40">
       <a-col flex="1">
@@ -161,7 +171,12 @@
       </a-col>
     </a-row>
     <!-- 栏目二 END -->
-    <ad-box v-if="adList[2]" :ad-source="adList[2]" :ad-height="100"></ad-box>
+    <ad-box
+      v-if="adList[2]"
+      class="advertis-margin"
+      :ad-source="adList[2]"
+      :ad-height="100"
+    ></ad-box>
     <!-- tabs START -->
     <tabs
       id="tabsAnchor"
@@ -188,7 +203,12 @@
       </template>
     </tabs>
     <!-- tabs END -->
-    <ad-box v-if="adList[3]" :ad-source="adList[3]" :ad-height="100"></ad-box>
+    <ad-box
+      v-if="adList[3]"
+      class="advertis-margin"
+      :ad-source="adList[3]"
+      :ad-height="100"
+    ></ad-box>
   </div>
 </template>
 
@@ -388,6 +408,10 @@ export default defineComponent({
   position: relative;
   left: 50%;
   transform: translate(-50%);
+
+  .advertis-margin {
+    margin-top: 40px;
+  }
 
   .column-item {
     position: relative;

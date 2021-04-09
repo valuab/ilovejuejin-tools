@@ -1,7 +1,12 @@
 <template>
   <article :style="{ width: '100%' }" class="container">
     <header class="header-bg">
-      <ad-box v-if="adList[0]" :ad-source="adList[0]" :ad-height="120"></ad-box>
+      <ad-box
+        v-if="adList[0]"
+        class="advertis-margin"
+        :ad-source="adList[0]"
+        :ad-height="120"
+      ></ad-box>
       <div class="header-box">
         <div class="header-left">
           <topic-img :img-url="detail.smallImageUrl"></topic-img>
@@ -14,12 +19,7 @@
           <img src="/qrcode/miniapp/djcars.jpg" />
         </aside>
       </div>
-      <ad-box
-        v-if="adList[1]"
-        :style="{ marginTop: '-40px' }"
-        :ad-source="adList[1]"
-        :ad-height="100"
-      ></ad-box>
+      <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100"></ad-box>
     </header>
     <div class="main">
       <div
@@ -41,7 +41,12 @@
         class="pagination"
         @change="pageChange"
       ></pagination>
-      <ad-box v-if="adList[2]" :ad-source="adList[2]" :ad-height="100"></ad-box>
+      <ad-box
+        v-if="adList[2]"
+        class="advertis-margin"
+        :ad-source="adList[2]"
+        :ad-height="100"
+      ></ad-box>
     </div>
   </article>
 </template>
@@ -191,6 +196,10 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .container {
+  .advertis-margin {
+    padding-top: 40px;
+  }
+
   .header-bg {
     width: 100%;
     background-color: #fff;

@@ -37,7 +37,6 @@ export default defineComponent({
   display: flex;
 
   & > a {
-    margin-top: 40px;
     display: block;
     flex: 1;
   }
