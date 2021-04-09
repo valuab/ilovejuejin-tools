@@ -412,6 +412,7 @@ export default defineComponent({
       // 加入缓存
       this.keyword = value
       this.query.keyword = value
+      this.query.type = this.type
       let allRes: any
       const page = 1
 

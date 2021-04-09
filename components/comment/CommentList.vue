@@ -86,7 +86,7 @@ export default defineComponent({
     // 获取评论列表
     const newsCommentList = await this.$http.comment.getWxSelectCommentList({
       id: this.$props.post.id,
-      typeId: PROT_TYPE_TYPEID.BIG_WORK,
+      typeId: PROT_TYPE_TYPEID.CAR_TALK,
       page: 1,
     })
     for (const i in newsCommentList.list) {
@@ -116,7 +116,7 @@ export default defineComponent({
     getWxSelectCommentList(page: number) {
       return this.$http.comment.getWxSelectCommentList({
         id: this.$props.post.id,
-        typeId: PROT_TYPE_TYPEID.BIG_WORK,
+        typeId: PROT_TYPE_TYPEID.CAR_TALK,
         page,
       })
     },
