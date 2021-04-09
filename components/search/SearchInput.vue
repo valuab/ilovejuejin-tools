@@ -6,7 +6,7 @@
         <Icon icon="CloseOrange" />
       </div>
     </div>
-    <input v-model="inputValue" class="input" />
+    <input v-model="inputValue" class="input" @keyup.enter="search" />
     <button type="button" class="button" @click="search">搜索</button>
   </article>
 </template>
@@ -34,12 +34,17 @@ export default defineComponent({
   emits: ['search', 'deleteSearch'],
   data() {
     return {
-      inputValue: '',
+      inputValue: this.$props.keyword,
       columnName: this.$props.typeName,
     }
   },
-  fetch() {
-    this.inputValue = this.$props.keyword
+  // fetch() {
+  //   this.inputValue =
+  // },
+  watch: {
+    keyword() {
+      this.inputValue = this.$props.keyword
+    },
   },
   methods: {
     /**

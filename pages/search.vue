@@ -75,7 +75,10 @@
       />
       <!-- 需要添加异步 -->
       <SearchError
-        v-if="!typeList.length && !allList[0].list.length"
+        v-if="
+          (!allList.length && !typeList.length) ||
+          (!allList[0].list.length && !typeList[0].list.length)
+        "
         :keyword="keyword"
       />
     </div>
@@ -90,16 +93,16 @@ import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 // 参数列表 // 标记
 
 interface IData {
-  keyword: String
+  keyword: string
   type: number // 搜索类型
-  typeName: String // 搜索类型关键字
+  typeName: string // 搜索类型关键字
   allList: ICommentList[]
   searchAllPage: number
   typeList: ICommentList[]
   typePage: number
   openCarType: boolean
   query: {
-    keyword: String
+    keyword: string
     type: number
     categoryId?: number
     keywordId?: number
@@ -180,18 +183,16 @@ export default defineComponent({
     allList.push(allRes)
 
     const typeList = []
-    if (temporary && temporary?.list.length !== 0) {
-      const typeRes = Object.assign(
-        {
-          list: [],
-          total: 0,
-          page: 1,
-          listLoad: false,
-        },
-        temporary
-      )
-      typeList.push(typeRes)
-    }
+    const typeRes = Object.assign(
+      {
+        list: [],
+        total: 0,
+        page: 1,
+        listLoad: false,
+      },
+      temporary
+    )
+    typeList.push(typeRes)
 
     return {
       allList,
@@ -223,9 +224,8 @@ export default defineComponent({
     // 监听路由
     $route() {
       const query = this.$route.query
-      const keyword = unescape(query.keyword as string) // 搜索关键字
+      const keyword = query.keyword.toString() // 搜索关键字
       this.type = Number(query.type) // 搜索类型
-      this.keyword = keyword
       this.search(keyword)
     },
   },
@@ -378,7 +378,8 @@ export default defineComponent({
      */
     async search(value: string) {
       // 重定向
-      if (value === this.keyword && this.type === +this.query.type) return // 没有更改搜索内容
+      if (value === this.keyword && this.type === +this.query.type && value)
+        return // 没有更改搜索内容
       this.keyword = value
       this.query.keyword = value
       let allRes: any
@@ -401,64 +402,37 @@ export default defineComponent({
           break
       }
 
-      if (allRes && allRes?.list.length !== 0) {
-        const allResType = Object.assign(
-          {
-            list: [],
-            total: 0,
-            page: 1,
-            listLoad: false,
-          },
-          allRes
-        )
-        this.allList.length = 0 // 清除之前数据
-        this.allList.push(allResType)
-      } else {
-        const allResType = Object.assign(
-          {
-            list: [],
-            total: 0,
-            page: 1,
-            listLoad: false,
-          },
-          allRes
-        )
-        this.allList.length = 0 // 清除之前数据
-        this.allList.push(allResType)
-      }
+      const allResType = Object.assign(
+        {
+          list: [],
+          total: 0,
+          page: 1,
+          listLoad: false,
+        },
+        allRes
+      )
+      this.allList.length = 0 // 清除之前数据
+      this.allList.push(allResType)
       // 搜索车型
       const temporary: any = await this.searchByCars(page)
-      if (temporary && temporary?.list.length !== 0) {
-        const typeRes = Object.assign(
-          {
-            list: [],
-            total: 0,
-            page: 1,
-            listLoad: false,
-          },
-          temporary
-        )
-        this.typeList.length = 0 // 清除之前数据
-        this.typeList.push(typeRes)
-      } else {
-        const typeRes = Object.assign(
-          {
-            list: [],
-            total: 0,
-            page: 1,
-            listLoad: false,
-          },
-          temporary
-        )
-        this.typeList.length = 0 // 清除之前数据
-        this.typeList.push(typeRes)
-      }
+      const typeRes = Object.assign(
+        {
+          list: [],
+          total: 0,
+          page: 1,
+          listLoad: false,
+        },
+        temporary
+      )
+      this.typeList.length = 0 // 清除之前数据
+      this.typeList.push(typeRes)
     },
     /**
      * @description 清除搜索
      */
     deleteSearch() {
       this.type = 1 // 改为全部搜索
+      this.search(this.keyword)
     },
     /**
      * @description 查看全部

@@ -14,7 +14,7 @@
           <a-popover
             v-if="iconItem.codeUrl"
             placement="top"
-            :overlay-style="{ width: '80px' }"
+            :overlay-style="{ width: '120px' }"
           >
             <template #content>
               <QRCode :src="iconItem.codeUrl" />
@@ -34,7 +34,7 @@
         </div>
       </template>
     </div>
-    <a-popover placement="top" :overlay-style="{ width: '80px' }" class="skip">
+    <a-popover placement="top" :overlay-style="{ width: '120px' }" class="skip">
       <template #content>
         <QRCode src="https://www.baidu.com/" />
       </template>

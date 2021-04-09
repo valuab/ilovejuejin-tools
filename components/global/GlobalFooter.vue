@@ -8,7 +8,7 @@
             <a-popover
               v-if="iconItem.codeUrl"
               placement="bottom"
-              :overlay-style="{ width: '80px' }"
+              :overlay-style="{ width: '120px' }"
             >
               <template #content>
                 <QRCode :src="iconItem.codeUrl" />

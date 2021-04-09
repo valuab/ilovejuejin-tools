@@ -18,7 +18,7 @@
         <a-popover
           v-else-if="iconItem.codeUrl"
           placement="right"
-          :overlay-style="{ width: '80px' }"
+          :overlay-style="{ width: '120px' }"
         >
           <template #content>
             <QRCode :src="iconItem.codeUrl" />
@@ -83,7 +83,7 @@ export default defineComponent({
     const pathname = this.$route.name || '' // string 页面名
     const origin = this.$route.path // string 域名
     const search = JSON.stringify(this.$route.query) // string 参数
-    console.log(search)
+    // console.log(search)
     // .replace(/-/g, '=').replace(/_/g, '&')
     const domain =
       'https://www.djcars.cn/' + origin || process.env.BASE_URL + origin

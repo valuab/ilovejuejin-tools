@@ -15,7 +15,7 @@
         <div class="post-msg-text-data">
           <div class="post-msg-text-data-time">{{ item.time }}</div>
 
-          <div v-if="isViewCount" class="post-msg-text-data-num">
+          <div v-if="item.isViewCount" class="post-msg-text-data-num">
             <Icon icon="ListView" :size="'12'" />
             <span>{{ item.totalViewCount }}</span>
           </div>

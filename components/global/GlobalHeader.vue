@@ -66,20 +66,25 @@
       @click="showLoginPopUp"
       >登 录</login-button
     >
-    <a-avatar
-      v-if="$accessor.userInfo.isLogin"
-      class="avatar"
-      size="large"
-      :src="$accessor.userInfo.smallImageUrl"
-      @mouseout="mouseout"
-      @mouseenter="mouseenter"
-    ></a-avatar>
 
-    <!-- 退出 -->
-    <div v-if="showOutLoginBox" class="outLogin">
-      <image class="code" :src="$accessor.userInfo.smallImageUrl"></image>
-      <p @click="outLogin">退出登录</p>
-    </div>
+    <a-popover
+      v-if="$accessor.userInfo.isLogin"
+      placement="bottom"
+      :overlay-style="{ width: '180px', height: '30px' }"
+    >
+      <template #content>
+        <div class="outLogin">
+          <QRCode :src="userWxUrl" />
+          <p @click="outLogin">退出登录</p>
+        </div>
+      </template>
+      <!-- 用户头像 -->
+      <a-avatar
+        class="avatar"
+        size="large"
+        :src="$accessor.userInfo.smallImageUrl"
+      ></a-avatar>
+    </a-popover>
 
     <login-pop-up v-if="$accessor.global.isLoginPopUpShow"></login-pop-up>
     <search-popup v-if="$accessor.global.isSearchPopup"></search-popup>
@@ -106,8 +111,12 @@ export default defineComponent({
       justifyContent: 'center',
     }
 
+    // 用户个人小程序链接
+    const userWxUrl = 'https://www.djcars.cn/'
+
     return {
       shopMenuItem,
+      userWxUrl,
     }
   },
   data() {
@@ -237,7 +246,7 @@ export default defineComponent({
 
 .outLogin {
   width: 180px;
-  height: 216px;
+  height: 236px;
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -247,8 +256,8 @@ export default defineComponent({
   right: 0;
 
   .code {
-    width: 40px;
-    height: 40px;
+    width: 180px;
+    height: 180px;
   }
 
   > p {
@@ -256,6 +265,7 @@ export default defineComponent({
     box-shadow: inset 0 -1px 0 0 #e6e6e6;
     text-align: center;
     line-height: 56px;
+    margin-bottom: 0;
     @include text(16px, #888);
   }
 }

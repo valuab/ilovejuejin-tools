@@ -59,8 +59,14 @@
             <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
           </aside>
         </div>
-        <ArticleFooter v-if="article.tagNameList.length" :post="article" />
+        <ArticleFooter
+          v-if="article.tagNameList.length"
+          class="ArticleFooter"
+          :post="article"
+        />
+        <!-- 评论区ad -->
         <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100" />
+        <p class="column-title publish">发表评论</p>
         <CommentInput
           :comment-value="commentValue"
           :post="article"
@@ -136,7 +142,7 @@ export default defineComponent({
     const adList = []
     for (let i = 0; i < 2; i++) {
       const ad = await this.$http.adList.getAdList({
-        pageName: 'article',
+        pageName: this.$props.query.videoType ? 'video' : 'article',
         number: AD_NUMBER_TYPE[i],
       })
       adList.push(ad[0])
@@ -291,6 +297,15 @@ export default defineComponent({
   > * {
     margin-bottom: 20px;
   }
+
+  .ArticleFooter {
+    margin-bottom: 40px;
+    display: block;
+  }
+}
+
+.publish {
+  margin-top: 40px;
 }
 
 .column-title {
