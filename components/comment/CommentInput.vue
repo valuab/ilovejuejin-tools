@@ -6,7 +6,7 @@
         class="commentInput-input"
         placeholder="请输入评论内容："
       />
-      <button type="button" class="commentInput-button" @click="send">
+      <button type="button" class="commentInput-button" @click="send()">
         发布评论
       </button>
     </div>
@@ -72,6 +72,7 @@ export default defineComponent({
      */
     send() {
       this.$emit('send', this.comment)
+      this.comment = ''
     },
   },
 })

@@ -165,6 +165,7 @@ export default defineComponent({
      * @description: 回复当前评论
      */
     send(comment: any) {
+      if (!comment) return
       this.openReplyId = '' // 清除回复框
       for (const i in this.newsCommentList[this.commentPage].list) {
         const { id }: any = this.newsCommentList[this.commentPage].list[i]

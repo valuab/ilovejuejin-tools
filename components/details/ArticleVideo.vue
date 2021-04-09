@@ -62,7 +62,6 @@ export default defineComponent({
       )
       videoUrl = 'https://v.qq.com/txp/iframe/player.html?vid' + newVideoUrl[1]
       this.url = videoUrl
-      // console.log(newVideoUrl)
     } else if (this.$props.videoUrl.includes('https://v.qq.com')) {
       const newVideoUrl = this.$props.videoUrl.split('https://v.qq.com')
       videoUrl = 'https://v.qq.com/txp' + newVideoUrl[1]

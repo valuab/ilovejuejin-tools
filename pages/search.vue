@@ -96,6 +96,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { ICommentList } from '@apiPublic/type'
+import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 
 // 参数列表 // 标记
@@ -203,12 +204,10 @@ export default defineComponent({
     )
     typeList.push(typeRes)
 
-    console.log(temporary)
     if (temporary && temporary.list.length > 4) {
       for (let i = 0; i < 4; i++) {
         typeList[0].copyList.push(typeList[0].list[i])
       }
-      console.log(typeList)
     }
 
     return {
@@ -407,6 +406,10 @@ export default defineComponent({
       // 重定向
       if (value === this.keyword && this.type === +this.query.type && value)
         return // 没有更改搜索内容
+
+      // 加入缓存
+      setSearchHistory(value)
+      // 加入缓存
       this.keyword = value
       this.query.keyword = value
       let allRes: any
@@ -455,14 +458,12 @@ export default defineComponent({
       )
       typeList.push(typeRes)
 
-      console.log(temporary)
       if (temporary && temporary.list.length > 4) {
         for (let i = 0; i < 4; i++) {
           typeList[0].copyList.push(typeList[0].list[i])
         }
       }
       this.typeList = typeList
-      console.log(this.typeList)
     },
     /**
      * @description 清除搜索

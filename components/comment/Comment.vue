@@ -20,7 +20,7 @@
         {{ comment.content }}
       </p>
       <div class="comment-handle">
-        <div class="comment-handle-support" @click="support">
+        <div class="comment-handle-support" @click="support()">
           <Icon v-if="comment.isSupport" icon="ArticleLikeOrange" size="24" />
           <Icon v-else icon="ArticleLikeGrey" size="24" />
           <span>点赞</span>

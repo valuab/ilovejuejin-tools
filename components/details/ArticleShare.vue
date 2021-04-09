@@ -51,11 +51,11 @@ interface IIconItem {
 }
 
 interface IData {
-  showWechat: boolean
   iconList: IIconItem[]
   posts: {
     isSupport: number
   }
+  videoUrl: string
 }
 
 export default defineComponent({
@@ -73,22 +73,36 @@ export default defineComponent({
   emits: ['support'],
   data(): IData {
     return {
-      showWechat: false,
       iconList: [],
       posts: this.$props.post,
+      videoUrl: '',
     }
   },
   fetch() {
+    const fullPath = this.$route.fullPath
     const title = this.post.title
     const pathname = this.$route.name || '' // string 页面名
     const origin = this.$route.path // string 域名
-    const search = JSON.stringify(this.$route.query) // string 参数
-    // console.log(search)
-    // .replace(/-/g, '=').replace(/_/g, '&')
+    let search: any = fullPath.replace(origin + '?', '')
+
+    // 暴力替换
+    for (const i in search) {
+      if (search[i] === '&') {
+        search = search.replace('&', '_')
+      }
+      if (search[i] === '=') {
+        search = search.replace('=', '-')
+      }
+    }
+
+    const url = fullPath.replace(origin, 'articleDetail')
     const domain =
-      'https://www.djcars.cn/' + origin || process.env.BASE_URL + origin
+      'https://www.djcars.cn' + origin || process.env.BASE_URL + origin
     const link = `${domain}/share/${pathname}?search=${search}` // 拼接分享链接
     const weiboUrl = getWeiboUrl(title, link)
+
+    const videoUrl = `https://www.djcars.cn/${url}`
+    this.videoUrl = videoUrl
 
     this.iconList = [
       {
@@ -98,12 +112,12 @@ export default defineComponent({
       },
       {
         icon: 'OptionWechat',
-        codeUrl: link,
+        codeUrl: videoUrl,
         url: '',
       },
       {
         icon: 'ArticleLikeMoment',
-        codeUrl: link,
+        codeUrl: videoUrl,
         url: '',
       },
       {
@@ -114,12 +128,6 @@ export default defineComponent({
     ]
   },
   methods: {
-    mouseout() {
-      this.showWechat = false
-    },
-    mouseenter() {
-      this.showWechat = true
-    },
     /**
      * @description: 点赞
      */

@@ -36,7 +36,7 @@
     </div>
     <a-popover placement="top" :overlay-style="{ width: '120px' }" class="skip">
       <template #content>
-        <QRCode src="https://www.baidu.com/" />
+        <QRCode :src="videoUrl" />
       </template>
       <div class="video-icon">
         <icon icon="ArticleQR" />
@@ -73,25 +73,41 @@ export default defineComponent({
     return {
       iconList: [] as IIconListType[],
       showWechat: false,
+      videoUrl: '',
     }
   },
   fetch() {
+    const fullPath = this.$route.fullPath
     const title = this.post.title
     const pathname = this.$route.name || '' // string 页面名
     const origin = this.$route.path // string 域名
-    const search = JSON.stringify(this.$route.query) // string 参数
+    let search: any = fullPath.replace(origin + '?', '')
+
+    // 暴力替换
+    for (const i in search) {
+      if (search[i] === '&') {
+        search = search.replace('&', '_')
+      }
+      if (search[i] === '=') {
+        search = search.replace('=', '-')
+      }
+    }
     const domain =
       'https://www.djcars.cn/' + origin || process.env.BASE_URL + origin
     const link = `${domain}/share/${pathname}?search=${search}` // 当前页面链接
     const weiboUrl = getWeiboUrl(title, link)
 
+    const url = this.$route.fullPath.replace(origin, 'articleDetail')
+    const videoUrl = `https://www.djcars.cn/${url}`
+    this.videoUrl = videoUrl
+
     this.iconList = [
       {
-        codeUrl: link,
+        codeUrl: videoUrl,
         icon: 'OptionWechat',
       },
       {
-        codeUrl: link,
+        codeUrl: videoUrl,
         icon: 'ArticleLikeMoment',
       },
       { url: weiboUrl, icon: 'OptionWeibo' },
