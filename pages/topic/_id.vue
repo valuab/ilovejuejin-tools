@@ -39,6 +39,7 @@
         v-anchor="'radioAnchor'"
         :total="total"
         class="pagination"
+        :default-page-size="16"
         @change="pageChange"
       ></pagination>
       <ad-box

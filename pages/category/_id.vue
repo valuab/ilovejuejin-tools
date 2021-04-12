@@ -26,6 +26,7 @@
             <pagination
               v-anchor="'tabsAnchor'"
               :total="articleList[index].total || 0"
+              :default-page-size="16"
               class="pagination"
               @change="pageChange"
             ></pagination>

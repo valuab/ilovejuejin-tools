@@ -4,7 +4,6 @@
     :item-render="itemRender"
     hide-on-single-page
     show-less-items
-    :default-page-size="16"
     v-bind="$attrs"
     v-on="$listeners"
   />
