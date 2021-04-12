@@ -74,7 +74,7 @@
     >
       <template #content>
         <div class="outLogin">
-          <img src="/static/myself.png" />
+          <img src="~/static/myself.png" />
           <p @click="outLogin">退出登录</p>
         </div>
       </template>
@@ -249,7 +249,7 @@ export default defineComponent({
   bottom: -215px;
   right: 0;
 
-  .code {
+  > img {
     width: 180px;
     height: 180px;
   }
