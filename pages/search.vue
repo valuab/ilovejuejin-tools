@@ -409,7 +409,7 @@ export default defineComponent({
     search(value: string) {
       let query: any
       if (this.type === 1) {
-        query = { keyword: value }
+        query = merge({}, { keyword: value })
       } else {
         query = merge(this.query, {
           keyword: value,

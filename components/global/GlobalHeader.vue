@@ -82,7 +82,7 @@
       <a-avatar
         class="avatar"
         size="large"
-        :src="$accessor.userInfo.smallImageUrl"
+        src="~/static/myself.png"
       ></a-avatar>
     </a-popover>
 
