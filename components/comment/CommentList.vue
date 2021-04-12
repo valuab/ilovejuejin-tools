@@ -1,5 +1,5 @@
 <template>
-  <article v-if="newsCommentList.length" class="commentList">
+  <div v-if="newsCommentList.length" id="commentList" class="commentList">
     <Comment
       v-for="item in newsCommentList[commentPage].list"
       :key="item.id"
@@ -40,13 +40,14 @@
     </Comment>
     <!-- 搜索分页 -->
     <Pagination
-      v-anchor="'tabsAnchor'"
+      v-anchor="'commentList'"
       :default-page-size="10"
       :total="newsCommentList[commentPage].total"
+      :current="newsCommentList[commentPage].page"
       class="pagination"
       @change="pageChange"
-    ></Pagination>
-  </article>
+    />
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
@@ -100,7 +101,7 @@ export default defineComponent({
       {
         list: [],
         total: 0,
-        page: 0,
+        page: 1,
         listLoad: false,
       },
       newsCommentList
@@ -216,5 +217,11 @@ export default defineComponent({
 
 .seeCommentDatails {
   @include text(14px, #ff8b00);
+}
+
+.pagination {
+  display: block;
+  width: 500px;
+  height: 500px;
 }
 </style>

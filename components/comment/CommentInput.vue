@@ -5,6 +5,7 @@
         v-model="comment"
         class="commentInput-input"
         placeholder="请输入评论内容："
+        @keyup.enter="send()"
       />
       <button type="button" class="commentInput-button" @click="send()">
         发布评论

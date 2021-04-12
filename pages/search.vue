@@ -94,6 +94,7 @@
 </template>
 
 <script lang="ts">
+import merge from 'webpack-merge'
 import { defineComponent } from '@nuxtjs/composition-api'
 import { ICommentList } from '@apiPublic/type'
 import { setSearchHistory } from '@/utils/search'
@@ -113,9 +114,10 @@ interface IData {
   query: {
     keyword: string
     type: string
-    categoryId?: number
-    keywordId?: number
-    hostUserId?: number
+    typeName: string
+    categoryId?: string
+    keywordId?: string
+    hostUserId?: string
   }
 }
 
@@ -124,7 +126,7 @@ export default defineComponent({
   async asyncData({ app, route }) {
     const query = route.query
     const viewUserId = app.$accessor.userInfo.userId.toString()
-    const keyword: string = decodeURI(query.keyword as string) // 搜索关键字
+    const keyword: any = query.keyword // 搜索关键字
     const type = Number(query.type) // 搜索类型
     const typeName = query.typeName // 搜索分类名称
 
@@ -232,6 +234,7 @@ export default defineComponent({
       query: {
         keyword: '',
         type: '0',
+        typeName: '',
       },
     }
   },
@@ -239,7 +242,7 @@ export default defineComponent({
     // 监听路由
     $route() {
       const query = this.$route.query
-      const keyword = query.keyword.toString() // 搜索关键字
+      const keyword: any = query.keyword // 搜索关键字
       this.type = Number(query.type) // 搜索类型
       this.openCarType = false
       this.searchData(keyword)
@@ -404,22 +407,14 @@ export default defineComponent({
     search(value: string) {
       let query: any
       if (this.type === 1) {
-        query = {
+        query = merge({}, { keyword: value })
+      } else {
+        query = merge(this.query, {
           keyword: value,
           type: this.type.toString(),
           typeName: this.typeName,
-        }
-      } else {
-        query = Object.assign(
-          {
-            keyword: value,
-            type: this.type.toString(),
-            typeName: this.typeName,
-          },
-          this.query
-        )
+        })
       }
-
       this.$router.push({
         query,
       })
