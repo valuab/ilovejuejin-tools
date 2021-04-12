@@ -404,7 +404,7 @@ export default defineComponent({
      */
     search(value: string) {
       this.$router.push({
-        path: `/Search?keyword=${value}&type=${this.type}`,
+        path: `/Search?keyword=${value}&type=${this.type}&typeName=${this.typeName}`,
       })
     },
     /**
