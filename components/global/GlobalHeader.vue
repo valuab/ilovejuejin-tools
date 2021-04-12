@@ -96,7 +96,6 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import getToken from '~/api/token'
 
 type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
 
@@ -160,14 +159,9 @@ export default defineComponent({
     },
     outLogin() {
       // 退出登录
-      const token = getToken()
       // 清除token
-      this.$axios.setHeader('sign', token.sign)
-      this.$axios.setHeader('sid', token.sid)
-      this.$axios.setHeader('uid', token.uid.toString())
-      this.$axios.setHeader('uuid', token.uuid)
-      // 清除登录态
       this.$accessor.userInfo.isLogin = false
+      this.$cookies.remove('token') // 清除token
     },
   },
 })

@@ -242,8 +242,8 @@ export default defineComponent({
       const query = this.$route.query
       const keyword = query.keyword.toString() // 搜索关键字
       this.type = Number(query.type) // 搜索类型
-      this.openCarType = true
-      this.search(keyword)
+      this.openCarType = false
+      this.searchData(keyword)
     },
   },
   methods: {
@@ -398,11 +398,21 @@ export default defineComponent({
     },
 
     /**
-     * @description 搜索
+     * @description 搜索方法
      * @param type 搜索类型区分
      * @param value 搜索关键字
      */
-    async search(value: string) {
+    search(value: string) {
+      this.$router.push({
+        path: `/Search?keyword=${value}&type=${this.type}`,
+      })
+    },
+    /**
+     * @description 搜索获取数据
+     * @param type 搜索类型区分
+     * @param value 搜索关键字
+     */
+    async searchData(value: string) {
       // 重定向
       if (value === this.keyword && this.type === +this.query.type && value)
         return // 没有更改搜索内容
@@ -471,7 +481,7 @@ export default defineComponent({
      */
     deleteSearch() {
       this.type = 1 // 改为全部搜索
-      this.search(this.keyword)
+      this.searchData(this.keyword)
     },
     /**
      * @description 查看全部
