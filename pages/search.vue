@@ -124,7 +124,6 @@ export default defineComponent({
   async asyncData({ app, route }) {
     const query = route.query
     const viewUserId = app.$accessor.userInfo.userId.toString()
-
     const keyword: string = decodeURI(query.keyword as string) // 搜索关键字
     const type = Number(query.type) // 搜索类型
     const typeName = query.typeName // 搜索分类名称
@@ -404,7 +403,11 @@ export default defineComponent({
      */
     search(value: string) {
       this.$router.push({
-        path: `/Search?keyword=${value}&type=${this.type}&typeName=${this.typeName}`,
+        query: {
+          keyword: value,
+          type: this.type.toString(),
+          typeName: this.typeName,
+        },
       })
     },
     /**
@@ -482,7 +485,13 @@ export default defineComponent({
     deleteSearch() {
       this.type = 1 // 改为全部搜索
       this.typeName = '' // 改为全部搜索
-      this.searchData(this.keyword)
+      this.$router.push({
+        query: {
+          keyword: this.keyword,
+          type: this.type.toString(),
+          typeName: this.typeName,
+        },
+      })
     },
     /**
      * @description 查看全部

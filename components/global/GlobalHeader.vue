@@ -111,7 +111,7 @@ export default defineComponent({
     }
 
     // 用户个人小程序链接
-    const userWxUrl = 'https://www.djcars.cn/'
+    const userWxUrl = 'https://www.djcars.cn/' + 'myself'
 
     return {
       shopMenuItem,

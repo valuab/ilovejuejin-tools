@@ -81,8 +81,7 @@ export default defineComponent({
   fetch() {
     const fullPath = this.$route.fullPath
     const title = this.post.title
-    const pathname = this.$route.name || '' // string 页面名
-    const origin = this.$route.path // string 域名
+    const origin = this.$route.path // string 页面名
     let search: any = fullPath.replace(origin + '?', '')
 
     // 暴力替换
@@ -98,7 +97,7 @@ export default defineComponent({
     const url = fullPath.replace(origin, 'articleDetail')
     const domain =
       'https://www.djcars.cn' + origin || process.env.BASE_URL + origin
-    const link = `${domain}/share/${pathname}?search=${search}` // 拼接分享链接
+    const link = `${domain}?search=${search}` // 拼接分享链接
     const weiboUrl = getWeiboUrl(title, link)
 
     const videoUrl = `https://www.djcars.cn/${url}`

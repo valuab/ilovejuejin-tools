@@ -123,10 +123,22 @@ export default defineComponent({
     /**
      * @description: 跳转详情
      */
-    navDetails(id: string, forumId: string) {
-      const history = this.$router.resolve(
-        `/details?id=${id}&forumId=${forumId}`
-      )
+    async navDetails(id: string, forumId: string) {
+      // 判断视频数量 videoNum >  0 跳转视频详情
+      const viewUserId = this.$accessor.userInfo.userId
+      const post = await this.$http.posts.getPost({
+        id,
+        forumId: Number(forumId),
+        viewUserId,
+      })
+      let history
+      if (post.videoNum) {
+        history = this.$router.resolve(
+          `/videoDetails?id=${id}&forumId=${forumId}`
+        )
+      } else {
+        history = this.$router.resolve(`/details?id=${id}&forumId=${forumId}`)
+      }
       window.open(history.href, '_blank')
     },
     /**

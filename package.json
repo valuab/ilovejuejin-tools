@@ -41,7 +41,6 @@
     "nuxt": "^2.14.12",
     "nuxt-typed-vuex": "^0.1.22",
     "qrcode": "^1.4.4",
-    "thirtysix": "0.0.1",
     "uuid": "^8.3.2",
     "vue-lazyload": "^1.3.3"
   },
