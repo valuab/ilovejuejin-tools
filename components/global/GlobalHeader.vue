@@ -74,7 +74,7 @@
     >
       <template #content>
         <div class="outLogin">
-          <QRCode :src="userWxUrl" />
+          <img src="/qrcode/miniapp/djcars.jpg" alt="" />
           <p @click="outLogin">退出登录</p>
         </div>
       </template>
@@ -111,7 +111,7 @@ export default defineComponent({
     }
 
     // 用户个人小程序链接
-    const userWxUrl = 'https://www.djcars.cn/' + 'myself'
+    const userWxUrl = `/qrcode/miniapp/djcars.jpg`
 
     return {
       shopMenuItem,
