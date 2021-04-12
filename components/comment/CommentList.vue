@@ -85,7 +85,13 @@ export default defineComponent({
     // if (this.$props.post.commentCount === 0) return
     // const viewUserId = this.$accessor.userInfo.userId
     // 获取评论列表
-    const newsCommentList = await this.$http.comment.getWxSelectCommentList({
+    let getComment
+    if (this.$accessor.userInfo.isLogin) {
+      getComment = this.$http.comment.getWxSelectCommentList
+    } else {
+      getComment = this.$http.comment.getNoLoginWxSelectCommentList
+    }
+    const newsCommentList = await getComment({
       id: this.$props.post.id,
       typeId: PROT_TYPE_TYPEID.CAR_TALK,
       page: 1,
@@ -115,7 +121,13 @@ export default defineComponent({
      * @description: 获取帖子评论列表
      */
     getWxSelectCommentList(page: number) {
-      return this.$http.comment.getWxSelectCommentList({
+      let getComment
+      if (this.$accessor.userInfo.isLogin) {
+        getComment = this.$http.comment.getWxSelectCommentList
+      } else {
+        getComment = this.$http.comment.getNoLoginWxSelectCommentList
+      }
+      return getComment({
         id: this.$props.post.id,
         typeId: PROT_TYPE_TYPEID.CAR_TALK,
         page,

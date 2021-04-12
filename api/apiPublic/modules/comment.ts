@@ -6,16 +6,23 @@ import { IApiResult } from '../index'
 import { handleUrlParams } from '~/utils/data'
 
 const commentLink = {
-  getWxSelectCommentList: '/api/pc/comment/getWxSelectCommentList', // 搜索全部
+  getWxSelectCommentList: '/api/pc/comment/getWxSelectCommentList', // 登录评论数据
+  getNoLoginWxSelectCommentList:
+    '/api/pc/comment/getNoLoginWxSelectCommentList', // 登录评论数据
   getNewCommentReplyList: '/api/pc/comment/getNewCommentReplyList', // 分类搜索
-  supportComment: '/api/pc/comment/supportComment', // 标签搜索
-  postComment: '/api/pc/comment/postComment', // 主持人搜索
+  supportComment: '/api/pc/comment/supportComment', // 点赞
+  postComment: '/api/pc/comment/postComment', // 回复
 }
 
 /**
  * 参数约束 START
  */
 interface INewsCommentListParmas {
+  id: number
+  typeId: number
+  page: number
+}
+interface INoLoginWxSelectCommentList {
   id: number
   typeId: number
   page: number
@@ -81,6 +88,9 @@ export interface IApiCommentDto {
 export interface NewsCommentListResult extends IApiResult {
   result: IApiCommentDto
 }
+export interface NoLoginWxSelectCommentList extends IApiResult {
+  result: IApiCommentDto
+}
 export interface NewCommentReplyListResult extends IApiResult {
   result: IApiCommentDto
 }
@@ -98,6 +108,9 @@ export interface ICommentModule {
   getWxSelectCommentList(
     params: INewsCommentListParmas
   ): Promise<NewsCommentListResult['result']>
+  getNoLoginWxSelectCommentList(
+    params: INoLoginWxSelectCommentList
+  ): Promise<NoLoginWxSelectCommentList['result']>
   getNewCommentReplyList(
     params: INewCommentReplyListParmas
   ): Promise<NewCommentReplyListResult['result']>
@@ -112,6 +125,12 @@ export default ($axios: NuxtAxiosInstance) => {
     async getWxSelectCommentList(params) {
       const url = handleUrlParams(commentLink.getWxSelectCommentList, params)
       const { data } = await $axios.get<NewsCommentListResult>(url)
+
+      return data.result
+    },
+    async getNoLoginWxSelectCommentList(params) {
+      const url = handleUrlParams(commentLink.getWxSelectCommentList, params)
+      const { data } = await $axios.get<NoLoginWxSelectCommentList>(url)
 
       return data.result
     },
