@@ -158,9 +158,9 @@ export default defineComponent({
         return
       }
       // 自己不能回复自己
-      if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
-        return
-      }
+      // if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
+      //   return
+      // }
       this.$emit('reply', this.comment.id)
     },
     /**
@@ -174,9 +174,9 @@ export default defineComponent({
         return
       }
       // 自己不能点赞自己
-      if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
-        return
-      }
+      // if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
+      //   return
+      // }
       const { contentId, shardId } = this.$props.comment
       const shardTypeId = this.$props.comment.typeId
       const commentId = this.$props.comment.id
