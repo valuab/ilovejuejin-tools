@@ -5,7 +5,7 @@
     <aside class="article-body">
       <!-- 分享挂件 -->
       <div v-if="!query.videoTyp" class="article-share">
-        <ArticleShare :post="article" />
+        <ArticleShare :post="article" @support="support" />
       </div>
 
       <article
@@ -73,9 +73,7 @@
           @send="send"
         />
         <p class="column-title">
-          全部评论（{{
-            $accessor.userInfo.isLogin ? article.commentCount : 0
-          }}）
+          精选评论{{ $accessor.userInfo.isLogin ? article.commentCount : 0 }}）
         </p>
         <CommentList ref="commentListRef" :post="article" />
       </article>

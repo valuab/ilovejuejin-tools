@@ -80,8 +80,7 @@ export default defineComponent({
     const fullPath = this.$route.fullPath
     const title = this.post.title
     const origin = this.$route.path // string 页面名
-    let search: any = fullPath.replace(origin + '?', '')
-
+    let search: any = fullPath
     // 暴力替换
     for (const i in search) {
       if (search[i] === '&') {
@@ -91,14 +90,10 @@ export default defineComponent({
         search = search.replace('=', '-')
       }
     }
-    const domain =
-      'https://www.djcars.cn/' + origin || process.env.BASE_URL + origin
-    const link = `${domain}?search=${search}` // 当前页面链接
+    const videoUrl = fullPath.replace(origin, 'articleDetail') // 微信链接
+    const domain = 'https://www.djcars.cn' || process.env.BASE_URL
+    const link = `${domain}/share?${search}` // 拼接分享链接
     const weiboUrl = getWeiboUrl(title, link)
-
-    const url = this.$route.fullPath.replace(origin, 'articleDetail')
-    const videoUrl = `https://www.djcars.cn/${url}`
-    this.videoUrl = videoUrl
 
     this.iconList = [
       {

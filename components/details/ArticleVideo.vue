@@ -10,7 +10,7 @@
       height="100%"
     ></iframe>
     <video v-else :src="videoUrl" class="video" controls="controls"></video>
-    <ArticleVideoShare :post="post" />
+    <ArticleVideoShare :post="post" @support="support" />
     <p class="videoWord">
       <span v-for="item in post.stepList" :key="item.id">{{
         item.content
@@ -46,6 +46,7 @@ export default defineComponent({
       },
     },
   },
+  emits: ['support'],
   data() {
     return {
       url: this.$props.videoUrl,
@@ -77,6 +78,11 @@ export default defineComponent({
         path: `/details?id=${id}&forumId=${forumId}`,
       })
       window.open(href, '_blank')
+    },
+    support() {
+      this.$props.post.isSupport = 1
+      this.$props.post.supportCount++
+      this.$emit('support')
     },
   },
 })

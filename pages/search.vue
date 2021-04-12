@@ -112,7 +112,7 @@ interface IData {
   openCarType: boolean
   query: {
     keyword: string
-    type: number
+    type: string
     categoryId?: number
     keywordId?: number
     hostUserId?: number
@@ -231,7 +231,7 @@ export default defineComponent({
       typeName: '',
       query: {
         keyword: '',
-        type: 0,
+        type: '0',
       },
     }
   },
@@ -402,12 +402,26 @@ export default defineComponent({
      * @param value 搜索关键字
      */
     search(value: string) {
-      this.$router.push({
-        query: {
+      let query: any
+      if (this.type === 1) {
+        query = {
           keyword: value,
           type: this.type.toString(),
           typeName: this.typeName,
-        },
+        }
+      } else {
+        query = Object.assign(
+          {
+            keyword: value,
+            type: this.type.toString(),
+            typeName: this.typeName,
+          },
+          this.query
+        )
+      }
+
+      this.$router.push({
+        query,
       })
     },
     /**
@@ -425,7 +439,7 @@ export default defineComponent({
       // 加入缓存
       this.keyword = value
       this.query.keyword = value
-      this.query.type = this.type
+      this.query.type = this.type.toString()
       let allRes: any
       const page = 1
 
