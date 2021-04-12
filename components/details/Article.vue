@@ -73,7 +73,7 @@
           @send="send"
         />
         <p class="column-title">
-          精选评论{{ $accessor.userInfo.isLogin ? article.commentCount : 0 }}）
+          精选评论({{ $accessor.userInfo.isLogin ? article.commentCount : 0 }})
         </p>
         <CommentList ref="commentListRef" :post="article" />
       </article>

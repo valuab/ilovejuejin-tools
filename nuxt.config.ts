@@ -52,7 +52,7 @@ export default {
 
   // router config
   router: {
-    middleware: ['login-redirect'],
+    middleware: ['login-redirect', 'share-redirect'],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
