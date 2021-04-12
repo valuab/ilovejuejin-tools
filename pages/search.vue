@@ -96,7 +96,6 @@
 </template>
 
 <script lang="ts">
-import merge from 'webpack-merge'
 import { defineComponent } from '@nuxtjs/composition-api'
 import { ICommentList } from '@apiPublic/type'
 import { setSearchHistory } from '@/utils/search'
@@ -409,13 +408,14 @@ export default defineComponent({
     search(value: string) {
       let query: any
       if (this.type === 1) {
-        query = merge({}, { keyword: value })
+        query = { keyword: value }
       } else {
-        query = merge(this.query, {
+        query = {
+          ...query,
           keyword: value,
           type: this.type.toString(),
           typeName: this.typeName,
-        })
+        }
       }
       this.$router.push({
         query,
