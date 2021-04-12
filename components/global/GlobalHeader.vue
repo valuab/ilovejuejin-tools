@@ -74,7 +74,7 @@
     >
       <template #content>
         <div class="outLogin">
-          <img src="/qrcode/miniapp/djcars.jpg" alt="" />
+          <img src="/static/myself.png" />
           <p @click="outLogin">退出登录</p>
         </div>
       </template>
@@ -82,7 +82,7 @@
       <a-avatar
         class="avatar"
         size="large"
-        src="~/static/myself.png"
+        :src="$accessor.userInfo.smallImageUrl"
       ></a-avatar>
     </a-popover>
 
