@@ -152,7 +152,7 @@ export default defineComponent({
      */
     reply() {
       // 判断登录态
-      if (this.$accessor.userInfo.userId === 0) {
+      if (!this.$accessor.userInfo.isLogin) {
         // 调取登录弹窗
         this.$accessor.global.showLoginPopUpOrHide()
         return
@@ -168,7 +168,7 @@ export default defineComponent({
      */
     async support() {
       // 判断登录态
-      if (this.$accessor.userInfo.userId === 0) {
+      if (!this.$accessor.userInfo.isLogin) {
         // 调取登录弹窗
         this.$accessor.global.showLoginPopUpOrHide()
         return

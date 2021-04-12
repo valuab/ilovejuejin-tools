@@ -120,7 +120,7 @@ export default defineComponent({
     async support() {
       if (this.post.isSupport) return
       // 判断登录
-      if (this.$accessor.userInfo.userId === 0) {
+      if (!this.$accessor.userInfo.isLogin) {
         this.$accessor.global.showLoginPopUpOrHide()
         return
       }

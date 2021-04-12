@@ -44,7 +44,7 @@ export default defineComponent({
   },
   fetch() {
     // 判断登录
-    if (this.$accessor.userInfo.userId) {
+    if (this.$accessor.userInfo.isLogin) {
       this.isLogin = true
     } else {
       this.isLogin = false
