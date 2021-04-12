@@ -67,6 +67,7 @@
       <Pagination
         v-if="!openCarType && allList.length && allList[0].list.length"
         v-anchor="'tabsAnchor'"
+        :default-page-size="16"
         :total="allList[searchAllPage - 1].total"
         :current="allList[searchAllPage - 1].page"
         class="pagination"
@@ -76,6 +77,7 @@
       <Pagination
         v-if="openCarType && typeList.length && typeList[0].list.length"
         v-anchor="'tabsAnchor'"
+        :default-page-size="16"
         :total="typeList[typePage - 1].total"
         :current="typeList[typePage - 1].page"
         class="pagination"

@@ -4,13 +4,13 @@
     <!-- 广告 -->
     <aside class="article-body">
       <!-- 分享挂件 -->
-      <div v-if="!query.videoTyp" class="article-share">
+      <div v-if="!query.videoType" class="article-share">
         <ArticleShare :post="article" @support="support" />
       </div>
 
       <article
         class="article"
-        :class="query.videoTyp ? 'article-video-width' : 'article-width'"
+        :class="query.videoType ? 'article-video-width' : 'article-width'"
       >
         <ArticleHeader :post="article" />
         <!-- 视频组件 -->
