@@ -72,7 +72,11 @@
           :post="article"
           @send="send"
         />
-        <p class="column-title">全部评论（{{ article.commentCount }}）</p>
+        <p class="column-title">
+          全部评论（{{
+            $accessor.userInfo.isLogin ? article.commentCount : 0
+          }}）
+        </p>
         <CommentList ref="commentListRef" :post="article" />
       </article>
       <aside class="subs">
@@ -95,9 +99,8 @@ import { mid } from '@/assets/ts/mid'
 // 评论数据结构
 
 interface IStepList {
-  qqVid: string
-  realVideoUrl: string
-  url: string
+  step: string
+  forumId: string
 }
 
 export default defineComponent({
@@ -227,12 +230,9 @@ export default defineComponent({
      */
     playVideo(item: IStepList) {
       const id = this.$props.posts.id || this.$props.posts.postId
-      const forumId = this.$props.posts.forumId
-      const videoType = true
+      const forumId = item.forumId
       const { href } = this.$router.resolve({
-        path: `/videoDetails?id=${id}&forumId=${forumId}&videoUrl=${
-          item.realVideoUrl || item.url
-        }&videoType=${videoType}&qqVid=${item.qqVid}`,
+        path: `/videoDetails?id=${id}&forumId=${forumId}&step=${item.step}`,
       })
       window.open(href, '_blank')
     },

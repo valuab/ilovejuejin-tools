@@ -76,24 +76,18 @@ export default defineComponent({
      * @param id 帖子id
      * @param forumId 帖子forumId
      */
-    navDetail(id: string, forumId: number) {
-      // 判断视频数量 videoNum === 1 跳转视频详情
-      const { videoNum } = this.$props.item
+    async navDetail(id: string, forumId: number) {
+      // 判断视频数量 videoNum >  0 跳转视频详情
+      const viewUserId = this.$accessor.userInfo.userId
+      const post = await this.$http.posts.getPost({
+        id,
+        forumId,
+        viewUserId,
+      })
       let history
-      if (videoNum === 1) {
-        let videoUrl = ''
-        for (const i in this.$props.item.stepList) {
-          if (
-            this.$props.item.stepList[i].showVideoUrl ||
-            this.$props.item.stepList[i].url
-          ) {
-            videoUrl =
-              this.$props.item.stepList[i].showVideoUrl ||
-              this.$props.item.stepList[i].url
-          }
-        }
+      if (post.videoNum) {
         history = this.$router.resolve(
-          `/videoDetails?id=${id}&forumId=${forumId}&videoType=${true}&videoUrl=${videoUrl}`
+          `/videoDetails?id=${id}&forumId=${forumId}`
         )
       } else {
         history = this.$router.resolve(`/details?id=${id}&forumId=${forumId}`)

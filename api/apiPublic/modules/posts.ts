@@ -52,6 +52,10 @@ interface IBuPostStep {
   typeId: number
   topicId: number
   userId: number
+  step: string
+  url: string
+  showVideoUrl: string
+  qqVid: string
 }
 
 /**

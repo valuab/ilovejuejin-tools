@@ -10,10 +10,10 @@ import { defineComponent } from '@nuxtjs/composition-api'
 interface IData {
   post: Object
   query: {
-    id: String
-    forumId: String
+    id: string
+    forumId: string
     videoType?: Boolean
-    videoUrl?: String
+    videoUrl?: string
   }
 }
 
@@ -25,7 +25,14 @@ export default defineComponent({
   name: 'Details',
   layout: 'container',
   async asyncData({ app, route }) {
-    const query = route.query
+    const query = Object.assign(
+      {
+        id: '',
+        forumId: '',
+        videoType: true,
+      },
+      route.query
+    )
     const viewUserId = app.$accessor.userInfo.userId
 
     // 获取帖子对象
@@ -34,6 +41,25 @@ export default defineComponent({
       forumId: Number(query.forumId),
       viewUserId,
     })
+
+    // 遍历取第一条 //或者根据视频位置id取链接
+    for (const i in post.stepList.reverse()) {
+      if (post.stepList[i].url || post.stepList[i].showVideoUrl) {
+        if (query.step === post.stepList[i].step.toString()) {
+          query.videoUrl = post.stepList[i].url || post.stepList[i].showVideoUrl
+          // 腾讯视频
+          if (post.stepList[i].qqVid) {
+            query.qqVid = post.stepList[i].qqVid
+          }
+        } else {
+          query.videoUrl = post.stepList[i].url || post.stepList[i].showVideoUrl
+          // 腾讯视频
+          if (post.stepList[i].qqVid) {
+            query.qqVid = post.stepList[i].qqVid
+          }
+        }
+      }
+    }
 
     return {
       post,
