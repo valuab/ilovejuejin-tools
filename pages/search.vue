@@ -481,6 +481,7 @@ export default defineComponent({
      */
     deleteSearch() {
       this.type = 1 // 改为全部搜索
+      this.typeName = '' // 改为全部搜索
       this.searchData(this.keyword)
     },
     /**
