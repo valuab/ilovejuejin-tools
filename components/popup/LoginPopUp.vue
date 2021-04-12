@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import wxConfig from '~/assets/ts/wxConfig'
 import config from '~/assets/ts/config'
 
 const wxLoginCSSlink = `${config.ASSETS_URL}/public/stylesheets/wxLogin.css`
@@ -40,14 +39,17 @@ export default defineComponent({
     }
   },
   mounted() {
+    const REDIRECT_URL = process.env.REDIRECT_URL
+    const APP_ID = process.env.APP_ID
+
     this.$nextTick(() => {
       ;(window as any).WxLogin({
         self_redirect: false,
         id: 'login-main',
-        appid: wxConfig.APP_ID,
+        appid: APP_ID,
         scope: 'snsapi_login,snsapi_userinfo',
         redirect_uri: encodeURIComponent(
-          wxConfig.REDIRECT_URL + this.$route.fullPath // 加参数
+          REDIRECT_URL + this.$route.fullPath // 加参数
         ),
         state: 'wxLogin',
         href: wxLoginCSSlink,

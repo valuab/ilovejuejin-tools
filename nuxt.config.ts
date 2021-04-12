@@ -9,6 +9,8 @@ export default {
   // https://zh.nuxtjs.org/docs/2.x/configuration-glossary/configuration-env/
   env: {
     BASE_URL: process.env.BASE_URL,
+    REDIRECT_URL: process.env.REDIRECT_URL,
+    APP_ID: process.env.APP_ID,
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
