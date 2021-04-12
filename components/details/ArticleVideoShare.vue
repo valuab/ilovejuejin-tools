@@ -81,6 +81,8 @@ export default defineComponent({
     const title = this.post.title
     const origin = this.$route.path // string 页面名
     let search: any = fullPath
+    search =
+      search.replace(`${origin}` + '?', '') + '&pathName=' + this.$route.name
     // 暴力替换
     for (const i in search) {
       if (search[i] === '&') {
