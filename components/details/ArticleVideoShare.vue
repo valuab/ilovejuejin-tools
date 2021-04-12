@@ -145,6 +145,7 @@ export default defineComponent({
   box-shadow: inset 0 -1px 0 0 #e6e6e6;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   .support {
     display: flex;

@@ -53,6 +53,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     margin-top: 10px;
+    cursor: pointer;
 
     .tag {
       display: flex;

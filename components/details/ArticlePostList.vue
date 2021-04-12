@@ -165,6 +165,7 @@ export default defineComponent({
   display: flex;
   width: 295px;
   flex-direction: column;
+  cursor: pointer;
 
   &-title {
     @include text(20px, #000000, bold);

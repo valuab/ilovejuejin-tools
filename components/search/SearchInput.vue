@@ -118,6 +118,7 @@ p {
     background: $primary-color;
     border: none;
     border-radius: 0;
+    cursor: pointer;
   }
 
   .button:hover {

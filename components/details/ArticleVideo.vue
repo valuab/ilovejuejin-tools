@@ -99,5 +99,6 @@ export default defineComponent({
   font-size: 14px;
   line-height: 14px;
   color: #666;
+  cursor: pointer;
 }
 </style>

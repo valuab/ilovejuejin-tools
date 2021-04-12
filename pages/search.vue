@@ -555,6 +555,7 @@ export default defineComponent({
   &-nav {
     height: 20px;
     padding-left: 10px;
+    cursor: pointer;
 
     @extend .flex-row-vertical-center;
     @include text($font-size-base, #666);
@@ -563,6 +564,7 @@ export default defineComponent({
 
   .backAll {
     color: #ff8022;
+    cursor: pointer;
   }
 }
 
