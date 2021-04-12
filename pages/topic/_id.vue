@@ -164,7 +164,7 @@ export default defineComponent({
     onSearch(value: string) {
       setSearchHistory(value).then(() => {
         this.$router.push(
-          `/search?type=${SEARCH_TYPE.LABEL}&keyword=${value}&keywordId=${this.id}&typeName=${this.detail.name}`
+          `/search?type=${SEARCH_TYPE.LABEL}&keyword=${value}&itemId=${this.id}&typeName=${this.detail.name}`
         )
       })
     },

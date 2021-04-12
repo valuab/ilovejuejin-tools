@@ -118,7 +118,7 @@ interface IData {
     type: string
     typeName: string
     categoryId?: string
-    keywordId?: string
+    itemId?: string
     hostUserId?: string
   }
 }
@@ -132,7 +132,7 @@ export default defineComponent({
     const type = Number(query.type) // 搜索类型
     const typeName = query.typeName // 搜索分类名称
 
-    let categoryId, keywordId: string, hostUserId: string
+    let categoryId, itemId: string, hostUserId: string
     const allList: any[] = []
     const page = 1
     let allRes: any
@@ -154,10 +154,10 @@ export default defineComponent({
         })
         break
       case SEARCH_TYPE.LABEL:
-        keywordId = query.keywordId.toString()
+        itemId = query.itemId.toString()
         allRes = await app.$http.search.getSearchByItemKeywordId({
           keyword: encodeURI(keyword),
-          keywordId,
+          itemId,
           viewUserId,
           page,
         })
@@ -180,12 +180,12 @@ export default defineComponent({
 
     // 关键字匹配车型
     categoryId = query?.categoryId?.toString() || '0'
-    keywordId = query?.keywordId?.toString() || '0'
+    itemId = query?.itemId?.toString() || '0'
     hostUserId = query?.hostUserId?.toString() || '0'
     const temporary = await app.$http.search.getSearchByCars({
       keyword: encodeURI(keyword),
       categoryId,
-      keywordId,
+      itemId,
       hostUserId,
       viewUserId,
       page,
@@ -348,11 +348,11 @@ export default defineComponent({
     getSearchByItemKeywordId(page: number) {
       const { query } = this
       const keyword = query.keyword.toString()
-      const keywordId = query?.keywordId?.toString() || '0'
+      const itemId = query?.itemId?.toString() || '0'
       const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchByItemKeywordId({
         keyword: encodeURI(keyword),
-        keywordId,
+        itemId,
         viewUserId,
         page,
       })
@@ -379,12 +379,12 @@ export default defineComponent({
       const { query } = this
       const keyword = query.keyword.toString()
       const categoryId = query?.categoryId?.toString() || '0'
-      const keywordId = query?.keywordId?.toString() || '0'
-      const hostUserId = query?.keywordId?.toString() || '0'
+      const itemId = query?.itemId?.toString() || '0'
+      const hostUserId = query?.itemId?.toString() || '0'
       const viewUserId = this.$accessor.userInfo.userId.toString()
       const parmas: any = {
         categoryId,
-        keywordId,
+        itemId,
         hostUserId,
         viewUserId,
       }

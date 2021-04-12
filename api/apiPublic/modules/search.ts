@@ -9,7 +9,7 @@ import { handleUrlParams } from '~/utils/data'
 const searchLink = {
   searchAll: '/api/pc/search/searchAll', // 搜索全部
   searchByItemCategoryId: '/api/pc/search/searchByItemCategoryId', // 分类搜索
-  searchByItemKeywordId: '/api/pc/search/searchByItemKeywordId', // 标签搜索
+  searchByItemId: '/api/pc/search/searchByItemId', // 标签搜索
   searchByHostUserId: '/api/pc/search/searchByHostUserId', // 主持人搜索
   searchByCars: '/api/pc/search/searchByCars', // 搜索车型
   getKolList: '/api/pc/search/getHostList', // 获取王牌节目列表
@@ -31,7 +31,7 @@ interface ISearchByItemCategoryIdParmas {
 }
 interface ISearchByItemKeywordIdParmas {
   keyword: string
-  keywordId: string
+  itemId: string
   viewUserId: string
   page: number
 }
@@ -44,7 +44,7 @@ interface ISearchByHostUserIdParmas {
 interface ISearchByCarsParmas {
   keyword: string
   categoryId?: string
-  keywordId?: string
+  itemId?: string
   hostUserId?: string
   viewUserId?: string
   page: number
@@ -153,7 +153,7 @@ export default ($axios: NuxtAxiosInstance) => {
     },
 
     async getSearchByItemKeywordId(params) {
-      const url = handleUrlParams(searchLink.searchByItemKeywordId, params)
+      const url = handleUrlParams(searchLink.searchByItemId, params)
       const { data } = await $axios.get<ISearchByItemKeywordId>(url)
 
       return data.result
