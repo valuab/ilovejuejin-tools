@@ -108,6 +108,7 @@ export default defineComponent({
       },
       { url: weiboUrl, icon: 'OptionWeibo' },
     ]
+    this.videoUrl = videoUrl
   },
   methods: {
     /**
