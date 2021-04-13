@@ -67,7 +67,7 @@ export interface IComment {
   contentId: number
   shardId: number
   auditId: number
-  createTime: number
+  createTime: string
   kol: number
   red: number
   userVoteCommentFlag: number

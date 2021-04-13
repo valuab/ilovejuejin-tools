@@ -124,7 +124,7 @@ export default defineComponent({
       IComment.content = comentValue
       IComment.essenceId = this.comment.rootId // 一级id
       IComment.parentId = this.comment.id // 一级id
-      IComment.createTime = Date.now()
+      IComment.createTime = Date.now().toString()
       IComment.userVoteCommentFlag = 0 // 未点赞
       IComment.parentName = this.$props.commentType ? this.comment.userName : ''
       if (post?.id) {
