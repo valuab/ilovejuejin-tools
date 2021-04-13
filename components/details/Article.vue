@@ -128,6 +128,7 @@ export default defineComponent({
         time: '',
         content: '',
         openAllReply: [],
+        shortCommentReplyList: [],
       },
       commentValue: '', // 输入清除
       adList: [] as IAdListType[],
@@ -176,6 +177,7 @@ export default defineComponent({
         this.IComment.userName = this.$accessor.userInfo.nickname
         this.IComment.smallUserIconUrl = this.$accessor.userInfo.smallImageUrl
         this.IComment.openAllReply = [] // 关闭全部回复
+        this.IComment.shortCommentReplyList = [] // 关闭全部回复
 
         // 添加帖子
         const { newsCommentList, commentPage }: any = this.$refs.commentListRef
