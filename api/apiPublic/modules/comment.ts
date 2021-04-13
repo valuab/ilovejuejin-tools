@@ -39,9 +39,9 @@ interface ISupportCommentParmas {
   shardTypeId: string
 }
 interface IPostCommentParmas {
-  commentId: number
-  contentId: number
-  shardId: number
+  commentId: string
+  contentId: string
+  shardId: string
   content: string
   djcarsmid: string
 }

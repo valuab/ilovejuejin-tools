@@ -25,7 +25,9 @@
       </div>
       <!-- 热评 -->
       <div
-        v-if="item.replayCommentDtoList.length && !item.openAllReply.length"
+        v-if="
+          item.replayCommentDtoList.length && !item.newCommentReplyList.length
+        "
         class="commentItemList"
       >
         <Comment
@@ -40,7 +42,7 @@
         />
       </div>
       <!-- 回复列表 -->
-      <div v-if="item.openAllReply.length" class="commentItemList">
+      <div v-if="item.newCommentReplyList.length" class="commentItemList">
         <Comment
           v-for="kind in item.newCommentReplyList"
           :key="kind.id"
@@ -54,13 +56,13 @@
       </div>
       <!-- 查看全部6条回复 -->
       <p
-        v-if="item.floorReplyCount > 1 && !item.openAllReply.length"
+        v-if="item.floorReplyCount > 1 && !item.newCommentReplyList.length"
         class="seeCommentDatails"
         @click="seeCommentDatails(item)"
       >
         查看全部{{
           item.replayCommentDtoList.length
-            ? item.floorReplyCount - 1
+            ? item.floorReplyCount - item.replayCommentDtoList.length
             : item.floorReplyCount
         }}条回复
       </p>
@@ -69,7 +71,7 @@
     <Pagination
       v-anchor="'commentList'"
       :default-page-size="10"
-      :total="newsCommentList[commentPage].total"
+      :total="Number(newsCommentList[commentPage].total)"
       :current="newsCommentList[commentPage].page"
       class="pagination"
       @change="pageChange"
@@ -124,7 +126,7 @@ export default defineComponent({
       page: 1,
     })
     for (const i in newsCommentList.list) {
-      newsCommentList.list[i].openAllReply = [] // 关闭全部回复
+      newsCommentList.list[i].openAllReply = false // 关闭全部回复
       newsCommentList.list[i].newCommentReplyList = []
       newsCommentList.list[i].shortCommentReplyList = []
       newsCommentList.list[i].replayCommentDtoList = [] // 热评
@@ -194,7 +196,7 @@ export default defineComponent({
       const newsCommentList = await this.getWxSelectCommentList(page)
 
       for (const i in newsCommentList.list) {
-        newsCommentList.list[i].openAllReply = [] // 关闭全部回复
+        newsCommentList.list[i].openAllReply = false // 关闭全部回复
         newsCommentList.list[i].newCommentReplyList = []
         newsCommentList.list[i].shortCommentReplyList = [] // 临时回复
         newsCommentList.list[i].replayCommentDtoList = [] // 热评
@@ -222,17 +224,48 @@ export default defineComponent({
      */
     send(comment: any) {
       if (!comment) return
+      console.log(comment)
       // 处理回复数据
       this.openReplyId = '' // 清除回复框
-      for (const i in this.newsCommentList[this.commentPage].list) {
-        const { id }: any = this.newsCommentList[this.commentPage].list[i]
+      this.newsCommentList[this.commentPage].list.forEach((val: any) => {
+        const { id }: any = val
         if (comment.essenceId === id) {
-          const { shortCommentReplyList }: any = this.newsCommentList[
-            this.commentPage
-          ].list[i]
-          shortCommentReplyList.push(comment)
+          // 回复一级评论
+          if (comment.parentId === id) {
+            const { shortCommentReplyList }: any = val
+            if (!shortCommentReplyList.length) {
+              shortCommentReplyList.push(comment)
+            }
+            shortCommentReplyList.forEach(
+              (element: any, index: any, arr: any) => {
+                if (comment.parentId === element.id) {
+                  arr.splice(index + 1, 0, comment)
+                  return arr
+                }
+              }
+            )
+            return
+          }
+
+          // 回复次级评论
+          const { newCommentReplyList, replayCommentDtoList }: any = val
+          console.log(newCommentReplyList, replayCommentDtoList)
+          newCommentReplyList.forEach((element: any, index: any, arr: any) => {
+            if (comment.parentId === element.id) {
+              console.log('newCommentReplyList', comment.parentId, element.id)
+              console.log('newCommentReplyList', comment, element, index)
+              arr.splice(index + 1, 0, comment)
+              return arr
+            }
+          })
+          replayCommentDtoList.forEach((element: any, index: any, arr: any) => {
+            if (comment.parentId === element.id) {
+              arr.splice(index + 1, 0, comment)
+              return arr
+            }
+          })
         }
-      }
+      })
     },
     /**
      * @description: 查看全部回复
@@ -240,27 +273,26 @@ export default defineComponent({
     async seeCommentDatails(comment: any) {
       const allNewCommentReplyList = await this.getNewCommentReplyList(comment)
       // 获取
-      for (const i in this.newsCommentList[this.commentPage].list) {
-        const { id }: any = this.newsCommentList[this.commentPage].list[i]
-        if (comment.id === id) {
-          const { newCommentReplyList }: any = this.newsCommentList[
-            this.commentPage
-          ].list[i]
-          newCommentReplyList.length = 0
-          // 排除 parentId === 0
-          allNewCommentReplyList.list.forEach((item, j) => {
-            if (item.parentId === '0') {
-              allNewCommentReplyList.list.splice(j, 1)
-            }
-          })
-          newCommentReplyList.push(...allNewCommentReplyList.list)
+      this.newsCommentList[this.commentPage].list.forEach(
+        (val: any, i: any) => {
+          const { id }: any = val
+          if (comment.id === id) {
+            const { newCommentReplyList }: any = val
+            newCommentReplyList.length = 0
+            // 排除 parentId === 0
+            allNewCommentReplyList.list.forEach((item, j, arr) => {
+              if (item.parentId === '0') {
+                arr.splice(j, 1)
+              }
+              return arr
+            })
+            newCommentReplyList.push(...allNewCommentReplyList.list)
 
-          const { openAllReply }: any = this.newsCommentList[
-            this.commentPage
-          ].list[i]
-          openAllReply.push(1)
+            this.newsCommentList[this.commentPage].list[i].openAllReply = true
+            return val
+          }
         }
-      }
+      )
     },
     /**
      * @description: 点击回复

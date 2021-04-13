@@ -179,6 +179,7 @@ export default defineComponent({
         IComment.smallUserIconUrl = this.$accessor.userInfo.smallImageUrl
         IComment.openAllReply = [] // 关闭全部回复
         IComment.shortCommentReplyList = [] // 关闭全部回复
+        IComment.replayCommentDtoList = [] // 关闭全部回复
 
         // 点赞，评论回复所需参数
         IComment.contentId = this.article.id || this.article.postId
@@ -223,7 +224,7 @@ export default defineComponent({
     postComment(content: string) {
       const shardId = this.posts.forumId
       const contentId = this.posts.id
-      const commentId = 0 // 对帖子评论填写0，对评论的回复填写评论id // 如果是对评论的 进行回复 contentid  就是 评论id shardid 就是 评论的contentid
+      const commentId = '0' // 对帖子评论填写0，对评论的回复填写评论id // 如果是对评论的 进行回复 contentid  就是 评论id shardid 就是 评论的contentid
       const userId = this.$accessor.userInfo.userId
       const path = this.$route.name || 'index'
       const token = this.$cookies.get('token')

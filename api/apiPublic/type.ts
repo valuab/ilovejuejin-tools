@@ -12,6 +12,7 @@ export interface IStepList {
 }
 // 文章栏目类型
 export interface IArticleItemType {
+  openAllReply: boolean
   postId: string
   forumId: number
   title: string

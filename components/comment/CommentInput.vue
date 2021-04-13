@@ -1,9 +1,10 @@
 <template>
   <article class="commentInput">
     <div v-if="isLogin" class="commentInput-table">
-      <input
+      <a-textarea
         v-model="comment"
         class="commentInput-input"
+        :auto-size="{ minRows: 3, maxRows: 6 }"
         placeholder="请输入评论内容："
         @keyup.enter="send()"
       />
@@ -114,6 +115,7 @@ export default defineComponent({
   &-input {
     display: flex;
     height: 40px;
+    min-height: 40px !important;
     padding: 0 16px;
     margin-right: 10px;
     background-color: #f5f5f5;

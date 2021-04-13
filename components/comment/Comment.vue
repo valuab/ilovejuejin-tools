@@ -11,9 +11,9 @@
           <span>回复</span>
           {{ comment.parentName }}
         </div>
-        <div v-if="comment.userId === post.userId" class="comment-user-author">
+        <!-- <div v-if="comment.userId === post.userId" class="comment-user-author">
           作者
-        </div>
+        </div> -->
         <div class="comment-user-time">{{ time }}</div>
       </div>
       <p class="comment-content">
@@ -123,7 +123,9 @@ export default defineComponent({
       }
       IComment.content = comentValue
       IComment.essenceId = this.comment.rootId // 一级id
+      IComment.parentId = this.comment.id // 一级id
       IComment.createTime = Date.now()
+      IComment.userVoteCommentFlag = 0 // 未点赞
       IComment.parentName = this.$props.commentType ? this.comment.userName : ''
       if (post?.id) {
         IComment.id = post.id.toString()
