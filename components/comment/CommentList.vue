@@ -1,7 +1,7 @@
 <template>
   <div v-if="newsCommentList.length" id="commentList" class="commentList">
     <Comment
-      v-for="item in newsCommentList[commentPage].list"
+      v-for="item in commentList"
       :key="item.id"
       :comment="item"
       :post="post"
@@ -81,13 +81,14 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import { ICommentList } from '@apiPublic/type'
+import { ICommentList, IArticleItemType } from '@apiPublic/type'
 
 // 获取枚举类型
 import { PROT_TYPE_TYPEID } from '@/enums/content'
 
 interface IData {
   newsCommentList: ICommentList[]
+  commentList: IArticleItemType[]
   commentPage: number
   openReplyId: string
 }
@@ -105,6 +106,7 @@ export default defineComponent({
   data(): IData {
     return {
       newsCommentList: [],
+      commentList: [],
       commentPage: 0,
       openReplyId: '',
     }
@@ -147,6 +149,7 @@ export default defineComponent({
     )
     data.total = Number(data.total)
     this.newsCommentList.push(data)
+    this.commentList.push(...data.list)
     // 获取评论回复列表
   },
   methods: {
@@ -218,6 +221,8 @@ export default defineComponent({
       )
       this.newsCommentList[page - 1] = data
       this.commentPage = page - 1
+      this.commentList.length = 0
+      this.commentList.push(...this.newsCommentList[this.commentPage].list)
     },
     /**
      * @description: 回复当前评论
@@ -284,6 +289,9 @@ export default defineComponent({
               if (item.parentId === '0') {
                 arr.splice(j, 1)
               }
+              const date = item.createTime.replace(/-/g, '/')
+              const postTimeStamp = new Date(date).getTime()
+              item.createTime = postTimeStamp
               return arr
             })
             newCommentReplyList.push(...allNewCommentReplyList.list)
