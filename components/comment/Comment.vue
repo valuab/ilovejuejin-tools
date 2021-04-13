@@ -29,7 +29,7 @@
           <Icon v-else icon="ArticleLikeGrey" size="24" />
           <span>点赞</span>
         </div>
-        <div class="comment-handle-answer" @click="reply">回复</div>
+        <div class="comment-handle-answer" @click="reply()">回复</div>
       </div>
       <CommentInput v-if="isReply" @send="send" />
       <slot />
@@ -122,9 +122,9 @@ export default defineComponent({
         ...this.IComment,
       }
       IComment.content = comentValue
-      IComment.parentId = this.comment.id
+      IComment.essenceId = this.comment.rootId // 一级id
+      IComment.createTime = Date.now()
       IComment.parentName = this.$props.commentType ? this.comment.userName : ''
-
       if (post?.id) {
         IComment.id = post.id.toString()
         this.$emit('send', IComment)

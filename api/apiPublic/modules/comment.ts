@@ -73,6 +73,7 @@ export interface IComment {
   userVoteCommentFlag: number
   supportCount: number
   replayCommentDto: IComment
+  essenceId?: string
 }
 /**
  * 列表数据结构 END

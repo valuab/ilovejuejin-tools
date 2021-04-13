@@ -58,7 +58,11 @@
         class="seeCommentDatails"
         @click="seeCommentDatails(item)"
       >
-        查看全部{{ item.floorReplyCount }}条回复
+        查看全部{{
+          item.replayCommentDtoList.length
+            ? item.floorReplyCount - 1
+            : item.floorReplyCount
+        }}条回复
       </p>
     </Comment>
     <!-- 搜索分页 -->
@@ -222,7 +226,7 @@ export default defineComponent({
       this.openReplyId = '' // 清除回复框
       for (const i in this.newsCommentList[this.commentPage].list) {
         const { id }: any = this.newsCommentList[this.commentPage].list[i]
-        if (comment.parentId === id) {
+        if (comment.essenceId === id) {
           const { shortCommentReplyList }: any = this.newsCommentList[
             this.commentPage
           ].list[i]
