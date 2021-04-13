@@ -94,7 +94,7 @@ export default defineComponent({
     }
     const videoUrl = fullPath.replace(origin, 'articleDetail') // 微信链接
     const domain = 'https://www.djcars.cn' || process.env.BASE_URL
-    const link = `${domain}/share?${search}` // 拼接分享链接
+    const link = `${domain}/share?search=${search}` // 拼接分享链接
     const weiboUrl = getWeiboUrl(title, link)
 
     this.iconList = [

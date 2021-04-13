@@ -80,8 +80,7 @@ export default defineComponent({
   setup(props) {
     const { comment } = toRefs(props)
     const date = comment.value.createTime
-    const postTimeStamp = new Date(date).getTime()
-    const time: string = handleTime(postTimeStamp)
+    const time: string = handleTime(date)
 
     return {
       time,
@@ -117,23 +116,28 @@ export default defineComponent({
       // 回复内容
       this.IComment.content = comentValue
       this.IComment.parentId = this.comment.id
-      this.IComment.parentName = this.commentType ? this.comment.userName : ''
+      this.IComment.parentName = this.$props.commentType
+        ? this.comment.userName
+        : ''
 
       if (post?.id) {
+        this.IComment.id = post.id.toString()
         this.$emit('send', this.IComment)
       } else {
         // 评论失败
+        this.isReply = false
+        this.$message.error(post.msg)
       }
     },
     /**
      * @description: 添加评论回复
      */
     postComment(content: string) {
-      const shardId = this.commentType
+      const shardId = this.$props.commentType
         ? this.comment.contentId
-        : this.post.forumId
-      const contentId = this.post.id
-      const commentId = this.comment.id // 对帖子评论填写0，对评论的回复填写评论id // 如果是对评论的 进行回复 contentid  就是 评论id shardid 就是 评论的 contentid
+        : this.post.forumId // 对帖子评论是forumId，对评论的回复填写评论的shardId
+      const contentId = this.post.id // 对帖子评论填写0，对评论的回复填写评论id
+      const commentId = this.comment.id // 对帖子评论是postId，对评论的回复填写评论contentId
       const userId = this.$accessor.userInfo.userId
       const path = this.$route.name || 'index'
       const token = this.$cookies.get('token')
@@ -161,6 +165,7 @@ export default defineComponent({
       // if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
       //   return
       // }
+      this.isReply = true
       this.$emit('reply', this.comment.id)
     },
     /**

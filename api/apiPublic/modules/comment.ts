@@ -9,7 +9,7 @@ const commentLink = {
   getWxSelectCommentList: '/api/pc/comment/getWxSelectCommentList', // 登录评论数据
   getNoLoginWxSelectCommentList:
     '/api/pc/comment/getNoLoginWxSelectCommentList', // 登录评论数据
-  getNewCommentReplyList: '/api/pc/comment/getNewCommentReplyList', // 分类搜索
+  getNewCommentReplyList: '/api/pc/comment/getNewCommentReplyList', // 获取回复数据
   supportComment: '/api/pc/comment/supportComment', // 点赞
   postComment: '/api/pc/comment/postComment', // 回复
 }
@@ -98,7 +98,7 @@ export interface SupportCommentResult extends IApiResult {
   result: number
 }
 export interface PostCommentResult extends IApiResult {
-  result: number
+  result?: number
 }
 /**
  * 输出解耦 END
@@ -149,7 +149,9 @@ export default ($axios: NuxtAxiosInstance) => {
     async postComment(params) {
       const url = handleUrlParams(commentLink.postComment, params)
       const { data } = await $axios.get<PostCommentResult>(url)
-
+      if (data.err) {
+        return data
+      }
       return data.result
     },
   } as ICommentModule

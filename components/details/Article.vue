@@ -122,10 +122,12 @@ export default defineComponent({
     return {
       IComment: {
         ...this.$accessor.userInfo,
+        id: '',
         smallUserIconUrl: '',
         userName: '',
         time: '',
         content: '',
+        openAllReply: [],
       },
       commentValue: '', // 输入清除
       adList: [] as IAdListType[],
@@ -167,11 +169,13 @@ export default defineComponent({
     async send(comentValue: string) {
       if (!comentValue) return
       const post: any = await this.postComment(comentValue)
-      if (post.id) {
+      if (post?.id) {
         this.IComment.time = handleTime(Date.now())
+        this.IComment.id = post.id.toString()
         this.IComment.content = comentValue
         this.IComment.userName = this.$accessor.userInfo.nickname
         this.IComment.smallUserIconUrl = this.$accessor.userInfo.smallImageUrl
+        this.IComment.openAllReply = [] // 关闭全部回复
 
         // 添加帖子
         const { newsCommentList, commentPage }: any = this.$refs.commentListRef
@@ -200,6 +204,9 @@ export default defineComponent({
 
         // 清除评论内容
         this.commentValue = ''
+      } else {
+        // 评论失败
+        this.$message.error(post.msg)
       }
     },
     /**

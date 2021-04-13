@@ -22,7 +22,9 @@ export default ({ app, $axios, redirect }: Context) => {
     redirect('/error')
   })
   $axios.onResponse(({ config, data }) => {
-    if (config.url?.includes('postComment')) return // 临时排除评论接口错误
+    if (config.url?.includes('postComment')) {
+      return
+    } // 临时排除评论接口错误
     if (data.err) {
       redirect('/error')
     }

@@ -11,14 +11,7 @@
       @send="send"
     >
       <!-- 回复列表 -->
-      <div
-        v-if="
-          item.replayCommentDto &&
-          item.newCommentReplyList &&
-          item.newCommentReplyList.length
-        "
-        class="commentItemList"
-      >
+      <div v-if="item.openAllReply.length" class="commentItemList">
         <Comment
           v-for="kind in item.newCommentReplyList"
           :key="kind.id"
@@ -26,6 +19,7 @@
           :post="post"
           :comment="kind"
           :comment-type="true"
+          @reply="reply"
           @send="send"
         />
       </div>
@@ -99,9 +93,6 @@ export default defineComponent({
     for (const i in newsCommentList.list) {
       newsCommentList.list[i].openAllReply = [] // 关闭全部回复
       newsCommentList.list[i].newCommentReplyList = []
-      newsCommentList.list[i].newCommentReplyList.push(
-        newsCommentList.list[i].replayCommentDto
-      ) // 查看全部回复管理
     }
     const data = Object.assign(
       {
@@ -162,6 +153,11 @@ export default defineComponent({
 
       const newsCommentList = await this.getWxSelectCommentList(page)
 
+      for (const i in newsCommentList.list) {
+        newsCommentList.list[i].openAllReply = [] // 关闭全部回复
+        newsCommentList.list[i].newCommentReplyList = []
+      }
+
       const data = Object.assign(
         {
           list: [],
@@ -179,6 +175,7 @@ export default defineComponent({
      */
     send(comment: any) {
       if (!comment) return
+      // 处理回复数据
       this.openReplyId = '' // 清除回复框
       for (const i in this.newsCommentList[this.commentPage].list) {
         const { id }: any = this.newsCommentList[this.commentPage].list[i]
@@ -186,7 +183,13 @@ export default defineComponent({
           const { newCommentReplyList }: any = this.newsCommentList[
             this.commentPage
           ].list[i]
+          // 开启
+          const { openAllReply }: any = this.newsCommentList[
+            this.commentPage
+          ].list[i]
+          openAllReply.push(1)
           newCommentReplyList.push(comment)
+          console.log(newCommentReplyList)
         }
       }
     },
@@ -203,7 +206,13 @@ export default defineComponent({
             this.commentPage
           ].list[i]
           newCommentReplyList.length = 0
-          newCommentReplyList.push(allNewCommentReplyList.list)
+          // 排除 parentId === 0
+          allNewCommentReplyList.list.forEach((item, j) => {
+            if (item.parentId === '0') {
+              allNewCommentReplyList.list.splice(j, 1)
+            }
+          })
+          newCommentReplyList.push(...allNewCommentReplyList.list)
 
           const { openAllReply }: any = this.newsCommentList[
             this.commentPage
@@ -216,6 +225,7 @@ export default defineComponent({
      * @description: 点击回复
      */
     reply(id: string) {
+      console.log(id)
       this.openReplyId = id // 清除回复框
     },
   },
