@@ -82,6 +82,12 @@ export default defineComponent({
      * @description: 发布内容
      */
     send() {
+      if (!this.$accessor.global.isCommentType) {
+        this.$message.error('提交太频繁，请稍等 10 秒后再尝试！O(∩_∩)O')
+        return
+      }
+      this.$accessor.global.allowComment(false)
+      // 十秒后允许评论
       if (!this.comment) return
       if (!this.comment.trim()) return
       this.loading = true
@@ -90,6 +96,9 @@ export default defineComponent({
       setTimeout(() => {
         this.loading = false
       }, 1000)
+      setTimeout(() => {
+        this.$accessor.global.allowComment(true)
+      }, 10000)
     },
   },
 })

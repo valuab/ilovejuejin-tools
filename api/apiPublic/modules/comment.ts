@@ -33,10 +33,10 @@ interface INewCommentReplyListParmas {
   sort: number
 }
 interface ISupportCommentParmas {
-  commentId: number
-  contentId: number
-  shardId: number
-  shardTypeId: number
+  commentId: string
+  contentId: string
+  shardId: string
+  shardTypeId: string
 }
 interface IPostCommentParmas {
   commentId: number

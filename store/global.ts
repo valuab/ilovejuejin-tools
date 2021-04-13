@@ -8,6 +8,7 @@ export interface IGlobalState {
   isAdPopupShow: Boolean // 广告弹窗显示
   feedBackTabsList: ICategoryListType[] // 反馈弹窗单选列表
   feedBackAppVersion: IAppVersionType[] // 反馈弹窗app版本列表
+  isCommentType: Boolean // 是否允许评论
 }
 
 export const namespaced = true
@@ -19,6 +20,7 @@ export const state: () => IGlobalState = () => ({
   isAdPopupShow: true,
   feedBackTabsList: [],
   feedBackAppVersion: [],
+  isCommentType: true,
 })
 
 export const mutations = mutationTree(state, {
@@ -39,6 +41,9 @@ export const mutations = mutationTree(state, {
   },
   setFeedBackVersion(state, list) {
     state.feedBackAppVersion = list
+  },
+  allowComment(state, value) {
+    state.isCommentType = value
   },
 })
 

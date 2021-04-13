@@ -180,6 +180,11 @@ export default defineComponent({
         IComment.openAllReply = [] // 关闭全部回复
         IComment.shortCommentReplyList = [] // 关闭全部回复
 
+        // 点赞，评论回复所需参数
+        IComment.contentId = this.article.id || this.article.postId
+        IComment.shardId = this.article.forumId
+        IComment.shardTypeId = '2' // 一级评论
+
         // 添加帖子
         const { newsCommentList, commentPage }: any = this.$refs.commentListRef
 

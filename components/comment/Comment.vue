@@ -118,15 +118,16 @@ export default defineComponent({
       const post: any = await this.postComment(comentValue)
 
       // 回复内容
-      this.IComment.content = comentValue
-      this.IComment.parentId = this.comment.id
-      this.IComment.parentName = this.$props.commentType
-        ? this.comment.userName
-        : ''
+      const IComment = {
+        ...this.IComment,
+      }
+      IComment.content = comentValue
+      IComment.parentId = this.comment.id
+      IComment.parentName = this.$props.commentType ? this.comment.userName : ''
 
       if (post?.id) {
-        this.IComment.id = post.id.toString()
-        this.$emit('send', this.IComment)
+        IComment.id = post.id.toString()
+        this.$emit('send', IComment)
       } else {
         // 评论失败
         this.isReply = false
@@ -138,7 +139,7 @@ export default defineComponent({
      */
     postComment(content: string) {
       const shardId = this.$props.commentType
-        ? this.comment.contentId
+        ? this.comment.shardId
         : this.post.forumId // 对帖子评论是forumId，对评论的回复填写评论的shardId
       const contentId = this.post.id // 对帖子评论填写0，对评论的回复填写评论id
       const commentId = this.comment.id // 对帖子评论是postId，对评论的回复填写评论contentId
@@ -188,7 +189,7 @@ export default defineComponent({
       //   return
       // }
       const { contentId, shardId } = this.$props.comment
-      const shardTypeId = this.$props.comment.typeId
+      const shardTypeId = this.$props.comment.typeId.toString()
       const commentId = this.$props.comment.id
       const data: any = await this.$http.comment.supportComment({
         commentId,
