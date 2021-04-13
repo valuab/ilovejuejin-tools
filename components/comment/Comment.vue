@@ -21,7 +21,11 @@
       </p>
       <div class="comment-handle">
         <div class="comment-handle-support" @click="support()">
-          <Icon v-if="comment.isSupport" icon="ArticleLikeOrange" size="24" />
+          <Icon
+            v-if="IComment.userVoteCommentFlag"
+            icon="ArticleLikeOrange"
+            size="24"
+          />
           <Icon v-else icon="ArticleLikeGrey" size="24" />
           <span>点赞</span>
         </div>
@@ -178,6 +182,7 @@ export default defineComponent({
         this.$accessor.global.showLoginPopUpOrHide()
         return
       }
+      if (this.IComment.userVoteCommentFlag) return
       // 自己不能点赞自己
       // if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
       //   return
@@ -192,8 +197,9 @@ export default defineComponent({
         shardTypeId,
       })
 
-      if (data.id) {
-        this.$props.comment.supportCount += 1
+      if (data?.id) {
+        this.IComment.supportCount += 1
+        this.IComment.userVoteCommentFlag = 1
       }
     },
   },
