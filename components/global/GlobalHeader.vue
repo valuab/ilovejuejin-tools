@@ -243,6 +243,7 @@ export default defineComponent({
   height: 236px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   background-color: #fff;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.15);
   position: absolute;
@@ -250,8 +251,10 @@ export default defineComponent({
   right: 0;
 
   > img {
-    width: 180px;
-    height: 180px;
+    display: block;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
   }
 
   > p {
