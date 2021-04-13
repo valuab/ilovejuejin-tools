@@ -171,13 +171,14 @@ export default defineComponent({
       if (!comentValue) return
       const post: any = await this.postComment(comentValue)
       if (post?.id) {
-        this.IComment.time = handleTime(Date.now())
-        this.IComment.id = post.id.toString()
-        this.IComment.content = comentValue
-        this.IComment.userName = this.$accessor.userInfo.nickname
-        this.IComment.smallUserIconUrl = this.$accessor.userInfo.smallImageUrl
-        this.IComment.openAllReply = [] // 关闭全部回复
-        this.IComment.shortCommentReplyList = [] // 关闭全部回复
+        const IComment: any = {}
+        IComment.time = handleTime(Date.now())
+        IComment.id = post.id.toString()
+        IComment.content = comentValue
+        IComment.userName = this.$accessor.userInfo.nickname
+        IComment.smallUserIconUrl = this.$accessor.userInfo.smallImageUrl
+        IComment.openAllReply = [] // 关闭全部回复
+        IComment.shortCommentReplyList = [] // 关闭全部回复
 
         // 添加帖子
         const { newsCommentList, commentPage }: any = this.$refs.commentListRef
@@ -186,7 +187,7 @@ export default defineComponent({
         if (newsCommentList.length === 0) {
           const data = Object.assign(
             {
-              list: [this.IComment],
+              list: [IComment],
               total: 1,
               page: 1,
               listLoad: false,
@@ -197,7 +198,7 @@ export default defineComponent({
         } else {
           const { list } = newsCommentList[commentPage]
           list.reverse()
-          list.push(this.IComment)
+          list.push(IComment)
           list.reverse()
         }
 

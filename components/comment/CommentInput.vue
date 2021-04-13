@@ -7,18 +7,27 @@
         placeholder="请输入评论内容："
         @keyup.enter="send()"
       />
-      <button type="button" class="commentInput-button" @click="send()">
+      <a-button
+        type="primary"
+        :loading="loading"
+        class="commentInput-button"
+        @click="send()"
+      >
         发布评论
-      </button>
+      </a-button>
     </div>
     <div v-else class="commentInput-table">
       <div class="commentInput-input">
         <div class="login-error">登录后可发表评论</div>
         <LoginButton class="login" @click="showLoginPopUp"> 登录 </LoginButton>
       </div>
-      <button type="button" class="commentInput-button" @click="showLoginPopUp">
+      <a-button
+        type="button"
+        class="commentInput-button"
+        @click="showLoginPopUp"
+      >
         发布评论
-      </button>
+      </a-button>
     </div>
   </article>
 </template>
@@ -41,6 +50,7 @@ export default defineComponent({
     return {
       isLogin: false,
       comment: this.$props.commentValue,
+      loading: false,
     }
   },
   fetch() {
@@ -72,8 +82,14 @@ export default defineComponent({
      * @description: 发布内容
      */
     send() {
+      if (!this.comment) return
+      if (!this.comment.trim()) return
+      this.loading = true
       this.$emit('send', this.comment)
       this.comment = ''
+      setTimeout(() => {
+        this.loading = false
+      }, 1000)
     },
   },
 })
