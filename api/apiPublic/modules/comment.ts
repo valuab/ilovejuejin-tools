@@ -72,6 +72,7 @@ export interface IComment {
   red: number
   userVoteCommentFlag: number
   supportCount: number
+  replayCommentDto: IComment
 }
 /**
  * 列表数据结构 END

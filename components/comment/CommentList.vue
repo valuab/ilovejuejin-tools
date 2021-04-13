@@ -23,6 +23,22 @@
           @send="send"
         />
       </div>
+      <!-- 热评 -->
+      <div
+        v-if="item.replayCommentDtoList.length && !item.openAllReply.length"
+        class="commentItemList"
+      >
+        <Comment
+          v-for="kind in item.replayCommentDtoList"
+          :key="kind.id"
+          :open-reply-id="openReplyId"
+          :post="post"
+          :comment="kind"
+          :comment-type="true"
+          @reply="reply"
+          @send="send"
+        />
+      </div>
       <!-- 回复列表 -->
       <div v-if="item.openAllReply.length" class="commentItemList">
         <Comment
@@ -107,6 +123,12 @@ export default defineComponent({
       newsCommentList.list[i].openAllReply = [] // 关闭全部回复
       newsCommentList.list[i].newCommentReplyList = []
       newsCommentList.list[i].shortCommentReplyList = []
+      newsCommentList.list[i].replayCommentDtoList = [] // 热评
+      if (newsCommentList.list[i]?.replayCommentDto) {
+        newsCommentList.list[i].replayCommentDtoList.push(
+          newsCommentList.list[i].replayCommentDto
+        ) // 查看全部回复管理
+      }
     }
     const data = Object.assign(
       {
@@ -171,6 +193,12 @@ export default defineComponent({
         newsCommentList.list[i].openAllReply = [] // 关闭全部回复
         newsCommentList.list[i].newCommentReplyList = []
         newsCommentList.list[i].shortCommentReplyList = [] // 临时回复
+        newsCommentList.list[i].replayCommentDtoList = [] // 热评
+        if (newsCommentList.list[i]?.replayCommentDto) {
+          newsCommentList.list[i].replayCommentDtoList.push(
+            newsCommentList.list[i].replayCommentDto
+          ) // 查看全部回复管理
+        }
       }
 
       const data = Object.assign(
