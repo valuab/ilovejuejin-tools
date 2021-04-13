@@ -10,6 +10,19 @@
       @reply="reply"
       @send="send"
     >
+      <!-- 临时回复列表 -->
+      <div v-if="item.shortCommentReplyList.length" class="commentItemList">
+        <Comment
+          v-for="kind in item.shortCommentReplyList"
+          :key="kind.id"
+          :open-reply-id="openReplyId"
+          :post="post"
+          :comment="kind"
+          :comment-type="true"
+          @reply="reply"
+          @send="send"
+        />
+      </div>
       <!-- 回复列表 -->
       <div v-if="item.openAllReply.length" class="commentItemList">
         <Comment
@@ -93,6 +106,7 @@ export default defineComponent({
     for (const i in newsCommentList.list) {
       newsCommentList.list[i].openAllReply = [] // 关闭全部回复
       newsCommentList.list[i].newCommentReplyList = []
+      newsCommentList.list[i].shortCommentReplyList = []
     }
     const data = Object.assign(
       {
@@ -156,6 +170,7 @@ export default defineComponent({
       for (const i in newsCommentList.list) {
         newsCommentList.list[i].openAllReply = [] // 关闭全部回复
         newsCommentList.list[i].newCommentReplyList = []
+        newsCommentList.list[i].shortCommentReplyList = [] // 临时回复
       }
 
       const data = Object.assign(
@@ -180,15 +195,10 @@ export default defineComponent({
       for (const i in this.newsCommentList[this.commentPage].list) {
         const { id }: any = this.newsCommentList[this.commentPage].list[i]
         if (comment.parentId === id) {
-          const { newCommentReplyList }: any = this.newsCommentList[
+          const { shortCommentReplyList }: any = this.newsCommentList[
             this.commentPage
           ].list[i]
-          // 开启
-          const { openAllReply }: any = this.newsCommentList[
-            this.commentPage
-          ].list[i]
-          openAllReply.push(1)
-          newCommentReplyList.push(comment)
+          shortCommentReplyList.push(comment)
         }
       }
     },
