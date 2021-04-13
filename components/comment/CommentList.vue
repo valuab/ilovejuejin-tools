@@ -189,7 +189,6 @@ export default defineComponent({
           ].list[i]
           openAllReply.push(1)
           newCommentReplyList.push(comment)
-          console.log(newCommentReplyList)
         }
       }
     },
@@ -225,7 +224,6 @@ export default defineComponent({
      * @description: 点击回复
      */
     reply(id: string) {
-      console.log(id)
       this.openReplyId = id // 清除回复框
     },
   },
