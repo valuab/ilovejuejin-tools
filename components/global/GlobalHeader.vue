@@ -39,7 +39,7 @@
           <img
             width="100px"
             height="100px"
-            src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            src="/qrcode/miniapp/shop.png"
             alt="图片加载失败"
           />
         </a-menu-item>
@@ -263,6 +263,7 @@ export default defineComponent({
     text-align: center;
     line-height: 56px;
     margin-bottom: 0;
+    cursor: pointer;
     @include text(16px, #888);
   }
 }
