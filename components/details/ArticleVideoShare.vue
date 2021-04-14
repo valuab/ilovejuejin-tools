@@ -2,7 +2,7 @@
   <aside class="video-share">
     <div class="support" @click.once="support()">
       <div class="video-icon">
-        <icon v-if="post.isSupport" icon="ArticleLikeOrange" :size="'24'" />
+        <icon v-if="posts.isSupport" icon="ArticleLikeOrange" :size="'24'" />
         <icon v-else icon="ArticleLikeGrey" />
       </div>
       <div class="support-num">{{ post.supportCount }}</div>
@@ -74,6 +74,7 @@ export default defineComponent({
       iconList: [] as IIconListType[],
       showWechat: false,
       videoUrl: '',
+      posts: this.$props.post,
     }
   },
   fetch() {
@@ -129,6 +130,7 @@ export default defineComponent({
       })
 
       if (support.id) {
+        this.posts.isSupport = 1
         this.$emit('support')
       }
     },
