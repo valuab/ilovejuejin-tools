@@ -150,6 +150,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     margin-right: 40px;
+    cursor: pointer;
     &-num {
       @include text(12px, #666);
     }

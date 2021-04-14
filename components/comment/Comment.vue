@@ -127,6 +127,7 @@ export default defineComponent({
       IComment.parentId = this.comment.id // 一级id
       IComment.createTime = Date.now().toString()
       IComment.userVoteCommentFlag = 0 // 未点赞
+      IComment.supportCount = 0 // 未点赞 // 点赞数
       IComment.parentName = this.$props.commentType ? this.comment.userName : ''
       if (post?.id) {
         IComment.id = post.id.toString()
@@ -281,6 +282,7 @@ export default defineComponent({
       display: flex;
       align-items: center;
       margin-right: 16px;
+      cursor: pointer;
 
       > span {
         margin-left: 4px;
@@ -290,6 +292,7 @@ export default defineComponent({
     &-answer {
       display: flex;
       align-items: center;
+      cursor: pointer;
     }
   }
 
