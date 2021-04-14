@@ -84,9 +84,8 @@ export default defineComponent({
   emits: ['reply'],
   setup(props) {
     const { comment } = toRefs(props)
-    const date = comment.value.createTime
-    const time: string = handleTime(date)
-
+    const date = Number(comment.value.createTime)
+    const time: any = handleTime(date)
     return {
       time,
     }
