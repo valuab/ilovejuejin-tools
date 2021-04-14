@@ -18,18 +18,18 @@ const commentLink = {
  * 参数约束 START
  */
 interface INewsCommentListParmas {
-  id: number
+  id: string
   typeId: number
   page: number
 }
 interface INoLoginWxSelectCommentList {
-  id: number
+  id: string
   typeId: number
   page: number
 }
 interface INewCommentReplyListParmas {
-  id: number
-  contentId: number
+  id: string
+  contentId: string
   sort: number
 }
 interface ISupportCommentParmas {
@@ -64,8 +64,8 @@ export interface IComment {
   parentName: string
   userId: number
   typeId: number
-  contentId: number
-  shardId: number
+  contentId: string
+  shardId: string
   auditId: number
   createTime: string
   kol: number

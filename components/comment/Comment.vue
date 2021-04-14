@@ -28,7 +28,9 @@
           />
           <Icon v-else icon="ArticleLikeGrey" size="24" />
           <span>点赞</span>
-          <span>{{ IComment.supportCount }}</span>
+          <span v-if="IComment.supportCount > 0">{{
+            IComment.supportCount
+          }}</span>
         </div>
         <div class="comment-handle-answer" @click="reply()">回复</div>
       </div>
@@ -50,6 +52,7 @@ import { IComment } from '@apiModules/comment'
 
 interface IData {
   isReply: boolean
+  isUserVoteCommentFlag: boolean
   IComment: IComment
 }
 export default defineComponent({
@@ -93,6 +96,7 @@ export default defineComponent({
   data(): IData {
     return {
       isReply: false, // 评论展示
+      isUserVoteCommentFlag: false, // 点赞节流
       // 初始化评论数据
       IComment: {
         ...this.$props.comment,
@@ -116,7 +120,6 @@ export default defineComponent({
     async send(comentValue: any) {
       if (!comentValue) return
       const post: any = await this.postComment(comentValue)
-
       // 回复内容
       const IComment = {
         ...this.IComment,
@@ -179,13 +182,15 @@ export default defineComponent({
      * @description: 点赞
      */
     async support() {
+      this.isUserVoteCommentFlag = false
       // 判断登录态
       if (!this.$accessor.userInfo.isLogin) {
         // 调取登录弹窗
         this.$accessor.global.showLoginPopUpOrHide()
         return
       }
-      if (this.IComment.userVoteCommentFlag) return
+      if (this.IComment.userVoteCommentFlag && !this.isUserVoteCommentFlag)
+        return
       // 自己不能点赞自己
       // if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
       //   return
@@ -203,6 +208,8 @@ export default defineComponent({
       if (data?.id) {
         this.IComment.supportCount += 1
         this.IComment.userVoteCommentFlag = 1
+      } else {
+        this.isUserVoteCommentFlag = true
       }
     },
   },
@@ -272,6 +279,7 @@ export default defineComponent({
   &-content {
     @include text(14px, #000000);
 
+    word-break: break-all;
     line-height: 24px;
   }
 

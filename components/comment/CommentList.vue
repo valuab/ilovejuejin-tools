@@ -229,7 +229,6 @@ export default defineComponent({
      */
     send(comment: any) {
       if (!comment) return
-      // console.log(comment)
       // 处理回复数据
       this.openReplyId = '' // 清除回复框
       this.newsCommentList[this.commentPage].list.forEach((val: any) => {
@@ -238,27 +237,27 @@ export default defineComponent({
           // 回复一级评论
           if (comment.parentId === id) {
             const { shortCommentReplyList }: any = val
-            if (!shortCommentReplyList.length) {
-              shortCommentReplyList.push(comment)
-            }
-            shortCommentReplyList.forEach(
-              (element: any, index: any, arr: any) => {
-                if (comment.parentId === element.id) {
-                  arr.splice(index + 1, 0, comment)
-                  return arr
-                }
-              }
-            )
+            shortCommentReplyList.push(comment)
             return
           }
 
           // 回复次级评论
-          const { newCommentReplyList, replayCommentDtoList }: any = val
-          // console.log(newCommentReplyList, replayCommentDtoList)
+          const {
+            newCommentReplyList,
+            replayCommentDtoList,
+            shortCommentReplyList,
+          }: any = val
+          // 回复回复处理
+          shortCommentReplyList.forEach(
+            (element: any, index: any, arr: any) => {
+              if (comment.parentId === element.id) {
+                arr.splice(index + 1, 0, comment)
+                return arr
+              }
+            }
+          )
           newCommentReplyList.forEach((element: any, index: any, arr: any) => {
             if (comment.parentId === element.id) {
-              // console.log('newCommentReplyList', comment.parentId, element.id)
-              // console.log('newCommentReplyList', comment, element, index)
               arr.splice(index + 1, 0, comment)
               return arr
             }

@@ -174,12 +174,19 @@ export default defineComponent({
         const IComment: any = {}
         IComment.time = handleTime(Date.now())
         IComment.id = post.id.toString()
+        IComment.rootId = post.id.toString()
+        IComment.typeId = '19'
         IComment.content = comentValue
         IComment.userName = this.$accessor.userInfo.nickname
         IComment.smallUserIconUrl = this.$accessor.userInfo.smallImageUrl
-        IComment.openAllReply = [] // 关闭全部回复
-        IComment.shortCommentReplyList = [] // 关闭全部回复
-        IComment.replayCommentDtoList = [] // 关闭全部回复
+        // 参数
+        IComment.supportCount = 0
+        IComment.userVoteCommentFlag = 0
+
+        IComment.openAllReply = false // 关闭全部回复
+        IComment.newCommentReplyList = [] //
+        IComment.shortCommentReplyList = [] //
+        IComment.replayCommentDtoList = [] //
 
         // 点赞，评论回复所需参数
         IComment.contentId = this.article.id || this.article.postId
@@ -187,7 +194,11 @@ export default defineComponent({
         IComment.shardTypeId = '2' // 一级评论
 
         // 添加帖子
-        const { newsCommentList, commentPage }: any = this.$refs.commentListRef
+        const {
+          newsCommentList,
+          commentPage,
+          commentList,
+        }: any = this.$refs.commentListRef
 
         // 0 回复
         if (newsCommentList.length === 0) {
@@ -207,6 +218,8 @@ export default defineComponent({
           list.push(IComment)
           list.reverse()
         }
+        commentList.length = 0
+        commentList.push(...newsCommentList[commentPage].list)
 
         // 评论数自增
         this.article.commentCount++

@@ -18,7 +18,7 @@ const postLinks = {
  * 参数约束 START
  */
 interface IPostParams {
-  id: String
+  id: string
   forumId: number
   viewUserId: number
 }
@@ -30,11 +30,11 @@ interface INewListByHostParams {
 }
 
 interface IPdateParams {
-  id: String
+  id: string
   forumId: number
 }
 interface ISupportParams {
-  postId: String
+  postId: string
   forumId: number
 }
 
@@ -46,7 +46,7 @@ interface ISupportParams {
  * 输出解耦 START
  */
 interface IBuPostStep {
-  id: number
+  id: string
   forumId: number
   modeId: number
   typeId: number
@@ -63,7 +63,7 @@ interface IBuPostStep {
  */
 export interface IPostResult extends IApiResult {
   result: {
-    id: number
+    id: string
     forumId: number
     modeId: number
     typeId: number
@@ -121,14 +121,14 @@ export interface IPostHost extends IApiResult {
  * 帖子浏览量更新
  */
 export interface IUpdate extends IApiResult {
-  result: number
+  result: string
 }
 
 /**
  * 帖子点赞
  */
 export interface ISupportPost extends IApiResult {
-  result: number
+  result: string
 }
 
 /**
