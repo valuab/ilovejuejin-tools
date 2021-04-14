@@ -5,6 +5,7 @@
         v-model="comment"
         class="commentInput-input"
         :auto-size="{ minRows: 3, maxRows: 6 }"
+        :max-length="300"
         placeholder="请输入评论内容："
         @keyup.enter="send()"
       />
@@ -109,7 +110,7 @@ export default defineComponent({
   &-table {
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: flex-start;
   }
 
   &-input {
@@ -123,6 +124,7 @@ export default defineComponent({
     box-sizing: border-box;
     flex: 1;
     align-items: center;
+    resize: none;
 
     .login {
       display: flex;

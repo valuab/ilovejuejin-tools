@@ -28,6 +28,7 @@
           />
           <Icon v-else icon="ArticleLikeGrey" size="24" />
           <span>点赞</span>
+          <span>{{ IComment.supportCount }}</span>
         </div>
         <div class="comment-handle-answer" @click="reply()">回复</div>
       </div>
