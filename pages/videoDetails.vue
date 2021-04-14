@@ -8,7 +8,10 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 // 参数列表 // 标记
 interface IData {
-  post: Object
+  post: {
+    title: string
+    content: string
+  }
   query: {
     id: string
     forumId: string
@@ -68,11 +71,35 @@ export default defineComponent({
   },
   data(): IData {
     return {
-      post: {},
+      post: {
+        title: '',
+        content: '',
+      },
       query: {
         id: '',
         forumId: '',
       },
+    }
+  },
+  head() {
+    const title = this.post.title as string
+    const { content }: any = this.post
+    const description = content.slice(0, 50)
+
+    return {
+      title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: description,
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: title,
+        },
+      ],
     }
   },
 })

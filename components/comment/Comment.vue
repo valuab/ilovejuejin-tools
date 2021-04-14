@@ -20,7 +20,7 @@
         {{ comment.content }}
       </p>
       <div class="comment-handle">
-        <div class="comment-handle-support" @click="support()">
+        <div class="comment-handle-support" @click.once="support()">
           <Icon
             v-if="IComment.userVoteCommentFlag"
             icon="ArticleLikeOrange"
@@ -52,7 +52,6 @@ import { IComment } from '@apiModules/comment'
 
 interface IData {
   isReply: boolean
-  isUserVoteCommentFlag: boolean
   IComment: IComment
 }
 export default defineComponent({
@@ -96,7 +95,6 @@ export default defineComponent({
   data(): IData {
     return {
       isReply: false, // 评论展示
-      isUserVoteCommentFlag: false, // 点赞节流
       // 初始化评论数据
       IComment: {
         ...this.$props.comment,
@@ -171,10 +169,6 @@ export default defineComponent({
         this.$accessor.global.showLoginPopUpOrHide()
         return
       }
-      // 自己不能回复自己
-      // if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
-      //   return
-      // }
       this.isReply = true
       this.$emit('reply', this.comment.id)
     },
@@ -182,19 +176,13 @@ export default defineComponent({
      * @description: 点赞
      */
     async support() {
-      this.isUserVoteCommentFlag = false
       // 判断登录态
       if (!this.$accessor.userInfo.isLogin) {
         // 调取登录弹窗
         this.$accessor.global.showLoginPopUpOrHide()
         return
       }
-      if (this.IComment.userVoteCommentFlag && !this.isUserVoteCommentFlag)
-        return
-      // 自己不能点赞自己
-      // if (this.$accessor.userInfo.userId === this.$props.comment.userId) {
-      //   return
-      // }
+      if (this.IComment.userVoteCommentFlag) return
       const { contentId, shardId } = this.$props.comment
       const shardTypeId = this.$props.comment.typeId.toString()
       const commentId = this.$props.comment.id
@@ -208,8 +196,6 @@ export default defineComponent({
       if (data?.id) {
         this.IComment.supportCount += 1
         this.IComment.userVoteCommentFlag = 1
-      } else {
-        this.isUserVoteCommentFlag = true
       }
     },
   },

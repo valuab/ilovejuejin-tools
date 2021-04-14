@@ -1,5 +1,5 @@
 <template>
-  <aside class="subs">
+  <aside v-if="post.opItemCategoryDto" class="subs">
     <div class="subs-title">所属分类</div>
     <div class="subs-msg" @click="navCategory(post.opItemCategoryDto.id)">
       <div class="subs-msg-img">
