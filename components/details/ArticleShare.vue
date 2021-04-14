@@ -2,7 +2,7 @@
   <aside class="share">
     <template v-for="(iconItem, index) in iconList">
       <div :key="iconItem.icon" class="share-tab">
-        <div v-if="index === 0" class="support" @click="support">
+        <div v-if="index === 0" class="support" @click.once="support()">
           <Icon
             :icon="posts.isSupport ? 'ArticleLikeOrange' : iconItem.icon"
             :size="'24'"

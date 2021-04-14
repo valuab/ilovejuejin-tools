@@ -1,6 +1,6 @@
 <template>
   <aside class="video-share">
-    <div class="support" @click="support">
+    <div class="support" @click.once="support()">
       <div class="video-icon">
         <icon v-if="post.isSupport" icon="ArticleLikeOrange" :size="'24'" />
         <icon v-else icon="ArticleLikeGrey" />
