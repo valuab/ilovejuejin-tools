@@ -22,11 +22,10 @@
         </a-menu-item>
         <a-menu-divider :style="{ margin: '0 31px' }"></a-menu-divider>
         <a-menu-item key="miniappBrand">
-          <div>
+          <div class="menu-item-line">
             <icon icon="LogoDjcarsLab" />
             <span>DJCARS潮牌</span>
           </div>
-          \
         </a-menu-item>
         <a-menu-item
           :style="{
@@ -49,11 +48,10 @@
       >
       <a-sub-menu key="car" class="menu-item" title="专业车膜">
         <a-menu-item key="miniappBrand">
-          <div>
+          <div class="menu-item-line">
             <icon icon="LogoProtection" />
             <span>大家车汽车膜</span>
           </div>
-          \
         </a-menu-item>
         <a-menu-item
           :style="{
@@ -210,6 +208,11 @@ export default defineComponent({
 
       &:hover {
         color: $primary-color;
+      }
+
+      .menu-item-line {
+        display: flex;
+        align-items: center;
       }
     }
   }
