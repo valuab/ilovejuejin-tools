@@ -16,9 +16,8 @@
         <a-checkbox :checked="isChecked" @change="change" />
         <span class="checkbox-text">
           已阅读并同意
-          <a style="color: #ff8b00" @click="navProtocol"
-            >"使用条款和隐私政策"</a
-          >
+          <a style="color: #ff8b00" @click="navProtocol">《服务使用协议》</a>
+          <a style="color: #ff8b00" @click="navPrivacy">《隐私政策》</a>
         </span>
       </div>
     </div>
@@ -67,6 +66,11 @@ export default defineComponent({
 
     navProtocol() {
       const history = this.$router.resolve('/loginProtocol')
+      window.open(history.href, '_blank')
+    },
+
+    navPrivacy() {
+      const history = this.$router.resolve('/loginPrivacy')
       window.open(history.href, '_blank')
     },
   },

@@ -23,7 +23,7 @@
         <a-menu-divider :style="{ margin: '0 31px' }"></a-menu-divider>
         <a-menu-item key="miniappBrand">
           <div>
-            <icon icon="LogoDjcars" />
+            <icon icon="LogoDjcarsLab" />
             <span>DJCARS潮牌</span>
           </div>
           \
@@ -39,7 +39,7 @@
           <img
             width="100px"
             height="100px"
-            src="/qrcode/miniapp/shop.png"
+            src="/qrcode/miniapp/djcarsLab.png"
             alt="图片加载失败"
           />
         </a-menu-item>
@@ -47,9 +47,30 @@
       <a-menu-item key="qhc" class="menu-item" @click="menuClick('qhc')"
         >情怀车中心</a-menu-item
       >
-      <a-menu-item key="car" class="menu-item" @click="menuClick('vkoll')"
-        >专业车膜</a-menu-item
-      >
+      <a-sub-menu key="car" class="menu-item" title="专业车膜">
+        <a-menu-item key="miniappBrand">
+          <div>
+            <icon icon="LogoProtection" />
+            <span>大家车汽车膜</span>
+          </div>
+          \
+        </a-menu-item>
+        <a-menu-item
+          :style="{
+            width: '100px',
+            height: '100px',
+            margin: '0 auto 30px',
+            padding: '0',
+          }"
+        >
+          <img
+            width="100px"
+            height="100px"
+            src="/qrcode/miniapp/djcarsProtection.png"
+            alt="图片加载失败"
+          />
+        </a-menu-item>
+      </a-sub-menu>
     </a-menu>
     <a-button
       class="search-btn flex-center"
@@ -142,9 +163,6 @@ export default defineComponent({
           break
         case 'qhc':
           window.open('https://vkool.djcars.cn/', '_blank')
-          break
-        case 'vkoll':
-          window.open('https://vkool.djcars.cn/#/product', '_blank')
           break
         default:
           break
