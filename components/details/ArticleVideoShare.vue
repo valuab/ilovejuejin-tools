@@ -5,7 +5,9 @@
         <icon v-if="posts.isSupport" icon="ArticleLikeOrange" :size="'24'" />
         <icon v-else icon="ArticleLikeGrey" />
       </div>
-      <div class="support-num">{{ post.supportCount }}</div>
+      <div class="support-num" :class="post.isSupport ? 'num_1' : ''">
+        {{ post.supportCount }}
+      </div>
     </div>
     <div class="share">
       <div class="share-word">分享到：</div>
@@ -153,6 +155,9 @@ export default defineComponent({
     cursor: pointer;
     &-num {
       @include text(12px, #666);
+    }
+    .num_1 {
+      color: #ff8022;
     }
   }
   .share {

@@ -91,7 +91,7 @@
       class="login-btn"
       type="link"
       @click="showLoginPopUp"
-      >登 录</login-button
+      >登录</login-button
     >
 
     <a-popover
@@ -273,12 +273,12 @@ export default defineComponent({
     display: block;
     width: 120px;
     height: 120px;
-    margin: 0 auto;
+    margin: 30px auto;
   }
 
   > p {
     height: 56px;
-    box-shadow: inset 0 -1px 0 0 #e6e6e6;
+    box-shadow: inset 0 1px 0 0 #e6e6e6;
     text-align: center;
     line-height: 56px;
     margin-bottom: 0;

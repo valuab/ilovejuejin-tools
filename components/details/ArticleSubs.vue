@@ -164,7 +164,7 @@ export default defineComponent({
 
   > * {
     // 子间距为4px
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
 }
 </style>

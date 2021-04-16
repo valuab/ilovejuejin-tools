@@ -46,7 +46,7 @@
             v-if="item.videoId !== 0"
             class="video"
             :to="{
-              name: 'VideoDetails',
+              name: 'videoDetails',
               query: {
                 id: article.id,
                 forumId: article.forumId,
@@ -63,7 +63,7 @@
             v-else-if="item.qqVid"
             class="video"
             :to="{
-              name: 'VideoDetails',
+              name: 'videoDetails',
               query: {
                 id: article.id || article.postId,
                 forumId: article.forumId,
@@ -286,6 +286,11 @@ export default defineComponent({
   width: 886px;
 }
 
+.column-title {
+  font-size: 20px !important;
+  @include text(20px, #000000, bold);
+}
+
 .article {
   display: flex;
   width: 780px;
@@ -333,10 +338,7 @@ export default defineComponent({
 
 .publish {
   margin-top: 40px;
-}
-
-.column-title {
-  @include text(20px, #000000, bold);
+  margin-bottom: 10px;
 }
 
 .article-share {
