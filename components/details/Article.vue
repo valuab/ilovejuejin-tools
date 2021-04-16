@@ -42,22 +42,34 @@
             :class="!item.smallShowImageUrl ? 'article-none' : ''"
           />
           <!-- 视频展示    -->
-          <aside
+          <nuxt-link
             v-if="item.videoId !== 0"
             class="video"
-            @click="playVideo(item)"
+            :to="{
+              name: 'VideoDetails',
+              query: { id: post.id, forumId: post.forumId, step: item.step },
+            }"
+            target="_blank"
           >
             <img class="video-poster" :src="item.smallShowImageUrl" />
             <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
-          </aside>
+          </nuxt-link>
           <!-- 腾讯视频展示 -->
-          <aside v-else-if="item.qqVid" class="video" @click="playVideo(item)">
+          <nuxt-link
+            v-else-if="item.qqVid"
+            class="video"
+            :to="{
+              name: 'VideoDetails',
+              query: { id: post.id, forumId: post.forumId, step: item.step },
+            }"
+            target="_blank"
+          >
             <img
               class="video-poster"
               :src="item.smallShowImageUrl || article.smallImageUrl"
             />
             <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
-          </aside>
+          </nuxt-link>
         </div>
         <ArticleFooter
           v-if="article.tagNameList.length"
@@ -95,11 +107,6 @@ import { AD_NUMBER_TYPE, IAdListType } from '@apiModules/adList'
 import { mid } from '@/assets/ts/mid'
 
 // 评论数据结构
-
-interface IStepList {
-  step: string
-  forumId: string
-}
 
 export default defineComponent({
   name: 'Article',
@@ -250,18 +257,6 @@ export default defineComponent({
         content,
         djcarsmid,
       })
-    },
-    /**
-     * @description: 视频播放
-     * @param item 数据
-     */
-    playVideo(item: IStepList) {
-      const id = this.$props.posts.id || this.$props.posts.postId
-      const forumId = item.forumId
-      const { href } = this.$router.resolve({
-        path: `/videoDetails?id=${id}&forumId=${forumId}&step=${item.step}`,
-      })
-      window.open(href, '_blank')
     },
     /**
      * @description: 点赞
