@@ -91,6 +91,8 @@ export default defineComponent({
 }
 
 .videoWord {
+  margin: 20px 0 12px;
+  font-size: 16px;
   line-height: 32px;
   @include text-multi(2);
 }

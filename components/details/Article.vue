@@ -297,6 +297,7 @@ export default defineComponent({
   margin-right: 60px;
   flex-direction: column;
   position: relative;
+  margin-bottom: 0 !important;
 
   p {
     font-size: 16px;

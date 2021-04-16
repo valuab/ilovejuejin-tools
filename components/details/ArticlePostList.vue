@@ -188,6 +188,7 @@ export default defineComponent({
 
       &-name {
         @include text(14px, #000000);
+        @include text-multi(2);
 
         margin-bottom: 10px;
         line-height: 20px;
