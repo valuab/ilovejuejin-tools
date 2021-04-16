@@ -54,6 +54,7 @@ export default defineComponent({
     .root-footer {
       width: 1240px;
       margin: 0 auto;
+      padding: 100px 0 0;
       padding-top: 100px;
       background: #fff;
     }

@@ -16,8 +16,12 @@
         <a-checkbox :checked="isChecked" @change="change" />
         <span class="checkbox-text">
           已阅读并同意
-          <a style="color: #ff8b00" @click="navProtocol">《服务使用协议》</a>
-          <a style="color: #ff8b00" @click="navPrivacy">《隐私政策》</a>
+          <nuxt-link to="/loginProtocol" target="_blank" style="color: #ff8b00"
+            >《服务使用协议》</nuxt-link
+          >
+          <nuxt-link to="/loginPrivacy" target="_blank" style="color: #ff8b00"
+            >《隐私政策》</nuxt-link
+          >
         </span>
       </div>
     </div>
@@ -62,16 +66,6 @@ export default defineComponent({
 
     change() {
       this.isChecked = !this.isChecked
-    },
-
-    navProtocol() {
-      const history = this.$router.resolve('/loginProtocol')
-      window.open(history.href, '_blank')
-    },
-
-    navPrivacy() {
-      const history = this.$router.resolve('/loginPrivacy')
-      window.open(history.href, '_blank')
     },
   },
 })
