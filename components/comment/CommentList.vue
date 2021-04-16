@@ -1,81 +1,90 @@
 <template>
-  <div v-if="newsCommentList.length" id="commentList" class="commentList">
-    <Comment
-      v-for="item in commentList"
-      :key="item.id"
-      :comment="item"
-      :post="post"
-      :open-reply-id="openReplyId"
-      class="Comment"
-      @reply="reply"
-      @send="send"
-    >
-      <!-- 临时回复列表 -->
-      <div v-if="item.shortCommentReplyList.length" class="commentItemList">
-        <Comment
-          v-for="kind in item.shortCommentReplyList"
-          :key="kind.id"
-          :open-reply-id="openReplyId"
-          :post="post"
-          :comment="kind"
-          :comment-type="true"
-          @reply="reply"
-          @send="send"
-        />
-      </div>
-      <!-- 热评 -->
-      <div
-        v-if="
-          item.replayCommentDtoList.length && !item.newCommentReplyList.length
-        "
-        class="commentItemList"
+  <div id="commentList" class="commentList">
+    <p class="column-title">
+      精选评论({{
+        $accessor.userInfo.isLogin && newsCommentList.length
+          ? newsCommentList[0].total
+          : 0
+      }})
+    </p>
+    <div v-if="newsCommentList.length" class="commentLists">
+      <Comment
+        v-for="item in commentList"
+        :key="item.id"
+        :comment="item"
+        :post="post"
+        :open-reply-id="openReplyId"
+        class="Comment"
+        @reply="reply"
+        @send="send"
       >
-        <Comment
-          v-for="kind in item.replayCommentDtoList"
-          :key="kind.id"
-          :open-reply-id="openReplyId"
-          :post="post"
-          :comment="kind"
-          :comment-type="true"
-          @reply="reply"
-          @send="send"
-        />
-      </div>
-      <!-- 回复列表 -->
-      <div v-if="item.newCommentReplyList.length" class="commentItemList">
-        <Comment
-          v-for="kind in item.newCommentReplyList"
-          :key="kind.id"
-          :open-reply-id="openReplyId"
-          :post="post"
-          :comment="kind"
-          :comment-type="true"
-          @reply="reply"
-          @send="send"
-        />
-      </div>
-      <!-- 查看全部6条回复 -->
-      <p
-        v-if="item.floorReplyCount > 1 && !item.newCommentReplyList.length"
-        class="seeCommentDatails"
-        @click="seeCommentDatails(item)"
-      >
-        查看全部{{
-          item.replayCommentDtoList.length
-            ? item.floorReplyCount - item.replayCommentDtoList.length
-            : item.floorReplyCount
-        }}条回复
-      </p>
-    </Comment>
-    <!-- 搜索分页 -->
-    <Pagination
-      v-anchor="'commentList'"
-      :default-page-size="10"
-      :total="Number(newsCommentList[commentPage].total)"
-      :current="newsCommentList[commentPage].page"
-      class="pagination"
-      @change="pageChange"
-    />
+        <!-- 临时回复列表 -->
+        <div v-if="item.shortCommentReplyList.length" class="commentItemList">
+          <Comment
+            v-for="kind in item.shortCommentReplyList"
+            :key="kind.id"
+            :open-reply-id="openReplyId"
+            :post="post"
+            :comment="kind"
+            :comment-type="true"
+            @reply="reply"
+            @send="send"
+          />
+        </div>
+        <!-- 热评 -->
+        <div
+          v-if="
+            item.replayCommentDtoList.length && !item.newCommentReplyList.length
+          "
+          class="commentItemList"
+        >
+          <Comment
+            v-for="kind in item.replayCommentDtoList"
+            :key="kind.id"
+            :open-reply-id="openReplyId"
+            :post="post"
+            :comment="kind"
+            :comment-type="true"
+            @reply="reply"
+            @send="send"
+          />
+        </div>
+        <!-- 回复列表 -->
+        <div v-if="item.newCommentReplyList.length" class="commentItemList">
+          <Comment
+            v-for="kind in item.newCommentReplyList"
+            :key="kind.id"
+            :open-reply-id="openReplyId"
+            :post="post"
+            :comment="kind"
+            :comment-type="true"
+            @reply="reply"
+            @send="send"
+          />
+        </div>
+        <!-- 查看全部6条回复 -->
+        <p
+          v-if="item.floorReplyCount > 1 && !item.newCommentReplyList.length"
+          class="seeCommentDatails"
+          @click="seeCommentDatails(item)"
+        >
+          查看全部{{
+            item.replayCommentDtoList.length
+              ? item.floorReplyCount - item.replayCommentDtoList.length
+              : item.floorReplyCount
+          }}条回复
+        </p>
+      </Comment>
+      <!-- 搜索分页 -->
+      <Pagination
+        v-anchor="'commentList'"
+        :default-page-size="10"
+        :total="Number(newsCommentList[commentPage].total)"
+        :current="newsCommentList[commentPage].page"
+        class="pagination"
+        @change="pageChange"
+      />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -314,6 +323,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 .Comment {
   margin-bottom: 20px;
+}
+
+.column-title {
+  @include text(20px, #000000, bold);
 }
 
 .seeCommentDatails {
