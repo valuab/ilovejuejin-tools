@@ -47,7 +47,11 @@
             class="video"
             :to="{
               name: 'VideoDetails',
-              query: { id: post.id, forumId: post.forumId, step: item.step },
+              query: {
+                id: article.id,
+                forumId: article.forumId,
+                step: item.step,
+              },
             }"
             target="_blank"
           >
@@ -60,7 +64,11 @@
             class="video"
             :to="{
               name: 'VideoDetails',
-              query: { id: post.id, forumId: post.forumId, step: item.step },
+              query: {
+                id: article.id || article.postId,
+                forumId: article.forumId,
+                step: item.step,
+              },
             }"
             target="_blank"
           >
