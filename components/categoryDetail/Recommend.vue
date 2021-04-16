@@ -106,10 +106,9 @@ export default defineComponent({
   background-color: #f5f5f5;
 
   .box {
-    display: flex;
     width: 1280px;
     height: 406px;
-    padding: 0 20px;
+    padding: 40px 20px;
     margin: 0 auto;
     flex-direction: column;
     justify-content: center;
@@ -120,6 +119,8 @@ export default defineComponent({
       justify-content: space-between;
 
       h2 {
+        margin: 0;
+        line-height: $font-size-heading;
         @include text($font-size-heading, #000000, bold);
       }
     }
@@ -151,6 +152,7 @@ export default defineComponent({
             width: 190px;
             margin-top: 16px;
             font-size: 16px;
+            line-height: 16px;
           }
         }
       }

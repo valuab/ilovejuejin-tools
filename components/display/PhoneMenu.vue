@@ -130,7 +130,7 @@ export default defineComponent({
         icon: 'LogoApp',
         name: '手机应用APP',
         left: {
-          title: 'IOS',
+          title: 'iOS',
           desc: '微信扫一扫，看汽车态度',
           img: '/qrcode/offic/ios.png',
         },
@@ -203,6 +203,7 @@ export default defineComponent({
       cursor: pointer;
 
       span {
+        font-size: 16px;
         margin-left: 16px;
       }
     }

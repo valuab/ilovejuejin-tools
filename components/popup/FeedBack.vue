@@ -73,14 +73,15 @@
             v-model="appIssue.textArea"
             class="contact-textArea"
             :max-length="140"
-            placeholder="第一步：打开APP
-第二步：点击到底部菜单发帖功能
-第三步：无法发出文章，或者其他？
-
-请用140字描述操作中遇到的问题"
             show-count
             :auto-size="{ minRows: 6, maxRows: 6 }"
           ></a-textarea>
+          <p v-if="appIssue.textArea.length === 0" class="textarea-placeholder">
+            第一步：打开APP<br />
+            第二步：点击到底部菜单发帖功能<br />
+            第三步：无法发出文章，或者其他？<br /><br />
+            请用140字描述操作中遇到的问题
+          </p>
         </div>
         <!-- APP问题END -->
 
@@ -398,6 +399,7 @@ export default defineComponent({
 
     & > .issue-box {
       margin-top: 16px;
+      position: relative;
 
       .issue-phone {
         display: flex;
@@ -411,6 +413,14 @@ export default defineComponent({
 
       .contact-textArea {
         margin-top: 16px;
+      }
+
+      .textarea-placeholder {
+        position: absolute;
+        top: 55px;
+        left: 12px;
+        pointer-events: none;
+        @include text($font-size-base, #ccc);
       }
 
       .dropdown-title {

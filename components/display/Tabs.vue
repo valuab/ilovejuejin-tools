@@ -168,6 +168,7 @@ export default defineComponent({
 .tabs {
   height: 64px;
   border-bottom: 1px solid #e6e6e6;
+  z-index: 1;
 
   @include flex;
 

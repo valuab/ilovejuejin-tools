@@ -12,7 +12,7 @@
       </span>
       <figcaption>
         <cite>
-          <p class="tag">{{ item.itemCategoryName }}</p>
+          <p class="tag text-hidden-1">{{ item.itemCategoryName }}</p>
           <p class="name">{{ title }}</p>
         </cite>
         <aside>

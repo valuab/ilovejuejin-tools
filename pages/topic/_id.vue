@@ -3,7 +3,7 @@
     <header class="header-bg">
       <ad-box
         v-if="adList[0]"
-        class="advertis-margin"
+        class="advertis-padding-top"
         :ad-source="adList[0]"
         :ad-height="120"
       ></ad-box>
@@ -19,7 +19,12 @@
           <img src="/qrcode/miniapp/djcars.jpg" />
         </aside>
       </div>
-      <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100"></ad-box>
+      <ad-box
+        v-if="adList[1]"
+        :ad-source="adList[1]"
+        :ad-height="100"
+        class="advertis-padding-bottom"
+      ></ad-box>
     </header>
     <div class="main">
       <div
@@ -44,7 +49,7 @@
       ></pagination>
       <ad-box
         v-if="adList[2]"
-        class="advertis-margin"
+        class="advertis-padding-top"
         :ad-source="adList[2]"
         :ad-height="100"
       ></ad-box>
@@ -197,8 +202,12 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .container {
-  .advertis-margin {
+  .advertis-padding-top {
     padding-top: 40px;
+  }
+
+  .advertis-padding-bottom {
+    padding-bottom: 40px;
   }
 
   .header-bg {

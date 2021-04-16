@@ -2,7 +2,12 @@
   <article>
     <header class="header">
       <div>
-        <h1>{{ data.name }}</h1>
+        <nuxt-link
+          :to="{ name: 'topic-id', params: { id: data.id } }"
+          target="_blank"
+        >
+          <h1>{{ data.name }}</h1>
+        </nuxt-link>
         <p class="text-hidden-1">{{ data.description }}</p>
       </div>
       <nuxt-link
@@ -65,14 +70,14 @@ export default defineComponent({
 
   h1 {
     margin-bottom: 10px;
-
+    line-height: 20px;
     @include text($font-size-heading, #000000, bold);
   }
 
   p {
     width: 58rem;
-    font-size: 14px;
-    color: #666;
+    line-height: 14px;
+    @include text($font-size-base, #666);
   }
 
   .nav-detail {
@@ -95,7 +100,7 @@ export default defineComponent({
     margin-right: 21px;
   }
 
-  .card-box {
+  .card-box:not(:last-child) {
     margin-right: 20px;
   }
 }

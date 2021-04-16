@@ -292,6 +292,8 @@ export default defineComponent({
     width: 1280px;
     padding: 30px 20px 0;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .radio-search {

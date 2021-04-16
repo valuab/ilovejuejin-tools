@@ -10,7 +10,7 @@
       <a-sub-menu key="shopping" class="menu-item" title="官方商城">
         <a-menu-item key="taobao">
           <a
-            :style="shopMenuItem"
+            class="menu-item-line"
             href="https://djcars.taobao.com/"
             target="_blank"
           >
@@ -20,7 +20,7 @@
         </a-menu-item>
         <a-menu-item key="tmall">
           <a
-            :style="shopMenuItem"
+            class="menu-item-line"
             href="https://djcsccp.tmall.com/"
             target="_blank"
           >
@@ -211,6 +211,8 @@ export default defineComponent({
       .menu-item-line {
         display: flex;
         align-items: center;
+        justify-content: center;
+        @include text($font-size-lg, #000);
       }
     }
   }
