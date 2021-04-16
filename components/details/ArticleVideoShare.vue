@@ -154,7 +154,7 @@ export default defineComponent({
     margin-right: 40px;
     cursor: pointer;
     &-num {
-      @include text(12px, #666);
+      @include text(12px, #666, bold);
     }
     .num_1 {
       color: #ff8022;

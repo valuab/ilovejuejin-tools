@@ -165,9 +165,7 @@ export default defineComponent({
   cursor: pointer;
 
   .num {
-    font-size: 10px;
-    line-height: 10px;
-    color: #666;
+    @include text(12px, #666, bold);
   }
 
   .num_1 {
