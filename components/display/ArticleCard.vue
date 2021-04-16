@@ -1,31 +1,33 @@
 <template>
-  <figure class="container" @click="navDetail(item.postId, item.forumId)">
-    <img
-      v-lazy="item.smallImageUrl"
-      :src="item.smallImageUrl"
-      class="img"
-      :alt="item.title"
-    />
-    <span v-if="item.itemKeywordName" class="column-tag">
-      {{ item.itemKeywordName }}
-    </span>
-    <figcaption>
-      <cite>
-        <p class="tag">{{ item.itemCategoryName }}</p>
-        <p class="name">{{ title }}</p>
-      </cite>
-      <aside>
-        <div>
-          <span>{{ item.userName }}</span>
-          <span>{{ time }}</span>
-        </div>
-        <div v-if="isViewCount">
-          <icon icon="ListView" size="12" />
-          <span>{{ item.totalViewCount }}</span>
-        </div>
-      </aside>
-    </figcaption>
-  </figure>
+  <nuxt-link :to="linkHref" target="_blank">
+    <figure class="container">
+      <img
+        v-lazy="item.smallImageUrl"
+        :src="item.smallImageUrl"
+        class="img"
+        :alt="item.title"
+      />
+      <span v-if="item.itemKeywordName" class="column-tag">
+        {{ item.itemKeywordName }}
+      </span>
+      <figcaption>
+        <cite>
+          <p class="tag">{{ item.itemCategoryName }}</p>
+          <p class="name">{{ title }}</p>
+        </cite>
+        <aside>
+          <div>
+            <span>{{ item.userName }}</span>
+            <span>{{ time }}</span>
+          </div>
+          <div v-if="isViewCount">
+            <icon icon="ListView" size="12" />
+            <span>{{ item.totalViewCount }}</span>
+          </div>
+        </aside>
+      </figcaption>
+    </figure>
+  </nuxt-link>
 </template>
 <script lang="ts">
 import {
@@ -51,6 +53,7 @@ export default defineComponent({
     const time = ref('') // 文章时间
     const title = ref('') // 文章标题
     const isViewCount = ref(true) // 阅读数展示
+    const linkHref = ref('')
     const dataInit = () => {
       const date = item.value.publishTime.replace(/-/g, '/')
       const postTimeStamp = new Date(date).getTime()
@@ -58,6 +61,9 @@ export default defineComponent({
         new Date().getTime() - postTimeStamp >= 24 * 60 * 60 * 1000
       time.value = handleTime(postTimeStamp)
       title.value = substrByByte(item.value.title, 62)
+      linkHref.value = `${
+        item.value.videoNum ? '/videoDetails' : '/details'
+      }?id=${item.value.postId}&forumId=${item.value.forumId}`
     }
 
     dataInit()
@@ -67,33 +73,9 @@ export default defineComponent({
     return {
       time,
       title,
+      linkHref,
       isViewCount,
     }
-  },
-  methods: {
-    /**
-     * 跳转详情
-     * @param id 帖子id
-     * @param forumId 帖子forumId
-     */
-    async navDetail(id: string, forumId: number) {
-      // 判断视频数量 videoNum >  0 跳转视频详情
-      const viewUserId = this.$accessor.userInfo.userId
-      const post = await this.$http.posts.getPost({
-        id,
-        forumId,
-        viewUserId,
-      })
-      let history
-      if (post.videoNum) {
-        history = this.$router.resolve(
-          `/videoDetails?id=${id}&forumId=${forumId}`
-        )
-      } else {
-        history = this.$router.resolve(`/details?id=${id}&forumId=${forumId}`)
-      }
-      window.open(history.href, '_blank')
-    },
   },
 })
 </script>

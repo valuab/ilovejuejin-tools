@@ -5,7 +5,12 @@
         <h1>{{ data.name }}</h1>
         <p class="text-hidden-1">{{ data.description }}</p>
       </div>
-      <a-button class="nav-detail" @click="navAllDetail">查看全部 ></a-button>
+      <nuxt-link
+        class="nav-detail"
+        :to="{ name: 'topic-id', params: { id: data.id } }"
+        target="_blank"
+        >查看全部 >
+      </nuxt-link>
     </header>
     <div class="main">
       <topic-img class="topicImg" :img-url="data.smallImageUrl"></topic-img>
@@ -47,12 +52,6 @@ export default defineComponent({
       count: 3,
     })
     this.articleList = list
-  },
-  methods: {
-    navAllDetail() {
-      const history = this.$router.resolve(`/topic/${this.$props.data.id}`)
-      window.open(history.href, '_blank')
-    },
   },
 })
 </script>

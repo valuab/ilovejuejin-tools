@@ -9,16 +9,24 @@
       </a-sub-menu>
       <a-sub-menu key="shopping" class="menu-item" title="官方商城">
         <a-menu-item key="taobao">
-          <div :style="shopMenuItem" @click="menuClick('taobao')">
+          <a
+            :style="shopMenuItem"
+            href="https://djcars.taobao.com/"
+            target="_blank"
+          >
             <icon :style="{ marginRight: '10px' }" icon="LogoTaobao" />
             <span>淘宝商城</span>
-          </div>
+          </a>
         </a-menu-item>
         <a-menu-item key="tmall">
-          <div :style="shopMenuItem" @click="menuClick('tmall')">
+          <a
+            :style="shopMenuItem"
+            href="https://djcsccp.tmall.com/"
+            target="_blank"
+          >
             <icon :style="{ marginRight: '10px' }" icon="LogoTmall" />
             <span>天猫商城</span>
-          </div>
+          </a>
         </a-menu-item>
         <a-menu-divider :style="{ margin: '0 31px' }"></a-menu-divider>
         <a-menu-item key="miniappBrand">
@@ -43,9 +51,9 @@
           />
         </a-menu-item>
       </a-sub-menu>
-      <a-menu-item key="qhc" class="menu-item" @click="menuClick('qhc')"
-        >情怀车中心</a-menu-item
-      >
+      <a-menu-item key="qhc" class="menu-item">
+        <a href="https://vkool.djcars.cn/" target="_blank">情怀车中心</a>
+      </a-menu-item>
       <a-sub-menu key="car" class="menu-item" title="专业车膜">
         <a-menu-item key="miniappBrand">
           <div class="menu-item-line">
@@ -116,8 +124,6 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-type clickType = 'taobao' | 'tmall' | 'qhc' | 'vkoll'
-
 export default defineComponent({
   name: 'GlobalHeader',
   emits: ['showSearch'],
@@ -149,22 +155,6 @@ export default defineComponent({
 
     showSearchPopup() {
       this.$accessor.global.showSearchPopup()
-    },
-
-    menuClick(type: clickType) {
-      switch (type) {
-        case 'taobao':
-          window.open('https://djcars.taobao.com/', '_blank')
-          break
-        case 'tmall':
-          window.open('https://djcsccp.tmall.com/', '_blank')
-          break
-        case 'qhc':
-          window.open('https://vkool.djcars.cn/', '_blank')
-          break
-        default:
-          break
-      }
     },
 
     mouseenter() {
@@ -208,6 +198,14 @@ export default defineComponent({
 
       &:hover {
         color: $primary-color;
+      }
+
+      a {
+        color: #000;
+
+        &:hover {
+          color: $primary-color;
+        }
       }
 
       .menu-item-line {
