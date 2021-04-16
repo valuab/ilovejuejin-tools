@@ -14,6 +14,7 @@ export interface IStepList {
 export interface IArticleItemType {
   openAllReply: boolean
   postId: string
+  id?: string
   forumId: number
   title: string
   userName: string

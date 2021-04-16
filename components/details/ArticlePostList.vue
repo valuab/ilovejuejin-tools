@@ -1,11 +1,15 @@
 <template>
   <aside v-if="newListByHostUserId.list.length" class="post">
     <div class="post-title">最近发表</div>
-    <div
+    <nuxt-link
       v-for="item in newListByHostUserId.list"
       :key="item.postId"
       class="post-msg"
-      @click="navDetails(item.postId, item.forumId)"
+      :to="{
+        name: item.videoNum ? `videoDetails` : `details`,
+        query: { id: item.id || item.postId, forumId: item.forumId },
+      }"
+      target="_blank"
     >
       <div class="post-msg-img">
         <img :src="item.smallImageUrl" alt="" />
@@ -26,7 +30,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </nuxt-link>
     <div
       v-if="newListByHostUserId.total > 10 && show"
       class="post-more"
@@ -120,27 +124,6 @@ export default defineComponent({
     },
   },
   methods: {
-    /**
-     * @description: 跳转详情
-     */
-    async navDetails(id: string, forumId: string) {
-      // 判断视频数量 videoNum >  0 跳转视频详情
-      const viewUserId = this.$accessor.userInfo.userId
-      const post = await this.$http.posts.getPost({
-        id,
-        forumId: Number(forumId),
-        viewUserId,
-      })
-      let history
-      if (post.videoNum) {
-        history = this.$router.resolve(
-          `/videoDetails?id=${id}&forumId=${forumId}`
-        )
-      } else {
-        history = this.$router.resolve(`/details?id=${id}&forumId=${forumId}`)
-      }
-      window.open(history.href, '_blank')
-    },
     /**
      * @description: 获取数据
      */

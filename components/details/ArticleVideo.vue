@@ -16,7 +16,12 @@
         item.content
       }}</span>
     </p>
-    <a class="videoSee" @click="seeDatails">查看内容详情 ></a>
+    <nuxt-link
+      class="videoSee"
+      :to="{ name: 'details', query: { id: post.id, forumId: post.forumId } }"
+      target="_blank"
+      >查看内容详情 ></nuxt-link
+    >
   </div>
 </template>
 
@@ -70,15 +75,6 @@ export default defineComponent({
     }
   },
   methods: {
-    seeDatails() {
-      // 跳转文章详情
-      const id = this.$props.post.id || this.$props.post.postId
-      const forumId = this.$props.post.forumId
-      const { href } = this.$router.resolve({
-        path: `/details?id=${id}&forumId=${forumId}`,
-      })
-      window.open(href, '_blank')
-    },
     support() {
       this.$props.post.isSupport = 1
       this.$props.post.supportCount++
