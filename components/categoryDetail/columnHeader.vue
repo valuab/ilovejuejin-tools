@@ -79,6 +79,7 @@ export default defineComponent({
         p {
           width: 42rem;
           margin: 0;
+          line-height: 1.5;
 
           @include text($font-size-lg, #666);
         }

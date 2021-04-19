@@ -143,6 +143,7 @@ export default defineComponent({
       }
 
       .name {
+        line-height: 1.4;
         @include text($font-size-lg, $text-color, bold);
 
         max-height: 48px;

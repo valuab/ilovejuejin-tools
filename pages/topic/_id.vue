@@ -241,6 +241,7 @@ export default defineComponent({
             @include text($font-size-lg, #717171);
 
             width: 37rem;
+            line-height: 1.5;
           }
         }
       }
