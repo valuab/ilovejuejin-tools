@@ -104,5 +104,7 @@ export default defineComponent({
   line-height: 14px;
   color: #666;
   cursor: pointer;
+  display: block;
+  margin-bottom: 20px;
 }
 </style>

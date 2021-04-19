@@ -10,7 +10,7 @@
       <div class="subs-msg-img">
         <img :src="item.smallImageUrl" alt="" />
         <div v-if="item.kol" class="icon">
-          <Icon icon="NavKol" :size="'24'" />
+          <Icon icon="KolBadgeK" :size="'24'" />
         </div>
       </div>
       <div class="subs-msg-text">
@@ -105,8 +105,10 @@ export default defineComponent({
   width: 295px;
   flex-direction: column;
   cursor: pointer;
+  margin-bottom: 60px !important;
 
   &-title {
+    margin-bottom: 20px !important;
     @include text(20px, #000000, bold);
   }
 
@@ -155,6 +157,7 @@ export default defineComponent({
       }
 
       &-tips {
+        line-height: 1.4;
         @include text(14px, #333333);
 
         @include text-multi(2);
@@ -162,9 +165,9 @@ export default defineComponent({
     }
   }
 
-  > * {
+  > *:not(:last-child) {
     // 子间距为4px
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 }
 </style>

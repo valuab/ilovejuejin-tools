@@ -1,6 +1,11 @@
 <template>
   <div class="body">
-    <ad-box v-if="adList[0]" :ad-source="adList[0]" :ad-height="100" />
+    <ad-box
+      v-if="adList[0]"
+      class="ad-header"
+      :ad-source="adList[0]"
+      :ad-height="100"
+    />
     <!-- 广告 -->
     <aside class="article-body">
       <!-- 分享挂件 -->
@@ -274,6 +279,9 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+.ad-header {
+  margin-top: 40px !important;
+}
 .article-body {
   display: flex;
   padding: 60px 0 0 0;
@@ -288,7 +296,8 @@ export default defineComponent({
 
 .column-title {
   font-size: 20px !important;
-  @include text(20px, #000000, bold);
+  color: #000 !important;
+  font-weight: bold !important;
 }
 
 .article {

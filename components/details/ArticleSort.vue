@@ -50,8 +50,10 @@ export default defineComponent({
   width: 295px;
   flex-direction: column;
   cursor: pointer;
+  margin-bottom: 60px !important;
 
   &-title {
+    margin-bottom: 20px !important;
     @include text(20px, #000000, bold);
   }
 
@@ -93,6 +95,7 @@ export default defineComponent({
       }
 
       &-tips {
+        line-height: 1.4;
         @include text(14px, #333333);
 
         @include text-multi(2);
@@ -100,9 +103,9 @@ export default defineComponent({
     }
   }
 
-  > * {
+  > *:not(:last-child) {
     // 子间距为4px
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 }
 </style>

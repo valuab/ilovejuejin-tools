@@ -163,6 +163,7 @@ export default defineComponent({
   cursor: pointer;
 
   &-title {
+    margin-bottom: 20px;
     @include text(20px, #000000, bold);
   }
 
@@ -233,7 +234,6 @@ export default defineComponent({
   }
 
   > * {
-    // 子间距为4px
     margin-bottom: 20px;
   }
 }

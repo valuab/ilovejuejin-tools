@@ -557,7 +557,6 @@ export default defineComponent({
   padding-top: 40px;
   padding-left: 20px;
   margin-bottom: 20px;
-  line-height: 1;
 
   @extend .flex-row-vertical-center;
 
