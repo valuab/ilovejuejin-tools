@@ -243,6 +243,7 @@ export default defineComponent({
   .login-btn {
     color: #3a3a3a;
     margin-left: 19px;
+    font-size: 16px !important;
     @extend .btn-init;
 
     &:hover {
