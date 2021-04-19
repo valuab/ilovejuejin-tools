@@ -28,9 +28,11 @@
           />
           <Icon v-else icon="ArticleLikeGrey" size="24" />
           <span>点赞</span>
-          <span v-if="IComment.supportCount > 0">{{
-            IComment.supportCount
-          }}</span>
+          <span
+            v-if="IComment.supportCount > 0"
+            :class="IComment.userVoteCommentFlag ? 'num-1' : ''"
+            >{{ IComment.supportCount }}</span
+          >
         </div>
         <div class="comment-handle-answer" @click="reply()">回复</div>
       </div>
@@ -230,7 +232,7 @@ export default defineComponent({
     align-items: center;
 
     &-name {
-      @include text(12px, #333333);
+      @include text(12px, #333333, bold);
     }
 
     // 回复
@@ -286,6 +288,10 @@ export default defineComponent({
 
       > span {
         margin-left: 4px;
+      }
+
+      .num-1 {
+        color: #ff8022;
       }
     }
 

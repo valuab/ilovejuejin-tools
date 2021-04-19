@@ -93,6 +93,7 @@
         <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100" />
         <p class="column-title publish">发表评论</p>
         <CommentInput
+          class="commentInput"
           :comment-value="commentValue"
           :post="article"
           @send="send"
@@ -358,5 +359,9 @@ export default defineComponent({
 
 .article-none {
   margin-bottom: 0;
+}
+
+.commentInput {
+  margin-bottom: 40px;
 }
 </style>
