@@ -549,13 +549,12 @@ export default defineComponent({
 }
 
 .search-content {
-  max-width: 1280px !important;
+  max-width: 1240px !important;
   margin: 0 auto;
 }
 
 .column-title {
   padding-top: 40px;
-  padding-left: 20px;
   margin-bottom: 20px;
 
   @extend .flex-row-vertical-center;
@@ -574,7 +573,7 @@ export default defineComponent({
 
   &-nav {
     height: 20px;
-    padding-left: 10px;
+    padding-left: 20px;
     cursor: pointer;
 
     @extend .flex-row-vertical-center;
@@ -586,9 +585,5 @@ export default defineComponent({
     color: #ff8022;
     cursor: pointer;
   }
-}
-
-.article-list {
-  margin-left: 20px;
 }
 </style>
