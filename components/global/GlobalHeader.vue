@@ -32,7 +32,7 @@
         <a-menu-item key="miniappBrand">
           <div class="menu-item-line">
             <icon icon="LogoDjcarsLab" />
-            <span>DJCARS潮牌</span>
+            <span style="color: #000">DJCARS潮牌</span>
           </div>
         </a-menu-item>
         <a-menu-item
@@ -57,8 +57,8 @@
       <a-sub-menu key="car" class="menu-item" title="专业车膜">
         <a-menu-item key="miniappBrand">
           <div class="menu-item-line">
-            <icon icon="LogoProtection" />
-            <span>大家车汽车膜</span>
+            <icon icon="LogoProtection" size="20" />
+            <span style="color: #000">大家车汽车膜</span>
           </div>
         </a-menu-item>
         <a-menu-item

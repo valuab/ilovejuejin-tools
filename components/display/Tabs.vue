@@ -207,6 +207,7 @@ export default defineComponent({
     line-height: 64px;
     cursor: pointer;
     transition: color 0.2s;
+    font-size: 16px;
 
     &-active {
       font-weight: bold;

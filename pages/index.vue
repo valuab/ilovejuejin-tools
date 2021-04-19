@@ -14,19 +14,33 @@
           <div
             class="column-carousel"
             :style="{
-              background: `url(${newList[0].smallImageUrl}) no-repeat 100% / 100%`,
+              background: `url(${
+                newList[0] && newList[0].smallImageUrl
+              }) no-repeat 100% / 100%`,
             }"
           >
             <client-only>
-              <a-carousel dots-class="dots" autoplay arrows>
+              <a-carousel
+                class="carousel-wrap"
+                dots-class="dots"
+                autoplay
+                arrows
+              >
                 <template #prevArrow>
-                  <div class="custom-slick-arrow-left">
-                    <icon icon="ArrowWhite"></icon>
+                  <div class="custom-slick-arrow custom-slick-arrow-left">
+                    <icon
+                      class="custom-slick-arrow-icon"
+                      icon="ArrowWhite"
+                    ></icon>
                   </div>
                 </template>
                 <template #nextArrow>
-                  <div class="custom-slick-arrow-right">
-                    <icon icon="ArrowWhite" rotate="180"></icon>
+                  <div class="custom-slick-arrow custom-slick-arrow-right">
+                    <icon
+                      class="custom-slick-arrow-icon"
+                      icon="ArrowWhite"
+                      rotate="180"
+                    ></icon>
                   </div>
                 </template>
                 <nuxt-link
@@ -195,6 +209,7 @@
           ></article-list>
           <pagination
             v-anchor="'tabsAnchor'"
+            style="margin-top: 14px"
             :total="categoryColumn.total || 0"
             :default-page-size="16"
             @change="changeCategory"
@@ -410,35 +425,34 @@ export default defineComponent({
   transform: translate(-50%);
 
   .advertis-margin {
-    margin-top: 40px;
+    margin: 40px 0;
   }
 
   .column-item {
     position: relative;
     padding-right: 20px;
 
-    .custom-slick-arrow-left {
-      left: 0;
-      z-index: 1;
-      display: flex;
+    .custom-slick-arrow {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
       width: 30px;
       height: 60px;
-      margin-top: -30px;
-      line-height: 80px;
-      text-align: center;
       background-color: rgba(0, 0, 0, 0.7);
-    }
+      z-index: 1;
 
-    .custom-slick-arrow-right {
-      right: 0;
-      z-index: 1;
-      display: flex;
-      width: 30px;
-      height: 60px;
-      margin-top: -30px;
-      line-height: 80px;
-      text-align: center;
-      background-color: rgba(0, 0, 0, 0.7);
+      &-left {
+        left: 0;
+      }
+
+      &-right {
+        right: 0;
+
+        .custom-slick-arrow-icon {
+          position: relative;
+          left: -4px;
+        }
+      }
     }
 
     .dots {
@@ -506,7 +520,7 @@ export default defineComponent({
       height: 154px;
       margin-bottom: 15px;
 
-      @include text($font-size-base, #000, bold);
+      @include text($font-size-base, #000);
       @include hoverColor($primary-color);
 
       p {

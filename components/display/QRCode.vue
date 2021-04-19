@@ -40,6 +40,8 @@ export default defineComponent({
   position: relative;
   width: var(--size);
   height: var(--size);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+
   .qrcodeIcon {
     position: absolute;
     z-index: 1;

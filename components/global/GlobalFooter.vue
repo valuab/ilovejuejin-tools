@@ -130,7 +130,7 @@ export default defineComponent({
 
   .slogan {
     margin: 0;
-    @include text($font-size-base, #000, bold);
+    @include text($font-size-base, #000);
   }
 
   .footer-content {

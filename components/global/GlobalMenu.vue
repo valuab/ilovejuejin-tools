@@ -122,6 +122,7 @@ export default defineComponent({
 
     .menu-item-title {
       margin-left: 8px;
+      white-space: nowrap;
 
       @include text($font-size-lg, $heading-color, 600);
     }
@@ -132,9 +133,9 @@ export default defineComponent({
       .all-btn {
         border: none;
         padding: 0;
-        color: #3a3a3a;
 
         @include flex(row, flex-start, center);
+        @include text(12px, #666);
       }
     }
 
