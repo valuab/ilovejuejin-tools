@@ -37,15 +37,15 @@
         </a-menu-item>
         <a-menu-item
           :style="{
-            width: '100px',
-            height: '100px',
+            width: '120px',
+            height: '120px',
             margin: '0 auto 30px',
             padding: '0',
           }"
         >
           <img
-            width="100px"
-            height="100px"
+            width="120px"
+            height="120px"
             src="/qrcode/miniapp/djcarsLab.png"
             alt="图片加载失败"
           />
@@ -63,15 +63,15 @@
         </a-menu-item>
         <a-menu-item
           :style="{
-            width: '100px',
-            height: '100px',
+            width: '120px',
+            height: '120px',
             margin: '0 auto 30px',
             padding: '0',
           }"
         >
           <img
-            width="100px"
-            height="100px"
+            width="120px"
+            height="120px"
             src="/qrcode/miniapp/djcarsProtection.png"
             alt="图片加载失败"
           />

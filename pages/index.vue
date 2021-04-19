@@ -562,6 +562,7 @@ export default defineComponent({
           .kol-name {
             width: 100px;
             padding-left: 10px;
+            font-weight: normal;
           }
         }
 

@@ -17,7 +17,7 @@
           <p>{{ detail.description }}</p>
         </div>
       </div>
-      <a-avatar src="/qrcode/miniapp/djcars.jpg" :size="100"></a-avatar>
+      <a-avatar src="/qrcode/miniapp/djcars.jpg" :size="120"></a-avatar>
     </div>
   </header>
 </template>

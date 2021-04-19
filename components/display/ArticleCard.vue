@@ -109,6 +109,9 @@ export default defineComponent({
     line-height: 30px;
     text-align: center;
     background-color: $primary-color;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
 
     @include text($font-size-base, #ffffff);
 
