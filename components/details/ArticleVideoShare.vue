@@ -99,19 +99,18 @@ export default defineComponent({
     const domain = 'https://www.djcars.cn' || process.env.BASE_URL
     const link = `${domain}/share?search=${search}` // 拼接分享链接
     const weiboUrl = getWeiboUrl(title, link)
-
+    this.videoUrl = `https://www.djcars.cn/${videoUrl}`
     this.iconList = [
       {
-        codeUrl: videoUrl,
+        codeUrl: this.videoUrl,
         icon: 'OptionWechat',
       },
       {
-        codeUrl: videoUrl,
+        codeUrl: this.videoUrl,
         icon: 'ArticleLikeMoment',
       },
       { url: weiboUrl, icon: 'OptionWeibo' },
     ]
-    this.videoUrl = videoUrl
   },
   methods: {
     /**

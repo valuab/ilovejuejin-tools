@@ -1,6 +1,12 @@
 <template>
   <div class="qrcodeBox" :style="{ '--size': size }">
-    <img width="100%" height="100%" :src="qrSrc" alt="加载二维码失败" />
+    <img
+      width="100%"
+      height="100%"
+      :src="qrSrc"
+      alt="加载二维码失败"
+      :title="src"
+    />
     <div class="qrcodeIcon">
       <icon icon="LogoDjcar" size="30" />
     </div>
