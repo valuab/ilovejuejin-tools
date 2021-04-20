@@ -285,6 +285,7 @@ export default defineComponent({
       align-items: center;
       margin-right: 16px;
       cursor: pointer;
+      font-size: 12px;
 
       > span {
         margin-left: 4px;
