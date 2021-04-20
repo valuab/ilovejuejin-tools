@@ -27,7 +27,7 @@
             size="24"
           />
           <Icon v-else icon="ArticleLikeGrey" size="24" />
-          <span>点赞</span>
+          <span v-if="IComment.supportCount === 0">点赞</span>
           <span
             v-if="IComment.supportCount > 0"
             :class="IComment.userVoteCommentFlag ? 'num-1' : ''"
