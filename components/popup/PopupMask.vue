@@ -48,7 +48,7 @@ export default defineComponent({
         break
     }
     const style = reactive({
-      top: unref(showHeader) ? '80px' : '0px',
+      top: unref(showHeader) ? '82px' : '0px',
       alignItems,
     })
     /** ** 布局设置END *****/
