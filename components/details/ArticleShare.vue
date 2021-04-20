@@ -165,7 +165,8 @@ export default defineComponent({
   cursor: pointer;
 
   .num {
-    @include text(12px, #666, bold);
+    transform: scale(0.84);
+    @include text(10px, #666, bold);
   }
 
   .num_1 {
@@ -205,6 +206,5 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 10px;
 }
 </style>
