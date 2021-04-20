@@ -139,6 +139,9 @@ export default defineComponent({
       font-style: normal;
 
       .tag {
+        padding-bottom: 10px;
+        line-height: 1;
+
         @include text($font-size-base, $primary-color, bold);
       }
 

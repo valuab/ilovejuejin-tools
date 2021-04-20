@@ -256,6 +256,10 @@ export default defineComponent({
   color: #000;
 }
 
+.ant-menu::v-deep .ant-menu-submenu-popup {
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.15);
+}
+
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #fff;
 }
