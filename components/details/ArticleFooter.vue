@@ -57,11 +57,11 @@ export default defineComponent({
 
     .tag {
       display: flex;
-      width: 60px;
       height: 30px;
+      padding: 8px 16px;
+      box-sizing: border-box;
       margin-right: 10px;
       font-size: 14px;
-      line-height: 30px;
       color: #333;
       background-color: #f5f5f5;
       justify-content: center;
