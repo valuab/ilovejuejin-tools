@@ -19,7 +19,7 @@
         {{ keyword }}
         <div class="tag">车型</div>
         <div
-          v-if="ifTypeShow() && typeList[typePage - 1].list.length > 4"
+          v-if="ifTypeShow() && typeList[typePage].list.length > 4"
           class="column-title-nav"
           @click="seeAll"
         >
@@ -30,7 +30,7 @@
       <article-list
         v-if="!openCarType && ifTypeShow()"
         class="article-list"
-        :data-source="typeList[0].copyList"
+        :data-source="typeList[typePage].copyList"
       />
       <!-- 查看全部结果 -->
       <h2 v-if="openCarType && ifTypeShow()" class="column-title">
@@ -40,55 +40,41 @@
       <article-list
         v-if="openCarType && ifTypeShow()"
         class="article-list"
-        :data-source="typeList[typePage - 1].list"
+        :data-source="typeListCopy"
       />
       <!-- 全部 -->
-      <h2
-        v-if="
-          allList.length &&
-          allList[searchAllPage - 1].list.length &&
-          !openCarType
-        "
-        class="column-title"
-      >
+      <h2 v-if="allListCopy.length && !openCarType" class="column-title">
         全部出品
       </h2>
       <article-list
-        v-if="
-          allList.length &&
-          allList[searchAllPage - 1].list.length &&
-          !openCarType
-        "
+        v-if="!openCarType && allListCopy.length"
         class="article-list"
-        :data-source="allList[searchAllPage - 1].list"
+        :data-source="allListCopy"
       />
 
       <!-- 搜索分页 -->
       <Pagination
-        v-if="!openCarType && allList.length && allList[0].list.length"
+        v-if="!openCarType && allListCopy.length"
         v-anchor="'tabsAnchor'"
         :default-page-size="16"
-        :total="allList[searchAllPage - 1].total"
-        :current="allList[searchAllPage - 1].page"
+        :total="allList[searchAllPage].total"
+        :current="allList[searchAllPage].page"
         class="pagination"
         @change="pageChange"
       />
       <!-- 车型搜索分页 -->
       <Pagination
-        v-if="openCarType && typeList.length && typeList[0].list.length"
+        v-if="openCarType && typeListCopy.length"
         v-anchor="'tabsAnchor'"
         :default-page-size="16"
-        :total="typeList[typePage - 1].total"
-        :current="typeList[typePage - 1].page"
+        :total="typeList[typePage].total"
+        :current="typeList[searchAllPage].page"
         class="pagination"
         @change="typePageChange"
       />
       <!-- 需要添加异步 -->
       <SearchError
-        v-if="
-          (!allList.length && !typeList.length) ||
-          (!allList[0].list.length && !typeList[0].list.length)
-        "
+        v-if="!allListCopy.length && !typeListCopy.length"
         :keyword="keyword"
       />
     </div>
@@ -98,7 +84,7 @@
 <script lang="ts">
 import merge from 'webpack-merge'
 import { defineComponent } from '@nuxtjs/composition-api'
-import { ICommentList } from '@apiPublic/type'
+import { ICommentList, IArticleItemType } from '@apiPublic/type'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 
@@ -109,8 +95,10 @@ interface IData {
   type: number // 搜索类型
   typeName: string // 搜索类型关键字
   allList: ICommentList[]
+  allListCopy: IArticleItemType[]
   searchAllPage: number
   typeList: ICommentList[]
+  typeListCopy: IArticleItemType[]
   typePage: number
   openCarType: boolean
   query: {
@@ -134,6 +122,7 @@ export default defineComponent({
 
     let categoryId, itemId: string, hostUserId: string
     const allList: any[] = []
+    const allListCopy: any[] = []
     const page = 1
     let allRes: any
     switch (type) {
@@ -191,10 +180,22 @@ export default defineComponent({
       page,
     })
 
-    allRes.page = 1
-    allList.push(allRes)
+    const allTemporary = Object.assign(
+      {
+        list: [],
+        copyList: [],
+        total: 0,
+        page: 1,
+        listLoad: false,
+      },
+      allRes
+    )
+
+    allList[1] = allTemporary
+    allListCopy.push(...allTemporary.list)
 
     const typeList = []
+    const typeListCopy: any = []
     const typeRes = Object.assign(
       {
         list: [],
@@ -205,30 +206,36 @@ export default defineComponent({
       },
       temporary
     )
-    typeList.push(typeRes)
-
+    typeList[1] = typeRes
+    typeListCopy.push(...typeRes.list)
     if (temporary && temporary.list.length > 4) {
       for (let i = 0; i < 4; i++) {
-        typeList[0].copyList.push(typeList[0].list[i])
+        typeList[1].copyList.push(typeList[1].list[i])
       }
     }
 
     return {
       allList,
+      allListCopy,
       keyword,
       typeList,
+      typeListCopy,
       query,
       typeName,
       type,
+      searchAllPage: 1,
+      typePage: 1,
     }
   },
 
   data(): IData {
     return {
-      allList: [], // 全部文章列表
+      allList: [], // 全部文章列表数据存储
+      allListCopy: [],
       searchAllPage: 1, // 初始页码
       keyword: '', // 搜索关键字
-      typeList: [], // 搜索类型文章列表
+      typeList: [], // 搜索类型文章列表数据存储
+      typeListCopy: [],
       typePage: 1, // 分类页码
       openCarType: false, // 车型搜索切换
       type: 0, // 模式类型
@@ -247,6 +254,11 @@ export default defineComponent({
       const keyword: any = query.keyword // 搜索关键字
       this.type = Number(query.type) // 搜索类型
       this.openCarType = false
+      // 初始化数据
+      this.allListCopy.length = 0
+      this.searchAllPage = 1 // 初始页码
+      this.typeListCopy.length = 0
+      this.typePage = 1 // 分类页码
       this.searchData(keyword)
     },
   },
@@ -259,12 +271,11 @@ export default defineComponent({
       // 获取数据存在本地变量
       // 判断是否是车型
       // 请求数据 or 直接切换页码
-      if (
-        this.allList.length > page - 1 &&
-        this.allList[page - 1].list.length > 0
-      ) {
+      if (this.allList.length > page && this.allList[page]?.list.length > 0) {
         // 当前页有数据
         this.searchAllPage = page
+        this.allListCopy.length = 0
+        this.allListCopy.push(...this.allList[page].list)
         return
       }
 
@@ -280,9 +291,10 @@ export default defineComponent({
         },
         newsCommentList
       )
-
-      this.allList.push(data)
+      this.allList[page] = data
       this.searchAllPage = page
+      this.allListCopy.length = 0
+      this.allListCopy.push(...data.list)
     },
     /**
      * @description: 车型页码改变
@@ -297,6 +309,8 @@ export default defineComponent({
       ) {
         // 当前页有数据
         this.typePage = page
+        this.typeListCopy.length = 0
+        this.typeListCopy.push(...this.typeList[page].list)
         return
       }
 
@@ -312,8 +326,10 @@ export default defineComponent({
         newsCommentList
       )
 
-      this.typeList.push(data)
+      this.typeList[page] = data
       this.typePage = page
+      this.typeListCopy.length = 0
+      this.typeListCopy.push(...data.list)
     },
     /**
      * @description: 搜索全部
@@ -467,7 +483,9 @@ export default defineComponent({
         allRes
       )
       this.allList.length = 0 // 清除之前数据
-      this.allList.push(allResType)
+      this.allList[1] = allResType
+      this.allListCopy.length = 0
+      this.allListCopy.push(...allResType.list)
       // 搜索车型
       const temporary: any = await this.searchByCars(page)
       const typeList = []
@@ -481,14 +499,17 @@ export default defineComponent({
         },
         temporary
       )
-      typeList.push(typeRes)
+      typeList[1] = typeRes
 
       if (temporary && temporary.list.length > 4) {
         for (let i = 0; i < 4; i++) {
-          typeList[0].copyList.push(typeList[0].list[i])
+          typeList[1].copyList.push(temporary.list[i])
         }
       }
+      this.typeList.length = 0
       this.typeList = typeList
+      this.typeListCopy.length = 0
+      this.typeListCopy.push(...typeRes.list)
     },
     /**
      * @description 清除搜索
@@ -520,9 +541,7 @@ export default defineComponent({
      * @description 判断是否展示车型
      */
     ifTypeShow() {
-      return (
-        this.typeList.length && this.typeList[this.typePage - 1].list.length
-      )
+      return this.typeList.length && this.typeList[this.typePage].list.length
     },
   },
 })
