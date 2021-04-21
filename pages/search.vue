@@ -41,7 +41,7 @@
         v-if="openCarType && ifTypeShow()"
         class="article-list"
         :data-source="typeListCopy"
-        :loading="typeList[typePage].listLoad"
+        :loading="typeList[1].listLoad"
       />
       <!-- 全部 -->
       <h2 v-if="allListCopy.length && !openCarType" class="column-title">
@@ -51,7 +51,7 @@
         v-if="!openCarType && allListCopy.length"
         class="article-list"
         :data-source="allListCopy"
-        :loading="allList[searchAllPage].listLoad"
+        :loading="allList[1].listLoad"
       />
 
       <!-- 搜索分页 -->
@@ -280,7 +280,7 @@ export default defineComponent({
         this.allListCopy.push(...this.allList[page].list)
         return
       }
-
+      this.allList[1].listLoad = true
       const newsCommentList = await this.getSearchAll(page)
 
       const data = Object.assign(
@@ -297,12 +297,12 @@ export default defineComponent({
       this.searchAllPage = page
       this.allListCopy.length = 0
       this.allListCopy.push(...data.list)
+      this.allList[1].listLoad = false
     },
     /**
      * @description: 车型页码改变
      */
     async typePageChange(page: number) {
-      this.typeList[page].listLoad = true
       // 获取数据存在本地变量
       // 判断搜索状态
       // 请求数据 or 直接切换页码
@@ -316,7 +316,7 @@ export default defineComponent({
         this.typeListCopy.push(...this.typeList[page].list)
         return
       }
-
+      this.typeList[1].listLoad = true
       const newsCommentList = await this.searchByCars(page)
       const data = Object.assign(
         {
@@ -333,6 +333,7 @@ export default defineComponent({
       this.typePage = page
       this.typeListCopy.length = 0
       this.typeListCopy.push(...data.list)
+      this.typeList[1].listLoad = false
     },
     /**
      * @description: 搜索全部
