@@ -41,6 +41,7 @@
         v-if="openCarType && ifTypeShow()"
         class="article-list"
         :data-source="typeListCopy"
+        :loading="typeList[typePage].listLoad"
       />
       <!-- 全部 -->
       <h2 v-if="allListCopy.length && !openCarType" class="column-title">
@@ -50,6 +51,7 @@
         v-if="!openCarType && allListCopy.length"
         class="article-list"
         :data-source="allListCopy"
+        :loading="allList[searchAllPage].listLoad"
       />
 
       <!-- 搜索分页 -->
@@ -68,7 +70,7 @@
         v-anchor="'tabsAnchor'"
         :default-page-size="16"
         :total="typeList[typePage].total"
-        :current="typeList[searchAllPage].page"
+        :current="typeList[typePage].page"
         class="pagination"
         @change="typePageChange"
       />
@@ -300,6 +302,7 @@ export default defineComponent({
      * @description: 车型页码改变
      */
     async typePageChange(page: number) {
+      this.typeList[page].listLoad = true
       // 获取数据存在本地变量
       // 判断搜索状态
       // 请求数据 or 直接切换页码
