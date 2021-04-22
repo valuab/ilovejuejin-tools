@@ -19,7 +19,7 @@
         {{ keyword }}
         <div class="tag">车型</div>
         <div
-          v-if="ifTypeShow() && typeList[typePage].list.length > 4"
+          v-if="ifTypeShow() && typeList[1].list.length > 4"
           class="column-title-nav"
           @click="seeAll"
         >
@@ -30,11 +30,11 @@
       <article-list
         v-if="!openCarType && ifTypeShow()"
         class="article-list"
-        :data-source="typeList[typePage].copyList"
+        :data-source="typeList[1].copyList"
       />
       <!-- 查看全部结果 -->
       <h2 v-if="openCarType && ifTypeShow()" class="column-title">
-        <div class="backAll" @click="backAll">返回全部</div>
+        <div class="backAll" @click="backAll()">返回全部</div>
         <div class="tag">为你搜索到“{{ keyword }}”车型结果：</div>
       </h2>
       <article-list
@@ -339,7 +339,7 @@ export default defineComponent({
      * @description: 搜索全部
      */
     getSearchAll(page: number) {
-      const keyword = this.query.keyword.toString()
+      const keyword = this.query.keyword
       const viewUserId = this.$accessor.userInfo.userId.toString()
       return this.$http.search.getSearchAll({
         keyword: encodeURI(keyword),
@@ -427,9 +427,17 @@ export default defineComponent({
      * @param value 搜索关键字
      */
     search(value: string) {
+      if (!value) return
       let query: any
       if (this.type === 1) {
-        query = merge({}, { keyword: value, type: this.type.toString() })
+        query = merge(
+          {},
+          {
+            keyword: value,
+            type: this.type.toString(),
+            typeName: this.typeName,
+          }
+        )
       } else {
         query = merge(this.query, {
           keyword: value,

@@ -38,14 +38,6 @@ export default defineComponent({
       columnName: this.$props.typeName,
     }
   },
-  // fetch() {
-  //   this.inputValue =
-  // },
-  watch: {
-    keyword() {
-      this.inputValue = this.$props.keyword
-    },
-  },
   methods: {
     /**
      * @description: 监听搜索
