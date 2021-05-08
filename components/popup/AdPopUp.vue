@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a target="_blank" :href="adData.url">
+    <a v-if="adData" target="_blank" :href="adData.url">
       <img :src="adData.smallImageUrl || adData.smallImage2Url" alt="ad" />
     </a>
     <span @click="hidePopUp">×</span>
@@ -14,7 +14,7 @@ export default defineComponent({
   name: 'AdPopUp',
   data() {
     return {
-      adData: {} as IAdListType,
+      adData: null as IAdListType | null,
     }
   },
   async fetch() {
