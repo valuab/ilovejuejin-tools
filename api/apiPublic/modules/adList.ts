@@ -2,7 +2,7 @@ import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { handleUrlParams } from '~/utils/data'
 
 const adLinks = {
-  getAdList: '/api/ad/getAdList',
+  getAdList: '/api/pc/getAdList',
 }
 
 // 广告位number参数
