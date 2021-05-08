@@ -292,7 +292,7 @@ export default defineComponent({
     categoryList[0] = yieldListData
 
     for (let i = 1; i < 5; i++) {
-      const ad = await app.$http.adList.getAdList({
+      const ad = await app.$http.adList.getGuangGaoList({
         pageName: 'index',
         number: AD_NUMBER_TYPE[i],
       })

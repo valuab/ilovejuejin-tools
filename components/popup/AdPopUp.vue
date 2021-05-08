@@ -18,7 +18,7 @@ export default defineComponent({
     }
   },
   async fetch() {
-    const ad = await this.$http.adList.getAdList({
+    const ad = await this.$http.adList.getGuangGaoList({
       pageName: 'index',
       number: AD_NUMBER_TYPE[0],
     })

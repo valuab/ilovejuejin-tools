@@ -163,7 +163,7 @@ export default defineComponent({
     // 获取广告
     const adList = []
     for (let i = 0; i < 2; i++) {
-      const ad = await this.$http.adList.getAdList({
+      const ad = await this.$http.adList.getGuangGaoList({
         pageName: this.$props.query.videoType ? 'video' : 'article',
         number: AD_NUMBER_TYPE[i],
       })

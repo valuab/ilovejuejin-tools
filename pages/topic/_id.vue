@@ -88,7 +88,7 @@ export default defineComponent({
     if (adTopicNames.includes(detail.name)) {
       const pageName = detail.name === adTopicNames[0] ? 'jzg' : 'dfc'
       for (let i = 0; i < 3; i++) {
-        const ad = await app.$http.adList.getAdList({
+        const ad = await app.$http.adList.getGuangGaoList({
           pageName,
           number: AD_NUMBER_TYPE[i],
         })

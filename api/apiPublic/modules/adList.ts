@@ -2,7 +2,7 @@ import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { handleUrlParams } from '~/utils/data'
 
 const adLinks = {
-  getAdList: '/api/pc/getGuangGaoList',
+  getGuangGaoList: '/api/pc/getGuangGaoList',
 }
 
 // 广告位number参数
@@ -22,14 +22,14 @@ interface IGetAdResult {
 }
 
 export interface IAdModule {
-  getAdList: (params: IGetAdParams) => Promise<IGetAdResult['result']>
+  getGuangGaoList: (params: IGetAdParams) => Promise<IGetAdResult['result']>
 }
 
 export default ($axios: NuxtAxiosInstance) => {
   const adModule: IAdModule = {
     // 获取秘钥令牌
-    async getAdList(params) {
-      const url = handleUrlParams(adLinks.getAdList, params)
+    async getGuangGaoList(params) {
+      const url = handleUrlParams(adLinks.getGuangGaoList, params)
       const { data } = await $axios.get<IGetAdResult>(url)
 
       return data.result
