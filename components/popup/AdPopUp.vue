@@ -22,7 +22,11 @@ export default defineComponent({
       pageName: 'index',
       number: AD_NUMBER_TYPE[0],
     })
-    this.adData = ad[0]
+    if (ad[0]) {
+      this.adData = ad[0]
+    } else {
+      this.hidePopUp()
+    }
   },
   methods: {
     hidePopUp() {
