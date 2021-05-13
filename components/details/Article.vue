@@ -33,7 +33,9 @@
           :key="item.id"
           class="article"
           :class="
-            !item.content && !item.smallShowImageUrl ? 'article-none' : ''
+            !item.content && !item.smallImageUrl && !item.smallShowImageUrl
+              ? 'article-none'
+              : ''
           "
         >
           <p v-if="item.content">
@@ -43,8 +45,10 @@
           <img
             v-if="item.videoId === 0"
             class="poster"
-            :src="article.smallImageUrl || item.smallShowImageUrl"
-            :class="!item.smallShowImageUrl ? 'article-none' : ''"
+            :src="item.smallImageUrl || item.smallShowImageUrl"
+            :class="
+              item.smallImageUrl || item.smallShowImageUrl ? '' : 'article-none'
+            "
           />
           <!-- 视频展示    -->
           <nuxt-link
@@ -60,7 +64,10 @@
             }"
             target="_blank"
           >
-            <img class="video-poster" :src="item.smallShowImageUrl" />
+            <img
+              class="video-poster"
+              :src="item.smallImageUrl || item.smallShowImageUrl"
+            />
             <div class="video-icon">
               <img src="../../assets/images/video_play.png" />
             </div>
@@ -81,7 +88,7 @@
           >
             <img
               class="video-poster"
-              :src="article.smallImageUrl || item.smallShowImageUrl"
+              :src="item.smallImageUrl || item.smallShowImageUrl"
             />
             <div class="video-icon">
               <img src="../../assets/images/video_play.png" />
