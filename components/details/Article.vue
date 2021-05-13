@@ -2,7 +2,7 @@
   <div class="body">
     <ad-box
       v-if="adList[0]"
-      class="ad-header"
+      class="advertis-header"
       :ad-source="adList[0]"
       :ad-height="100"
     />
@@ -291,7 +291,7 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-.ad-header {
+.advertis-header {
   margin-top: 40px !important;
 }
 .article-body {
