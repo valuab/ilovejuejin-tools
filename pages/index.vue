@@ -47,7 +47,7 @@
                   v-for="newItem in newList"
                   :key="newItem.postId"
                   :to="{
-                    name: 'details',
+                    name: newItem.videoCount ? 'videoDetails' : 'details',
                     query: { id: newItem.postId, forumId: newItem.forumId },
                   }"
                   target="_blank"
@@ -124,7 +124,9 @@
             >
               <nuxt-link
                 :to="{
-                  name: 'details',
+                  name: guessYouLikeItem.videoCount
+                    ? 'videoDetails'
+                    : 'details',
                   query: {
                     id: guessYouLikeItem.postId,
                     forumId: guessYouLikeItem.forumId,

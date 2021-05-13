@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <a v-if="adData" target="_blank" :href="adData.url">
+  <div v-if="adData" class="container">
+    <a target="_blank" :href="adData.url">
       <img :src="adData.smallImageUrl || adData.smallImage2Url" alt="ad" />
     </a>
     <span @click="hidePopUp">×</span>
