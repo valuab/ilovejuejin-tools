@@ -43,7 +43,7 @@
           <img
             v-if="item.videoId === 0"
             class="poster"
-            :src="item.smallShowImageUrl"
+            :src="article.smallImageUrl || item.smallShowImageUrl"
             :class="!item.smallShowImageUrl ? 'article-none' : ''"
           />
           <!-- 视频展示    -->
@@ -61,7 +61,9 @@
             target="_blank"
           >
             <img class="video-poster" :src="item.smallShowImageUrl" />
-            <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
+            <div class="video-icon">
+              <img src="../../assets/images/video_play.png" />
+            </div>
           </nuxt-link>
           <!-- 腾讯视频展示 -->
           <nuxt-link
@@ -79,9 +81,11 @@
           >
             <img
               class="video-poster"
-              :src="item.smallShowImageUrl || article.smallImageUrl"
+              :src="article.smallImageUrl || item.smallShowImageUrl"
             />
-            <Icon icon="ArticleVideoPaly" class="video-icon" size="30" />
+            <div class="video-icon">
+              <img src="../../assets/images/video_play.png" />
+            </div>
           </nuxt-link>
         </div>
         <ArticleFooter
@@ -333,8 +337,16 @@ export default defineComponent({
 
   .video-icon {
     position: absolute;
-    width: 30px !important;
-    height: 20px !important;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 60px;
+      height: 60px;
+    }
   }
 
   > * {

@@ -97,9 +97,11 @@ export interface NewCommentReplyListResult extends IApiResult {
   result: IApiCommentDto
 }
 export interface SupportCommentResult extends IApiResult {
+  err: number
   result: number
 }
 export interface PostCommentResult extends IApiResult {
+  err: number
   result?: number
 }
 /**
@@ -150,7 +152,7 @@ export default ($axios: NuxtAxiosInstance) => {
     },
     async postComment(params) {
       const url = handleUrlParams(commentLink.postComment, params)
-      const { data } = await $axios.get<PostCommentResult>(url)
+      const data: any = await $axios.get<PostCommentResult>(url)
       if (data.err) {
         return data
       }
