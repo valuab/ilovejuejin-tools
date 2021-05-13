@@ -52,7 +52,7 @@
         </a-menu-item>
       </a-sub-menu>
       <a-menu-item key="qhc" class="menu-item">
-        <a href="https://vkool.djcars.cn/" target="_blank">情怀车中心</a>
+        <a href="https://qhc.djcars.cn/" target="_blank">情怀车中心</a>
       </a-menu-item>
       <a-sub-menu key="car" class="menu-item" title="专业车膜">
         <a-menu-item key="miniappBrand">

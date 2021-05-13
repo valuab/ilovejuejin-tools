@@ -29,7 +29,6 @@
         </template>
       </div>
     </div>
-    <p class="slogan">真人真话，道出专业与真实</p>
     <div class="footer-content">
       <div class="content-item">
         <span class="content-text">合作：</span>
@@ -126,11 +125,6 @@ export default defineComponent({
         }
       }
     }
-  }
-
-  .slogan {
-    margin: 0;
-    @include text($font-size-base, #000);
   }
 
   .footer-content {
