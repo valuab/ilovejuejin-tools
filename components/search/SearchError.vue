@@ -18,9 +18,13 @@
         </div>
         <div class="code">
           <div class="code-img">
-            <img width="190px" height="190px" src="/qrcode/offic/android.png" />
+            <img
+              width="190px"
+              height="190px"
+              src="/qrcode/miniapp/djcars.jpg"
+            />
           </div>
-          <div class="code-text">扫一扫下载App</div>
+          <div class="code-text">扫一扫进入小程序</div>
         </div>
       </div>
     </article>
