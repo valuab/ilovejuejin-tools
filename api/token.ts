@@ -9,8 +9,8 @@ export interface IToken {
   uuid: string
 }
 
-export default (sid = '', uid = 0) => {
-  const _uuid = v4()
+export default ({ sid = '', uid = 0, uuid = '' }) => {
+  const _uuid = uuid || v4()
   const sessionId = sid || v4()
   const sign = HmacSHA1(sessionId + uid, config.APP_SECRET)
 

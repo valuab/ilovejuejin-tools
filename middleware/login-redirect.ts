@@ -39,7 +39,8 @@ export default async ({ route, app, $axios, redirect }: Context) => {
       gender: userInfo.sex,
     }
     const { sessionId, userId } = await app.$http.login.thirdLogin(loginParams)
-    const token = getToken(sessionId, userId)
+    const uuid = app.$cookies.get('_uuid')
+    const token = getToken({ sid: sessionId, uid: userId, uuid })
 
     $axios.setHeader('sign', token.sign)
     $axios.setHeader('sid', token.sid)
