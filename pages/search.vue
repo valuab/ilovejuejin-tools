@@ -8,7 +8,7 @@
           :keyword="keyword"
           :type="type"
           :type-name="typeName"
-          @search="search"
+          @search="search()"
           @deleteSearch="deleteSearch"
         />
       </div>
@@ -456,8 +456,9 @@ export default defineComponent({
      */
     async searchData(value: string) {
       // 重定向
-      if (value === this.keyword && this.type === +this.query.type && value)
+      if (value === this.keyword && this.type === +this.query.type && value) {
         return // 没有更改搜索内容
+      }
 
       // 加入缓存
       setSearchHistory(value)
