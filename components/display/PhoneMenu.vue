@@ -126,20 +126,6 @@ export default defineComponent({
           img: '/qrcode/miniapp/runCarGame.jpg',
         },
       },
-      {
-        icon: 'LogoApp',
-        name: '手机应用APP',
-        left: {
-          title: 'iOS',
-          desc: '微信扫一扫，看汽车态度',
-          img: '/qrcode/offic/ios.png',
-        },
-        right: {
-          title: 'Android',
-          desc: '微信扫一扫，看汽车态度',
-          img: '/qrcode/offic/android.png',
-        },
-      },
     ])
     const imgSrc = reactive({
       left: {
@@ -220,7 +206,6 @@ export default defineComponent({
   .right {
     display: flex;
     width: 500px;
-    height: 420px;
     background-color: #fff;
     box-shadow: inset 1px 0 0 0 #e6e6e6;
     align-items: center;
