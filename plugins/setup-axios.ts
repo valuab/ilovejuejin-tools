@@ -25,8 +25,7 @@ export default ({ app, $axios, redirect }: Context) => {
   $axios.onResponse(({ config, data }) => {
     if (
       config.url?.includes('postComment') ||
-      config.url?.includes('supportComment') ||
-      config.url?.includes('createForSite')
+      config.url?.includes('supportComment')
     ) {
       return data
     }
