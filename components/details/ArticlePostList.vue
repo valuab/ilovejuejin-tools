@@ -6,7 +6,7 @@
       :key="item.postId"
       class="post-msg"
       :to="{
-        name: item.videoNum ? `videoDetails` : `details`,
+        name: item.videoCount ? `videoDetails` : `details`,
         query: { id: item.id || item.postId, forumId: item.forumId },
       }"
       target="_blank"

@@ -72,7 +72,7 @@ export interface IPostResult extends IApiResult {
     title: String
     content: String
     imageNum: number
-    videoNum: number
+    videoCount: number
     voiceNum: number
     auditId: number
     auditReason: String

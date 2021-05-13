@@ -62,7 +62,7 @@ export default defineComponent({
       time.value = handleTime(postTimeStamp)
       title.value = substrByByte(item.value.title, 62)
       linkHref.value = `${
-        item.value.videoNum ? '/videoDetails' : '/details'
+        item.value.videoCount ? '/videoDetails' : '/details'
       }?id=${item.value.postId}&forumId=${item.value.forumId}`
     }
 

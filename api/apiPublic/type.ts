@@ -24,7 +24,7 @@ export interface IArticleItemType {
   publishTime: string
   totalViewCount?: number
   commentCount?: number
-  videoNum?: number
+  videoCount?: number
   stepList: Array<IStepList>
 }
 

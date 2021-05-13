@@ -50,7 +50,7 @@ export interface INewListData {
   smallImageUrl: string
   postId: string
   title: string
-  videoNum: number
+  videoCount: number
 }
 
 interface IGetNewListParams {
@@ -89,7 +89,7 @@ export interface IGuessYouLikeItem {
   postId: string
   title: string
   smallImageUrl: string
-  videoNum: number
+  videoCount: number
 }
 
 interface IGetGuessYouLikeListParams {
