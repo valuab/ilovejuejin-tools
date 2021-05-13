@@ -427,7 +427,6 @@ export default defineComponent({
      * @param value 搜索关键字
      */
     search(value: string) {
-      console.log(value)
       if (!value) return
       let query: any
       if (this.type === 1) {
