@@ -38,6 +38,11 @@ export default defineComponent({
       columnName: this.$props.typeName,
     }
   },
+  watch: {
+    keyword(newVal) {
+      this.inputValue = newVal
+    },
+  },
   methods: {
     /**
      * @description: 监听搜索
