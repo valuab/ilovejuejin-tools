@@ -2,12 +2,12 @@
   <div class="container">
     <ad-box
       v-if="adList[0]"
-      class="advertis-margin"
+      style="padding-top: 40px"
       :ad-source="adList[0]"
       :ad-height="120"
     ></ad-box>
     <!-- 栏目一 START -->
-    <a-row type="flex" :gutter="20">
+    <a-row style="padding: 40px 0" type="flex" :gutter="20">
       <a-col :span="12">
         <div class="column-item">
           <h2 class="column-title">最新推荐</h2>
@@ -95,14 +95,9 @@
       </a-col>
     </a-row>
     <!-- 栏目一 END -->
-    <ad-box
-      v-if="adList[1]"
-      class="advertis-margin"
-      :ad-source="adList[1]"
-      :ad-height="100"
-    ></ad-box>
+    <ad-box v-if="adList[1]" :ad-source="adList[1]" :ad-height="100"></ad-box>
     <!-- 栏目二 START -->
-    <a-row type="flex" :gutter="40">
+    <a-row style="padding: 40px 0" type="flex" :gutter="40">
       <a-col flex="1">
         <h2 class="column-title">
           猜你喜欢
@@ -187,15 +182,11 @@
       </a-col>
     </a-row>
     <!-- 栏目二 END -->
-    <ad-box
-      v-if="adList[2]"
-      class="advertis-margin"
-      :ad-source="adList[2]"
-      :ad-height="100"
-    ></ad-box>
+    <ad-box v-if="adList[2]" :ad-source="adList[2]" :ad-height="100"></ad-box>
     <!-- tabs START -->
     <tabs
       id="tabsAnchor"
+      style="padding-top: 40px"
       :tabs="categoryTabsList"
       @tabActive="getListByCategoryId"
     >
@@ -222,7 +213,7 @@
     <!-- tabs END -->
     <ad-box
       v-if="adList[3]"
-      class="advertis-margin"
+      style="padding-top: 40px"
       :ad-source="adList[3]"
       :ad-height="100"
     ></ad-box>
@@ -426,10 +417,6 @@ export default defineComponent({
   left: 50%;
   transform: translate(-50%);
 
-  .advertis-margin {
-    margin: 40px 0;
-  }
-
   .column-item {
     position: relative;
     padding-right: 20px;
@@ -489,7 +476,6 @@ export default defineComponent({
   }
 
   .column-title {
-    padding-top: 40px;
     margin-bottom: 20px;
 
     @include flex(row, flex-start, center);
