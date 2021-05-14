@@ -65,7 +65,6 @@ export default defineComponent({
       width: 80px;
       height: 80px;
       margin-right: 20px;
-      background-color: #e6e6e6;
       border-radius: 50%;
       overflow: hidden;
       align-items: center;
