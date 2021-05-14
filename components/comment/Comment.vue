@@ -199,6 +199,10 @@ export default defineComponent({
       if (data?.id) {
         this.IComment.supportCount += 1
         this.IComment.userVoteCommentFlag = 1
+      } else {
+        // 评论失败
+        this.isReply = false
+        this.$message.error(data.msg)
       }
     },
   },

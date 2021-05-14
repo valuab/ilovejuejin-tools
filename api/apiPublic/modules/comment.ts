@@ -146,7 +146,7 @@ export default ($axios: NuxtAxiosInstance) => {
     },
     async supportComment(params) {
       const url = handleUrlParams(commentLink.supportComment, params)
-      const { data } = await $axios.get<SupportCommentResult>(url)
+      const data: any = await $axios.get<SupportCommentResult>(url)
 
       return data.result
     },
