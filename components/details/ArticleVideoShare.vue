@@ -130,9 +130,11 @@ export default defineComponent({
         forumId,
       })
 
-      if (support.id) {
+      if (support?.id) {
         this.posts.isSupport = 1
         this.$emit('support')
+      } else {
+        this.$message.error(support.msg)
       }
     },
   },

@@ -3,7 +3,7 @@
     <p class="column-title">
       精选评论({{
         $accessor.userInfo.isLogin && newsCommentList.length
-          ? newsCommentList[0].total
+          ? post.commentCount
           : 0
       }})
     </p>
