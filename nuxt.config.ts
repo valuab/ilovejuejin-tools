@@ -191,6 +191,15 @@ export default {
           test: /\.svg$/,
           use: ['vue-loader', 'vue-svg-loader'],
         })
+        // 配置 file 文件转义
+        module.rules.push({
+          test: /\.(eot|ttf|woff)$/,
+          use: [
+            {
+              loader: 'file-loader',
+            },
+          ],
+        })
         // 配置 antdvue 风格
         module.rules.push({
           test: /\.less/,

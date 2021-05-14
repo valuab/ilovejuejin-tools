@@ -74,7 +74,7 @@
               "
             />
             <div class="video-icon">
-              <img src="../../assets/images/video_play.png" />
+              <img src="@images/video_play.png" />
             </div>
           </nuxt-link>
           <!-- 腾讯视频展示 -->
@@ -101,7 +101,7 @@
               "
             />
             <div class="video-icon">
-              <img src="../../assets/images/video_play.png" />
+              <img src="@images/video_play.png" />
             </div>
           </nuxt-link>
         </div>

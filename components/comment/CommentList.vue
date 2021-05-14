@@ -202,6 +202,8 @@ export default defineComponent({
       ) {
         // 当前页有数据
         this.commentPage = page - 1
+        this.commentList.length = 0
+        this.commentList.push(...this.newsCommentList[this.commentPage].list)
         return
       }
 

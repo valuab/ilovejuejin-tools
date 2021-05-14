@@ -1,6 +1,9 @@
 <template>
   <article class="comment">
-    <img :src="comment.smallUserIconUrl" class="comment-profile" />
+    <img
+      :src="comment.smallUserIconUrl || '@images/user.png'"
+      class="comment-profile"
+    />
     <article
       class="comment-msg"
       :class="commentType ? '' : 'comment-msg-border'"
