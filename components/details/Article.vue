@@ -66,7 +66,12 @@
           >
             <img
               class="video-poster"
-              :src="item.showImageUrl || item.smallShowImageUrl"
+              :src="
+                item.showImageUrl ||
+                item.smallShowImageUrl ||
+                article.imageUrl ||
+                article.smallImageUrl
+              "
             />
             <div class="video-icon">
               <img src="../../assets/images/video_play.png" />
@@ -88,7 +93,12 @@
           >
             <img
               class="video-poster"
-              :src="item.showImageUrl || item.smallShowImageUrl"
+              :src="
+                item.showImageUrl ||
+                item.smallShowImageUrl ||
+                article.imageUrl ||
+                article.smallImageUrl
+              "
             />
             <div class="video-icon">
               <img src="../../assets/images/video_play.png" />
@@ -243,6 +253,7 @@ export default defineComponent({
           newsCommentList.push(data)
         } else {
           const { list } = newsCommentList[commentPage]
+          newsCommentList[0].total++ // 评论数自增
           list.reverse()
           list.push(IComment)
           list.reverse()
