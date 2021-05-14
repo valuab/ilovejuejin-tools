@@ -33,7 +33,7 @@
           :key="item.id"
           class="article"
           :class="
-            !item.content && !item.smallImageUrl && !item.smallShowImageUrl
+            !item.content && !item.showImageUrl && !item.smallShowImageUrl
               ? 'article-none'
               : ''
           "
@@ -45,9 +45,9 @@
           <img
             v-if="item.videoId === 0"
             class="poster"
-            :src="item.smallImageUrl || item.smallShowImageUrl"
+            :src="item.showImageUrl || item.smallShowImageUrl"
             :class="
-              item.smallImageUrl || item.smallShowImageUrl ? '' : 'article-none'
+              item.showImageUrl || item.smallShowImageUrl ? '' : 'article-none'
             "
           />
           <!-- 视频展示    -->
@@ -66,7 +66,7 @@
           >
             <img
               class="video-poster"
-              :src="item.smallImageUrl || item.smallShowImageUrl"
+              :src="item.showImageUrl || item.smallShowImageUrl"
             />
             <div class="video-icon">
               <img src="../../assets/images/video_play.png" />
@@ -88,7 +88,7 @@
           >
             <img
               class="video-poster"
-              :src="item.smallImageUrl || item.smallShowImageUrl"
+              :src="item.showImageUrl || item.smallShowImageUrl"
             />
             <div class="video-icon">
               <img src="../../assets/images/video_play.png" />
