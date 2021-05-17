@@ -1,11 +1,7 @@
 <template>
   <div id="commentList" class="commentList">
     <p class="column-title">
-      精选评论({{
-        $accessor.userInfo.isLogin && newsCommentList.length
-          ? newsCommentList[0].total
-          : 0
-      }})
+      精选评论({{ newsCommentList.length ? newsCommentList[0].total : 0 }})
     </p>
     <div v-if="newsCommentList.length" class="commentLists">
       <Comment
