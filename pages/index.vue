@@ -201,7 +201,6 @@
             :loading="categoryTabsLoad"
           ></article-list>
           <pagination
-            v-anchor="'tabsAnchor'"
             style="margin-top: 14px"
             :total="categoryColumn.total || 0"
             :default-page-size="16"
@@ -234,6 +233,7 @@ import {
   IKolListData,
   IGetCategoryIdResult,
 } from '~/api/apiPublic/modules/home'
+import { useAnchor } from '~/utils/data'
 
 export default defineComponent({
   setup() {
@@ -384,6 +384,7 @@ export default defineComponent({
       const categoryList = this.categoryList
       const index = this.categoryIndex
       const categoryId = this.categoryTabsList[index].id
+      useAnchor('tabsAnchor')
 
       this.categoryTabsLoad = true
       if (categoryId) {

@@ -25,7 +25,6 @@
               ></article-list>
             </div>
             <pagination
-              v-anchor="'tabsAnchor'"
               :current="articleList[index].page"
               :total="articleList[index].total"
               :default-page-size="16"
@@ -45,6 +44,7 @@ import { ITopicListType } from '@apiModules/kol'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '@/enums/content'
 import { IArticleList } from '@/api/apiPublic/type'
+import { useAnchor } from '~/utils/data'
 
 interface ICategoryTabs {
   title: string
@@ -221,6 +221,7 @@ export default defineComponent({
      * @description: 页码改变
      */
     pageChange(page: number) {
+      useAnchor('tabsAnchor')
       this.articleList[this.articleIndex].page = page
       this.getArticleList()
     },

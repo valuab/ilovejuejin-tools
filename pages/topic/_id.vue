@@ -41,7 +41,6 @@
         <article-list :loading="listLoad" :data-source="list"></article-list>
       </div>
       <pagination
-        v-anchor="'radioAnchor'"
         :total="total"
         class="pagination"
         :default-page-size="16"
@@ -64,6 +63,7 @@ import { IAdListType, AD_NUMBER_TYPE } from '@apiPublic/modules/adList'
 import { IOpItemResult } from '@apiModules/program'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
+import { useAnchor } from '~/utils/data'
 
 interface IData {
   id: string
@@ -193,6 +193,7 @@ export default defineComponent({
      * @description: 改变页码
      */
     pageChange(page: number) {
+      useAnchor('radioAnchor')
       this.listLoad = true
       this.page = page
       this.getArticleList()

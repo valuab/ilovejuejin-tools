@@ -68,3 +68,14 @@ export const substrByByte = function (str: string, num: number) {
   }
   return str
 }
+
+/**
+ * @description: 锚点跳转
+ * @param id 元素id
+ */
+export const useAnchor = function (id: string) {
+  if (id && typeof id === 'string') {
+    const vnode = document.getElementById(id) as HTMLElement
+    document.documentElement.scrollTop = vnode?.offsetTop || 0
+  }
+}

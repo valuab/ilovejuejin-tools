@@ -24,7 +24,6 @@
               ></article-list>
             </div>
             <pagination
-              v-anchor="'tabsAnchor'"
               :total="articleList[index].total || 0"
               :default-page-size="16"
               class="pagination"
@@ -43,6 +42,7 @@ import { IProgramListType } from '@apiModules/category'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '@/enums/content'
 import { setSearchHistory } from '@/utils/search'
 import { IArticleList } from '@/api/apiPublic/type'
+import { useAnchor } from '~/utils/data'
 
 interface IUserTabs {
   title: string
@@ -214,6 +214,7 @@ export default defineComponent({
      * @description: 页码改变
      */
     pageChange(page: number) {
+      useAnchor('tabsAnchor')
       this.articleList[this.articleIndex].page = page
       this.getArticleList()
     },

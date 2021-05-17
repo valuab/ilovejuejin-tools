@@ -77,7 +77,6 @@
       </Comment>
       <!-- 搜索分页 -->
       <Pagination
-        v-anchor="'commentList'"
         :default-page-size="10"
         :total="Number(newsCommentList[commentPage].total)"
         :current="newsCommentList[commentPage].page"
@@ -94,6 +93,7 @@ import { ICommentList, IArticleItemType } from '@apiPublic/type'
 
 // 获取枚举类型
 import { PROT_TYPE_TYPEID } from '@/enums/content'
+import { useAnchor } from '~/utils/data'
 
 interface IData {
   newsCommentList: ICommentList[]
@@ -194,6 +194,8 @@ export default defineComponent({
      * @description: 页码改变
      */
     async pageChange(page: number) {
+      useAnchor('commentList')
+
       // 评论列表切换
       // 请求数据 or 直接切换页码
       if (

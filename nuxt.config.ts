@@ -64,7 +64,6 @@ export default {
     '@/plugins/babel-polyfill',
     '@/plugins/antd-ui',
     '@/plugins/setup-axios',
-    '@/plugins/directives',
     { src: '@/plugins/lazyload.ts', mode: 'client' },
   ],
 

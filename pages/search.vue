@@ -57,7 +57,6 @@
       <!-- 搜索分页 -->
       <Pagination
         v-if="!openCarType && allListCopy.length"
-        v-anchor="'tabsAnchor'"
         :default-page-size="16"
         :total="allList[searchAllPage].total"
         :current="allList[searchAllPage].page"
@@ -67,7 +66,6 @@
       <!-- 车型搜索分页 -->
       <Pagination
         v-if="openCarType && typeListCopy.length"
-        v-anchor="'tabsAnchor'"
         :default-page-size="16"
         :total="typeList[typePage].total"
         :current="typeList[typePage].page"
@@ -89,6 +87,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import { ICommentList, IArticleItemType } from '@apiPublic/type'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
+import { useAnchor } from '~/utils/data'
 
 // 参数列表 // 标记
 
@@ -269,6 +268,8 @@ export default defineComponent({
      * @description: 全部列表页码改变
      */
     async pageChange(page: number) {
+      useAnchor('tabsAnchor')
+
       // 每页十六条数据
       // 获取数据存在本地变量
       // 判断是否是车型
@@ -303,6 +304,8 @@ export default defineComponent({
      * @description: 车型页码改变
      */
     async typePageChange(page: number) {
+      useAnchor('tabsAnchor')
+
       // 获取数据存在本地变量
       // 判断搜索状态
       // 请求数据 or 直接切换页码
