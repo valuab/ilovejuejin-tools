@@ -336,6 +336,6 @@ export default defineComponent({
 .pagination {
   display: block;
   width: 500px;
-  height: 500px;
+  margin: 0 auto;
 }
 </style>
