@@ -77,8 +77,7 @@ export default defineComponent({
   setup() {
     const iconList = ref([
       {
-        codeUrl:
-          'https://apps.apple.com/cn/app/da-jiacars-lai-zhe-li-he-qi/id1080519110',
+        codeUrl: 'https://www.djcars.cn/',
         icon: 'OptionWechat',
       },
       { url: 'https://weibo.com/cheyanlun', icon: 'OptionWeibo' },
