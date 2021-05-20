@@ -1,7 +1,7 @@
 <template>
   <div class="ArticleVideo">
     <iframe
-      v-if="qqVid"
+      v-if="isQqvideo"
       frameborder="0"
       :src="url"
       allowFullScreen="true"
@@ -43,36 +43,20 @@ export default defineComponent({
         return ''
       },
     },
-    // 是否是腾讯视频
-    qqVid: {
-      type: String,
-      default: () => {
-        return ''
-      },
-    },
+    isQqvideo: Boolean,
   },
   emits: ['support'],
   data() {
     return {
-      url: this.$props.videoUrl,
+      url: '', // 腾讯视频
     }
   },
   fetch() {
-    let videoUrl = ''
-    // 处理video链接
-    if (
-      this.$props.videoUrl.includes('https://v.qq.com/iframe/preview.html?vid')
-    ) {
-      const newVideoUrl = this.$props.videoUrl.split(
-        'https://v.qq.com/iframe/preview.html?vid'
-      )
-      videoUrl = 'https://v.qq.com/txp/iframe/player.html?vid' + newVideoUrl[1]
-      this.url = videoUrl
-    } else if (this.$props.videoUrl.includes('https://v.qq.com')) {
-      const newVideoUrl = this.$props.videoUrl.split('https://v.qq.com')
-      videoUrl = 'https://v.qq.com/txp' + newVideoUrl[1]
-      this.url = videoUrl
-    }
+    const qqVideoUrl = 'https://v.qq.com/txp/iframe/player.html'
+    const urlParams = this.$props.videoUrl.split('?')[1]
+    const url = `${qqVideoUrl}?${urlParams}`
+
+    this.url = url
   },
   methods: {
     support() {

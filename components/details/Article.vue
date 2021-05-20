@@ -23,7 +23,7 @@
           v-if="article && query.videoType"
           :post="article"
           :video-url="query.videoUrl"
-          :qq-vid="query.qqVid"
+          :is-qqvideo="query.isQqvideo"
         />
         <!-- 文章内容组件 -->
         <!-- 文字段落 -->
@@ -52,7 +52,7 @@
           />
           <!-- 视频展示    -->
           <nuxt-link
-            v-if="item.videoId !== 0"
+            v-if="item.realVideoUrl"
             class="video"
             :to="{
               name: 'videoDetails',
@@ -79,7 +79,7 @@
           </nuxt-link>
           <!-- 腾讯视频展示 -->
           <nuxt-link
-            v-else-if="item.qqVid"
+            v-else-if="item.url"
             class="video"
             :to="{
               name: 'videoDetails',

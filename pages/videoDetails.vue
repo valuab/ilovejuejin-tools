@@ -33,6 +33,7 @@ export default defineComponent({
         id: '',
         forumId: '',
         videoType: true,
+        isQqvideo: false,
       },
       route.query
     )
@@ -50,16 +51,10 @@ export default defineComponent({
       if (post.stepList[i].url || post.stepList[i].showVideoUrl) {
         if (query.step === post.stepList[i].step.toString()) {
           query.videoUrl = post.stepList[i].url || post.stepList[i].showVideoUrl
-          // 腾讯视频
-          if (post.stepList[i].qqVid) {
-            query.qqVid = post.stepList[i].qqVid
-          }
+          query.isQqvideo = !!post.stepList[i].url
         } else {
           query.videoUrl = post.stepList[i].url || post.stepList[i].showVideoUrl
-          // 腾讯视频
-          if (post.stepList[i].qqVid) {
-            query.qqVid = post.stepList[i].qqVid
-          }
+          query.isQqvideo = !!post.stepList[i].url
         }
       }
     }

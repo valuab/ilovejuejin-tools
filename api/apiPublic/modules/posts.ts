@@ -55,7 +55,6 @@ interface IBuPostStep {
   step: string
   url: string
   showVideoUrl: string
-  qqVid: string
 }
 
 /**
