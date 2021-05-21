@@ -191,12 +191,11 @@ export default defineComponent({
      */
     async pageChange(page: number) {
       useAnchor('commentList')
-
       // 评论列表切换
       // 请求数据 or 直接切换页码
       if (
         this.newsCommentList.length > page &&
-        this.newsCommentList[page].list.length > 0
+        this.newsCommentList[page - 1]?.list.length > 0
       ) {
         // 当前页有数据
         this.commentPage = page - 1
