@@ -15,7 +15,7 @@
             class="column-carousel"
             :style="{
               background: `url(${
-                newList[0] && newList[0].smallImageUrl
+                newList[0] && newList[0].imageUrl
               }) no-repeat 100% / 100%`,
             }"
           >
@@ -55,7 +55,7 @@
                 >
                   <img
                     class="carousel-item-img"
-                    :src="newItem.smallImageUrl"
+                    :src="newItem.imageUrl"
                     :alt="newItem.title"
                   />
                   <p class="carousel-title text-hidden-1">
@@ -69,7 +69,7 @@
       </a-col>
       <a-col :span="12">
         <h2 class="column-title">
-          精选王牌节目
+          王牌节目推荐
           <nuxt-link class="column-title-nav" to="/topiclist"
             >查看全部 ></nuxt-link
           >
@@ -86,7 +86,7 @@
             >
               <img
                 class="column-list-item"
-                :src="recommendItem.recommendSmallImageUrl"
+                :src="recommendItem.recommendImageUrl"
                 :alt="recommendItem.description"
               />
             </nuxt-link>
