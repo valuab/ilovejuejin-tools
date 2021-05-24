@@ -82,7 +82,6 @@ export default defineComponent({
 }
 
 .videoSee {
-  width: 98px;
   height: 14px;
   font-size: 14px;
   line-height: 14px;
@@ -90,5 +89,6 @@ export default defineComponent({
   cursor: pointer;
   display: block;
   margin-bottom: 20px;
+  white-space: normal;
 }
 </style>
