@@ -23,6 +23,7 @@ interface IData {
 export default defineComponent({
   async asyncData({ app }) {
     const { list, total } = await app.$http.program.getCommendItemList({
+      count: 10,
       page: 1,
     })
 
@@ -59,6 +60,7 @@ export default defineComponent({
   methods: {
     async addList() {
       const { list } = await this.$http.program.getCommendItemList({
+        count: 10,
         page: this.page++,
       })
       this.list = this.list.concat(list)

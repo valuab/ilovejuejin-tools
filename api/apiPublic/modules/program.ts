@@ -15,6 +15,7 @@ const topicLink = {
 
 export interface ICommendListParams {
   page: number
+  count?: number
 }
 export interface ICommendListType {
   id: string
