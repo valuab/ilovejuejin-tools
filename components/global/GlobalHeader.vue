@@ -177,13 +177,13 @@ export default defineComponent({
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
   width: 100%;
   padding: 8px 15px;
   background: #fff;
   box-shadow: inset 0 -1px 0 0 #e6e6e6;
   display: flex;
   align-items: center;
+  z-index: 11;
 
   .menu {
     padding-left: 30px;

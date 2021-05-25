@@ -38,6 +38,7 @@
   }
 
   .content-wrap {
+    min-width: 1280px;
     display: flex;
     flex-direction: column;
     min-height: 90vh;

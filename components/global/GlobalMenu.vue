@@ -111,6 +111,9 @@ export default defineComponent({
   border-right: 1px solid #e6e6e6;
   box-sizing: border-box;
   overflow: hidden;
+  background: #fff;
+  z-index: 10;
+
   @include scrollHover;
 
   &:hover {
@@ -118,7 +121,7 @@ export default defineComponent({
   }
 
   .menu-item-group {
-    width: 140px;
+    width: 144px;
 
     .menu-item-title {
       margin-left: 8px;

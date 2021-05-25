@@ -48,6 +48,7 @@ export default defineComponent({
   }
 
   .content-wrap {
+    min-width: 1280px;
     background: #fff !important;
     @include flex(column, space-between, center);
 
