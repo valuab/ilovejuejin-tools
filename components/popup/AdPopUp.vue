@@ -1,6 +1,9 @@
 <template>
   <div v-if="adData" class="container">
-    <a target="_blank" :href="adData.url">
+    <a
+      :target="adData.url ? '_blank' : '_self'"
+      :href="adData.url || 'javascript:void(0)'"
+    >
       <img :src="adData.smallImageUrl || adData.smallImage2Url" alt="ad" />
     </a>
     <span @click="hidePopUp">×</span>
@@ -8,7 +11,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { AD_NUMBER_TYPE, IAdListType } from '@apiPublic/modules/adList'
+import {
+  AD_NUMBER_TYPE,
+  IAdListType,
+  AD_EXPIRE_TIME,
+} from '@apiPublic/modules/adList'
 
 export default defineComponent({
   name: 'AdPopUp',
@@ -17,19 +24,25 @@ export default defineComponent({
       adData: null as IAdListType | null,
     }
   },
-  async fetch() {
+  async mounted() {
     const ad = await this.$http.adList.getGuangGaoList({
       pageName: 'index',
       number: AD_NUMBER_TYPE[0],
     })
-    if (ad[0]) {
+    const nowTime = new Date().getTime()
+    const expireTime: number = Number(
+      window.localStorage.getItem(AD_EXPIRE_TIME)
+    )
+
+    if (ad[0] && (!expireTime || nowTime - expireTime >= 60 * 60 * 1000)) {
       this.adData = ad[0]
     } else {
-      this.hidePopUp()
+      this.$accessor.global.showAdPopup()
     }
   },
   methods: {
     hidePopUp() {
+      window.localStorage.setItem(AD_EXPIRE_TIME, `${new Date().getTime()}`)
       this.$accessor.global.showAdPopup()
     },
   },

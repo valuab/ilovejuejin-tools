@@ -1,6 +1,9 @@
 <template>
   <div class="advertis-container">
-    <a target="_blank" :href="adSource.url">
+    <a
+      :target="adSource.url ? '_blank' : '_self'"
+      :href="adSource.url || 'javascript:void(0)'"
+    >
       <img
         :src="adSource.smallImageUrl || adSource.smallImage2Url"
         width="100%"

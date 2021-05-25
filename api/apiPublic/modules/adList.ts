@@ -8,6 +8,8 @@ const adLinks = {
 // 广告位number参数
 export const AD_NUMBER_TYPE = ['one', 'two', 'three', 'four', 'five', 'six']
 
+// 广告弹窗过期时间key
+export const AD_EXPIRE_TIME = 'AD_EXPIRE_TIME'
 interface IGetAdParams {
   pageName: string
   number: string
