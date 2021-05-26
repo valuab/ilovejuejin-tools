@@ -26,6 +26,7 @@ export interface IArticleItemType {
   commentCount?: number
   videoCount?: number
   stepList: Array<IStepList>
+  floorReplyCount?: number
 }
 
 // 分类&kol文章列表

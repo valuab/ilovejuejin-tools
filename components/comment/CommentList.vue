@@ -85,7 +85,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import { ICommentList, IArticleItemType } from '@apiPublic/type'
+import { ICommentList } from '@apiPublic/type'
 
 // 获取枚举类型
 import { PROT_TYPE_TYPEID } from '@/enums/content'
@@ -93,7 +93,7 @@ import { useAnchor } from '~/utils/data'
 
 interface IData {
   newsCommentList: ICommentList[]
-  commentList: IArticleItemType[]
+  commentList: any[]
   commentPage: number
   openReplyId: string
 }
