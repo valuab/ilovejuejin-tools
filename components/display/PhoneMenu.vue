@@ -109,7 +109,7 @@ export default defineComponent({
         right: {
           title: '小程序',
           desc: '华人粤语汽车节目大本营',
-          img: '/qrcode/miniapp/yue.JPG',
+          img: '/qrcode/miniapp/yue.png',
         },
       },
       {
