@@ -577,7 +577,7 @@ export default defineComponent({
   justify-content: center;
 
   .search {
-    width: 1280px;
+    width: $container-width;
     padding-left: 20px;
     margin: 0 auto;
   }

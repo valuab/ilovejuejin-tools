@@ -372,7 +372,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .container {
-  width: 1280px;
+  width: $container-width;
   padding: 50px 20px;
 
   h1,

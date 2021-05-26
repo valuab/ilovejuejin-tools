@@ -75,7 +75,7 @@ export default defineComponent({
   background-color: #fff;
 }
 .container {
-  width: 1280px;
+  width: $container-width;
   padding: 0 20px;
   margin: 0 auto 60px;
 

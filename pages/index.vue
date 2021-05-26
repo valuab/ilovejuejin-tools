@@ -412,7 +412,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .container {
-  max-width: 1280px;
+  max-width: $container-width;
   padding: 0 20px;
   position: relative;
   left: 50%;

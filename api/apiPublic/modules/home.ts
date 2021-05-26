@@ -51,6 +51,7 @@ export interface INewListData {
   postId: string
   title: string
   videoCount: number
+  imageUrl: string
 }
 
 interface IGetNewListParams {
@@ -77,6 +78,7 @@ export interface IRecommendListData {
   smallImageUrl: string
   description: string
   recommendSmallImageUrl: string
+  recommendImageUrl: string
 }
 interface IGetRecommendList extends IApiResult {
   result: {

@@ -284,7 +284,7 @@ export default defineComponent({
   }
 
   .tabContainer {
-    width: 1280px;
+    width: $container-width;
     padding: 30px 20px 0;
     margin: 0 auto;
     display: flex;

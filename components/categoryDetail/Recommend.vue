@@ -106,7 +106,7 @@ export default defineComponent({
   background-color: #f5f5f5;
 
   .box {
-    width: 1280px;
+    width: $container-width;
     height: 406px;
     padding: 40px 20px;
     margin: 0 auto;

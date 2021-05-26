@@ -43,4 +43,5 @@ export interface ICommentList {
   total: number
   page: number
   listLoad: boolean
+  copyList?: IArticleItemType[]
 }

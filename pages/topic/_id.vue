@@ -217,7 +217,7 @@ export default defineComponent({
 
     .header-box {
       display: flex;
-      width: 1280px;
+      width: $container-width;
       height: 392px;
       padding: 0 20px;
       margin: 0 auto;
