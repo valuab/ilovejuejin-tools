@@ -45,13 +45,14 @@ export default defineComponent({
     ) {
       const wx = require('weixin-js-sdk')
       // 安卓系统微信内浏览器
-      const url = location.href
+      const url = location.href.split('#')[0]
       const {
         timestamp,
         nonceStr,
         signature,
         appId,
       } = await this.$http.mobile.getJsSdkAll({ url })
+      alert(location.href.split('#')[0])
       // eslint-disable-next-line no-undef
       wx.config({
         debug: true,
