@@ -62,7 +62,7 @@
                 step: item.step,
               },
             }"
-            target="_blank"
+            :target="$accessor.global.navTarget"
           >
             <img
               class="video-poster"
@@ -89,7 +89,7 @@
                 step: item.step,
               },
             }"
-            target="_blank"
+            :target="$accessor.global.navTarget"
           >
             <img
               class="video-poster"

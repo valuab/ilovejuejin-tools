@@ -50,7 +50,7 @@
                     name: newItem.videoCount ? 'videoDetails' : 'details',
                     query: { id: newItem.postId, forumId: newItem.forumId },
                   }"
-                  target="_blank"
+                  :target="$accessor.global.navTarget"
                   class="carousel-item"
                 >
                   <img
@@ -81,7 +81,7 @@
             span="12"
           >
             <nuxt-link
-              target="_blank"
+              :target="$accessor.global.navTarget"
               :to="{ name: 'topic-id', params: { id: recommendItem.id } }"
             >
               <img
@@ -128,7 +128,7 @@
                   },
                 }"
                 class="like-column-item"
-                target="_blank"
+                :target="$accessor.global.navTarget"
               >
                 <img
                   width="100%"

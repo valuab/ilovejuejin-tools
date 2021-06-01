@@ -4,7 +4,7 @@
       <div>
         <nuxt-link
           :to="{ name: 'topic-id', params: { id: data.id } }"
-          target="_blank"
+          :target="$accessor.global.navTarget"
         >
           <h1>{{ data.name }}</h1>
         </nuxt-link>
@@ -13,7 +13,7 @@
       <nuxt-link
         class="nav-detail"
         :to="{ name: 'topic-id', params: { id: data.id } }"
-        target="_blank"
+        :target="$accessor.global.navTarget"
         >查看全部 >
       </nuxt-link>
     </header>

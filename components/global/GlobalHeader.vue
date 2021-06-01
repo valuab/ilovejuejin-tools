@@ -118,14 +118,17 @@
     <ad-pop-up
       v-if="$accessor.global.isAdPopupShow && this.$route.name === 'index'"
     ></ad-pop-up>
+    <wx-app-modal :hidden="!$accessor.global.isWxAppPopupShow"></wx-app-modal>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import WxAppModal from '../popup/WxAppModal.vue'
 
 export default defineComponent({
   name: 'GlobalHeader',
+  components: { WxAppModal },
   emits: ['showSearch'],
   setup() {
     // 商城menu子item样式

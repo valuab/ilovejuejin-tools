@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="linkHref" target="_blank">
+  <nuxt-link :to="linkHref" :target="$accessor.global.navTarget">
     <figure class="container">
       <img
         v-lazy="item.smallImageUrl"

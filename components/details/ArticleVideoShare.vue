@@ -29,7 +29,7 @@
             v-else
             class="icon-wrap flex-center"
             :href="iconItem.url"
-            target="_blank"
+            :target="$accessor.global.navTarget"
           >
             <icon :icon="iconItem.icon" size="24" />
           </a>

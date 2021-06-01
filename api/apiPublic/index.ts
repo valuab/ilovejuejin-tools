@@ -13,6 +13,7 @@ import searchModule, { ISearchModule } from './modules/search'
 import commentModule, { ICommentModule } from './modules/comment'
 import postsModule, { IPostsModule } from './modules/posts'
 import AdModule, { IAdModule } from './modules/adList'
+import mobileModule, { IMobileModule } from './modules/mobileModule'
 
 export type IApiResult = {
   err: number
@@ -29,6 +30,7 @@ export interface IRootHttpState {
   comment: ICommentModule
   posts: IPostsModule
   adList: IAdModule
+  mobile: IMobileModule
 }
 
 export default ($axios: NuxtAxiosInstance) => {
@@ -43,5 +45,6 @@ export default ($axios: NuxtAxiosInstance) => {
     comment: commentModule($axios),
     posts: postsModule($axios),
     adList: AdModule($axios),
+    mobile: mobileModule($axios),
   } as IRootHttpState
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="advertis-container">
     <a
-      :target="adSource.url ? '_blank' : '_self'"
+      :target="adSource.url ? $accessor.global.navTarget : '_self'"
       :href="adSource.url || 'javascript:void(0)'"
     >
       <img

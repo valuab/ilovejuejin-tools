@@ -6,6 +6,8 @@ export interface IGlobalState {
   isFeedBack: Boolean // 反馈弹窗显示
   isLoginPopUpShow: Boolean // 登录弹窗显示
   isAdPopupShow: Boolean // 广告弹窗显示
+  isWxAppPopupShow: Boolean // H5跳转小程序弹窗
+  navTarget: String // 路由跳转目标
   feedBackTabsList: ICategoryListType[] // 反馈弹窗单选列表
   feedBackAppVersion: IAppVersionType[] // 反馈弹窗app版本列表
   isCommentType: Boolean // 是否允许评论
@@ -18,6 +20,8 @@ export const state: () => IGlobalState = () => ({
   isFeedBack: false,
   isLoginPopUpShow: false,
   isAdPopupShow: true,
+  isWxAppPopupShow: false,
+  navTarget: '_blank',
   feedBackTabsList: [],
   feedBackAppVersion: [],
   isCommentType: true,
@@ -35,6 +39,12 @@ export const mutations = mutationTree(state, {
   },
   showAdPopup(state) {
     state.isAdPopupShow = !state.isAdPopupShow
+  },
+  showWxAppPopup(state, show: boolean) {
+    state.isWxAppPopupShow = show
+  },
+  setNavTarget(state, targetStr: string) {
+    state.navTarget = targetStr
   },
   setFeedBackTabs(state, list) {
     state.feedBackTabsList = list

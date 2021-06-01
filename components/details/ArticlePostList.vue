@@ -9,7 +9,7 @@
         name: item.videoCount ? `videoDetails` : `details`,
         query: { id: item.id || item.postId, forumId: item.forumId },
       }"
-      target="_blank"
+      :target="$accessor.global.navTarget"
     >
       <div class="post-msg-img">
         <img :src="item.smallImageUrl" alt="" />

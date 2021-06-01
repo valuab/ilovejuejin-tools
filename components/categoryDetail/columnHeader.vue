@@ -17,7 +17,7 @@
           <p>{{ detail.description }}</p>
         </div>
       </div>
-      <a-avatar src="/qrcode/miniapp/djcars.jpg" :size="120"></a-avatar>
+      <QRCode :src="qrUrl" :size="120" :is-shadow="false" />
     </div>
   </header>
 </template>
@@ -36,6 +36,23 @@ export default defineComponent({
       type: Object as PropType<IDetail>,
       required: true,
     },
+  },
+  data() {
+    return {
+      qrUrl: '',
+    }
+  },
+  created() {
+    const { name, params } = this.$route
+    const urlOrg =
+      process.env.BASE_URL === 'http://192.168.5.202:9037'
+        ? 'https://pc-beta.djcars.cn/'
+        : 'https://www.djcars.cn/'
+    if (name === 'kol-id') {
+      this.qrUrl = `${urlOrg}userDetail?id=${params.id}`
+    } else if (name === 'category-id') {
+      this.qrUrl = `${urlOrg}category?id=${params.id}`
+    }
   },
 })
 </script>

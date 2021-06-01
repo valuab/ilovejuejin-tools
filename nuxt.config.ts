@@ -36,6 +36,7 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       { src: 'https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js' },
+      { src: 'https://res.wx.qq.com/open/js/jweixin-1.6.0.js' },
     ],
   },
 
@@ -61,6 +62,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '@/plugins/router', mode: 'client' },
     '@/plugins/babel-polyfill',
     '@/plugins/antd-ui',
     '@/plugins/setup-axios',
