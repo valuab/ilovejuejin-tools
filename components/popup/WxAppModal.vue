@@ -44,7 +44,7 @@ export default defineComponent({
     ) {
       const wx = require('weixin-js-sdk')
       // 安卓系统微信内浏览器
-      const url = location.origin
+      const url = location.href
       const {
         timestamp,
         nonceStr,
