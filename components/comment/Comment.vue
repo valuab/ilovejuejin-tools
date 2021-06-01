@@ -134,6 +134,12 @@ export default defineComponent({
       IComment.userVoteCommentFlag = 0 // 未点赞
       IComment.supportCount = 0 // 未点赞 // 点赞数
       IComment.parentName = this.$props.commentType ? this.comment.userName : ''
+      IComment.userName = this.$props.commentType
+        ? this.$accessor.userInfo.nickname
+        : ''
+      IComment.smallUserIconUrl = this.$props.commentType
+        ? this.$accessor.userInfo.smallImageUrl
+        : ''
       if (post?.id) {
         IComment.id = post.id.toString()
         this.$emit('send', IComment)
