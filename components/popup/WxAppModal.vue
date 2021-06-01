@@ -1,6 +1,7 @@
 <template>
   <popup-mask @hide="showFeedBack">
     <div v-if="isWeixin">
+      <div>微信内安卓打开</div>
       <wx-open-launch-weapp username="gh_f36e46000282" :path="wxPath">
         <script type="text/wxtag-template">
           <style>.btn { padding: 12px }</style>
@@ -63,11 +64,11 @@ export default defineComponent({
       })
       wx.ready((e: any) => {
         // eslint-disable-next-line no-console
-        alert(e)
+        alert([e, 'ready'])
       })
       wx.error((e: any) => {
         // eslint-disable-next-line no-console
-        alert(e)
+        alert([e, 'error'])
       })
       this.wxPath = `${path}.html?${query}`
       this.isWeixin = true
