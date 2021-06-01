@@ -59,7 +59,7 @@ export default defineComponent({
         timestamp, // 必填，生成签名的时间戳
         nonceStr, // 必填，生成签名的随机串
         signature, // 必填，签名
-        jsApiList: ['onMenuShareTimeline'], // 必填，需要使用的JS接口列表
+        jsApiList: ['wx-open-launch-weapp'], // 必填，需要使用的JS接口列表
         openTagList: ['wx-open-launch-weapp'],
       })
       wx.ready((e: any) => {
