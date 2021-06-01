@@ -3,7 +3,8 @@
     <div v-if="isWeixin">
       <wx-open-launch-weapp username="gh_f36e46000282" :path="wxPath">
         <script type="text/wxtag-template">
-          <button class="btn">跳转小程序</button>
+          <style>.btn { padding: 12px }</style>
+          <button class="btn">打开小程序</button>
         </script>
       </wx-open-launch-weapp>
     </div>
@@ -41,24 +42,34 @@ export default defineComponent({
       ua.match(/MicroMessenger/i) &&
       (ua.includes('android') || ua.includes('adr'))
     ) {
-      // 安卓系统微信内浏览器
       const wx = require('weixin-js-sdk')
+      // 安卓系统微信内浏览器
       const url = location.origin
       const {
         timestamp,
         nonceStr,
         signature,
+        appId,
       } = await this.$http.mobile.getJsSdkAll({ url })
+      // eslint-disable-next-line no-undef
       wx.config({
         debug: true,
-        appId: 'wxb943f9ee08974767',
+        appId,
         timestamp, // 必填，生成签名的时间戳
         nonceStr, // 必填，生成签名的随机串
         signature, // 必填，签名
         jsApiList: ['onMenuShareTimeline'], // 必填，需要使用的JS接口列表
         openTagList: ['wx-open-launch-weapp'],
       })
-      this.wxPath = `${path}?${query}`
+      wx.ready((e: any) => {
+        // eslint-disable-next-line no-console
+        alert(e)
+      })
+      wx.error((e: any) => {
+        // eslint-disable-next-line no-console
+        alert(e)
+      })
+      this.wxPath = `${path}.html?${query}`
       this.isWeixin = true
     } else {
       // 其他浏览器

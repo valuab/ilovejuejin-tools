@@ -36,7 +36,6 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       { src: 'https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js' },
-      { src: 'https://res.wx.qq.com/open/js/jweixin-1.6.0.js' },
     ],
   },
 
@@ -66,7 +65,7 @@ export default {
     '@/plugins/babel-polyfill',
     '@/plugins/antd-ui',
     '@/plugins/setup-axios',
-    { src: '@/plugins/lazyload.ts', mode: 'client' },
+    { src: '@/plugins/vue-config.ts', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

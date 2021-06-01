@@ -39,6 +39,7 @@ export interface IGetSdkResult extends IApiResult {
     timestamp: string
     nonceStr: string
     signature: string
+    appId: string
   }
 }
 

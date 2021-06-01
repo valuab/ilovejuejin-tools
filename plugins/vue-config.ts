@@ -6,3 +6,5 @@ Vue.use(VueLazyload, {
   preLoad: 1,
   attempt: 1,
 })
+
+Vue.config.ignoredElements = ['wx-open-launch-weapp']
