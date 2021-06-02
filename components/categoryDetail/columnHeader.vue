@@ -44,10 +44,10 @@ export default defineComponent({
   },
   created() {
     const { name, params } = this.$route
-    const urlOrg =
-      process.env.BASE_URL === 'http://192.168.5.202:9037'
-        ? 'https://pc-beta.djcars.cn/'
-        : 'https://www.djcars.cn/'
+    const urlOrg = 'https://www.djcars.cn/'
+    // process.env.BASE_URL === 'http://192.168.5.202:9037'
+    //   ? 'https://pc-beta.djcars.cn/'
+    //   : 'https://www.djcars.cn/'
     if (name === 'kol-id') {
       this.qrUrl = `${urlOrg}userDetail?id=${params.id}`
     } else if (name === 'category-id') {
