@@ -14,7 +14,7 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: '大家车言论',
+    title: '大家车',
     htmlAttrs: {
       lang: 'en',
     },
