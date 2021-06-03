@@ -45,6 +45,7 @@ import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '@/enums/content'
 import { IArticleList } from '@/api/apiPublic/type'
 import { useAnchor } from '~/utils/data'
+import { IDetail } from '~/components/categoryDetail/columnHeader.vue'
 
 interface ICategoryTabs {
   title: string
@@ -53,12 +54,7 @@ interface ICategoryTabs {
 }
 
 interface IData {
-  detail: {
-    name: string
-    description: string
-    imgUrl: string
-    kol: number
-  } // kol详情
+  detail: IDetail // kol详情
   kolId: string // kolId
   recommendList: ITopicListType[] // 王牌推荐俩表
   categoryTabs: ICategoryTabs[]

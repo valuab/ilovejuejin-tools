@@ -6,13 +6,11 @@
       <div class="operate">
         <button class="cancel-btn" @click="showFeedBack">取消</button>
         <div v-if="isWeixin" class="launch-btn-bg">
-          <div class="launch-btn-box">
-            <wx-open-launch-weapp :username="wxBtnusername" :path="wxPath">
-              <script type="text/wxtag-template">
-                <div style="color: #fff; position: relative; top: 0; left: 0; width: 100%; height: 100%">立即打开</div>
-              </script>
-            </wx-open-launch-weapp>
-          </div>
+          <wx-open-launch-weapp :username="wxBtnusername" :path="wxPath">
+            <script type="text/wxtag-template">
+              <div style="color: #fff; width: 240px; font-size: 32px; line-height: 90px; text-align: center">立即打开</div>
+            </script>
+          </wx-open-launch-weapp>
         </div>
         <button v-else class="open-btn" @click="navWxApp">立即打开</button>
       </div>
@@ -32,8 +30,8 @@ export default defineComponent({
     return {
       url: defaultScheme,
       isWeixin: false,
-      wxPath: '',
-      wxBtnusername: 'gh_f36e46000282',
+      wxPath: '', // 开放标签跳转路径
+      wxBtnusername: 'gh_f36e46000282', // 开放标签跳转小程序原始id
     }
   },
   async mounted() {
@@ -41,8 +39,9 @@ export default defineComponent({
       !navigator.userAgent.match(
         /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|IEMobile)/i
       )
-    )
+    ) {
       return
+    }
     const ua = navigator.userAgent.toLowerCase()
     const name = this.$route.name as string
     const path = wxappUrl.get(name)
@@ -60,9 +59,6 @@ export default defineComponent({
         signature,
         appId,
       } = await this.$http.mobile.getJsSdkAll({ url })
-      // eslint-disable-next-line no-console
-      console.log(location.href.split('#')[0])
-      // eslint-disable-next-line no-undef
       wx.config({
         debug: false,
         appId,
@@ -72,13 +68,13 @@ export default defineComponent({
         jsApiList: ['onMenuShareTimeline'], // 必填，需要使用的JS接口列表
         openTagList: ['wx-open-launch-weapp'],
       })
-      wx.ready((e: any) => {
+      wx.ready((res: any) => {
         // eslint-disable-next-line no-console
-        console.log([e, 'ready'])
+        console.log(res, 'ready')
       })
-      wx.error((e: any) => {
+      wx.error((err: any) => {
         // eslint-disable-next-line no-console
-        console.log([e, 'error'])
+        console.log(err, 'error')
       })
       this.wxBtnusername =
         process.env.BASE_URL === 'http://192.168.5.202:9037'
@@ -134,63 +130,54 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .container {
-  width: 80vw;
-  height: 36vh;
+  width: 600px;
+  height: 478px;
   background-color: #fff;
-  border-radius: 1vw;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   & > img {
-    width: 43vw;
-    height: 10vh;
-    margin-top: 4vh;
+    width: 320px;
+    height: 128px;
+    margin-top: 60px;
   }
 
   & > p {
-    font-size: 3vh;
-    line-height: 3vh;
-    margin: 3vh 0 0;
+    font-size: 40px;
+    line-height: 40px;
+    margin: 40px 0 0;
     font-weight: bold;
   }
 
   & > .operate {
-    margin-top: 6vh;
+    margin-top: 80px;
     display: flex;
     justify-content: space-between;
 
     & > button {
       padding: 0;
       margin: 0;
-      width: 32vw;
-      height: 7vh;
+      width: 240px;
+      height: 90px;
       text-align: center;
-      line-height: 7vh;
+      line-height: 90px;
       border: 0;
-      border-radius: 5vh;
-      font-size: 2vh;
+      border-radius: 60px;
+      font-size: 32px;
     }
 
     .launch-btn-bg {
       background-color: #ff8022;
       position: relative;
-      width: 32vw;
-      height: 7vh;
-      font-size: 2vh;
-      border-radius: 5vh;
-
-      .launch-btn-box {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -1.5vh;
-        margin-left: -8vw;
-      }
+      width: 240px;
+      height: 90px;
+      border-radius: 60px;
     }
 
     .cancel-btn {
-      margin-right: 5vw;
+      margin-right: 40px;
       color: #333;
       background-color: #f5f5f5;
     }

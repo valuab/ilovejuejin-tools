@@ -16,10 +16,16 @@
         <a-checkbox :checked="isChecked" @change="change" />
         <span class="checkbox-text">
           已阅读并同意
-          <nuxt-link to="/loginProtocol" target="_blank" style="color: #ff8b00"
+          <nuxt-link
+            to="/loginProtocol"
+            :target="$accessor.global.navTarget"
+            style="color: #ff8b00"
             >《服务使用协议》</nuxt-link
           >
-          <nuxt-link to="/loginPrivacy" target="_blank" style="color: #ff8b00"
+          <nuxt-link
+            to="/loginPrivacy"
+            :target="$accessor.global.navTarget"
+            style="color: #ff8b00"
             >《隐私政策》</nuxt-link
           >
         </span>

@@ -85,11 +85,11 @@ export default defineComponent({
       id: route.params.id,
     })
 
-    const urlOrg = 'https://www.djcars.cn/'
-    // process.env.BASE_URL === 'http://192.168.5.202:9037'
-    //   ? 'https://pc-beta.djcars.cn/'
-    //   : 'https://www.djcars.cn/'
-    const qrUrl = `${urlOrg}category?userId=${route.params.id}`
+    const urlOrg =
+      process.env.BASE_URL === 'http://192.168.5.202:9037'
+        ? 'https://pc-beta.djcars.cn/'
+        : 'https://www.djcars.cn/'
+    const qrUrl = `${urlOrg}program?id=${route.params.id}`
 
     // 获取广告
     const adTopicNames = ['驾值观', '大疯车']

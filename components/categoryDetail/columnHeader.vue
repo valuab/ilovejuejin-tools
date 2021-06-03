@@ -5,7 +5,7 @@
         <div class="header-avatar">
           <a-avatar :src="detail.imgUrl" :size="100"></a-avatar>
           <icon
-            v-if="this.$route.name === 'kol-id'"
+            v-if="this.$route.name === 'kol-id' && detail.kol"
             class="avatar-kol"
             :icon="
               detail.kol === 1 ? 'KolBadgeK' : kol === 2 ? 'KolBadgeV' : ''
@@ -44,12 +44,12 @@ export default defineComponent({
   },
   created() {
     const { name, params } = this.$route
-    const urlOrg = 'https://www.djcars.cn/'
-    // process.env.BASE_URL === 'http://192.168.5.202:9037'
-    //   ? 'https://pc-beta.djcars.cn/'
-    //   : 'https://www.djcars.cn/'
+    const urlOrg =
+      process.env.BASE_URL === 'http://192.168.5.202:9037'
+        ? 'https://pc-beta.djcars.cn/'
+        : 'https://www.djcars.cn/'
     if (name === 'kol-id') {
-      this.qrUrl = `${urlOrg}userDetail?id=${params.id}`
+      this.qrUrl = `${urlOrg}userDetail?userId=${params.id}`
     } else if (name === 'category-id') {
       this.qrUrl = `${urlOrg}category?id=${params.id}`
     }
