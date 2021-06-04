@@ -20,6 +20,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { wxappUrl } from '@apiModules/mobileModule'
+import { Route } from 'vue-router'
 
 // 默认首页scheme路径
 const defaultScheme = 'weixin://dl/business/?t=F0lG3O6kHIu'
@@ -28,11 +29,34 @@ export default defineComponent({
   name: 'WxAppModal',
   data() {
     return {
-      url: defaultScheme,
-      isWeixin: false,
+      url: defaultScheme, // scheme url
+      isWeixin: false, // true 安卓微信内浏览器
       wxPath: '', // 开放标签跳转路径
       wxBtnusername: 'gh_f36e46000282', // 开放标签跳转小程序原始id
     }
+  },
+  watch: {
+    '$accessor.global.toRouteObj'(newval) {
+      const name = newval.name
+      if (
+        name &&
+        navigator.userAgent.match(
+          /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|IEMobile)/i
+        )
+      ) {
+        const path = wxappUrl.get(name) as string
+        const query = this._eachParams(newval)
+        const ua = navigator.userAgent.toLowerCase()
+        if (
+          ua.match(/MicroMessenger/i) &&
+          (ua.includes('android') || ua.includes('adr'))
+        ) {
+          this.wxPath = `${path}.html?${query}`
+        } else {
+          this.getScheme(path, query)
+        }
+      }
+    },
   },
   async mounted() {
     if (
@@ -44,8 +68,8 @@ export default defineComponent({
     }
     const ua = navigator.userAgent.toLowerCase()
     const name = this.$route.name as string
-    const path = wxappUrl.get(name)
-    const query = this._eachParams()
+    const path = wxappUrl.get(name) as string
+    const query = this._eachParams(this.$route)
     if (
       ua.match(/MicroMessenger/i) &&
       (ua.includes('android') || ua.includes('adr'))
@@ -60,11 +84,11 @@ export default defineComponent({
         appId,
       } = await this.$http.mobile.getJsSdkAll({ url })
       wx.config({
-        debug: false,
+        debug: false, // 调试，移动端会alert提示信息
         appId,
-        timestamp, // 必填，生成签名的时间戳
-        nonceStr, // 必填，生成签名的随机串
-        signature, // 必填，签名
+        timestamp,
+        nonceStr,
+        signature,
         jsApiList: ['onMenuShareTimeline'], // 必填，需要使用的JS接口列表
         openTagList: ['wx-open-launch-weapp'],
       })
@@ -84,13 +108,7 @@ export default defineComponent({
       this.isWeixin = true
     } else {
       // 其他浏览器
-      const scheme = await this.$http.mobile.getUrlScheme({
-        path: path as string,
-        query,
-      })
-      const url = scheme || defaultScheme
-      location.href = url
-      this.url = url
+      location.href = await this.getScheme(path, query)
     }
   },
   methods: {
@@ -109,10 +127,22 @@ export default defineComponent({
     },
 
     /**
+     * @description: 获取scheme值
+     */
+    async getScheme(path: string, query: string) {
+      const scheme = await this.$http.mobile.getUrlScheme({
+        path: path as string,
+        query,
+      })
+      const url = scheme || defaultScheme
+      this.url = url
+      return url
+    },
+
+    /**
      * @description: 循环遍历当前路由参数
      */
-    _eachParams() {
-      const { params, query } = this.$route
+    _eachParams({ params, query }: Route) {
       let str = ''
       if (Object.keys(params).length !== 0) {
         for (const [k, v] of Object.entries(params)) {

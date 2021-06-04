@@ -16,7 +16,8 @@
           </div>
         </div>
         <aside class="qrimg">
-          <QRCode :src="qrUrl" :size="120" :is-shadow="false" />
+          <QRCode :src="qrUrl" :size="100" :is-shadow="false" />
+          <p>扫码用手机看视频</p>
         </aside>
       </div>
       <ad-box
@@ -243,17 +244,28 @@ export default defineComponent({
           margin-left: 20px;
 
           & > h1 {
-            @include text(32px, #000000, bold);
+            @include text(28px, #000000, bold);
 
             margin-bottom: 10px;
           }
 
           & > p {
-            @include text($font-size-lg, #717171);
+            @include text($font-size-base, #717171);
 
             width: 37rem;
-            line-height: 1.5;
+            line-height: 20px;
           }
+        }
+      }
+
+      .qrimg {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > p {
+          margin: 0;
+          @include text($font-size-sm, #333333);
         }
       }
     }

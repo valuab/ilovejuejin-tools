@@ -17,7 +17,10 @@
           <p>{{ detail.description }}</p>
         </div>
       </div>
-      <QRCode :src="qrUrl" :size="120" :is-shadow="false" />
+      <div class="header-right">
+        <QRCode :src="qrUrl" :size="100" :is-shadow="false" />
+        <p>扫码用手机看视频</p>
+      </div>
     </div>
   </header>
 </template>
@@ -64,8 +67,7 @@ export default defineComponent({
   .header-box {
     display: flex;
     width: $container-width;
-    height: 220px;
-    padding: 0 20px;
+    padding: 30px 20px;
     margin: 0 auto;
     align-items: center;
     justify-content: space-between;
@@ -90,16 +92,25 @@ export default defineComponent({
         h1 {
           margin-bottom: 10px;
 
-          @include text(32px, #000000, bold);
+          @include text(28px, #000000, bold);
         }
 
         p {
           width: 42rem;
           margin: 0;
-          line-height: 1.5;
+          line-height: 20px;
 
-          @include text($font-size-lg, #666);
+          @include text($font-size-base, #666);
         }
+      }
+    }
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > p {
+        margin: 0;
+        @include text($font-size-sm, #333333);
       }
     }
   }

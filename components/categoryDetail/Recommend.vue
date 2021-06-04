@@ -107,8 +107,7 @@ export default defineComponent({
 
   .box {
     width: $container-width;
-    height: 406px;
-    padding: 40px 20px;
+    padding: 30px 20px;
     margin: 0 auto;
     flex-direction: column;
     justify-content: center;

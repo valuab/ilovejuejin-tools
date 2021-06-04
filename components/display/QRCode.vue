@@ -2,7 +2,7 @@
   <div
     class="qrcodeBox"
     :class="{ 'box-shadow': isShadow }"
-    :style="{ '--size': size }"
+    :style="{ '--size': size + 'px' }"
   >
     <img
       width="100%"
@@ -29,7 +29,7 @@ export default defineComponent({
     },
     size: {
       type: Number,
-      default: 80,
+      default: 120,
     },
     isShadow: {
       type: Boolean,
