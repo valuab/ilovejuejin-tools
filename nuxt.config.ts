@@ -35,17 +35,13 @@ export default {
     ],
     link: [
       {
-        rel: 'shortcut icon',
+        rel: 'icon',
         type: 'image/x-icon',
         href: '/favicon.ico',
       },
       {
-        rel: 'icon',
-        href: '/static/logo234.png',
-      },
-      {
         rel: 'apple-touch-icon-precomposed',
-        href: '/static/logo234.png',
+        href: '/logo64.png',
       },
     ],
     script: [
