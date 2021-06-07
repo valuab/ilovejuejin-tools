@@ -38,12 +38,7 @@ export default defineComponent({
   watch: {
     '$accessor.global.toRouteObj'(newval) {
       const name = newval.name
-      if (
-        name &&
-        navigator.userAgent.match(
-          /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|IEMobile)/i
-        )
-      ) {
+      if (name && this.$accessor.global.isMobile) {
         const path = wxappUrl.get(name) as string
         const query = this._eachParams(newval)
         const ua = navigator.userAgent.toLowerCase()
@@ -59,11 +54,7 @@ export default defineComponent({
     },
   },
   async mounted() {
-    if (
-      !navigator.userAgent.match(
-        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|IEMobile)/i
-      )
-    ) {
+    if (!this.$accessor.global.isMobile) {
       return
     }
     const ua = navigator.userAgent.toLowerCase()
@@ -76,7 +67,8 @@ export default defineComponent({
     ) {
       // 安卓系统微信内浏览器
       const wx = require('weixin-js-sdk')
-      const url = location.href.split('#')[0]
+      const url = encodeURIComponent(location.href.split('#')[0])
+
       const {
         timestamp,
         nonceStr,
@@ -131,8 +123,8 @@ export default defineComponent({
      */
     async getScheme(path: string, query: string) {
       const scheme = await this.$http.mobile.getUrlScheme({
-        path: path as string,
-        query,
+        path: encodeURIComponent(path),
+        query: encodeURIComponent(query),
       })
       const url = scheme || defaultScheme
       this.url = url

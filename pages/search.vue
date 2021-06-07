@@ -531,8 +531,10 @@ export default defineComponent({
      * @description 清除搜索
      */
     deleteSearch() {
-      this.type = 1 // 改为全部搜索
-      this.typeName = '' // 改为全部搜索
+      if (!this.$accessor.global.isMobile) {
+        this.type = 1 // 改为全部搜索
+        this.typeName = '' // 改为全部搜索
+      }
       this.$router.push({
         query: {
           keyword: this.keyword,
