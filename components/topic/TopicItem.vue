@@ -1,14 +1,18 @@
 <template>
   <article>
-    <header class="header">
+    <header :class="data.description ? '' : 'not-desc'" class="header">
       <div>
         <nuxt-link
           :to="{ name: 'topic-id', params: { id: data.id } }"
           :target="$accessor.global.navTarget"
         >
-          <h1>{{ data.name }}</h1>
+          <h1>
+            {{ data.name }}
+          </h1>
         </nuxt-link>
-        <p class="text-hidden-1">{{ data.description }}</p>
+        <p v-if="data.description" class="text-hidden-1">
+          {{ data.description }}
+        </p>
       </div>
       <nuxt-link
         class="nav-detail"
@@ -74,9 +78,16 @@ export default defineComponent({
     @include text($font-size-heading, #000000, bold);
   }
 
+  /* .name-not-desc {
+    margin: 0;
+    line-height: 24px;
+    font-size: 24px;
+  } */
+
   p {
     width: 58rem;
     line-height: 14px;
+    margin: 0 0 20px;
     @include text($font-size-base, #666);
   }
 
@@ -90,6 +101,15 @@ export default defineComponent({
     &:hover {
       color: $heading-color;
     }
+  }
+}
+
+.not-desc {
+  margin-bottom: 24px;
+  h1 {
+    margin: 0;
+    line-height: 24px;
+    font-size: 24px;
   }
 }
 

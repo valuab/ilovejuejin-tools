@@ -13,8 +13,10 @@
           />
         </div>
         <div class="desc">
-          <h1>{{ detail.name }}</h1>
-          <p>{{ detail.description }}</p>
+          <h1 :style="detail.description ? '' : 'margin: 0'">
+            {{ detail.name }}
+          </h1>
+          <p v-if="detail.description">{{ detail.description }}</p>
         </div>
       </div>
       <div class="header-right">

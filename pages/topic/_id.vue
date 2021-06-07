@@ -11,8 +11,10 @@
         <div class="header-left">
           <topic-img-small :img-url="detail.smallImageUrl"></topic-img-small>
           <div class="des">
-            <h1>{{ detail.name }}</h1>
-            <p>{{ detail.description }}</p>
+            <h1 :style="detail.description ? '' : 'margin: 0'">
+              {{ detail.name }}
+            </h1>
+            <p v-if="detail.description">{{ detail.description }}</p>
           </div>
         </div>
         <aside class="qrimg">
