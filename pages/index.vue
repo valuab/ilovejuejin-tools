@@ -58,9 +58,11 @@
                     :src="newItem.imageUrl"
                     :alt="newItem.title"
                   />
-                  <p class="carousel-title text-hidden-1">
-                    {{ newItem.title }}
-                  </p>
+                  <div class="carousel-title">
+                    <p class="text-hidden-1">
+                      {{ newItem.title }}
+                    </p>
+                  </div>
                 </nuxt-link>
               </a-carousel>
             </client-only>
@@ -466,12 +468,19 @@ export default defineComponent({
       .carousel-title {
         position: absolute;
         left: 0;
+        top: 0;
         width: 100%;
-        padding: 0 16px;
-        line-height: 24px;
-        bottom: 0;
+        height: 100%;
 
-        @include text(24px, #fff, bold);
+        p {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          padding: 0 16px;
+          line-height: 24px;
+          @include text(24px, #fff, bold);
+        }
       }
     }
   }
