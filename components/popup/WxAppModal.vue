@@ -33,6 +33,7 @@ export default defineComponent({
       isWeixin: false, // true 安卓微信内浏览器
       wxPath: '', // 开放标签跳转路径
       wxBtnusername: 'gh_f36e46000282', // 开放标签跳转小程序原始id
+      notParams: ['search'], // 不需要跳转参数的页面name list
     }
   },
   watch: {
@@ -40,7 +41,9 @@ export default defineComponent({
       const name = newval.name
       if (name && this.$accessor.global.isMobile) {
         const path = wxappUrl.get(name) as string
-        const query = this._eachParams(newval)
+        const query = this.notParams.includes(name)
+          ? ''
+          : this._eachParams(newval)
         const ua = navigator.userAgent.toLowerCase()
         if (
           ua.match(/MicroMessenger/i) &&
@@ -60,7 +63,9 @@ export default defineComponent({
     const ua = navigator.userAgent.toLowerCase()
     const name = this.$route.name as string
     const path = wxappUrl.get(name) as string
-    const query = this._eachParams(this.$route)
+    const query = this.notParams.includes(name)
+      ? ''
+      : this._eachParams(this.$route)
     if (
       ua.match(/MicroMessenger/i) &&
       (ua.includes('android') || ua.includes('adr'))
