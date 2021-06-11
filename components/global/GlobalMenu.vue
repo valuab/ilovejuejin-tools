@@ -27,12 +27,12 @@
       >
         <nuxt-link
           class="text-hidden-1"
-          :to="{ name: groupItem.page, params: { id: menuItem.id } }"
+          :to="{ name: groupItem.page, query: { id: menuItem.id } }"
           >{{ menuItem.name }}</nuxt-link
         >
       </a-menu-item>
       <a-menu-item
-        v-if="rawDataList[index].length > 5"
+        v-if="rawDataList[index].length > groupItem.fewerIndex"
         class="group-menu-item"
         @click="onUnfoldMenuGroup(index)"
       >
@@ -66,8 +66,9 @@ export default defineComponent({
           id: 0,
           title: '王牌节目',
           icon: 'NavStar',
-          list: commendList.slice(0, 5),
-          page: 'topic-id',
+          list: commendList.slice(0, 2),
+          fewerIndex: 2,
+          page: 'program',
           unfold: false,
         },
         {
@@ -75,7 +76,8 @@ export default defineComponent({
           title: '内容分类',
           icon: 'NavSort',
           list: opItemCategoryList.slice(0, 5),
-          page: 'category-id',
+          fewerIndex: 2,
+          page: 'category',
           unfold: false,
         },
         {
@@ -83,7 +85,8 @@ export default defineComponent({
           title: '我们的KOL',
           icon: 'NavKol',
           list: kolList.slice(0, 5),
-          page: 'kol-id',
+          fewerIndex: 2,
+          page: 'kol',
           unfold: false,
         },
       ],
@@ -96,7 +99,7 @@ export default defineComponent({
       this.menuGroupList[index].unfold = unfold
       this.menuGroupList[index].list = unfold
         ? rawDataList[index]
-        : rawDataList[index].slice(0, 5)
+        : rawDataList[index].slice(0, this.menuGroupList[index].fewerIndex)
     },
   },
 })

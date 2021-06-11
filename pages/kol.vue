@@ -45,6 +45,7 @@ import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '@/enums/content'
 import { IArticleList } from '@/api/apiPublic/type'
 import { useAnchor } from '~/utils/data'
+import { IDetail } from '~/components/categoryDetail/columnHeader.vue'
 
 interface ICategoryTabs {
   title: string
@@ -53,12 +54,7 @@ interface ICategoryTabs {
 }
 
 interface IData {
-  detail: {
-    name: string
-    description: string
-    imgUrl: string
-    kol: number
-  } // kol详情
+  detail: IDetail // kol详情
   kolId: string // kolId
   recommendList: ITopicListType[] // 王牌推荐俩表
   categoryTabs: ICategoryTabs[]
@@ -68,6 +64,7 @@ interface IData {
 
 export default defineComponent({
   async asyncData({ app, route }) {
+    const userId = route.query.id as string
     // 获取分类详情
     const {
       nickname: name,
@@ -75,13 +72,13 @@ export default defineComponent({
       smallImageUrl,
       kol,
     } = await app.$http.kol.getUserInfo({
-      userId: Number(route.params.id),
+      userId: Number(userId),
     })
 
     // 获取王牌节目列表
     const { list: recommendList } = await app.$http.kol.getItemListByHostUserId(
       {
-        hostUserId: route.params.id,
+        hostUserId: userId,
       }
     )
 
@@ -89,7 +86,7 @@ export default defineComponent({
     const categoryTabs: ICategoryTabs[] = []
     let articleList: IArticleList[] = []
     const categoryRes = await app.$http.kol.getListByHostUserId({
-      userId: route.params.id,
+      userId,
     })
     if (categoryRes.total) {
       for (let i = 0; i < categoryRes.list?.length; i++) {
@@ -109,7 +106,7 @@ export default defineComponent({
       // 获取文章列表
       const articleRes = await app.$http.kol.getNewListByHostUserId({
         page: 1,
-        hostUserId: route.params.id,
+        hostUserId: userId,
         viewUserId: app.$accessor.userInfo.userId,
         typeId: -1,
       })
@@ -131,7 +128,7 @@ export default defineComponent({
         imgUrl: smallImageUrl,
         kol,
       },
-      kolId: route.params.id,
+      kolId: userId,
       recommendList,
       categoryTabs,
       articleList,
@@ -179,6 +176,7 @@ export default defineComponent({
         : '810px'
     },
   },
+  watchQuery: ['id'],
   methods: {
     /**
      * @description: tab切换
@@ -291,7 +289,7 @@ export default defineComponent({
 
   .tabContainer {
     width: $container-width;
-    padding: 30px 20px 0;
+    padding: 10px 20px 0;
     margin: 0 auto;
     display: flex;
     flex-direction: column;

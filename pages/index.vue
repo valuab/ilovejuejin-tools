@@ -20,12 +20,7 @@
             }"
           >
             <client-only>
-              <a-carousel
-                class="carousel-wrap"
-                dots-class="dots"
-                autoplay
-                arrows
-              >
+              <a-carousel class="carousel-wrap" dots-class="dots" arrows>
                 <template #prevArrow>
                   <div class="custom-slick-arrow custom-slick-arrow-left">
                     <icon
@@ -50,7 +45,7 @@
                     name: newItem.videoCount ? 'videoDetails' : 'details',
                     query: { id: newItem.postId, forumId: newItem.forumId },
                   }"
-                  target="_blank"
+                  :target="$accessor.global.navTarget"
                   class="carousel-item"
                 >
                   <img
@@ -58,9 +53,11 @@
                     :src="newItem.imageUrl"
                     :alt="newItem.title"
                   />
-                  <p class="carousel-title text-hidden-1">
-                    {{ newItem.title }}
-                  </p>
+                  <div class="carousel-title">
+                    <p class="text-hidden-1">
+                      {{ newItem.title }}
+                    </p>
+                  </div>
                 </nuxt-link>
               </a-carousel>
             </client-only>
@@ -81,8 +78,8 @@
             span="12"
           >
             <nuxt-link
-              target="_blank"
-              :to="{ name: 'topic-id', params: { id: recommendItem.id } }"
+              :target="$accessor.global.navTarget"
+              :to="{ name: 'program', query: { id: recommendItem.id } }"
             >
               <img
                 class="column-list-item"
@@ -128,7 +125,7 @@
                   },
                 }"
                 class="like-column-item"
-                target="_blank"
+                :target="$accessor.global.navTarget"
               >
                 <img
                   width="100%"
@@ -169,7 +166,7 @@
                 v-for="kolItem in kolGroup"
                 :key="kolItem.id"
                 class="kol-item"
-                :to="{ name: 'kol-id', params: { id: kolItem.userId } }"
+                :to="{ name: 'kol', query: { id: kolItem.userId } }"
               >
                 <a-avatar :size="30" :src="kolItem.smallImageUrl"></a-avatar>
                 <strong class="kol-name text-hidden-1">{{
@@ -466,12 +463,19 @@ export default defineComponent({
       .carousel-title {
         position: absolute;
         left: 0;
+        top: 0;
         width: 100%;
-        padding: 0 16px;
-        line-height: 24px;
-        bottom: 0;
+        height: 100%;
 
-        @include text(24px, #fff, bold);
+        p {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          padding: 0 16px;
+          line-height: 1.2;
+          @include text(24px, #fff, bold);
+        }
       }
     }
   }

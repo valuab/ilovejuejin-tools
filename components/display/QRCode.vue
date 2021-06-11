@@ -1,5 +1,9 @@
 <template>
-  <div class="qrcodeBox" :style="{ '--size': size }">
+  <div
+    class="qrcodeBox"
+    :class="{ 'box-shadow': isShadow }"
+    :style="{ '--size': size + 'px' }"
+  >
     <img
       width="100%"
       height="100%"
@@ -25,7 +29,11 @@ export default defineComponent({
     },
     size: {
       type: Number,
-      default: 80,
+      default: 120,
+    },
+    isShadow: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props) {
@@ -46,7 +54,6 @@ export default defineComponent({
   position: relative;
   width: var(--size);
   height: var(--size);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
 
   .qrcodeIcon {
     position: absolute;
@@ -56,5 +63,8 @@ export default defineComponent({
     margin-top: -15px;
     margin-left: -15px;
   }
+}
+.box-shadow {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
 }
 </style>

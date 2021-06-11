@@ -102,7 +102,7 @@ export default defineComponent({
      * @description: 跳转至kol详情页
      */
     navKolDetail(id: number) {
-      this.$router.push(`/kol/${id}`)
+      this.$router.push(`/kol?id=${id}`)
       this.ifSearchpopup()
     },
   },

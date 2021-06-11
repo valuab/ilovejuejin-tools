@@ -21,7 +21,7 @@
             v-for="(item, index) in list"
             :key="index"
             class="list-item"
-            :to="{ name: 'topic-id', params: { id: item.id } }"
+            :to="{ name: 'program', query: { id: item.id } }"
           >
             <img :src="item.smallImageUrl" alt="图片加载失败" srcset="" />
             <span class="text-hidden-1">{{ item.name }}</span>
@@ -107,8 +107,7 @@ export default defineComponent({
 
   .box {
     width: $container-width;
-    height: 406px;
-    padding: 40px 20px;
+    padding: 30px 20px;
     margin: 0 auto;
     flex-direction: column;
     justify-content: center;

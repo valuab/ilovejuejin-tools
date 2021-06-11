@@ -65,27 +65,28 @@ interface IData {
 
 export default defineComponent({
   async asyncData({ app, route }) {
+    const categoryId = route.query.id as string
     // 获取分类详情
     const {
       name,
       description,
       smallImageUrl,
     } = await app.$http.category.getOpItemCategory({
-      id: route.params.id,
+      id: categoryId,
     })
 
     // 获取王牌节目列表
     const {
       list: recommendList,
     } = await app.$http.category.getItemListByCategoryId({
-      categoryId: route.params.id,
+      categoryId,
     })
 
     // 获取kol列表
     const userTabs: IUserTabs[] = []
     let articleList: IArticleList[] = []
     const userRes = await app.$http.category.getHostListByCategoryId({
-      categoryId: route.params.id,
+      categoryId,
     })
 
     if (userRes.total) {
@@ -106,7 +107,7 @@ export default defineComponent({
       // 获取文章列表
       const articleRes = await app.$http.category.getListByCategoryId({
         page: 1,
-        categoryId: route.params.id,
+        categoryId,
         viewUserId: app.$accessor.userInfo.userId,
         typeId: -1,
       })
@@ -126,7 +127,7 @@ export default defineComponent({
         description,
         imgUrl: smallImageUrl,
       },
-      categoryId: route.params.id,
+      categoryId,
       recommendList,
       userTabs,
       articleList,
@@ -173,6 +174,7 @@ export default defineComponent({
         : '810px'
     },
   },
+  watchQuery: ['id'],
   methods: {
     /**
      * @description: tab切换
@@ -285,7 +287,7 @@ export default defineComponent({
 
   .tabContainer {
     width: $container-width;
-    padding: 30px 20px 0;
+    padding: 10px 20px 0;
     margin: 0 auto;
     display: flex;
     flex-direction: column;

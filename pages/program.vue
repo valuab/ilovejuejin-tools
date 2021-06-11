@@ -9,14 +9,17 @@
       ></ad-box>
       <div class="header-box">
         <div class="header-left">
-          <topic-img :img-url="detail.smallImageUrl"></topic-img>
+          <topic-img-small :img-url="detail.smallImageUrl"></topic-img-small>
           <div class="des">
-            <h1>{{ detail.name }}</h1>
-            <p>{{ detail.description }}</p>
+            <h1 :style="detail.description ? '' : 'margin: 0'">
+              {{ detail.name }}
+            </h1>
+            <p v-if="detail.description">{{ detail.description }}</p>
           </div>
         </div>
         <aside class="qrimg">
-          <img src="/qrcode/miniapp/djcars.jpg" />
+          <QRCode :src="qrUrl" :size="100" :is-shadow="false" />
+          <p>扫码用手机看视频</p>
         </aside>
       </div>
       <ad-box
@@ -64,9 +67,11 @@ import { IOpItemResult } from '@apiModules/program'
 import { setSearchHistory } from '@/utils/search'
 import { SEARCH_TYPE, POST_RADIO_TYPE } from '~/enums/content'
 import { useAnchor } from '~/utils/data'
+import TopicImgSmall from '~/components/topic/TopicImgSmall.vue'
 
 interface IData {
   id: string
+  qrUrl: string
   detail: IOpItemResult['result']
   listLoad: Boolean
   list: Array<IArticleItemType>
@@ -77,10 +82,18 @@ interface IData {
 }
 
 export default defineComponent({
+  components: { TopicImgSmall },
   async asyncData({ app, route }) {
+    const topicId = route.query.id as string
     const detail = await app.$http.program.getOpItem({
-      id: route.params.id,
+      id: topicId,
     })
+
+    const urlOrg =
+      process.env.BASE_URL === 'http://192.168.5.202:9037'
+        ? 'https://pc-beta.djcars.cn/'
+        : 'https://www.djcars.cn/'
+    const qrUrl = `${urlOrg}program?id=${topicId}`
 
     // 获取广告
     const adTopicNames = ['驾值观', '大疯车']
@@ -98,11 +111,12 @@ export default defineComponent({
 
     const { list, total } = await app.$http.program.getListByItemId({
       page: 1,
-      itemId: route.params.id,
+      itemId: topicId,
       viewUserId: app.$accessor.userInfo.userId,
     })
     return {
-      id: route.params.id,
+      id: topicId,
+      qrUrl,
       detail,
       list,
       total,
@@ -113,6 +127,7 @@ export default defineComponent({
   data(): IData {
     return {
       id: '', // 节目ID
+      qrUrl: '', // 二维码地址
       detail: {
         name: '',
         description: '',
@@ -146,6 +161,7 @@ export default defineComponent({
       ],
     }
   },
+  watchQuery: ['id'],
   methods: {
     /**
      * @description: 单选框
@@ -218,8 +234,7 @@ export default defineComponent({
     .header-box {
       display: flex;
       width: $container-width;
-      height: 392px;
-      padding: 0 20px;
+      padding: 40px 20px;
       margin: 0 auto;
       background-color: #fff;
       align-items: center;
@@ -230,26 +245,31 @@ export default defineComponent({
         align-items: center;
 
         .des {
-          margin-left: 44px;
+          margin-left: 20px;
 
           & > h1 {
-            @include text(32px, #000000, bold);
+            @include text(28px, #000000, bold);
 
             margin-bottom: 10px;
           }
 
           & > p {
-            @include text($font-size-lg, #717171);
+            @include text($font-size-base, #717171);
 
             width: 37rem;
-            line-height: 1.5;
+            line-height: 20px;
           }
         }
       }
+
       .qrimg {
-        & > img {
-          width: 120px;
-          height: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > p {
+          margin: 0;
+          @include text($font-size-sm, #333333);
         }
       }
     }

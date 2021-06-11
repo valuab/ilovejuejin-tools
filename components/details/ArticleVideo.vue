@@ -19,7 +19,7 @@
     <nuxt-link
       class="videoSee"
       :to="{ name: 'details', query: { id: post.id, forumId: post.forumId } }"
-      target="_blank"
+      :target="$accessor.global.navTarget"
       >查看内容详情 ></nuxt-link
     >
   </div>

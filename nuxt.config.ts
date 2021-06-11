@@ -14,7 +14,7 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: '大家车言论',
+    title: '大家车',
     htmlAttrs: {
       lang: 'en',
     },
@@ -33,7 +33,17 @@ export default {
           '这是一个全新维度的汽车信息集群,大家车言论名称中的“大家”有两层含义：第一就是你我他；第二就是大咖、大人物。这构成了“大家车言论”品牌的核心。目前大家车言论旗下有大家车言论自媒体矩阵，大家车问、大家车观察、玩车厂牌大疯车、评车厂牌驾值观等内容厂牌，2019年我们将为大家带来更多价值汽车内容！',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico',
+      },
+      {
+        rel: 'apple-touch-icon-precomposed',
+        href: '/logo64.png',
+      },
+    ],
     script: [
       { src: 'https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js' },
     ],
@@ -61,10 +71,11 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '@/plugins/router', mode: 'client' },
     '@/plugins/babel-polyfill',
     '@/plugins/antd-ui',
     '@/plugins/setup-axios',
-    { src: '@/plugins/lazyload.ts', mode: 'client' },
+    { src: '@/plugins/vue-config.ts', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

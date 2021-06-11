@@ -1,11 +1,16 @@
 import { mutationTree, actionTree } from 'typed-vuex'
 import { IAppVersionType, ICategoryListType } from '@apiModules/feedback'
+import { Route } from 'vue-router'
 
 export interface IGlobalState {
   isSearchPopup: Boolean // 搜索弹窗显示
   isFeedBack: Boolean // 反馈弹窗显示
   isLoginPopUpShow: Boolean // 登录弹窗显示
   isAdPopupShow: Boolean // 广告弹窗显示
+  isWxAppPopupShow: Boolean // H5跳转小程序弹窗
+  isMobile: Boolean // 移动端判断
+  navTarget: String // 路由跳转目标
+  toRouteObj: Route // 移动端路由跳转对象
   feedBackTabsList: ICategoryListType[] // 反馈弹窗单选列表
   feedBackAppVersion: IAppVersionType[] // 反馈弹窗app版本列表
   isCommentType: Boolean // 是否允许评论
@@ -18,6 +23,10 @@ export const state: () => IGlobalState = () => ({
   isFeedBack: false,
   isLoginPopUpShow: false,
   isAdPopupShow: true,
+  isWxAppPopupShow: false,
+  isMobile: false,
+  navTarget: '_blank',
+  toRouteObj: <Route>{},
   feedBackTabsList: [],
   feedBackAppVersion: [],
   isCommentType: true,
@@ -35,6 +44,18 @@ export const mutations = mutationTree(state, {
   },
   showAdPopup(state) {
     state.isAdPopupShow = !state.isAdPopupShow
+  },
+  showWxAppPopup(state, show: boolean) {
+    state.isWxAppPopupShow = show
+  },
+  setIsMobile(state, isMobile: Boolean) {
+    state.isMobile = isMobile
+  },
+  setNavTarget(state, targetStr: string) {
+    state.navTarget = targetStr
+  },
+  setToRoute(state, route: Route) {
+    state.toRouteObj = route
   },
   setFeedBackTabs(state, list) {
     state.feedBackTabsList = list

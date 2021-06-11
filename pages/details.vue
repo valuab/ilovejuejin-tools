@@ -1,18 +1,17 @@
 <template>
   <!-- 居中 -->
-  <Article :posts="post" />
+  <Article v-if="post.auditId === 0" :posts="post" />
+  <article-del v-else />
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import { IPostResult } from '@apiModules/posts'
 
 // 参数列表 // 标记
 
 interface IData {
-  post: {
-    title: string
-    content: string
-  }
+  post: IPostResult['result']
   query: {
     id: String
     forumId: String
@@ -43,10 +42,7 @@ export default defineComponent({
   },
   data(): IData {
     return {
-      post: {
-        title: '',
-        content: '',
-      },
+      post: {} as IPostResult['result'],
       query: {
         id: '',
         forumId: '',

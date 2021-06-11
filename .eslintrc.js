@@ -12,7 +12,6 @@ module.exports = {
     'plugin:nuxt/recommended',
   ],
   plugins: ['prettier'],
-  // add your custom rules here
   rules: {
     'vue/no-v-model-argument': 'off',
     camelcase: 'off',

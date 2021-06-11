@@ -29,7 +29,7 @@
             v-else
             class="icon-wrap flex-center"
             :href="iconItem.url"
-            target="_blank"
+            :target="$accessor.global.navTarget"
           >
             <icon :icon="iconItem.icon" size="24" />
           </a>
@@ -95,11 +95,10 @@ export default defineComponent({
         search = search.replace('=', '-')
       }
     }
-    const videoUrl = fullPath.replace(origin, 'articleDetail') // 微信链接
     const domain = 'https://www.djcars.cn' || process.env.BASE_URL
     const link = `${domain}/share?search=${search}` // 拼接分享链接
     const weiboUrl = getWeiboUrl(title, link)
-    this.videoUrl = `https://www.djcars.cn/${videoUrl}`
+    this.videoUrl = `https://www.djcars.cn${fullPath}`
     this.iconList = [
       {
         codeUrl: this.videoUrl,

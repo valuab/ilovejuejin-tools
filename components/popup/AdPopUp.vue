@@ -1,7 +1,7 @@
 <template>
   <div v-if="adData" class="container">
     <a
-      :target="adData.url ? '_blank' : '_self'"
+      :target="adData.url ? $accessor.global.navTarget : '_self'"
       :href="adData.url || 'javascript:void(0)'"
     >
       <img :src="adData.smallImageUrl || adData.smallImage2Url" alt="ad" />

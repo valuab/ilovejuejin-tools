@@ -75,13 +75,13 @@ export default defineComponent({
     let placeholder = ''
     const routeName = this.$route.name
     switch (routeName) {
-      case 'category-id':
+      case 'category':
         placeholder = '分类内搜索'
         break
-      case 'topic-id':
+      case 'program':
         placeholder = '节目内搜索'
         break
-      case 'kol-id':
+      case 'kol':
         placeholder = '搜索Ta的出品'
         break
       default:

@@ -56,7 +56,9 @@ export default defineComponent({
      * @description 清除搜索模式
      */
     deleteSearchColumn() {
-      this.columnName = ''
+      if (!this.$accessor.global.isMobile) {
+        this.columnName = ''
+      }
       this.$emit('deleteSearch')
     },
   },
