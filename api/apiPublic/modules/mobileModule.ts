@@ -14,9 +14,9 @@ const mobileLink = {
 // 官网页面匹配小程序路径
 export const wxappUrl = new Map([
   ['index', 'pages/recommend/recommend'],
-  ['topic-id', 'pages/programDetail/programDetail'],
-  ['kol-id', 'pages/userDetail/userDetail'],
-  ['category-id', 'pages/categoryDetail/categoryDetail'],
+  ['program', 'pages/programDetail/programDetail'],
+  ['kol', 'pages/userDetail/userDetail'],
+  ['category', 'pages/categoryDetail/categoryDetail'],
   ['videoDetails', 'pages/article/article'],
   ['details', 'pages/article/article'],
   ['topiclist', 'pages/recommend/recommend'],

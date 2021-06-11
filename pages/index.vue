@@ -20,12 +20,7 @@
             }"
           >
             <client-only>
-              <a-carousel
-                class="carousel-wrap"
-                dots-class="dots"
-                autoplay
-                arrows
-              >
+              <a-carousel class="carousel-wrap" dots-class="dots" arrows>
                 <template #prevArrow>
                   <div class="custom-slick-arrow custom-slick-arrow-left">
                     <icon
@@ -84,7 +79,7 @@
           >
             <nuxt-link
               :target="$accessor.global.navTarget"
-              :to="{ name: 'topic-id', params: { id: recommendItem.id } }"
+              :to="{ name: 'program', query: { id: recommendItem.id } }"
             >
               <img
                 class="column-list-item"
@@ -171,7 +166,7 @@
                 v-for="kolItem in kolGroup"
                 :key="kolItem.id"
                 class="kol-item"
-                :to="{ name: 'kol-id', params: { id: kolItem.userId } }"
+                :to="{ name: 'kol', query: { id: kolItem.userId } }"
               >
                 <a-avatar :size="30" :src="kolItem.smallImageUrl"></a-avatar>
                 <strong class="kol-name text-hidden-1">{{
@@ -478,7 +473,7 @@ export default defineComponent({
           left: 0;
           width: 100%;
           padding: 0 16px;
-          line-height: 24px;
+          line-height: 1.2;
           @include text(24px, #fff, bold);
         }
       }

@@ -21,7 +21,7 @@
             v-for="(item, index) in list"
             :key="index"
             class="list-item"
-            :to="{ name: 'topic-id', params: { id: item.id } }"
+            :to="{ name: 'program', query: { id: item.id } }"
           >
             <img :src="item.smallImageUrl" alt="图片加载失败" srcset="" />
             <span class="text-hidden-1">{{ item.name }}</span>

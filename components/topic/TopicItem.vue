@@ -3,7 +3,7 @@
     <header :class="data.description ? '' : 'not-desc'" class="header">
       <div>
         <nuxt-link
-          :to="{ name: 'topic-id', params: { id: data.id } }"
+          :to="{ name: 'program', query: { id: data.id } }"
           :target="$accessor.global.navTarget"
         >
           <h1>
@@ -16,7 +16,7 @@
       </div>
       <nuxt-link
         class="nav-detail"
-        :to="{ name: 'topic-id', params: { id: data.id } }"
+        :to="{ name: 'program', query: { id: data.id } }"
         :target="$accessor.global.navTarget"
         >查看全部 >
       </nuxt-link>

@@ -39,7 +39,7 @@ export default defineComponent({
      * @description: 跳转至分类
      */
     navCategory(id: number) {
-      this.$router.push(`/Category/${id}`)
+      this.$router.push(`/category?id=${id}`)
     },
   },
 })

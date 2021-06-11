@@ -64,6 +64,7 @@ interface IData {
 
 export default defineComponent({
   async asyncData({ app, route }) {
+    const userId = route.query.id as string
     // 获取分类详情
     const {
       nickname: name,
@@ -71,13 +72,13 @@ export default defineComponent({
       smallImageUrl,
       kol,
     } = await app.$http.kol.getUserInfo({
-      userId: Number(route.params.id),
+      userId: Number(userId),
     })
 
     // 获取王牌节目列表
     const { list: recommendList } = await app.$http.kol.getItemListByHostUserId(
       {
-        hostUserId: route.params.id,
+        hostUserId: userId,
       }
     )
 
@@ -85,7 +86,7 @@ export default defineComponent({
     const categoryTabs: ICategoryTabs[] = []
     let articleList: IArticleList[] = []
     const categoryRes = await app.$http.kol.getListByHostUserId({
-      userId: route.params.id,
+      userId,
     })
     if (categoryRes.total) {
       for (let i = 0; i < categoryRes.list?.length; i++) {
@@ -105,7 +106,7 @@ export default defineComponent({
       // 获取文章列表
       const articleRes = await app.$http.kol.getNewListByHostUserId({
         page: 1,
-        hostUserId: route.params.id,
+        hostUserId: userId,
         viewUserId: app.$accessor.userInfo.userId,
         typeId: -1,
       })
@@ -127,7 +128,7 @@ export default defineComponent({
         imgUrl: smallImageUrl,
         kol,
       },
-      kolId: route.params.id,
+      kolId: userId,
       recommendList,
       categoryTabs,
       articleList,
@@ -175,6 +176,7 @@ export default defineComponent({
         : '810px'
     },
   },
+  watchQuery: ['id'],
   methods: {
     /**
      * @description: tab切换

@@ -84,15 +84,16 @@ interface IData {
 export default defineComponent({
   components: { TopicImgSmall },
   async asyncData({ app, route }) {
+    const topicId = route.query.id as string
     const detail = await app.$http.program.getOpItem({
-      id: route.params.id,
+      id: topicId,
     })
 
     const urlOrg =
       process.env.BASE_URL === 'http://192.168.5.202:9037'
         ? 'https://pc-beta.djcars.cn/'
         : 'https://www.djcars.cn/'
-    const qrUrl = `${urlOrg}program?id=${route.params.id}`
+    const qrUrl = `${urlOrg}program?id=${topicId}`
 
     // 获取广告
     const adTopicNames = ['驾值观', '大疯车']
@@ -110,11 +111,11 @@ export default defineComponent({
 
     const { list, total } = await app.$http.program.getListByItemId({
       page: 1,
-      itemId: route.params.id,
+      itemId: topicId,
       viewUserId: app.$accessor.userInfo.userId,
     })
     return {
-      id: route.params.id,
+      id: topicId,
       qrUrl,
       detail,
       list,
@@ -160,6 +161,7 @@ export default defineComponent({
       ],
     }
   },
+  watchQuery: ['id'],
   methods: {
     /**
      * @description: 单选框

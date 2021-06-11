@@ -27,7 +27,7 @@
       >
         <nuxt-link
           class="text-hidden-1"
-          :to="{ name: groupItem.page, params: { id: menuItem.id } }"
+          :to="{ name: groupItem.page, query: { id: menuItem.id } }"
           >{{ menuItem.name }}</nuxt-link
         >
       </a-menu-item>
@@ -68,7 +68,7 @@ export default defineComponent({
           icon: 'NavStar',
           list: commendList.slice(0, 2),
           fewerIndex: 2,
-          page: 'topic-id',
+          page: 'program',
           unfold: false,
         },
         {
@@ -77,7 +77,7 @@ export default defineComponent({
           icon: 'NavSort',
           list: opItemCategoryList.slice(0, 5),
           fewerIndex: 2,
-          page: 'category-id',
+          page: 'category',
           unfold: false,
         },
         {
@@ -86,7 +86,7 @@ export default defineComponent({
           icon: 'NavKol',
           list: kolList.slice(0, 5),
           fewerIndex: 2,
-          page: 'kol-id',
+          page: 'kol',
           unfold: false,
         },
       ],
