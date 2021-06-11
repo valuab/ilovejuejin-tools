@@ -55,7 +55,6 @@ export default defineComponent({
     const qqVideoUrl = 'https://v.qq.com/txp/iframe/player.html'
     const urlParams = this.$props.videoUrl.split('?')[1]
     const url = `${qqVideoUrl}?${urlParams}`
-
     this.url = url
   },
   methods: {

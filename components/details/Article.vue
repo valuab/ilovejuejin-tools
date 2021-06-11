@@ -38,77 +38,72 @@
               : ''
           "
         >
-          <p v-if="item.typeId === 1">
+          <p v-if="item.content">
             {{ item.content }}
           </p>
           <!-- 图片 -->
           <img
-            v-else-if="item.typeId === 2"
+            v-if="item.videoId === 0"
             class="poster"
             :src="item.showImageUrl || item.smallShowImageUrl"
             :class="
               item.showImageUrl || item.smallShowImageUrl ? '' : 'article-none'
             "
           />
-          <div v-else-if="item.typeId === 3">
-            <!-- 视频展示    -->
-            <nuxt-link
-              v-if="item.realVideoUrl"
-              class="video"
-              :to="{
-                name: 'videoDetails',
-                query: {
-                  id: article.id,
-                  forumId: article.forumId,
-                  step: item.step,
-                },
-              }"
-              :target="$accessor.global.navTarget"
-            >
-              <img
-                class="video-poster"
-                :src="
-                  item.showImageUrl ||
-                  item.smallShowImageUrl ||
-                  article.imageUrl ||
-                  article.smallImageUrl
-                "
-              />
-              <div class="video-icon">
-                <img src="@images/video_play.png" />
-              </div>
-            </nuxt-link>
-            <!-- 腾讯视频展示 -->
-            <nuxt-link
-              v-else-if="item.url"
-              class="video"
-              :to="{
-                name: 'videoDetails',
-                query: {
-                  id: article.id || article.postId,
-                  forumId: article.forumId,
-                  step: item.step,
-                },
-              }"
-              :target="$accessor.global.navTarget"
-            >
-              <img
-                class="video-poster"
-                :src="
-                  item.showImageUrl ||
-                  item.smallShowImageUrl ||
-                  article.imageUrl ||
-                  article.smallImageUrl
-                "
-              />
-              <div class="video-icon">
-                <img src="@images/video_play.png" />
-              </div>
-            </nuxt-link>
-          </div>
-          <a v-else-if="item.typeId === 4" :href="item.url">
-            {{ item.content }}
-          </a>
+          <!-- 视频展示    -->
+          <nuxt-link
+            v-if="item.realVideoUrl"
+            class="video"
+            :to="{
+              name: 'videoDetails',
+              query: {
+                id: article.id,
+                forumId: article.forumId,
+                step: item.step,
+              },
+            }"
+            target="_blank"
+          >
+            <img
+              class="video-poster"
+              :src="
+                item.showImageUrl ||
+                item.smallShowImageUrl ||
+                article.imageUrl ||
+                article.smallImageUrl
+              "
+            />
+            <div class="video-icon">
+              <img src="@images/video_play.png" />
+            </div>
+          </nuxt-link>
+          <!-- 腾讯视频展示 -->
+          <nuxt-link
+            v-else-if="item.url"
+            class="video"
+            :to="{
+              name: 'videoDetails',
+              query: {
+                id: article.id || article.postId,
+                forumId: article.forumId,
+                step: item.step,
+              },
+            }"
+            target="_blank"
+          >
+            <img
+              class="video-poster"
+              :src="
+                item.showImageUrl ||
+                item.smallShowImageUrl ||
+                article.imageUrl ||
+                article.smallImageUrl
+              "
+            />
+            <div class="video-icon">
+              <img src="@images/video_play.png" />
+            </div>
+          </nuxt-link>
         </div>
         <ArticleFooter
           v-if="article.tagNameList.length"

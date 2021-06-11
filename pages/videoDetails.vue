@@ -51,6 +51,7 @@ export default defineComponent({
         if (query.step === post.stepList[i].step.toString()) {
           query.videoUrl = post.stepList[i].url || post.stepList[i].showVideoUrl
           query.isQqvideo = !!post.stepList[i].url
+          break
         } else {
           query.videoUrl = post.stepList[i].url || post.stepList[i].showVideoUrl
           query.isQqvideo = !!post.stepList[i].url
